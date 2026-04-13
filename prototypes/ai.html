@@ -1,0 +1,2011 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AI · Terial</title>
+  <link rel="stylesheet" href="../terial-tokens.css" />
+  <style>
+    /* ============================================================
+       AI / Home Dashboard prototype
+       ============================================================ */
+
+    html, body { height: 100%; }
+    body {
+      display: flex;
+      overflow: hidden;
+      background: var(--color-bg-page);
+    }
+
+    /* ---------- App sidebar (dark) ---------- */
+    .app-sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      background: var(--color-gray-8);
+      color: var(--color-white);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    .app-brand {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px var(--space-2xl) 18px var(--space-2xl);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .app-brand .mark {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .app-brand .mark .glyph {
+      width: 28px; height: 28px;
+      display: grid; place-items: center;
+      background: var(--color-primary-6);
+      color: var(--color-gray-9);
+      font-weight: 800;
+      font-size: 14px;
+      border-radius: 6px;
+      box-shadow: var(--shadow-sm);
+    }
+    .app-brand .name {
+      font-size: var(--font-body-xl-semi-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-white);
+    }
+    .app-brand .collapse {
+      color: rgba(255,255,255,0.5);
+      font-size: 14px;
+      background: none; border: none;
+      cursor: pointer;
+    }
+
+    .app-nav {
+      flex: 1;
+      padding: var(--space-lg) 0 var(--space-lg) 0;
+      overflow-y: auto;
+    }
+    .nav-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      padding: 10px var(--space-2xl);
+      color: rgba(255,255,255,0.85);
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+      user-select: none;
+    }
+    .nav-row:hover { background: rgba(255,255,255,0.04); }
+    .nav-row .icon { width: 16px; height: 16px; opacity: 0.85; flex-shrink: 0; display: grid; place-items: center; }
+    .nav-row .icon svg { width: 16px; height: 16px; display: block; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .nav-row .caret { margin-left: auto; opacity: 0.5; font-size: 10px; }
+
+    .nav-row.is-section-active {
+      color: var(--color-primary-6);
+    }
+    .nav-row.is-section-active .icon { opacity: 1; }
+
+    .nav-children { padding-bottom: 6px; }
+    .nav-child {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px var(--space-2xl) 8px 52px;
+      color: rgba(255,255,255,0.7);
+      font-size: var(--font-body-md-size);
+      cursor: pointer;
+    }
+    .nav-child::before {
+      content: "";
+      width: 6px; height: 6px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 1px;
+      flex-shrink: 0;
+    }
+    .nav-child:hover { color: var(--color-white); }
+    .nav-child.is-active { color: var(--color-white); }
+    .nav-child.is-active::before { background: var(--color-primary-6); }
+
+    .app-user {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      padding: var(--space-lg) var(--space-2xl);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      color: var(--color-white);
+      font-size: var(--font-body-md-size);
+    }
+    .app-user .avatar {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--color-gray-6);
+      display: grid; place-items: center;
+      color: var(--color-white);
+      font-size: 11px;
+    }
+
+    .help-link {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      padding: 10px var(--space-2xl);
+      color: rgba(255,255,255,0.5);
+      font-size: var(--font-body-md-size);
+      cursor: pointer;
+    }
+    .help-link:hover { color: rgba(255,255,255,0.8); }
+    .help-link .icon { width: 16px; height: 16px; display: grid; place-items: center; }
+    .help-link .icon svg { width: 16px; height: 16px; display: block; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ---------- App main ---------- */
+    .app-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      height: 100vh;
+      position: relative;
+    }
+
+    /* ---------- Sidebar search ---------- */
+    .sidebar-search {
+      padding: var(--space-lg) var(--space-xl);
+      position: relative;
+    }
+    .sidebar-search-row {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius-sm);
+      padding: 0 4px 0 10px;
+      gap: 4px;
+    }
+    .sidebar-search-row:focus-within {
+      background: rgba(255,255,255,0.14);
+      border-color: rgba(255,255,255,0.2);
+    }
+    .sidebar-search-row .search-icon {
+      width: 14px; height: 14px;
+      color: rgba(255,255,255,0.4);
+      flex-shrink: 0;
+    }
+    .sidebar-search-row input {
+      flex: 1;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-white);
+      padding: 7px 4px;
+    }
+    .sidebar-search-row input::placeholder { color: rgba(255,255,255,0.35); }
+    .sidebar-ai-btn {
+      width: 26px; height: 26px;
+      border-radius: var(--radius-sm);
+      background: var(--color-primary-6);
+      border: none;
+      display: grid; place-items: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: filter 0.15s ease;
+    }
+    .sidebar-ai-btn:hover { filter: brightness(0.92); }
+    .sidebar-ai-btn svg {
+      width: 13px; height: 13px;
+      fill: var(--color-gray-9);
+    }
+
+    /* Sidebar search dropdown */
+    .sidebar-search-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 24px;
+      width: 420px;
+      margin-top: 4px;
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      z-index: 100;
+      max-height: 420px;
+      overflow-y: auto;
+      display: none;
+    }
+    .sidebar-search-dropdown.is-visible { display: block; }
+    .search-dd-section {
+      padding: var(--space-sm) 0;
+    }
+    .search-dd-section + .search-dd-section {
+      border-top: 1px solid var(--color-border-default);
+    }
+    .search-dd-heading {
+      padding: 6px var(--space-lg);
+      font-size: 10px;
+      font-weight: var(--font-weight-semibold);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--color-text-tertiary);
+    }
+    .search-dd-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 7px var(--space-lg);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-primary);
+      cursor: pointer;
+    }
+    .search-dd-item:hover { background: var(--color-gray-1); }
+    .search-dd-item .dd-icon {
+      width: 14px; height: 14px;
+      color: var(--color-text-tertiary);
+      flex-shrink: 0;
+      display: grid; place-items: center;
+    }
+    .search-dd-item .dd-icon svg {
+      width: 14px; height: 14px;
+      stroke: currentColor; fill: none;
+      stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .search-dd-item .dd-type {
+      margin-left: auto;
+      font-size: 10px;
+      color: var(--color-text-tertiary);
+      text-transform: uppercase;
+    }
+    .search-dd-ai-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 7px var(--space-lg);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-blue-7);
+      cursor: pointer;
+    }
+    .search-dd-ai-item:hover { background: var(--color-blue-1); }
+    .search-dd-ai-item .dd-bolt {
+      width: 14px; height: 14px;
+      flex-shrink: 0;
+      display: grid; place-items: center;
+    }
+    .search-dd-ai-item .dd-bolt svg {
+      width: 13px; height: 13px;
+      fill: var(--color-primary-6);
+    }
+
+    .search-dd-ask-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin: 6px var(--space-lg);
+      padding: 8px 12px;
+      background: var(--color-primary-6);
+      color: var(--color-gray-9);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-semibold);
+      cursor: pointer;
+      text-align: left;
+      width: calc(100% - 2 * var(--space-lg));
+      box-sizing: border-box;
+      transition: filter 0.15s ease;
+    }
+    .search-dd-ask-btn:hover { filter: brightness(0.94); }
+    .search-dd-ask-btn svg {
+      width: 14px; height: 14px;
+      fill: var(--color-gray-9);
+      flex-shrink: 0;
+    }
+    .search-dd-ask-btn .ask-query {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    /* ---------- Sidebar RoofCo ---------- */
+    .sidebar-customer {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 10px var(--space-2xl);
+      color: rgba(255,255,255,0.7);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+    }
+    .sidebar-customer .swatch {
+      width: 14px; height: 14px;
+      background: var(--color-green-7);
+      border-radius: 2px;
+      transform: rotate(45deg);
+      flex-shrink: 0;
+    }
+
+    /* ---------- Dashboard content ---------- */
+    .dashboard {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-2xl);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2xl);
+    }
+
+    /* Terial Insights card */
+    .insights-card {
+      background: var(--color-white);
+      border: 2px solid transparent;
+      border-radius: var(--radius-md);
+      padding: var(--space-xl) var(--space-2xl) var(--space-2xl);
+      position: relative;
+      background-clip: padding-box;
+    }
+    .insights-card::before {
+      content: '';
+      position: absolute;
+      inset: -2px;
+      border-radius: calc(var(--radius-md) + 2px);
+      background: linear-gradient(135deg, #ffca00, #ffd633, #ffb800, #ffe066, #ffca00);
+      z-index: -1;
+    }
+    .insights-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-xl);
+    }
+    .insights-header .insights-icon {
+      width: 24px; height: 24px;
+      display: grid; place-items: center;
+    }
+    .insights-header .insights-icon svg {
+      width: 18px; height: 18px;
+      fill: var(--color-primary-7);
+    }
+    .insights-title {
+      font-size: var(--font-body-lg-semi-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+    }
+    .insights-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-xl);
+    }
+    .insight-item {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      position: relative;
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      padding: var(--space-lg);
+    }
+    .insight-chart {
+      height: 100px;
+      border-radius: var(--radius-sm);
+      background: var(--color-gray-1);
+      position: relative;
+      overflow: hidden;
+    }
+    .insight-chart svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .insight-label {
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      line-height: 1.3;
+    }
+    .insight-desc {
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+      line-height: 1.4;
+    }
+    .insight-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: var(--font-weight-semibold);
+    }
+    .insight-badge.up {
+      background: #dcfce7;
+      color: #15803d;
+    }
+    .insight-badge.down {
+      background: #fef2f2;
+      color: #b91c1c;
+    }
+
+    /* Stat cards row */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-lg);
+    }
+    .stat-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      padding: var(--space-xl) var(--space-2xl);
+      position: relative;
+    }
+    .stat-card .stat-label {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      margin-bottom: var(--space-sm);
+    }
+    .stat-card .stat-value {
+      font-size: 28px;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+    }
+    .stat-card .stat-info {
+      position: absolute;
+      top: var(--space-lg);
+      right: var(--space-lg);
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      background: var(--color-gray-1);
+      display: grid; place-items: center;
+      color: var(--color-text-tertiary);
+      font-size: 11px;
+      cursor: pointer;
+    }
+    .stat-card.stat-orange .stat-label { color: var(--color-orange-7); }
+    .stat-card.stat-yellow .stat-label { color: #c08b00; }
+    .stat-card.stat-red .stat-label { color: var(--color-red-7); }
+
+    /* Charts row */
+    .charts-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--space-lg);
+    }
+    .chart-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      padding: var(--space-xl) var(--space-2xl);
+      min-height: 240px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+    .chart-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-lg);
+    }
+    .chart-title {
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+    }
+    .chart-toggle {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .chart-toggle-btn {
+      padding: 3px 10px;
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-tertiary);
+      background: var(--color-white);
+      border: none;
+      cursor: pointer;
+      border-right: 1px solid var(--color-border-default);
+    }
+    .chart-toggle-btn:last-child { border-right: none; }
+    .chart-toggle-btn.is-active {
+      background: var(--color-gray-8);
+      color: var(--color-white);
+    }
+    .chart-body {
+      flex: 1;
+      display: flex;
+      align-items: flex-end;
+      position: relative;
+    }
+
+    /* Tabs inside cards */
+    .card-tabs {
+      display: flex;
+      border-bottom: 2px solid var(--color-border-default);
+      margin-bottom: var(--space-lg);
+    }
+    .card-tab {
+      padding: var(--space-sm) var(--space-2xl);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+    .card-tab.is-active {
+      color: var(--color-blue-7);
+      border-bottom-color: var(--color-blue-7);
+    }
+
+    .assignment-label {
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: 2px;
+    }
+    .assignment-sub {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+    }
+
+    /* Bar chart */
+    .bar-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      flex: 1;
+      height: 160px;
+      padding-top: var(--space-lg);
+      position: relative;
+    }
+    .bar-chart-y {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 22px;
+      width: 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .bar-chart-y span {
+      font-size: 10px;
+      color: var(--color-text-tertiary);
+      text-align: right;
+    }
+    .bar-chart-grid {
+      position: absolute;
+      left: 48px;
+      right: 0;
+      top: 0;
+      bottom: 22px;
+    }
+    .bar-chart-grid .grid-line {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: var(--color-gray-2);
+    }
+    .bar-chart-bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 10px;
+      margin-left: 48px;
+      flex: 1;
+      height: 140px;
+    }
+    .bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .bar-fill {
+      width: 100%;
+      max-width: 32px;
+      border-radius: 2px 2px 0 0;
+      background: var(--color-blue-6);
+    }
+    .bar-label {
+      font-size: 10px;
+      color: var(--color-text-tertiary);
+    }
+
+    /* Donut chart */
+    .donut-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex: 1;
+      padding: var(--space-lg) 0;
+    }
+    .donut-container {
+      position: relative;
+      width: 160px;
+      height: 160px;
+    }
+    .donut-svg {
+      width: 160px;
+      height: 160px;
+      transform: rotate(-90deg);
+    }
+    .donut-center {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+    }
+    .donut-center .pct {
+      font-size: 22px;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+    }
+    .donut-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-sm) var(--space-xl);
+      justify-content: center;
+      padding-top: var(--space-lg);
+    }
+    .donut-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+    }
+    .donut-legend-item .dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Go to Calendar link */
+    .goto-calendar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      justify-content: flex-end;
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-blue-7);
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .goto-calendar svg {
+      width: 14px; height: 14px;
+    }
+
+    /* Calendar section */
+    .dashboard-calendar {
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      position: relative;
+    }
+    .cal-header {
+      display: flex;
+      align-items: center;
+      padding: var(--space-xl) var(--space-2xl);
+      gap: var(--space-2xl);
+    }
+    .cal-year {
+      font-size: 24px;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-text-primary);
+    }
+    .cal-nav {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .cal-nav-btn {
+      width: 28px; height: 28px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      background: var(--color-white);
+      display: grid; place-items: center;
+      cursor: pointer;
+      color: var(--color-text-tertiary);
+      font-size: 14px;
+    }
+    .cal-nav-btn:hover {
+      background: var(--color-gray-1);
+    }
+    .cal-today-label {
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-primary);
+    }
+    .cal-date-sub {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      text-align: center;
+    }
+    .cal-view-toggle {
+      margin-left: auto;
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .cal-view-btn {
+      padding: 5px 16px;
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-tertiary);
+      background: var(--color-white);
+      border: none;
+      cursor: pointer;
+      border-right: 1px solid var(--color-border-default);
+    }
+    .cal-view-btn:last-child { border-right: none; }
+    .cal-view-btn.is-active {
+      background: var(--color-gray-8);
+      color: var(--color-white);
+    }
+
+    /* Week calendar grid */
+    .week-cal {
+      width: 100%;
+      border-collapse: collapse;
+    }
+    .week-cal th {
+      padding: 8px 6px;
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      border-bottom: 1px solid var(--color-border-default);
+      border-right: 1px solid var(--color-border-default);
+      text-align: center;
+    }
+    .week-cal th.month-label {
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      text-align: left;
+      padding-left: var(--space-lg);
+      min-width: 100px;
+    }
+    .week-cal th:first-child {
+      text-align: left;
+      padding-left: var(--space-lg);
+      min-width: 180px;
+      border-right: 1px solid var(--color-border-default);
+    }
+    .week-cal td {
+      padding: 10px 6px;
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-primary);
+      border-bottom: 1px solid var(--color-border-default);
+      border-right: 1px solid var(--color-border-default);
+      height: 36px;
+      vertical-align: middle;
+    }
+    .week-cal td:first-child {
+      padding-left: var(--space-lg);
+      font-weight: var(--font-weight-medium);
+      background: var(--color-white);
+      min-width: 180px;
+    }
+    .week-cal td.today-col {
+      background: #dbeafe;
+    }
+    .week-cal th.today-col {
+      background: #dbeafe;
+    }
+
+    /* Bottom row — tasks */
+    .bottom-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+    }
+    .tasks-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      padding: var(--space-xl) var(--space-2xl);
+      position: relative;
+    }
+    .tasks-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-sm);
+    }
+    .tasks-title {
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+    }
+    .tasks-sub {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+    }
+    .add-btn {
+      width: 28px; height: 28px;
+      border-radius: var(--radius-sm);
+      background: var(--color-blue-7);
+      color: var(--color-white);
+      border: none;
+      display: grid; place-items: center;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .empty-state {
+      padding: var(--space-2xl) 0;
+      text-align: center;
+      color: var(--color-text-tertiary);
+      font-size: var(--font-body-sm-size);
+    }
+    .link-text {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-blue-7);
+      cursor: pointer;
+      text-decoration: underline;
+      margin-top: var(--space-sm);
+    }
+
+    /* Ask Terial FAB button — primary yellow pill */
+    .ask-terial-btn {
+      padding: 10px 20px;
+      background: var(--color-primary-6);
+      color: var(--color-text-on-primary);
+      border: 1px solid transparent;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-semibold);
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      cursor: pointer;
+      white-space: nowrap;
+      box-shadow: var(--shadow-lg);
+      transition: filter 0.15s ease;
+    }
+    .ask-terial-btn:hover { filter: brightness(0.96); }
+    .ask-terial-btn:active { filter: brightness(0.92); }
+    .ask-terial-btn .bolt {
+      width: 14px; height: 14px;
+    }
+
+    /* Card Ask Terial button — yellow small, hidden until card hover */
+    .card-ask-btn {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--button-gap, 6px);
+      padding: 6px 10px;
+      background: var(--color-primary-6);
+      color: var(--color-text-on-primary);
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-family: var(--font-family-base);
+      font-size: var(--font-button-sm-size);
+      line-height: var(--font-button-sm-line);
+      font-weight: var(--font-button-md-weight);
+      white-space: nowrap;
+      z-index: 5;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.15s ease, filter 0.15s ease;
+    }
+    .card-ask-btn:hover { filter: brightness(0.96); }
+    .card-ask-btn:active { filter: brightness(0.92); }
+    .card-ask-btn .bolt-icon {
+      width: 13px;
+      height: 13px;
+      flex-shrink: 0;
+      fill: currentColor;
+    }
+
+    /* Show button on card hover */
+    .stat-card:hover .card-ask-btn,
+    .chart-card:hover .card-ask-btn,
+    .dashboard-calendar:hover .card-ask-btn,
+    .tasks-card:hover .card-ask-btn,
+    .insight-item:hover .card-ask-btn {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* ---------- AI Side Panel ---------- */
+    .ai-panel {
+      width: 360px;
+      flex-shrink: 0;
+      background: var(--color-white);
+      border-left: 1px solid var(--color-border-default);
+      display: none;
+      flex-direction: column;
+      height: 100vh;
+      position: relative;
+      z-index: 50;
+    }
+    .ai-panel.is-open {
+      display: flex;
+    }
+
+    .ai-panel-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 14px var(--space-xl);
+      border-bottom: 1px solid var(--color-border-default);
+      flex-shrink: 0;
+    }
+    .ai-panel-title {
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-primary-7);
+      flex: 1;
+    }
+    .ai-panel-title .edit-icon {
+      font-size: 12px;
+      color: var(--color-primary-6);
+      cursor: pointer;
+      margin-left: 4px;
+    }
+    .panel-action {
+      width: 28px; height: 28px;
+      border: none;
+      background: none;
+      display: grid; place-items: center;
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+    }
+    .panel-action:hover {
+      background: var(--color-gray-1);
+      color: var(--color-text-primary);
+    }
+    .panel-action svg {
+      width: 16px; height: 16px;
+      stroke: currentColor; fill: none;
+      stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+    }
+
+    /* Chat messages area */
+    .ai-panel-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-xl);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-xl);
+    }
+
+    .chat-msg {
+      display: flex;
+      gap: var(--space-sm);
+      max-width: 100%;
+    }
+    .chat-msg.user-msg {
+      justify-content: flex-end;
+    }
+    .chat-msg.ai-msg {
+      justify-content: flex-start;
+    }
+
+    .msg-avatar {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: grid; place-items: center;
+      font-size: 11px;
+    }
+    .msg-avatar.user-avatar {
+      background: var(--color-gray-7);
+      color: var(--color-white);
+    }
+    .msg-avatar.ai-avatar {
+      background: var(--color-primary-6);
+    }
+    .msg-avatar.ai-avatar svg {
+      width: 14px; height: 14px;
+      fill: var(--color-gray-9);
+    }
+
+    .msg-bubble {
+      padding: 10px 14px;
+      border-radius: var(--radius-md);
+      font-size: var(--font-body-sm-size);
+      line-height: 1.5;
+      max-width: 260px;
+    }
+    .user-msg .msg-bubble {
+      background: var(--color-gray-8);
+      color: var(--color-white);
+      border-bottom-right-radius: 4px;
+    }
+    .ai-msg .msg-content {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+      max-width: 280px;
+    }
+    .ai-msg .msg-bubble {
+      background: var(--color-gray-1);
+      color: var(--color-text-primary);
+      border-bottom-left-radius: 4px;
+    }
+
+    .msg-time {
+      font-size: 10px;
+      color: var(--color-text-tertiary);
+      margin-top: 2px;
+    }
+    .user-msg .msg-time { text-align: right; }
+
+    /* Typing indicator */
+    .typing-indicator {
+      display: flex;
+      gap: 4px;
+      padding: 12px 14px;
+    }
+    .typing-indicator span {
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--color-gray-4);
+      animation: typing 1.2s ease-in-out infinite;
+    }
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes typing {
+      0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+      30% { transform: translateY(-4px); opacity: 1; }
+    }
+
+    /* Input area */
+    .ai-panel-input {
+      padding: var(--space-lg) var(--space-xl);
+      border-top: 1px solid var(--color-border-default);
+      flex-shrink: 0;
+    }
+    .input-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      padding: 8px 12px;
+      background: var(--color-white);
+    }
+    .input-row:focus-within {
+      border-color: var(--color-blue-6);
+      box-shadow: 0 0 0 2px rgba(59,130,246,0.15);
+    }
+    .input-row input {
+      flex: 1;
+      border: none;
+      outline: none;
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-primary);
+      background: transparent;
+    }
+    .input-row input::placeholder { color: var(--color-gray-4); }
+    .input-action {
+      width: 28px; height: 28px;
+      border: none;
+      background: none;
+      display: grid; place-items: center;
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+    }
+    .input-action:hover { color: var(--color-blue-7); }
+    .input-action svg {
+      width: 16px; height: 16px;
+      stroke: currentColor; fill: none;
+      stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .input-action.send-btn {
+      color: var(--color-blue-7);
+    }
+    .input-action.send-btn svg {
+      fill: currentColor;
+      stroke: none;
+    }
+
+    /* Recommended prompt chips */
+    .prompt-chips {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-top: 4px;
+    }
+    .prompt-chip {
+      display: block;
+      padding: 8px 12px;
+      background: var(--color-white);
+      border: 1px solid var(--color-blue-3);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-blue-7);
+      cursor: pointer;
+      text-align: left;
+      transition: background 0.12s ease, border-color 0.12s ease;
+      line-height: 1.4;
+    }
+    .prompt-chip:hover {
+      background: var(--color-blue-1);
+      border-color: var(--color-blue-5);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================ -->
+  <!-- Sidebar -->
+  <!-- ============================================================ -->
+  <aside class="app-sidebar">
+    <div class="app-brand">
+      <div class="mark">
+        <div class="glyph">T</div>
+        <div class="name">Terial</div>
+      </div>
+      <button class="collapse" title="Collapse">«</button>
+    </div>
+
+    <div class="sidebar-search" style="position:relative;">
+      <div class="sidebar-search-row">
+        <svg class="search-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="6" cy="6" r="4.5"/>
+          <path d="M9.5 9.5L12 12"/>
+        </svg>
+        <input type="text" id="sidebar-search-input" placeholder="Search or ask anything" />
+        <button class="sidebar-ai-btn" id="sidebar-ai-btn" title="Ask Terial AI">
+          <svg viewBox="0 0 14 14"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg>
+        </button>
+      </div>
+      <div class="sidebar-search-dropdown" id="search-dropdown">
+        <div class="search-dd-section" id="search-results-section">
+          <div id="search-results-list"></div>
+        </div>
+        <div class="search-dd-section" id="search-ai-section">
+          <div class="search-dd-heading">Ask Terial</div>
+          <div id="search-ai-list"></div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="app-nav">
+      <div class="nav-row is-section-active">
+        <span class="icon"><svg viewBox="0 0 16 16"><path d="M2 7l6-5 6 5v7a1 1 0 0 1-1 1h-3v-5H6v5H3a1 1 0 0 1-1-1z"/></svg></span>
+        Home
+      </div>
+
+      <div class="nav-row">
+        <span class="icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M5 6h6M5 9h6"/></svg></span>
+        Customers
+        <span class="caret">▾</span>
+      </div>
+
+      <div class="nav-row">
+        <span class="icon"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="3"/><circle cx="8" cy="8" r="1" fill="currentColor"/></svg></span>
+        CRM
+        <span class="caret">▾</span>
+      </div>
+
+      <div class="nav-row">
+        <span class="icon"><svg viewBox="0 0 16 16"><path d="M11 4l1 1-7 7-2 .5L3 11l7-7z"/></svg></span>
+        Service
+        <span class="caret">▾</span>
+      </div>
+      <div class="nav-row">
+        <span class="icon"><svg viewBox="0 0 16 16"><path d="M3 13h10M5 13V6l3-2 3 2v7"/></svg></span>
+        Production
+        <span class="caret">▾</span>
+      </div>
+      <div class="nav-row">
+        <span class="icon"><svg viewBox="0 0 16 16"><path d="M2 12h12M2 4h12M5 4v8M11 4v8M2 8h12"/></svg></span>
+        Reports
+        <span class="caret">▾</span>
+      </div>
+      <div class="nav-row">
+        <span class="icon"><svg viewBox="0 0 16 16"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3 2.5-5 6-5s6 2 6 5"/></svg></span>
+        Admin
+        <span class="caret">▾</span>
+      </div>
+    </nav>
+
+    <div class="help-link">
+      <span class="icon"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M6.5 6.5a1.5 1.5 0 0 1 3 0c0 1-1.5 1-1.5 2"/><circle cx="8" cy="11" r="0.5" fill="currentColor"/></svg></span>
+      Help and Support
+    </div>
+
+    <div class="sidebar-customer">
+      <span class="swatch"></span>
+      RoofCo
+    </div>
+
+    <div class="app-user">
+      <div class="avatar">GC</div>
+      <div>George Chang <span style="opacity:0.6;">(Designer)</span></div>
+    </div>
+  </aside>
+
+  <!-- ============================================================ -->
+  <!-- App main -->
+  <!-- ============================================================ -->
+  <div class="app-main">
+
+    <!-- Dashboard scrollable content -->
+    <div class="dashboard">
+
+      <!-- Stat cards -->
+      <div class="stat-row">
+        <div class="stat-card">
+          <button class="card-ask-btn" data-context="Active Tickets"><svg class="bolt-icon" viewBox="0 0 14 14"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg><span class="card-ask-label">Ask Terial</span></button>
+          <div class="stat-label">Active Tickets</div>
+          <div class="stat-value">92</div>
+        </div>
+        <div class="stat-card stat-orange">
+          <button class="card-ask-btn" data-context="Tickets Under Review"><svg class="bolt-icon" viewBox="0 0 14 14"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg><span class="card-ask-label">Ask Terial</span></button>
+          <div class="stat-label">Tickets Under Review</div>
+          <div class="stat-value">5</div>
+        </div>
+        <div class="stat-card stat-yellow">
+          <button class="card-ask-btn" data-context="Invoices to Collect"><svg class="bolt-icon" viewBox="0 0 14 14"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg><span class="card-ask-label">Ask Terial</span></button>
+          <div class="stat-label">Invoices to Collect</div>
+          <div class="stat-value">51</div>
+        </div>
+        <div class="stat-card stat-red">
+          <button class="card-ask-btn" data-context="Invoice Value to Collect"><svg class="bolt-icon" viewBox="0 0 14 14"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg><span class="card-ask-label">Ask Terial</span></button>
+          <div class="stat-label">Invoice Value to Collect</div>
+          <div class="stat-value">$448,599.38</div>
+        </div>
+      </div>
+
+      <!-- Charts row -->
+      <div class="charts-row">
+        <!-- Tickets assigned card -->
+        <div class="chart-card">
+          <button class="card-ask-btn" data-context="Tickets Assigned to Me"><svg class="bolt-icon" viewBox="0 0 14 14"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg><span class="card-ask-label">Ask Terial</span></button>
+          <div class="card-tabs">
+            <button class="card-tab is-active">Service</button>
+            <button class="card-tab">Production</button>
+          </div>
+          <div class="assignment-label">Tickets Assigned to Me</div>
+          <div class="assignment-sub">Action Required</div>
+        </div>
+
+        <!-- Service Revenue bar chart -->
+        <div class="chart-card">
+          <button class="card-ask-btn" data-context="Service Revenue"><svg class="bolt-icon" viewBox="0 0 14 14"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg><span class="card-ask-label">Ask Terial</span></button>
+          <div class="chart-header">
+            <span class="chart-title">Service Revenue</span>
+            <div class="chart-toggle">
+              <button class="chart-toggle-btn">Week</button>
+              <button class="chart-toggle-btn is-active">Month</button>
+              <button class="chart-toggle-btn">YTD</button>
+            </div>
+          </div>
+          <div class="chart-body">
+            <div class="bar-chart-y">
+              <span>$800K</span>
+              <span>$600K</span>
+              <span>$400K</span>
+              <span>$200K</span>
+              <span>$0</span>
+            </div>
+            <div class="bar-chart-grid">
+              <div class="grid-line" style="top:0%;"></div>
+              <div class="grid-line" style="top:25%;"></div>
+              <div class="grid-line" style="top:50%;"></div>
+              <div class="grid-line" style="top:75%;"></div>
+              <div class="grid-line" style="top:100%;"></div>
+            </div>
+            <div class="bar-chart-bars">
+              <div class="bar-col"><div class="bar-fill" style="height:8px;"></div><span class="bar-label">May</span></div>
+              <div class="bar-col"><div class="bar-fill" style="height:10px;"></div><span class="bar-label">Jun</span></div>
+              <div class="bar-col"><div class="bar-fill" style="height:6px;"></div><span class="bar-label">Jul</span></div>
+              <div class="bar-col"><div class="bar-fill" style="height:4px;"></div><span class="bar-label">Aug</span></div>
+              <div class="bar-col"><div class="bar-fill" style="height:5px;"></div><span class="bar-label">Sep</span></div>
+              <div class="bar-col"><div class="bar-fill" style="height:8px;"></div><span class="bar-label">Oct</span></div>
+              <div class="bar-col"><div class="bar-fill" style="height:12px;"></div><span class="bar-label">Nov</span></div>
+              <div class="bar-col"><div class="bar-fill" style="height:15px;"></div><span class="bar-label">Dec</span></div>
+              <div class="bar-col"><div class="bar-fill" style="height:55%;background:var(--color-blue-6);"></div><span class="bar-label">Jan</span></div>
+              <div class="bar-col"><div class="bar-fill" style="height:8px;"></div><span class="bar-label">Feb</span></div>
+              <div class="bar-col"><div class="bar-fill" style="height:80%;background:var(--color-blue-6);"></div><span class="bar-label">Mar</span></div>
+              <div class="bar-col"><div class="bar-fill" style="height:12%;background:var(--color-blue-4);"></div><span class="bar-label">Apr</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ticket Type donut chart -->
+        <div class="chart-card">
+          <button class="card-ask-btn" data-context="Ticket Type"><svg class="bolt-icon" viewBox="0 0 14 14"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg><span class="card-ask-label">Ask Terial</span></button>
+          <div class="chart-header">
+            <span class="chart-title">Ticket Type</span>
+            <div class="chart-toggle">
+              <button class="chart-toggle-btn is-active">YTD</button>
+              <button class="chart-toggle-btn">MTD</button>
+            </div>
+            <div class="stat-info" style="position:static;">i</div>
+          </div>
+          <div class="donut-wrap">
+            <div class="donut-container">
+              <svg class="donut-svg" viewBox="0 0 160 160">
+                <!-- Inspection 75% -->
+                <circle cx="80" cy="80" r="60" fill="none" stroke="#d0d5dd" stroke-width="28"
+                        stroke-dasharray="282.6 94.2" stroke-dashoffset="0"/>
+                <!-- Preventative Maintenance 6.3% -->
+                <circle cx="80" cy="80" r="60" fill="none" stroke="#3b82f6" stroke-width="28"
+                        stroke-dasharray="23.7 353.1" stroke-dashoffset="-282.6"/>
+                <!-- Quoted Service Work 12.5% -->
+                <circle cx="80" cy="80" r="60" fill="none" stroke="#2563eb" stroke-width="28"
+                        stroke-dasharray="47.1 329.7" stroke-dashoffset="-306.3"/>
+                <!-- T&M Service Work 3% (approx) -->
+                <circle cx="80" cy="80" r="60" fill="none" stroke="#93c5fd" stroke-width="28"
+                        stroke-dasharray="11.3 365.5" stroke-dashoffset="-353.4"/>
+              </svg>
+              <div class="donut-center">
+                <div class="pct">75.0%</div>
+              </div>
+            </div>
+          </div>
+          <div class="donut-legend">
+            <div class="donut-legend-item"><span class="dot" style="background:#d0d5dd;"></span> Inspection</div>
+            <div class="donut-legend-item"><span class="dot" style="background:#3b82f6;"></span> Preventative Maintenance</div>
+            <div class="donut-legend-item"><span class="dot" style="background:#2563eb;"></span> Quoted Service Work</div>
+            <div class="donut-legend-item"><span class="dot" style="background:#93c5fd;"></span> T&M Service Work</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Terial Insights -->
+      <div class="insights-card">
+        <div class="insights-header">
+          <div class="insights-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z" fill="var(--color-primary-7)"/></svg></div>
+          <div class="insights-title">Terial Insights</div>
+        </div>
+        <div class="insights-grid">
+          <div class="insight-item">
+            <button class="card-ask-btn" data-context="Crew Performance"><svg class="bolt-icon" viewBox="0 0 14 14"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg><span class="card-ask-label">Ask Terial</span></button>
+            <div class="insight-chart">
+              <svg viewBox="0 0 200 80" preserveAspectRatio="none">
+                <rect x="10" y="50" width="16" height="25" rx="2" fill="#c4b5fd"/>
+                <rect x="32" y="35" width="16" height="40" rx="2" fill="#c4b5fd"/>
+                <rect x="54" y="20" width="16" height="55" rx="2" fill="#8b5cf6"/>
+                <rect x="76" y="30" width="16" height="45" rx="2" fill="#c4b5fd"/>
+                <rect x="98" y="10" width="16" height="65" rx="2" fill="#8b5cf6"/>
+                <rect x="120" y="25" width="16" height="50" rx="2" fill="#c4b5fd"/>
+                <rect x="142" y="15" width="16" height="60" rx="2" fill="#8b5cf6"/>
+                <rect x="164" y="40" width="16" height="35" rx="2" fill="#c4b5fd"/>
+              </svg>
+            </div>
+            <div class="insight-label">Crew Performance <span class="insight-badge up">↑ 12%</span></div>
+            <div class="insight-desc">Top crew completed 18% more jobs this month vs. average</div>
+          </div>
+          <div class="insight-item">
+            <button class="card-ask-btn" data-context="Pipeline Conversion"><svg class="bolt-icon" viewBox="0 0 14 14"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg><span class="card-ask-label">Ask Terial</span></button>
+            <div class="insight-chart">
+              <svg viewBox="0 0 200 80" preserveAspectRatio="none">
+                <defs><linearGradient id="ig1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b82f6" stop-opacity="0.25"/><stop offset="100%" stop-color="#3b82f6" stop-opacity="0.02"/></linearGradient></defs>
+                <path d="M0 65 Q30 55 50 48 T100 30 T150 22 T200 15 V80 H0Z" fill="url(#ig1)"/>
+                <path d="M0 65 Q30 55 50 48 T100 30 T150 22 T200 15" fill="none" stroke="#3b82f6" stroke-width="2"/>
+                <circle cx="150" cy="22" r="3" fill="#3b82f6"/>
+                <text x="140" y="16" font-size="8" fill="#3b82f6" font-weight="600">68%</text>
+              </svg>
+            </div>
+            <div class="insight-label">Pipeline Conversion <span class="insight-badge up">↑ 5%</span></div>
+            <div class="insight-desc">CRM pipeline conversion rate trending up over 6 weeks</div>
+          </div>
+          <div class="insight-item">
+            <button class="card-ask-btn" data-context="Seasonal Patterns"><svg class="bolt-icon" viewBox="0 0 14 14"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg><span class="card-ask-label">Ask Terial</span></button>
+            <div class="insight-chart">
+              <svg viewBox="0 0 200 80" preserveAspectRatio="none">
+                <path d="M0 60 C20 55 40 30 60 25 S100 50 120 45 S160 20 180 18 L200 22" fill="none" stroke="#f59e0b" stroke-width="2"/>
+                <path d="M0 60 C20 55 40 30 60 25 S100 50 120 45 S160 20 180 18 L200 22 V80 H0Z" fill="#f59e0b" fill-opacity="0.1"/>
+                <line x1="60" y1="25" x2="60" y2="75" stroke="#f59e0b" stroke-dasharray="3 2" stroke-width="0.8" opacity="0.5"/>
+                <text x="48" y="73" font-size="7" fill="#92400e">Peak</text>
+              </svg>
+            </div>
+            <div class="insight-label">Seasonal Patterns <span class="insight-badge down">↓ incoming</span></div>
+            <div class="insight-desc">Storm season expected to increase ticket volume by 30%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Go to Calendar link -->
+      <div style="text-align:right;">
+        <a class="goto-calendar" href="#">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="2" width="12" height="12" rx="1"/>
+            <path d="M2 6h12M6 2v4M10 2v4"/>
+          </svg>
+          Go To Calendar
+        </a>
+      </div>
+
+      <!-- Calendar section -->
+      <div class="dashboard-calendar">
+        <button class="card-ask-btn" data-context="Calendar Schedule"><svg class="bolt-icon" viewBox="0 0 14 14"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg><span class="card-ask-label">Ask Terial</span></button>
+        <div class="cal-header">
+          <span class="cal-year">2026</span>
+          <div class="cal-nav">
+            <button class="cal-nav-btn">‹</button>
+            <div style="text-align:center;">
+              <div class="cal-today-label">Today</div>
+              <div class="cal-date-sub">Sunday, 4/12/2026</div>
+            </div>
+            <button class="cal-nav-btn">›</button>
+          </div>
+          <div class="cal-view-toggle">
+            <button class="cal-view-btn">Month</button>
+            <button class="cal-view-btn is-active">Week</button>
+            <button class="cal-view-btn">Day</button>
+          </div>
+        </div>
+
+        <table class="week-cal">
+          <thead>
+            <tr>
+              <th class="month-label">April 2026</th>
+              <th class="today-col">Sun, Apr 12</th>
+              <th>Mon, Apr 13</th>
+              <th>Tue, Apr 14</th>
+              <th>Wed, Apr 15</th>
+              <th>Thu, Apr 16</th>
+              <th>Fri, Apr 17</th>
+              <th>Sat, Apr 18</th>
+              <th>Sun, Apr 19</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Aaron User</td>
+              <td class="today-col"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>Alec Client Admin</td>
+              <td class="today-col"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>Alec User</td>
+              <td class="today-col"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>Brian Cluzet Admin</td>
+              <td class="today-col"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>George Chang (Designer)</td>
+              <td class="today-col"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>Giolvani de Matos Admin</td>
+              <td class="today-col"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>Giolvani de Matos User</td>
+              <td class="today-col"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>Greg Fronda Admin</td>
+              <td class="today-col"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>Joseph Fennelly Admin</td>
+              <td class="today-col"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+            <tr>
+              <td>Karl Mills Admin</td>
+              <td class="today-col"></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Bottom row — Tasks -->
+      <div class="bottom-row">
+        <div class="tasks-card">
+          <button class="card-ask-btn" data-context="Tasks Assigned to Me"><svg class="bolt-icon" viewBox="0 0 14 14"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg><span class="card-ask-label">Ask Terial</span></button>
+          <div class="card-tabs">
+            <button class="card-tab is-active">Projects</button>
+            <button class="card-tab">CRM</button>
+          </div>
+          <div class="tasks-header">
+            <div>
+              <div class="tasks-title">Tasks Assigned to Me</div>
+              <div class="tasks-sub">Upcoming and overdue</div>
+            </div>
+            <button class="add-btn">+</button>
+          </div>
+          <div class="empty-state">No pending tasks</div>
+          <div class="link-text">See All</div>
+          <div class="link-text" style="margin-top:var(--space-lg);">Show Recently Completed</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- AI Side Panel -->
+  <!-- ============================================================ -->
+  <aside class="ai-panel" id="ai-panel">
+    <div class="ai-panel-header">
+      <div class="ai-panel-title">
+        User Has A Question
+        <span class="edit-icon">&#9998;</span>
+      </div>
+      <button class="panel-action" id="reset-panel" title="Reset conversation">
+        <svg viewBox="0 0 16 16"><path d="M2 8a6 6 0 0 1 10.3-4.2"/><path d="M14 2v4h-4"/><path d="M14 8a6 6 0 0 1-10.3 4.2"/><path d="M2 14v-4h4"/></svg>
+      </button>
+      <button class="panel-action" title="History">
+        <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 4.5V8l2.5 1.5"/></svg>
+      </button>
+      <button class="panel-action" title="Settings">
+        <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="2"/><path d="M8 1v2M8 13v2M1 8h2M13 8h2M3.05 3.05l1.41 1.41M11.54 11.54l1.41 1.41M3.05 12.95l1.41-1.41M11.54 4.46l1.41-1.41"/></svg>
+      </button>
+      <button class="panel-action" id="close-panel" title="Close">
+        <svg viewBox="0 0 16 16"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+      </button>
+    </div>
+
+    <div class="ai-panel-messages" id="ai-messages">
+      <!-- Messages injected by JS -->
+    </div>
+
+    <div class="ai-panel-input">
+      <div class="input-row">
+        <button class="input-action" title="Attach">
+          <svg viewBox="0 0 16 16"><path d="M8 3v10M3 8h10"/></svg>
+        </button>
+        <input type="text" id="ai-input" placeholder="Type or hold mic to speak..." />
+        <button class="input-action" title="Voice">
+          <svg viewBox="0 0 16 16"><rect x="6" y="1" width="4" height="8" rx="2"/><path d="M3 7a5 5 0 0 0 10 0"/><path d="M8 12v3"/></svg>
+        </button>
+        <button class="input-action send-btn" id="ai-send" title="Send">
+          <svg viewBox="0 0 16 16"><path d="M1 1l14 7-14 7V9l9-1-9-1z"/></svg>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <script>
+  (function () {
+    'use strict';
+
+    // ---- AI Panel toggle ----
+    var panel = document.getElementById('ai-panel');
+    var closeBtn = document.getElementById('close-panel');
+    var resetBtn = document.getElementById('reset-panel');
+
+    function openPanel() { panel.classList.add('is-open'); }
+    function closePanel() { panel.classList.remove('is-open'); }
+
+    closeBtn.addEventListener('click', closePanel);
+
+    // ---- Chatbot logic ----
+    var messagesEl = document.getElementById('ai-messages');
+    var input = document.getElementById('ai-input');
+    var sendBtn = document.getElementById('ai-send');
+
+    function timeStr() {
+      var d = new Date();
+      return d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit', second: '2-digit', hour12: true });
+    }
+
+    function escapeHtml(str) {
+      var div = document.createElement('div');
+      div.textContent = str;
+      return div.innerHTML;
+    }
+
+    function addUserMessage(text) {
+      var wrap = document.createElement('div');
+      wrap.className = 'chat-msg user-msg';
+      wrap.innerHTML =
+        '<div>' +
+          '<div class="msg-bubble">' + escapeHtml(text) + '</div>' +
+          '<div class="msg-time">' + timeStr() + '</div>' +
+        '</div>' +
+        '<div class="msg-avatar user-avatar">GC</div>';
+      messagesEl.appendChild(wrap);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function addAiMessage(text, promptChips) {
+      var wrap = document.createElement('div');
+      wrap.className = 'chat-msg ai-msg';
+      var chipsHtml = '';
+      if (promptChips && promptChips.length) {
+        chipsHtml = '<div class="prompt-chips">';
+        promptChips.forEach(function (chip) {
+          chipsHtml += '<button class="prompt-chip">' + escapeHtml(chip) + '</button>';
+        });
+        chipsHtml += '</div>';
+      }
+      wrap.innerHTML =
+        '<div class="msg-avatar ai-avatar">' +
+          '<svg viewBox="0 0 14 14" fill="currentColor"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg>' +
+        '</div>' +
+        '<div class="msg-content">' +
+          '<div class="msg-bubble">' + text + '</div>' +
+          chipsHtml +
+          '<div class="msg-time">' + timeStr() + '</div>' +
+        '</div>';
+      messagesEl.appendChild(wrap);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+
+      // Bind chip clicks
+      if (promptChips && promptChips.length) {
+        wrap.querySelectorAll('.prompt-chip').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            var chipText = btn.textContent;
+            var chipsContainer = btn.closest('.prompt-chips');
+            if (chipsContainer) chipsContainer.remove();
+            addUserMessage(chipText);
+            showTyping();
+            setTimeout(function () {
+              removeTyping();
+              addAiMessage(getAiResponse());
+            }, 1200 + Math.random() * 800);
+          });
+        });
+      }
+    }
+
+    function showTyping() {
+      var wrap = document.createElement('div');
+      wrap.className = 'chat-msg ai-msg';
+      wrap.id = 'typing-indicator';
+      wrap.innerHTML =
+        '<div class="msg-avatar ai-avatar">' +
+          '<svg viewBox="0 0 14 14" fill="currentColor"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg>' +
+        '</div>' +
+        '<div class="typing-indicator"><span></span><span></span><span></span></div>';
+      messagesEl.appendChild(wrap);
+      messagesEl.scrollTop = messagesEl.scrollHeight;
+    }
+
+    function removeTyping() {
+      var el = document.getElementById('typing-indicator');
+      if (el) el.remove();
+    }
+
+    // Generic AI responses
+    var aiResponses = [
+      "I can help with that! Based on your current data, here's what I found...",
+      "Let me look into that for you. I found some relevant information in your service records.",
+      "Great question! Looking at your project data, I can see a few options we can explore.",
+      "I've analyzed the data and here's a summary: Your team's productivity has been trending upward this quarter.",
+      "Sure! I can pull up those details. Would you like me to create a report or just give you a quick overview?",
+      "Based on your calendar and current workload, I'd recommend prioritizing the pending invoices first.",
+      "I've checked across all your active projects. Here are the key action items that need attention.",
+      "That's a great point. Let me cross-reference that with your CRM pipeline data.",
+    ];
+    var responseIndex = 0;
+
+    function getAiResponse() {
+      var resp = aiResponses[responseIndex % aiResponses.length];
+      responseIndex++;
+      return resp;
+    }
+
+    // Context-specific recommended prompts per card
+    var contextPrompts = {
+      'Active Tickets': [
+        'Show me a breakdown of active tickets by status',
+        'Which tickets have been open the longest?',
+        'Compare this month\'s active tickets to last month'
+      ],
+      'Tickets Under Review': [
+        'Who is assigned to tickets under review?',
+        'How long have these tickets been under review?',
+        'Show me tickets that need escalation'
+      ],
+      'Invoices to Collect': [
+        'Which invoices are overdue?',
+        'Show me the aging report for invoices',
+        'What is the average time to collect?'
+      ],
+      'Invoice Value to Collect': [
+        'Break down invoice value by customer',
+        'Show me the largest outstanding invoices',
+        'What is the trend of outstanding invoices over time?'
+      ],
+      'Tickets Assigned to Me': [
+        'What are my highest priority tickets?',
+        'Which of my tickets are overdue?',
+        'Summarize my workload for this week'
+      ],
+      'Service Revenue': [
+        'What is driving the revenue spike in March?',
+        'Compare revenue year-over-year',
+        'Which service type generates the most revenue?'
+      ],
+      'Ticket Type': [
+        'Why is Inspection the majority of tickets?',
+        'Show me ticket type trends over the last 6 months',
+        'Which ticket types have the highest resolution time?'
+      ],
+      'Calendar Schedule': [
+        'Who has the most availability this week?',
+        'Are there any scheduling conflicts?',
+        'Show me unassigned time slots for this week'
+      ],
+      'Tasks Assigned to Me': [
+        'What tasks are coming due this week?',
+        'Show me overdue tasks across all projects',
+        'Summarize my task completion rate'
+      ],
+      'Crew Performance': [
+        'Which crew has the highest completion rate?',
+        'Compare crew performance month over month',
+        'Show me crews that need additional support'
+      ],
+      'Pipeline Conversion': [
+        'What stage has the highest drop-off rate?',
+        'Show me conversion trends by lead source',
+        'Which sales reps have the best conversion rates?'
+      ],
+      'Seasonal Patterns': [
+        'When does the peak season typically start?',
+        'How should I prepare staffing for storm season?',
+        'Show me historical ticket volume by month'
+      ]
+    };
+
+    // Default welcome prompts
+    var defaultPrompts = [
+      'Give me a summary of my dashboard',
+      'What needs my attention today?',
+      'Show me overdue tickets and invoices'
+    ];
+
+    function resetChat() {
+      messagesEl.innerHTML = '';
+      responseIndex = 0;
+      addAiMessage('What can I help you with today?', defaultPrompts);
+    }
+
+    function handleSend() {
+      var text = input.value.trim();
+      if (!text) return;
+      addUserMessage(text);
+      input.value = '';
+      showTyping();
+      setTimeout(function () {
+        removeTyping();
+        addAiMessage(getAiResponse());
+      }, 1200 + Math.random() * 800);
+    }
+
+    sendBtn.addEventListener('click', handleSend);
+    input.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') handleSend();
+    });
+
+    // Reset button
+    resetBtn.addEventListener('click', resetChat);
+
+    // ---- Sidebar search with smart dropdown ----
+    var sidebarInput = document.getElementById('sidebar-search-input');
+    var sidebarAiBtn = document.getElementById('sidebar-ai-btn');
+    var searchDropdown = document.getElementById('search-dropdown');
+    var searchResultsList = document.getElementById('search-results-list');
+    var searchAiList = document.getElementById('search-ai-list');
+
+    // Searchable data
+    var searchableItems = [
+      { name: 'Cunningham Roofing Project', type: 'Project' },
+      { name: 'CRM Pipeline Review', type: 'Task' },
+      { name: 'Cedar Heights - Roof Repair', type: 'Ticket' },
+      { name: 'Columbia Ave Inspection', type: 'Ticket' },
+      { name: 'Customer Portal Setup', type: 'Task' },
+      { name: 'Canet, Lluis', type: 'Contact' },
+      { name: 'Chang, George', type: 'Contact' },
+      { name: 'Cluzet, Brian', type: 'Contact' },
+      { name: 'Commercial Bid - 123 Main St', type: 'Opportunity' },
+      { name: 'Coastal Homes Re-Roof', type: 'Project' },
+      { name: 'Danbury Warehouse Restoration', type: 'Project' },
+      { name: 'Daily Crew Report', type: 'Report' },
+      { name: 'Hartford CarMax Inspection', type: 'Ticket' },
+      { name: 'Invoice #4521 - Beacon Hill', type: 'Invoice' },
+      { name: 'Linwood Re-Roof Project', type: 'Project' },
+      { name: 'Manhattan Production Schedule', type: 'Task' },
+      { name: 'New Haven Office Build Out', type: 'Project' },
+      { name: 'Preventative Maintenance Log', type: 'Report' },
+      { name: 'RoofCo Annual Report', type: 'Report' },
+      { name: 'Service Revenue Dashboard', type: 'Report' },
+      { name: 'Stamford Plaza - T&M Work', type: 'Ticket' },
+    ];
+
+    function getSearchAiPrompts(query) {
+      return [
+        'What is the status of ' + query + '?',
+        'Show me all tickets related to ' + query,
+        'Summarize recent activity for ' + query
+      ];
+    }
+
+    function renderSearchDropdown(query) {
+      if (!query) {
+        searchDropdown.classList.remove('is-visible');
+        return;
+      }
+
+      var lowerQ = query.toLowerCase();
+      var matches = searchableItems.filter(function (item) {
+        return item.name.toLowerCase().indexOf(lowerQ) !== -1;
+      }).slice(0, 5);
+
+      // Ask Terial button at top
+      var askBtnHtml = '<button class="search-dd-ask-btn" id="search-ask-terial-btn">' +
+        '<svg viewBox="0 0 14 14"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg>' +
+        '<span class="ask-query">Ask Terial: ' + escapeHtml(query) + '</span>' +
+        '</button>';
+
+      // Search results
+      var resultsHtml = '';
+      if (matches.length) {
+        matches.forEach(function (item) {
+          resultsHtml +=
+            '<div class="search-dd-item">' +
+              '<span class="dd-icon"><svg viewBox="0 0 14 14"><circle cx="6" cy="6" r="4.5"/><path d="M9.5 9.5L12 12"/></svg></span>' +
+              '<span>' + escapeHtml(item.name) + '</span>' +
+              '<span class="dd-type">' + item.type + '</span>' +
+            '</div>';
+        });
+      } else {
+        resultsHtml = '<div class="search-dd-item" style="color:var(--color-text-tertiary);cursor:default;">No results found</div>';
+      }
+      searchResultsList.innerHTML = askBtnHtml + '<div class="search-dd-heading">Search Results</div>' + resultsHtml;
+
+      // Show the Ask Terial section with recommended prompts
+      var aiPrompts = getSearchAiPrompts(query);
+      var aiHtml = '';
+      aiPrompts.forEach(function (p) {
+        aiHtml +=
+          '<div class="search-dd-ai-item" data-prompt="' + escapeHtml(p) + '">' +
+            '<span class="dd-bolt"><svg viewBox="0 0 14 14"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg></span>' +
+            '<span>' + escapeHtml(p) + '</span>' +
+          '</div>';
+      });
+      searchAiList.innerHTML = aiHtml;
+      searchAiList.parentElement.style.display = '';
+
+      // Bind AI prompt clicks
+      searchAiList.querySelectorAll('.search-dd-ai-item').forEach(function (el) {
+        el.addEventListener('click', function () {
+          var prompt = el.getAttribute('data-prompt');
+          searchDropdown.classList.remove('is-visible');
+          sidebarInput.value = '';
+          messagesEl.innerHTML = '';
+          openPanel();
+          addUserMessage(prompt);
+          showTyping();
+          setTimeout(function () {
+            removeTyping();
+            addAiMessage(getAiResponse());
+          }, 1200 + Math.random() * 800);
+        });
+      });
+
+      // Bind Ask Terial button
+      var askBtn = document.getElementById('search-ask-terial-btn');
+      askBtn.addEventListener('click', function () {
+        var prompt = sidebarInput.value.trim();
+        searchDropdown.classList.remove('is-visible');
+        sidebarInput.value = '';
+        messagesEl.innerHTML = '';
+        openPanel();
+        addUserMessage(prompt);
+        showTyping();
+        setTimeout(function () {
+          removeTyping();
+          addAiMessage(getAiResponse());
+        }, 1200 + Math.random() * 800);
+      });
+
+      searchDropdown.classList.add('is-visible');
+    }
+
+    sidebarInput.addEventListener('input', function () {
+      renderSearchDropdown(sidebarInput.value.trim());
+    });
+
+    sidebarInput.addEventListener('focus', function () {
+      if (sidebarInput.value.trim()) {
+        renderSearchDropdown(sidebarInput.value.trim());
+      }
+    });
+
+    // Hide dropdown on click outside
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.sidebar-search')) {
+        searchDropdown.classList.remove('is-visible');
+      }
+    });
+
+    sidebarAiBtn.addEventListener('click', function () {
+      var text = sidebarInput.value.trim();
+      searchDropdown.classList.remove('is-visible');
+      if (!text) {
+        openPanel();
+        return;
+      }
+      messagesEl.innerHTML = '';
+      openPanel();
+      addUserMessage(text);
+      sidebarInput.value = '';
+      showTyping();
+      setTimeout(function () {
+        removeTyping();
+        addAiMessage(getAiResponse());
+      }, 1200 + Math.random() * 800);
+    });
+
+    sidebarInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') {
+        var text = sidebarInput.value.trim();
+        if (text) {
+          searchDropdown.classList.remove('is-visible');
+          messagesEl.innerHTML = '';
+          openPanel();
+          addUserMessage(text);
+          sidebarInput.value = '';
+          showTyping();
+          setTimeout(function () {
+            removeTyping();
+            addAiMessage(getAiResponse());
+          }, 1200 + Math.random() * 800);
+        }
+      }
+    });
+
+    // ---- Card Ask Terial buttons ----
+    document.querySelectorAll('.card-ask-btn').forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        var context = btn.getAttribute('data-context');
+        messagesEl.innerHTML = '';
+        openPanel();
+        addUserMessage('I have a question about ' + context);
+        showTyping();
+        setTimeout(function () {
+          removeTyping();
+          var prompts = contextPrompts[context] || [
+            'Tell me more about this section',
+            'Show me a summary',
+            'Are there any issues I should know about?'
+          ];
+          addAiMessage(
+            'Great! What would you like to know about <strong>' + escapeHtml(context) + '</strong>? Here are a few things I can help with:',
+            prompts
+          );
+        }, 1000 + Math.random() * 500);
+      });
+    });
+
+    // Initialize with default welcome state
+    resetChat();
+
+  })();
+  </script>
+</body>
+</html>

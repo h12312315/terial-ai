@@ -1,0 +1,2040 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tasks · Terial</title>
+  <link rel="stylesheet" href="../terial-tokens.css" />
+  <style>
+    /* ============================================================
+       Tasks prototype — uses terial-tokens.css for all colors,
+       typography, spacing, radii, shadows.
+       ============================================================ */
+
+    html, body { height: 100%; }
+    body {
+      display: flex;
+      overflow: hidden;
+      background: var(--color-bg-page);
+    }
+
+    /* ---------- App sidebar (dark) ---------- */
+    .app-sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      background: var(--color-gray-8); /* #272c4c */
+      color: var(--color-white);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    .app-brand {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px var(--space-2xl) 18px var(--space-2xl);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .app-brand .mark {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .app-brand .mark .glyph {
+      width: 28px; height: 28px;
+      display: grid; place-items: center;
+      background: var(--color-primary-6);
+      color: var(--color-gray-9);
+      font-weight: 800;
+      font-size: 14px;
+      border-radius: 6px;
+      box-shadow: var(--shadow-sm);
+    }
+    .app-brand .name {
+      font-size: var(--font-body-xl-semi-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-white);
+    }
+    .app-brand .collapse {
+      color: rgba(255,255,255,0.5);
+      font-size: 14px;
+      background: none; border: none;
+      cursor: pointer;
+    }
+
+    .app-nav {
+      flex: 1;
+      padding: var(--space-lg) 0 var(--space-lg) 0;
+      overflow-y: auto;
+    }
+    .nav-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      padding: 10px var(--space-2xl);
+      color: rgba(255,255,255,0.85);
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+      user-select: none;
+    }
+    .nav-row:hover { background: rgba(255,255,255,0.04); }
+    .nav-row .icon { width: 16px; height: 16px; opacity: 0.85; flex-shrink: 0; display: grid; place-items: center; }
+    .nav-row .icon svg { width: 16px; height: 16px; display: block; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .nav-row .caret { margin-left: auto; opacity: 0.5; font-size: 10px; }
+
+    .nav-row.is-section-active {
+      color: var(--color-primary-6);
+    }
+    .nav-row.is-section-active .icon { opacity: 1; }
+
+    .nav-children { padding-bottom: 6px; }
+    .nav-child {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px var(--space-2xl) 8px 52px;
+      color: rgba(255,255,255,0.7);
+      font-size: var(--font-body-md-size);
+      cursor: pointer;
+    }
+    .nav-child::before {
+      content: "";
+      width: 6px; height: 6px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 1px;
+      flex-shrink: 0;
+    }
+    .nav-child:hover { color: var(--color-white); }
+    .nav-child.is-active {
+      color: var(--color-white);
+    }
+    .nav-child.is-active::before {
+      background: var(--color-primary-6);
+    }
+
+    .app-user {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      padding: var(--space-lg) var(--space-2xl);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      color: var(--color-white);
+      font-size: var(--font-body-md-size);
+    }
+    .app-user .avatar {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--color-gray-6);
+      display: grid; place-items: center;
+      color: var(--color-white);
+      font-size: 11px;
+    }
+
+    /* ---------- App main ---------- */
+    .app-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      height: 100vh;
+      position: relative;
+    }
+
+    /* ---------- Top bar ---------- */
+    .app-topbar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2xl);
+      padding: var(--space-lg) var(--space-2xl);
+      background: var(--color-gray-2);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .top-search {
+      flex: 1;
+      max-width: none;
+      position: relative;
+    }
+    .top-search input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px 12px 8px 34px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      background: var(--color-white);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-primary);
+      outline: none;
+    }
+    .top-search input::placeholder { color: var(--color-gray-5); }
+    .top-search .search-icon {
+      position: absolute;
+      left: 12px; top: 50%;
+      transform: translateY(-50%);
+      width: 14px; height: 14px;
+      color: var(--color-gray-5);
+    }
+    .top-customer {
+      display: flex; align-items: center; gap: var(--space-sm);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-9);
+      font-size: var(--font-body-md-size);
+    }
+    .top-customer .swatch {
+      width: 18px; height: 18px;
+      background: var(--color-green-7);
+      border-radius: 3px;
+      transform: rotate(45deg);
+    }
+
+    /* ---------- Content area ---------- */
+    .app-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-2xl) var(--space-2xl) 80px var(--space-2xl);
+    }
+
+    .page-head {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: var(--space-2xl);
+    }
+    .page-head h1 { margin: 0; }
+
+    /* ---------- Filters ---------- */
+    .filters {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr auto;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-lg);
+      align-items: center;
+    }
+    .filter-input, .filter-select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px 12px;
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-primary);
+      outline: none;
+      appearance: none;
+    }
+    .filter-input::placeholder { color: var(--color-gray-5); }
+    .filter-select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%237D89B0' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 5l3 3 3-3'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+      color: var(--color-gray-5);
+    }
+    .filter-search {
+      position: relative;
+    }
+    .filter-search .filter-input { padding-left: 34px; }
+    .filter-search::before {
+      content: "";
+      position: absolute;
+      left: 12px; top: 50%;
+      transform: translateY(-50%);
+      width: 14px; height: 14px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14' fill='none' stroke='%237D89B0' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='6' cy='6' r='4.5'/%3E%3Cpath d='M9.5 9.5L12 12'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+    }
+    .add-task-btn {
+      background: var(--color-gray-9);
+      color: var(--color-white);
+      border: none;
+      padding: 9px 16px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-semibold);
+      cursor: pointer;
+    }
+
+    /* ---------- Toolbar row (view + range toggles) ---------- */
+    .toolbar-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2xl);
+      margin: 0 0 var(--space-lg) 0;
+      flex-wrap: wrap;
+    }
+
+    /* ---------- View toggle ---------- */
+    .view-toggle,
+    .range-toggle {
+      display: inline-flex;
+      padding: 3px;
+      background: var(--color-gray-2);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+    }
+    .view-toggle button,
+    .range-toggle button {
+      background: none;
+      border: none;
+      padding: 6px 14px;
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-gray-6);
+      cursor: pointer;
+      border-radius: 3px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .view-toggle button.is-active,
+    .range-toggle button.is-active {
+      background: var(--color-white);
+      color: var(--color-text-primary);
+      box-shadow: var(--shadow-sm);
+    }
+    .view-toggle .v-icon {
+      width: 14px; height: 14px;
+      display: inline-block;
+    }
+
+    /* ---------- Kanban ---------- */
+    .kanban {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: var(--space-lg);
+      margin-top: var(--space-2xl);
+      align-items: start;
+    }
+    .kanban-col {
+      background: var(--color-gray-1);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      display: flex;
+      flex-direction: column;
+      min-height: 400px;
+    }
+    .kanban-col-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-lg);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .kanban-col-head .title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: var(--font-weight-semibold);
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-primary);
+    }
+    .kanban-col-head .count {
+      display: inline-grid;
+      place-items: center;
+      min-width: 22px;
+      height: 22px;
+      padding: 0 6px;
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-pill);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+    }
+    .kanban-col-head .col-add {
+      background: none;
+      border: none;
+      color: var(--color-gray-6);
+      cursor: pointer;
+      font-size: 18px;
+      line-height: 1;
+      padding: 0 4px;
+    }
+    .kanban-col-body {
+      padding: var(--space-lg);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-lg);
+      flex: 1;
+    }
+    .kanban-section {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .kanban-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-gray-7);
+      padding: 4px 2px 0 2px;
+    }
+    .kanban-eyebrow .eyebrow-icon {
+      width: 12px; height: 12px;
+      color: var(--color-gray-7);
+    }
+    .kanban-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      padding: var(--space-lg);
+      box-shadow: var(--shadow-sm);
+      cursor: grab;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .kanban-card:hover {
+      border-color: var(--color-gray-4);
+    }
+    .kanban-card:active { cursor: grabbing; }
+    .kanban-card.is-dragging {
+      opacity: 0.4;
+      box-shadow: var(--shadow-md);
+    }
+    .kanban-col-body.is-drop-target,
+    [data-bucket].is-drop-target {
+      background: rgba(255, 202, 0, 0.08);
+      border-radius: var(--radius-sm);
+      outline: 2px dashed var(--color-primary-6);
+      outline-offset: -2px;
+    }
+
+    .card-top-row {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 8px;
+    }
+    .card-due-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      flex-shrink: 0;
+    }
+    .card-due-row .due-label {
+      font-weight: var(--font-weight-medium);
+    }
+
+    /* Date pill */
+    .date-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 10px;
+      border-radius: var(--radius-pill);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-semibold);
+      width: fit-content;
+      line-height: 1.5;
+    }
+    .date-pill .pill-icon {
+      width: 11px; height: 11px;
+      flex-shrink: 0;
+    }
+    .date-pill.is-open {
+      background: rgba(255, 202, 0, 0.22);
+      color: #7a5b00;
+    }
+    .date-pill.is-overdue {
+      background: var(--color-danger-bg);
+      color: var(--color-danger-fg);
+    }
+    .date-pill.is-completed {
+      background: var(--color-success-bg);
+      color: var(--color-success-fg);
+    }
+    .kanban-card .card-title {
+      font-weight: var(--font-weight-semibold);
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-primary);
+      line-height: 1.3;
+    }
+    .kanban-card .card-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-secondary);
+    }
+    .kanban-card .card-meta-row .meta-icon {
+      width: 12px; height: 12px;
+      flex-shrink: 0;
+      color: var(--color-gray-5);
+    }
+    .kanban-card.is-done .card-title {
+      text-decoration: line-through;
+      color: var(--color-gray-5);
+    }
+    .kanban-empty {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      padding: var(--space-lg) 2px;
+      text-align: center;
+    }
+
+    /* ---------- Tabs ---------- */
+    .tabs-bar {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--color-border-default);
+      margin-bottom: 0;
+    }
+    .tab-btn {
+      padding: 12px 18px;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-gray-6);
+      cursor: pointer;
+      margin-bottom: -1px;
+    }
+    .tab-btn:hover { color: var(--color-text-primary); }
+    .tab-btn.is-active {
+      color: var(--color-text-primary);
+      border-bottom-color: var(--color-primary-6);
+    }
+
+    /* ---------- Table ---------- */
+    .data-table-wrap {
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      overflow-x: auto;
+      margin-top: var(--space-2xl);
+    }
+    [hidden] { display: none !important; }
+    table.data-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--font-body-md-size);
+    }
+    .data-table thead th {
+      padding: 12px var(--space-lg);
+      text-align: left;
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-7);
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-border-default);
+      font-size: var(--font-body-md-size);
+      white-space: nowrap;
+    }
+    .data-table thead th .sort {
+      display: inline-block;
+      margin-left: 4px;
+      font-size: 10px;
+      color: var(--color-gray-5);
+    }
+    .data-table tbody td {
+      padding: 14px var(--space-lg);
+      border-bottom: 1px solid var(--color-gray-2);
+      vertical-align: middle;
+      color: var(--color-text-primary);
+      white-space: nowrap;
+    }
+    .data-table tbody tr:last-child td { border-bottom: none; }
+    .data-table tbody tr {
+      cursor: pointer;
+    }
+    .data-table tbody tr:hover { background: var(--color-gray-1); }
+
+    .data-table .col-check { width: 32px; }
+    .check-circle {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      border: 1.5px solid var(--color-gray-4);
+      display: grid; place-items: center;
+      background: var(--color-white);
+    }
+    .check-circle.is-done {
+      background: var(--color-green-7);
+      border-color: var(--color-green-7);
+      color: var(--color-white);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .row-overdue td { color: var(--color-red-8); }
+    .row-overdue td.t-default { color: var(--color-text-primary); }
+    .row-overdue .link { color: var(--color-red-8); }
+
+    .link {
+      color: var(--color-blue-7);
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .row-overdue .link { color: var(--color-red-8); }
+
+    .row-done td { color: var(--color-gray-5); }
+    .row-done .strike { text-decoration: line-through; }
+
+    .row-actions {
+      width: 32px;
+      text-align: center;
+      color: var(--color-gray-5);
+    }
+
+    /* ---------- Pagination ---------- */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-lg);
+      padding: var(--space-2xl) 0;
+      color: var(--color-text-tertiary);
+      font-size: var(--font-body-md-size);
+    }
+    .page-arrow, .page-num {
+      width: 28px; height: 28px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border-default);
+      background: var(--color-white);
+      display: grid; place-items: center;
+      cursor: pointer;
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-secondary);
+    }
+    .page-num.is-active {
+      background: var(--color-gray-9);
+      color: var(--color-white);
+      border-color: var(--color-gray-9);
+    }
+    .page-arrow:disabled {
+      opacity: 0.4; cursor: not-allowed;
+    }
+
+    /* ---------- AI floating button ---------- */
+    .ai-fab {
+      position: absolute;
+      right: var(--space-2xl);
+      bottom: var(--space-2xl);
+      background: var(--color-gray-9);
+      color: var(--color-white);
+      border: none;
+      border-radius: var(--radius-pill);
+      padding: 10px 16px;
+      display: flex; align-items: center; gap: 8px;
+      cursor: pointer;
+      box-shadow: var(--shadow-md);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-semibold);
+    }
+    .ai-fab .bolt {
+      width: 14px; height: 14px;
+      color: var(--color-primary-6);
+    }
+
+    /* ============================================================
+       Modal — Edit Task
+       ============================================================ */
+    .drawer-overlay {
+      position: fixed; inset: 0;
+      background: rgba(20, 25, 50, 0.35);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.25s ease, visibility 0.25s ease;
+    }
+    .drawer-overlay.is-open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .drawer {
+      position: fixed;
+      top: 0; right: 0; bottom: 0;
+      width: 520px;
+      max-width: 92vw;
+      background: var(--color-white);
+      box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+      transform: translateX(100%);
+      transition: transform 0.25s ease;
+      z-index: 1001;
+    }
+    .drawer-overlay.is-open .drawer { transform: translateX(0); }
+    .drawer-head {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      padding: var(--space-2xl);
+      border-bottom: 1px solid var(--color-border-default);
+      gap: var(--space-lg);
+    }
+    .drawer-head-left { flex: 1; min-width: 0; }
+    .drawer-title-display {
+      margin: 0;
+      font-size: var(--font-h5-size);
+      line-height: var(--font-h5-line);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      cursor: pointer;
+      padding: 4px 0;
+      word-wrap: break-word;
+    }
+    .drawer-title-display:hover {
+      background: var(--color-gray-1);
+      border-radius: var(--radius-sm);
+    }
+    .drawer-title-edit { display: none; }
+    .drawer-title-edit.is-editing { display: block; }
+    .drawer-title-display.is-editing { display: none; }
+    .drawer-title-edit input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 6px 10px;
+      border: 1px solid var(--color-blue-7);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-h5-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(28, 126, 214, 0.12);
+    }
+    .drawer-title-actions {
+      display: flex; gap: 6px; margin-top: 8px;
+    }
+    .drawer-title-actions button {
+      padding: 4px 12px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+      border: none;
+    }
+    .drawer-title-actions .title-save {
+      background: var(--color-gray-9);
+      color: var(--color-white);
+    }
+    .drawer-title-actions .title-cancel-btn {
+      background: var(--color-gray-3);
+      color: var(--color-text-secondary);
+    }
+    .drawer-head-meta {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      margin-top: 4px;
+    }
+    .drawer-head-meta .creator-icon {
+      width: 12px; height: 12px;
+    }
+    .drawer-head-sep {
+      color: var(--color-gray-4);
+    }
+    .drawer-head-right {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-shrink: 0;
+    }
+    .drawer-close {
+      background: none; border: none;
+      font-size: 18px;
+      color: var(--color-gray-5);
+      cursor: pointer;
+      padding: 4px;
+      flex-shrink: 0;
+    }
+    /* Status dropdown in header */
+    .status-dropdown {
+      position: relative;
+    }
+    .status-trigger {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: none;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-pill);
+      padding: 4px 10px 4px 4px;
+      cursor: pointer;
+      font-family: var(--font-family-base);
+    }
+    .status-trigger .status-arrow {
+      width: 10px; height: 10px;
+      color: var(--color-gray-5);
+      transition: transform 0.15s ease;
+    }
+    .status-dropdown.is-open .status-trigger .status-arrow {
+      transform: rotate(180deg);
+    }
+    .status-menu {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-md);
+      padding: 4px;
+      min-width: 150px;
+      z-index: 10;
+    }
+    .status-dropdown.is-open .status-menu { display: block; }
+    .status-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 8px 12px;
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-primary);
+      cursor: pointer;
+      border-radius: 3px;
+      text-align: left;
+    }
+    .status-option:hover { background: var(--color-gray-1); }
+    .status-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .status-dot.dot-open { background: #c89e00; }
+    .status-dot.dot-overdue { background: var(--color-danger-fg); }
+    .status-dot.dot-completed { background: var(--color-success-fg); }
+    .drawer-body {
+      padding: var(--space-2xl);
+      overflow-y: auto;
+      flex: 1;
+    }
+    /* Inline row for assignee + due at */
+    .drawer-inline-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+    .drawer-inline-row .field { margin-bottom: 0; }
+    /* Description textarea */
+    .field-textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 9px 12px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      background: var(--color-white);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-primary);
+      outline: none;
+      resize: vertical;
+      min-height: 160px;
+    }
+    .field-textarea:focus {
+      border-color: var(--color-blue-7);
+      box-shadow: 0 0 0 3px rgba(28, 126, 214, 0.12);
+    }
+    /* Creator value with icon */
+    .creator-value {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 0;
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-secondary);
+    }
+    .creator-icon {
+      width: 14px; height: 14px;
+      color: var(--color-gray-5);
+      flex-shrink: 0;
+    }
+    /* Date picker styled like the reference */
+    .date-picker-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0 12px;
+      height: 38px;
+      box-sizing: border-box;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      background: var(--color-white);
+      cursor: pointer;
+    }
+    .date-picker-wrap:focus-within {
+      border-color: var(--color-blue-7);
+      box-shadow: 0 0 0 3px rgba(28, 126, 214, 0.12);
+    }
+    .date-picker-icon {
+      width: 14px; height: 14px;
+      color: var(--color-gray-5);
+      flex-shrink: 0;
+    }
+    .date-picker-input {
+      border: none;
+      background: transparent;
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-primary);
+      outline: none;
+      flex: 1;
+      min-width: 0;
+      cursor: pointer;
+    }
+    /* Card comment count */
+    .card-divider {
+      border-top: 1px solid var(--color-border-default);
+      margin: 2px 0;
+    }
+    .card-comment-count {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+    }
+    .card-comment-avatar {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--color-gray-3);
+      display: grid; place-items: center;
+      font-size: 9px; font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-7);
+      flex-shrink: 0;
+    }
+    .card-comment-avatars {
+      display: flex;
+      margin-right: 2px;
+    }
+    .card-comment-avatars .card-comment-avatar + .card-comment-avatar {
+      margin-left: -6px;
+    }
+    /* Comments section */
+    .comments-divider {
+      border: none;
+      border-top: 1px solid var(--color-border-default);
+      margin: var(--space-2xl) calc(-1 * var(--space-2xl)) 0 calc(-1 * var(--space-2xl));
+    }
+    .comments-section { padding-top: var(--space-2xl); }
+    .comments-section .section-label {
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-2xl);
+    }
+    .comment-thread {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2xl);
+      margin-bottom: var(--space-2xl);
+    }
+    .comment {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .comment-avatar {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: var(--color-gray-3);
+      display: grid; place-items: center;
+      font-size: 12px; font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-7);
+      flex-shrink: 0;
+    }
+    .comment-body { flex: 1; min-width: 0; }
+    .comment-meta {
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 2px;
+    }
+    .comment-author {
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+    }
+    .comment-time {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+    }
+    .comment-text {
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-secondary);
+      line-height: 1.45;
+    }
+    .comment-compose {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .compose-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      background: var(--color-white);
+      overflow: hidden;
+    }
+    .compose-wrap:focus-within {
+      border-color: var(--color-blue-7);
+      box-shadow: 0 0 0 3px rgba(28, 126, 214, 0.12);
+    }
+    .compose-textarea {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 12px;
+      border: none;
+      background: transparent;
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-primary);
+      outline: none;
+      resize: none;
+      min-height: 72px;
+    }
+    .compose-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 4px 6px;
+    }
+    .compose-icon-btn {
+      background: none;
+      border: none;
+      padding: 4px;
+      cursor: pointer;
+      color: var(--color-gray-5);
+      display: grid; place-items: center;
+    }
+    .compose-icon-btn svg {
+      width: 16px; height: 16px;
+    }
+    .compose-icon-btn:hover { color: var(--color-gray-7); }
+    .compose-send-btn {
+      background: var(--color-gray-9);
+      border: none;
+      border-radius: var(--radius-sm);
+      padding: 5px 6px;
+      cursor: pointer;
+      color: var(--color-white);
+      display: grid; place-items: center;
+    }
+    .compose-send-btn svg {
+      width: 14px; height: 14px;
+    }
+    .compose-send-btn:hover { background: var(--color-gray-8); }
+    .field { margin-bottom: var(--space-lg); }
+    .drawer-body .field { margin-bottom: var(--space-2xl); }
+    .drawer-body .drawer-inline-row { margin-bottom: var(--space-2xl); }
+    .drawer-body .drawer-inline-row .field { margin-bottom: 0; }
+    .field .field-label {
+      display: block;
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: 6px;
+    }
+    .field .field-label .required { color: var(--color-red-8); }
+    .field .field-input,
+    .field .field-select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 9px 12px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      background: var(--color-white);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-primary);
+      outline: none;
+    }
+    .field .field-input:focus,
+    .field .field-select:focus {
+      border-color: var(--color-blue-7);
+      box-shadow: 0 0 0 3px rgba(28, 126, 214, 0.12);
+    }
+    .field-with-clear {
+      position: relative;
+    }
+    .field-with-clear .field-input { padding-right: 32px; }
+    .field-with-clear .clear-btn {
+      position: absolute;
+      right: 10px; top: 50%;
+      transform: translateY(-50%);
+      background: none; border: none;
+      color: var(--color-gray-5);
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .chip-input {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
+      padding: 6px 12px;
+      height: 38px;
+      box-sizing: border-box;
+      overflow: hidden;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      background: var(--color-white);
+    }
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 4px 3px 8px;
+      background: var(--color-gray-2);
+      border-radius: var(--radius-sm);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-primary);
+    }
+    .chip button {
+      background: none; border: none;
+      color: var(--color-gray-6);
+      cursor: pointer;
+      font-size: 12px;
+      padding: 0 4px;
+    }
+
+    .date-input {
+      display: flex; align-items: center; gap: 6px;
+      padding: 9px 12px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      background: var(--color-white);
+      font-size: var(--font-body-md-size);
+    }
+    .date-input .icon { color: var(--color-gray-6); }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-lg);
+    }
+    .meta-grid .meta .meta-label {
+      display: block;
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: 4px;
+    }
+    .meta-grid .meta .meta-value {
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-secondary);
+    }
+
+    .link-to {
+      display: block;
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: 6px;
+    }
+    .link-toggle {
+      display: inline-flex;
+      gap: 6px;
+      padding: 4px;
+      background: var(--color-gray-2);
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--space-lg);
+    }
+    .link-toggle button {
+      background: none; border: none;
+      padding: 6px 12px;
+      border-radius: 3px;
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-gray-6);
+      cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .link-toggle button.is-active {
+      background: var(--color-blue-dark-6);
+      color: var(--color-white);
+    }
+
+    .drawer-foot {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--space-sm);
+      padding: var(--space-lg) var(--space-2xl) var(--space-2xl) var(--space-2xl);
+      border-top: 1px solid var(--color-border-default);
+    }
+    .btn-cancel {
+      padding: 9px 18px;
+      background: var(--color-gray-3);
+      color: var(--color-text-secondary);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-semibold);
+      cursor: pointer;
+    }
+    .btn-save {
+      padding: 9px 22px;
+      background: var(--color-primary-6);
+      color: var(--color-gray-9);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-semibold);
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================ -->
+  <!-- App sidebar -->
+  <!-- ============================================================ -->
+  <aside class="app-sidebar">
+    <div class="app-brand">
+      <div class="mark">
+        <div class="glyph">T</div>
+        <div class="name">Terial</div>
+      </div>
+      <button class="collapse" title="Collapse">«</button>
+    </div>
+
+    <nav class="app-nav">
+      <div class="nav-row">
+        <span class="icon"><svg viewBox="0 0 16 16"><path d="M2 7l6-5 6 5v7a1 1 0 0 1-1 1h-3v-5H6v5H3a1 1 0 0 1-1-1z"/></svg></span>
+        Home
+      </div>
+
+      <div class="nav-row">
+        <span class="icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M5 6h6M5 9h6"/></svg></span>
+        Customers
+        <span class="caret">▾</span>
+      </div>
+
+      <div class="nav-row is-section-active">
+        <span class="icon"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="3"/><circle cx="8" cy="8" r="1" fill="currentColor"/></svg></span>
+        CRM
+        <span class="caret">▴</span>
+      </div>
+      <div class="nav-children">
+        <div class="nav-child">Opportunities</div>
+        <div class="nav-child">Proposals</div>
+        <div class="nav-child is-active">Tasks</div>
+        <div class="nav-child">Reports</div>
+        <div class="nav-child">Touchpoints</div>
+      </div>
+
+      <div class="nav-row">
+        <span class="icon"><svg viewBox="0 0 16 16"><path d="M11 4l1 1-7 7-2 .5L3 11l7-7z"/></svg></span>
+        Service
+        <span class="caret">▾</span>
+      </div>
+      <div class="nav-row">
+        <span class="icon"><svg viewBox="0 0 16 16"><path d="M3 13h10M5 13V6l3-2 3 2v7"/></svg></span>
+        Production
+        <span class="caret">▾</span>
+      </div>
+    </nav>
+
+    <div class="app-user">
+      <div class="avatar">GC</div>
+      <div>George Chang <span style="opacity:0.6;">(Designer)</span></div>
+    </div>
+  </aside>
+
+  <!-- ============================================================ -->
+  <!-- App main -->
+  <!-- ============================================================ -->
+  <main class="app-main">
+
+    <div class="app-topbar">
+      <div class="top-search">
+        <svg class="search-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="6" cy="6" r="4.5"/>
+          <path d="M9.5 9.5L12 12"/>
+        </svg>
+        <input type="text" placeholder="Search" />
+      </div>
+      <div class="top-customer">
+        <span class="swatch"></span>
+        RoofCo
+      </div>
+    </div>
+
+    <div class="app-content">
+      <div class="page-head">
+        <h1 class="t-h3">Tasks</h1>
+      </div>
+
+      <div class="filters">
+        <div class="filter-search">
+          <input class="filter-input" type="text" placeholder="Search Tasks" />
+        </div>
+        <select class="filter-select"><option>Assigned to</option></select>
+        <select class="filter-select"><option>Pipeline</option></select>
+        <select class="filter-select"><option>Opportunity</option></select>
+        <button class="add-task-btn">+ Task</button>
+      </div>
+
+      <div class="toolbar-row">
+        <div class="view-toggle" role="tablist" aria-label="View">
+          <button class="is-active" data-view="kanban">
+            <svg class="v-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1.5" y="2" width="3" height="10" rx="0.5"/>
+              <rect x="5.5" y="2" width="3" height="6" rx="0.5"/>
+              <rect x="9.5" y="2" width="3" height="8" rx="0.5"/>
+            </svg>
+            Kanban
+          </button>
+          <button data-view="list">
+            <svg class="v-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 4h10M2 7h10M2 10h10"/>
+            </svg>
+            List
+          </button>
+        </div>
+
+        <div class="range-toggle" role="tablist" aria-label="Date range">
+          <button class="is-active" data-range="all">All</button>
+          <button data-range="this-month">This month</button>
+          <button data-range="this-year">This year</button>
+        </div>
+      </div>
+
+      <!-- ============== OPEN tasks (List view) ============== -->
+      <div class="data-table-wrap" data-pane="open">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th class="col-check"><span style="font-size:14px;color:var(--color-gray-5);">✓</span></th>
+              <th>Due Date <span class="sort">▲</span></th>
+              <th>Task</th>
+              <th>Task Assignees</th>
+              <th>Opportunity</th>
+              <th>Touchpoint</th>
+              <th>Contact</th>
+              <th>Company</th>
+              <th>Created By</th>
+              <th class="row-actions">⋮</th>
+            </tr>
+          </thead>
+          <tbody id="open-rows">
+            <!-- rendered by JS -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- ============== KANBAN view ============== -->
+      <div class="kanban" id="kanban-view" hidden>
+        <div class="kanban-col" data-col="open">
+          <div class="kanban-col-head">
+            <div class="title">Open <span class="count">0</span></div>
+            <button class="col-add" id="col-add-open" title="Add task">+</button>
+          </div>
+          <div class="kanban-col-body">
+            <div class="kanban-section">
+              <div class="kanban-eyebrow">Due today</div>
+              <div data-bucket="due-today" class="kanban-section" style="gap:8px;"></div>
+            </div>
+            <div class="kanban-section">
+              <div class="kanban-eyebrow">Due later</div>
+              <div data-bucket="due-later" class="kanban-section" style="gap:8px;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="kanban-col" data-col="overdue">
+          <div class="kanban-col-head">
+            <div class="title">Overdue <span class="count">0</span></div>
+          </div>
+          <div class="kanban-col-body" data-bucket="overdue">
+            <div class="kanban-section">
+              <div class="kanban-eyebrow">Less than 1 week</div>
+              <div data-bucket="overdue-recent" class="kanban-section" style="gap:8px;"></div>
+            </div>
+            <div class="kanban-section">
+              <div class="kanban-eyebrow">More than 1 week</div>
+              <div data-bucket="overdue-old" class="kanban-section" style="gap:8px;"></div>
+            </div>
+          </div>
+        </div>
+        <div class="kanban-col" data-col="completed">
+          <div class="kanban-col-head">
+            <div class="title">Completed <span class="count">0</span></div>
+          </div>
+          <div class="kanban-col-body" data-bucket="completed"></div>
+        </div>
+      </div>
+
+      <div class="pagination" id="list-pagination">
+        <span id="list-page-label">1-14 of 14</span>
+        <button class="page-arrow" disabled>‹</button>
+        <button class="page-num is-active">1</button>
+        <button class="page-arrow" disabled>›</button>
+      </div>
+    </div>
+
+    <button class="ai-fab">
+      <svg class="bolt" viewBox="0 0 14 14" fill="currentColor"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg>
+      Terial AI
+    </button>
+  </main>
+
+  <!-- ============================================================ -->
+  <!-- Edit Task modal -->
+  <!-- ============================================================ -->
+  <div class="drawer-overlay" id="task-drawer">
+    <div class="drawer" role="dialog" aria-modal="true">
+      <!-- Header — editable title + status badge + close -->
+      <div class="drawer-head">
+        <div class="drawer-head-left">
+          <h2 class="drawer-title-display" id="drawer-title-display">Task Name</h2>
+          <div class="drawer-title-edit" id="drawer-title-edit">
+            <input type="text" id="drawer-title-input" value="" />
+            <div class="drawer-title-actions">
+              <button class="title-save" id="title-save-btn">Save</button>
+              <button class="title-cancel-btn" id="title-cancel-btn">Cancel</button>
+            </div>
+          </div>
+          <div class="drawer-head-meta" id="drawer-head-meta">
+            <svg class="creator-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="5" r="2.5"/><path d="M2.5 12c.8-2.2 2.6-3.3 4.5-3.3s3.7 1.1 4.5 3.3"/></svg>
+            <span id="drawer-head-creator">-</span>
+            <span class="drawer-head-sep">·</span>
+            <span id="drawer-head-date">-</span>
+          </div>
+        </div>
+        <div class="drawer-head-right">
+          <div class="status-dropdown" id="status-dropdown">
+            <button class="status-trigger" id="status-trigger">
+              <span id="status-trigger-pill"></span>
+              <svg class="status-arrow" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l4 4 4-4"/></svg>
+            </button>
+            <div class="status-menu" id="status-menu">
+              <button data-status="open" class="status-option">
+                <span class="status-dot dot-open"></span> Open / Overdue
+              </button>
+              <button data-status="completed" class="status-option">
+                <span class="status-dot dot-completed"></span> Completed
+              </button>
+            </div>
+          </div>
+          <button class="drawer-close" id="drawer-close-x">✕</button>
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div class="drawer-body">
+        <!-- Opportunity + Company -->
+        <div class="drawer-inline-row">
+          <div class="field">
+            <label class="field-label">Opportunity</label>
+            <select class="field-select" id="drawer-opp-select">
+              <option value="">— Select opportunity —</option>
+              <option value="Romao Test Opportunity">Romao Test Opportunity</option>
+              <option value="Madison Square Garden Re-Roof">Madison Square Garden Re-Roof</option>
+              <option value="Albert Einstein">Albert Einstein</option>
+            </select>
+          </div>
+          <div class="field">
+            <label class="field-label">Company</label>
+            <select class="field-select" id="drawer-company-select">
+              <option value="">— Select company —</option>
+              <option value="CT Storage Units">CT Storage Units</option>
+              <option value="New York City Building Management">New York City Building Management</option>
+              <option value="Terial">Terial</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Assignee + Due At inline -->
+        <div class="drawer-inline-row">
+          <div class="field">
+            <label class="field-label">Assignee</label>
+            <div class="chip-input" id="drawer-assignee-chips">
+              <span class="chip">Romao Barbosa <button>✕</button></span>
+            </div>
+          </div>
+          <div class="field">
+            <label class="field-label">Due At</label>
+            <input class="field-input" id="drawer-due-input" type="date" value="" />
+          </div>
+        </div>
+
+        <!-- Description -->
+        <div class="field">
+          <label class="field-label">Description</label>
+          <textarea class="field-textarea" id="drawer-description" placeholder="Add a description…"></textarea>
+        </div>
+
+        <!-- Divider + Comments -->
+        <hr class="comments-divider" />
+        <div class="comments-section">
+          <div class="section-label" id="drawer-comments-label">Comments (0)</div>
+          <div class="comment-thread" id="drawer-comments">
+            <!-- rendered by JS -->
+          </div>
+          <div class="comment-compose">
+            <div class="comment-avatar">You</div>
+            <div class="compose-wrap">
+              <textarea class="compose-textarea" id="drawer-comment-input" placeholder="Write a comment…"></textarea>
+              <div class="compose-actions">
+                <button class="compose-icon-btn" title="Attach file">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 8l-5.6 5.6a3.5 3.5 0 0 1-5-5L9 3a2.3 2.3 0 0 1 3.3 3.3L6.7 12a1.2 1.2 0 0 1-1.7-1.7L10.6 5"/></svg>
+                </button>
+                <button class="compose-send-btn" id="drawer-post-comment" title="Post comment">
+                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 1.5l-6 13-2.5-5.5L.5 6.5z"/><path d="M14.5 1.5L6 9"/></svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="drawer-foot">
+        <button class="btn-cancel" id="drawer-cancel">Cancel</button>
+        <button class="btn-save">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ====== Task data — single source of truth, status drives both views ======
+    // status: 'overdue' | 'due-today' | 'due-later' | 'completed'
+    var TODAY = new Date(2026, 3, 11); // April 11, 2026
+    var DAY_MS = 24 * 60 * 60 * 1000;
+
+    var tasks = [
+      // ----- Overdue (5) — 2 within < 1 week, 3 in 1+ week -----
+      { id:1, iso:"2026-04-08", dd:"Apr 8",  task:"PROD - Romao Test CRM Task 2", assignee:"Romao Barbosa", opp:"Romao Test Opportunity", touch:"", contact:"", company:"CT Storage Units", creator:"Romao Barbosa", status:"overdue" },
+      { id:2, iso:"2026-04-05", dd:"Apr 5",  task:"PROD - Romao Test CRM Task 1", assignee:"Romao Barbosa", opp:"Romao Test Opportunity", touch:"", contact:"", company:"CT Storage Units", creator:"Romao Barbosa", status:"overdue" },
+      { id:3, iso:"2026-03-20", dd:"Mar 20", task:"PROD - Romao Test CRM Task 3", assignee:"Romao Barbosa", opp:"Romao Test Opportunity", touch:"", contact:"", company:"CT Storage Units", creator:"Romao Barbosa", status:"overdue" },
+      { id:4, iso:"2026-03-12", dd:"Mar 12", task:"PROD - Romao Test CRM Task X", assignee:"Romao Barbosa", opp:"Romao Test Opportunity", touch:"", contact:"", company:"CT Storage Units", creator:"Romao Barbosa", status:"overdue" },
+      { id:5, iso:"2026-02-27", dd:"Feb 27", task:"Testing completed notifications", assignee:"Alec Client Admin", opp:"Albert Einstein", touch:"", contact:"", company:"", creator:"Alec McGovern", status:"overdue" },
+
+      // ----- Due today (5) -----
+      { id:6,  iso:"2026-04-11", dd:"Apr 11", task:"Yet another task", assignee:"Alec McGovern", opp:"Madison Square Garden Re-Roof", touch:"", contact:"", company:"New York City Building Management", creator:"Alec McGovern", status:"due-today" },
+      { id:7,  iso:"2026-04-11", dd:"Apr 11", task:"Another task", assignee:"Alec McGovern", opp:"Albert Einstein", touch:"", contact:"", company:"", creator:"Alec McGovern", status:"due-today" },
+      { id:8,  iso:"2026-04-11", dd:"Apr 11", task:"Task 3", assignee:"Alec Client Admin", opp:"Madison Square Garden Re-Roof", touch:"", contact:"", company:"New York City Building Management", creator:"Alec Client Admin", status:"due-today" },
+      { id:9,  iso:"2026-04-11", dd:"Apr 11", task:"Test", assignee:"Alec McGovern, Matt Billard", opp:"", touch:"", contact:"", company:"", creator:"Alec McGovern", status:"due-today" },
+      { id:10, iso:"2026-04-11", dd:"Apr 11", task:"Follow up in 2 weeks if no response", assignee:"Aaron Weinstein, Alec McGovern", opp:"", touch:"Invoice FU", contact:"", company:"Terial", creator:"Aaron Weinstein", status:"due-today" },
+
+      // ----- Due later (4) -----
+      { id:11, iso:"2026-04-25", dd:"Apr 25", task:"Weekend", assignee:"Aaron Weinstein, Alec McGovern, ...and 2 more", opp:"Albert Einstein", touch:"", contact:"", company:"", creator:"Matt Billard", status:"due-later" },
+      { id:12, iso:"2026-05-02", dd:"May 2",  task:"Be a jobroni", assignee:"Alec McGovern", opp:"", touch:"", contact:"", company:"", creator:"Theo Weller", status:"due-later" },
+      { id:13, iso:"2026-05-08", dd:"May 8",  task:"Quarterly review prep", assignee:"Theo Weller", opp:"Madison Square Garden Re-Roof", touch:"", contact:"", company:"New York City Building Management", creator:"Theo Weller", status:"due-later" },
+      { id:14, iso:"2026-05-15", dd:"May 15", task:"Send invoice reminder", assignee:"Aaron Weinstein", opp:"Romao Test Opportunity", touch:"Invoice FU", contact:"", company:"CT Storage Units", creator:"Aaron Weinstein", status:"due-later" },
+
+      // ----- Completed (1) -----
+      { id:15, iso:"2026-04-09", dd:"Apr 9", task:"Be a Jabroni", assignee:"Alec McGovern", opp:"", touch:"", contact:"", company:"", creator:"Theo Weller", status:"completed" }
+    ];
+
+    function isoToDate(s) {
+      var p = s.split('-');
+      return new Date(parseInt(p[0],10), parseInt(p[1],10) - 1, parseInt(p[2],10));
+    }
+    function daysOverdue(t) {
+      return Math.floor((TODAY - isoToDate(t.iso)) / DAY_MS);
+    }
+
+    var currentDateRange = 'all';
+    function inDateRange(t) {
+      if (currentDateRange === 'all') return true;
+      if (!t.iso) return false;
+      var d = isoToDate(t.iso);
+      if (currentDateRange === 'this-month') {
+        return d.getFullYear() === TODAY.getFullYear() && d.getMonth() === TODAY.getMonth();
+      }
+      if (currentDateRange === 'this-year') {
+        return d.getFullYear() === TODAY.getFullYear();
+      }
+      return true;
+    }
+
+    // List view shows all non-completed tasks (respecting date range filter)
+    function getOpenTasks() {
+      return tasks.filter(function (t) { return t.status !== 'completed' && inDateRange(t); });
+    }
+    // Backward-compat alias used by older render code
+    var openTasks = getOpenTasks();
+
+    function renderOpen() {
+      var tbody = document.getElementById('open-rows');
+      var html = '';
+      openTasks = getOpenTasks();
+      openTasks.forEach(function (t) {
+        var rowCls = t.status === 'overdue' ? 'row-overdue' : '';
+        function cell(v, asLink) {
+          if (!v) return '<td></td>';
+          if (asLink) return '<td><a class="link" href="#" onclick="event.stopPropagation();return false;">' + v + '</a></td>';
+          return '<td class="t-default">' + v + '</td>';
+        }
+        html += '<tr class="' + rowCls + '">' +
+          '<td><div class="check-circle"></div></td>' +
+          '<td>' + datePillHtml(t) + '</td>' +
+          '<td>' + (t.task || '') + '</td>' +
+          cell(t.assignee, true) +
+          cell(t.opp, true) +
+          cell(t.touch, true) +
+          cell(t.contact, true) +
+          cell(t.company, true) +
+          cell(t.creator, true) +
+          '<td class="row-actions">⋮</td>' +
+          '</tr>';
+      });
+      tbody.innerHTML = html;
+
+      // Bind row clicks → open drawer
+      tbody.querySelectorAll('tr').forEach(function (row, i) {
+        row.addEventListener('click', function () {
+          openDrawer(openTasks[i]);
+        });
+      });
+
+      var label = document.getElementById('list-page-label');
+      if (label) label.textContent = '1-' + openTasks.length + ' of ' + openTasks.length;
+    }
+
+    // ====== Drawer ======
+    var drawer = document.getElementById('task-drawer');
+    var drawerTitleDisplay = document.getElementById('drawer-title-display');
+    var drawerTitleEditWrap = document.getElementById('drawer-title-edit');
+    var drawerTitleInput = document.getElementById('drawer-title-input');
+    var drawerAssigneeChips = document.getElementById('drawer-assignee-chips');
+    var drawerDueInput = document.getElementById('drawer-due-input');
+    var drawerOppSelect = document.getElementById('drawer-opp-select');
+    // drawer-creator removed from body; creator shown in header meta only
+    var drawerCompanySelect = document.getElementById('drawer-company-select');
+    var drawerDescription = document.getElementById('drawer-description');
+    var drawerComments = document.getElementById('drawer-comments');
+    var drawerCommentsLabel = document.getElementById('drawer-comments-label');
+    var drawerCommentInput = document.getElementById('drawer-comment-input');
+    var statusTrigger = document.getElementById('status-trigger');
+    var statusTriggerPill = document.getElementById('status-trigger-pill');
+    var statusDropdown = document.getElementById('status-dropdown');
+    var statusMenu = document.getElementById('status-menu');
+    var currentDrawerTask = null;
+
+    // Sample comments per task (prototype data)
+    var taskComments = {
+      1: [
+        { author:'Romao Barbosa', initials:'RB', time:'Apr 7, 3:15 PM', text:'Pushed the deadline — waiting on client docs.' },
+        { author:'Alec McGovern', initials:'AM', time:'Apr 8, 9:02 AM', text:'Got it, will follow up today.' }
+      ],
+      6: [
+        { author:'Alec McGovern', initials:'AM', time:'Apr 10, 4:30 PM', text:'Almost done, need final sign-off from the team.' }
+      ]
+    };
+
+    function renderComments(taskId) {
+      var comments = taskComments[taskId] || [];
+      drawerCommentsLabel.textContent = 'Comments (' + comments.length + ')';
+      if (!comments.length) {
+        drawerComments.innerHTML = '<div class="comment-text" style="color:var(--color-text-tertiary);padding:4px 0;">No comments yet.</div>';
+        return;
+      }
+      drawerComments.innerHTML = comments.map(function (c) {
+        return '<div class="comment">' +
+          '<div class="comment-avatar">' + c.initials + '</div>' +
+          '<div class="comment-body">' +
+            '<div class="comment-meta"><span class="comment-author">' + c.author + '</span><span class="comment-time">' + c.time + '</span></div>' +
+            '<div class="comment-text">' + c.text + '</div>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+    }
+
+    // Status dropdown in header
+    function drawerStatusCategory(t) {
+      if (!t) return 'open';
+      if (t.status === 'completed') return 'completed';
+      if (t.status === 'overdue') return 'overdue';
+      return 'open'; // due-today and due-later are both "open"
+    }
+    function statusPillForCategory(cat) {
+      var label, cls;
+      if (cat === 'overdue') { label = 'Overdue'; cls = 'is-overdue'; }
+      else if (cat === 'completed') { label = 'Completed'; cls = 'is-completed'; }
+      else { label = 'Open'; cls = 'is-open'; }
+      return '<span class="date-pill ' + cls + '" style="font-size:12px;">' + label + '</span>';
+    }
+    function setDrawerStatus(cat) {
+      statusTriggerPill.innerHTML = statusPillForCategory(cat);
+      statusDropdown.classList.remove('is-open');
+    }
+    statusTrigger.addEventListener('click', function (e) {
+      e.stopPropagation();
+      statusDropdown.classList.toggle('is-open');
+    });
+    document.addEventListener('click', function () {
+      statusDropdown.classList.remove('is-open');
+    });
+    statusMenu.addEventListener('click', function (e) {
+      var btn = e.target.closest('.status-option');
+      if (!btn) return;
+      e.stopPropagation();
+      var newStatus = btn.getAttribute('data-status');
+      setDrawerStatus(newStatus);
+      // Update task data
+      if (currentDrawerTask) {
+        if (newStatus === 'open') currentDrawerTask.status = 'due-today';
+        else currentDrawerTask.status = newStatus;
+        renderKanban();
+        renderOpen();
+      }
+    });
+
+    // Editable title
+    function enterTitleEdit() {
+      drawerTitleInput.value = drawerTitleDisplay.textContent;
+      drawerTitleDisplay.classList.add('is-editing');
+      drawerTitleEditWrap.classList.add('is-editing');
+      drawerTitleInput.focus();
+      drawerTitleInput.select();
+    }
+    function exitTitleEdit(save) {
+      if (save && drawerTitleInput.value.trim()) {
+        drawerTitleDisplay.textContent = drawerTitleInput.value.trim();
+        if (currentDrawerTask) currentDrawerTask.task = drawerTitleInput.value.trim();
+      }
+      drawerTitleDisplay.classList.remove('is-editing');
+      drawerTitleEditWrap.classList.remove('is-editing');
+    }
+    drawerTitleDisplay.addEventListener('click', enterTitleEdit);
+    document.getElementById('title-save-btn').addEventListener('click', function () { exitTitleEdit(true); });
+    document.getElementById('title-cancel-btn').addEventListener('click', function () { exitTitleEdit(false); });
+    drawerTitleInput.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter') exitTitleEdit(true);
+      if (e.key === 'Escape') { e.stopPropagation(); exitTitleEdit(false); }
+    });
+
+    // Post comment
+    document.getElementById('drawer-post-comment').addEventListener('click', function () {
+      var text = drawerCommentInput.value.trim();
+      if (!text || !currentDrawerTask) return;
+      if (!taskComments[currentDrawerTask.id]) taskComments[currentDrawerTask.id] = [];
+      taskComments[currentDrawerTask.id].push({
+        author: 'You', initials: 'You', time: 'Just now', text: text
+      });
+      renderComments(currentDrawerTask.id);
+      drawerCommentInput.value = '';
+    });
+
+    var drawerHeadCreator = document.getElementById('drawer-head-creator');
+    var drawerHeadDate = document.getElementById('drawer-head-date');
+    var drawerHeadMeta = document.getElementById('drawer-head-meta');
+
+    function openDrawer(t) {
+      currentDrawerTask = t;
+      exitTitleEdit(false);
+      statusDropdown.classList.remove('is-open');
+      if (t && t.task) {
+        drawerTitleDisplay.textContent = t.task;
+        drawerAssigneeChips.innerHTML = t.assignee
+          ? '<span class="chip">' + t.assignee + ' <button>✕</button></span>'
+          : '';
+        drawerDueInput.value = t.iso || '';
+        drawerOppSelect.value = t.opp || '';
+
+        drawerCompanySelect.value = t.company || '';
+        setDrawerStatus(drawerStatusCategory(t));
+        drawerDescription.value = t.desc || '';
+        // Header meta
+        drawerHeadCreator.textContent = t.creator || '-';
+        drawerHeadDate.textContent = t.dd ? 'Created ' + t.dd : '';
+        drawerHeadMeta.style.display = '';
+        renderComments(t.id);
+      }
+      drawer.classList.add('is-open');
+    }
+    function openBlankDrawer() {
+      currentDrawerTask = null;
+      exitTitleEdit(false);
+      statusDropdown.classList.remove('is-open');
+      drawerTitleDisplay.textContent = 'New Task';
+      enterTitleEdit();
+      drawerTitleInput.value = '';
+      drawerTitleInput.placeholder = 'Task name';
+      drawerAssigneeChips.innerHTML = '';
+      drawerDueInput.value = '';
+      drawerOppSelect.value = '';
+
+      drawerCompanySelect.value = '';
+      setDrawerStatus('open');
+      drawerDescription.value = '';
+      drawerComments.innerHTML = '';
+      drawerCommentsLabel.textContent = 'Comments (0)';
+      drawerHeadMeta.style.display = 'none';
+      drawer.classList.add('is-open');
+    }
+    function closeDrawer() {
+      drawer.classList.remove('is-open');
+      exitTitleEdit(false);
+      statusDropdown.classList.remove('is-open');
+    }
+    document.getElementById('drawer-close-x').addEventListener('click', closeDrawer);
+    document.getElementById('drawer-cancel').addEventListener('click', closeDrawer);
+    drawer.addEventListener('click', function (e) {
+      if (e.target === drawer) closeDrawer();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeDrawer();
+    });
+
+    // ====== Kanban rendering ======
+    function datePillHtml(t) {
+      if (!t.dd) return '';
+      var cls = 'is-open';
+      var icon = '';
+      if (t.status === 'overdue') {
+        cls = 'is-overdue';
+        icon = '<svg class="pill-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+          '<path d="M7 1.6L13 12H1L7 1.6z"/>' +
+          '<path d="M7 5.5v3"/>' +
+          '<circle cx="7" cy="10.4" r="0.6" fill="currentColor" stroke="none"/>' +
+          '</svg>';
+      } else if (t.status === 'completed') {
+        cls = 'is-completed';
+        icon = '<svg class="pill-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">' +
+          '<path d="M3 7.5l3 3 5-6"/></svg>';
+      } else {
+        icon = '<svg class="pill-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+          '<rect x="2" y="3" width="10" height="9" rx="1"/>' +
+          '<path d="M2 6h10M5 1.5v2M9 1.5v2"/>' +
+          '</svg>';
+      }
+      return '<span class="date-pill ' + cls + '">' + icon + t.dd + '</span>';
+    }
+
+    function makeCard(t) {
+      var card = document.createElement('div');
+      card.className = 'kanban-card' + (t.status === 'completed' ? ' is-done' : '');
+      card.setAttribute('draggable', 'true');
+      card.setAttribute('data-id', t.id);
+
+      // Top row: title + due date pill
+      var html = '<div class="card-top-row">';
+      html += '<div class="card-title">' + (t.task || 'Untitled') + '</div>';
+      if (t.dd) {
+        html += '<div class="card-due-row">' + datePillHtml(t) + '</div>';
+      }
+      html += '</div>';
+      if (t.assignee) {
+        html += '<div class="card-meta-row">' +
+          '<svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+          '<circle cx="7" cy="5" r="2.5"/><path d="M2.5 12c.8-2.2 2.6-3.3 4.5-3.3S10.7 9.8 11.5 12"/></svg>' +
+          t.assignee + '</div>';
+      }
+      if (t.opp) {
+        html += '<div class="card-meta-row">' +
+          '<svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+          '<path d="M6 8a3 3 0 0 0 4.2 0l2-2a3 3 0 0 0-4.2-4.2L7 2.8"/>' +
+          '<path d="M8 6a3 3 0 0 0-4.2 0l-2 2a3 3 0 0 0 4.2 4.2L7 11.2"/></svg>' +
+          t.opp + '</div>';
+      }
+      // Comment count with commenter avatars
+      var comments = taskComments[t.id] || [];
+      if (comments.length > 0) {
+        html += '<div class="card-divider"></div>';
+        // Unique commenters (up to 3 avatars)
+        var seen = {};
+        var avatars = '';
+        comments.forEach(function (c) {
+          if (!seen[c.initials]) {
+            seen[c.initials] = true;
+            avatars += '<span class="card-comment-avatar">' + c.initials + '</span>';
+          }
+        });
+        html += '<div class="card-comment-count">' +
+          '<span class="card-comment-avatars">' + avatars + '</span>' +
+          comments.length + '</div>';
+      }
+      card.innerHTML = html;
+
+      // Click → open existing task in modal (ignore drag end clicks)
+      var dragMoved = false;
+      card.addEventListener('click', function () {
+        if (dragMoved) { dragMoved = false; return; }
+        openDrawer(t);
+      });
+
+      // Drag handlers
+      card.addEventListener('dragstart', function (e) {
+        dragMoved = true;
+        dragSourceStatus = t.status;
+        card.classList.add('is-dragging');
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/plain', String(t.id));
+      });
+      card.addEventListener('dragend', function () {
+        card.classList.remove('is-dragging');
+        clearAllDropTargets();
+        dragSourceStatus = null;
+        // Reset shortly so a real click after drag still works
+        setTimeout(function () { dragMoved = false; }, 50);
+      });
+
+      return card;
+    }
+
+    var dragSourceStatus = null;
+
+    function isAllowedMove(from, to) {
+      if (!from || from === to) return false;
+      // Open or Overdue → Completed
+      if (to === 'completed' && (from === 'overdue' || from === 'due-today' || from === 'due-later')) return true;
+      // Completed → Open (due-today or due-later)
+      if (from === 'completed' && (to === 'due-today' || to === 'due-later')) return true;
+      return false;
+    }
+
+    function clearAllDropTargets() {
+      Array.prototype.forEach.call(document.querySelectorAll('.is-drop-target'), function (el) {
+        el.classList.remove('is-drop-target');
+      });
+    }
+
+    function renderKanban() {
+      var openCol = document.querySelector('[data-col="open"]');
+      var dueTodayBucket = openCol.querySelector('[data-bucket="due-today"]');
+      var dueLaterBucket = openCol.querySelector('[data-bucket="due-later"]');
+      var overdueRecentBucket = document.querySelector('[data-bucket="overdue-recent"]');
+      var overdueOldBucket = document.querySelector('[data-bucket="overdue-old"]');
+      var completedBucket = document.querySelector('[data-bucket="completed"]');
+
+      dueTodayBucket.innerHTML = '';
+      dueLaterBucket.innerHTML = '';
+      overdueRecentBucket.innerHTML = '';
+      overdueOldBucket.innerHTML = '';
+      completedBucket.innerHTML = '';
+
+      var openCount = 0, overdueCount = 0, completedCount = 0;
+
+      tasks.forEach(function (t) {
+        if (!inDateRange(t)) return;
+        if (t.status === 'overdue') {
+          if (daysOverdue(t) < 7) {
+            overdueRecentBucket.appendChild(makeCard(t));
+          } else {
+            overdueOldBucket.appendChild(makeCard(t));
+          }
+          overdueCount++;
+        } else if (t.status === 'due-today') {
+          dueTodayBucket.appendChild(makeCard(t));
+          openCount++;
+        } else if (t.status === 'due-later') {
+          dueLaterBucket.appendChild(makeCard(t));
+          openCount++;
+        } else if (t.status === 'completed') {
+          completedBucket.appendChild(makeCard(t));
+          completedCount++;
+        }
+      });
+
+      function emptyIfEmpty(el, msg) {
+        if (!el.children.length) el.innerHTML = '<div class="kanban-empty">' + msg + '</div>';
+      }
+      emptyIfEmpty(dueTodayBucket, 'Nothing due today');
+      emptyIfEmpty(dueLaterBucket, 'Nothing scheduled');
+      emptyIfEmpty(overdueRecentBucket, 'Nothing recent');
+      emptyIfEmpty(overdueOldBucket, 'Nothing older');
+      emptyIfEmpty(completedBucket, 'No completed tasks');
+
+      openCol.querySelector('.count').textContent = openCount;
+      document.querySelector('[data-col="overdue"] .count').textContent = overdueCount;
+      document.querySelector('[data-col="completed"] .count').textContent = completedCount;
+    }
+
+    // ====== Drag & drop targets ======
+    function bindDropTarget(el, status) {
+      el.addEventListener('dragenter', function (e) {
+        if (!isAllowedMove(dragSourceStatus, status)) return;
+        e.preventDefault();
+        clearAllDropTargets();
+        el.classList.add('is-drop-target');
+      });
+      el.addEventListener('dragover', function (e) {
+        if (!isAllowedMove(dragSourceStatus, status)) return;
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+      });
+      el.addEventListener('dragleave', function (e) {
+        // Only clear when actually leaving this drop target (not entering a child)
+        if (!el.contains(e.relatedTarget)) {
+          el.classList.remove('is-drop-target');
+        }
+      });
+      el.addEventListener('drop', function (e) {
+        if (!isAllowedMove(dragSourceStatus, status)) return;
+        e.preventDefault();
+        clearAllDropTargets();
+        var id = parseInt(e.dataTransfer.getData('text/plain'), 10);
+        var t = tasks.find(function (x) { return x.id === id; });
+        if (!t) return;
+        t.status = status;
+        renderKanban();
+        renderOpen();
+      });
+    }
+    bindDropTarget(document.querySelector('[data-bucket="due-today"]'), 'due-today');
+    bindDropTarget(document.querySelector('[data-bucket="due-later"]'), 'due-later');
+    bindDropTarget(document.querySelector('[data-bucket="overdue"]'), 'overdue');
+    bindDropTarget(document.querySelector('[data-bucket="completed"]'), 'completed');
+
+    // Safety net: clear any stray highlight if drag is cancelled
+    document.addEventListener('dragend', clearAllDropTargets);
+
+    // ====== View toggle ======
+    var viewBtns = document.querySelectorAll('.view-toggle button');
+    var kanbanEl = document.getElementById('kanban-view');
+    var listPane = document.querySelector('[data-pane="open"]');
+    var listPagination = document.getElementById('list-pagination');
+
+    function setView(view) {
+      viewBtns.forEach(function (b) {
+        b.classList.toggle('is-active', b.getAttribute('data-view') === view);
+      });
+      if (view === 'kanban') {
+        listPane.hidden = true;
+        listPagination.hidden = true;
+        kanbanEl.hidden = false;
+      } else {
+        listPane.hidden = false;
+        listPagination.hidden = false;
+        kanbanEl.hidden = true;
+      }
+    }
+
+    viewBtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        setView(b.getAttribute('data-view'));
+      });
+    });
+
+    // ====== Date range toggle ======
+    var rangeBtns = document.querySelectorAll('.range-toggle button');
+    rangeBtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        rangeBtns.forEach(function (x) { x.classList.remove('is-active'); });
+        b.classList.add('is-active');
+        currentDateRange = b.getAttribute('data-range');
+        renderKanban();
+        renderOpen();
+      });
+    });
+
+    // ====== "+" buttons → open blank modal ======
+    document.getElementById('col-add-open').addEventListener('click', openBlankDrawer);
+    document.querySelector('.add-task-btn').addEventListener('click', openBlankDrawer);
+
+    renderOpen();
+    renderKanban();
+    setView('kanban');
+  </script>
+</body>
+</html>

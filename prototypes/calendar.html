@@ -1,0 +1,1557 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Calendar · Terial</title>
+  <link rel="stylesheet" href="../terial-tokens.css" />
+  <style>
+    /* ============================================================
+       Calendar prototype — uses terial-tokens.css for all colors,
+       typography, spacing, radii, shadows.
+       ============================================================ */
+
+    html, body { height: 100%; }
+    body {
+      display: flex;
+      overflow: hidden;
+      background: var(--color-bg-page);
+    }
+
+    /* ---------- App sidebar (dark) ---------- */
+    .app-sidebar {
+      width: 240px;
+      flex-shrink: 0;
+      background: var(--color-gray-8);
+      color: var(--color-white);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    .app-brand {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px var(--space-2xl) 18px var(--space-2xl);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .app-brand .mark {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .app-brand .mark .glyph {
+      width: 28px; height: 28px;
+      display: grid; place-items: center;
+      background: var(--color-primary-6);
+      color: var(--color-gray-9);
+      font-weight: 800;
+      font-size: 14px;
+      border-radius: 6px;
+      box-shadow: var(--shadow-sm);
+    }
+    .app-brand .name {
+      font-size: var(--font-body-xl-semi-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-white);
+    }
+    .app-brand .collapse {
+      color: rgba(255,255,255,0.5);
+      font-size: 14px;
+      background: none; border: none;
+      cursor: pointer;
+    }
+
+    .app-nav {
+      flex: 1;
+      padding: var(--space-lg) 0 var(--space-lg) 0;
+      overflow-y: auto;
+    }
+    .nav-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      padding: 10px var(--space-2xl);
+      color: rgba(255,255,255,0.85);
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+      user-select: none;
+    }
+    .nav-row:hover { background: rgba(255,255,255,0.04); }
+    .nav-row .icon { width: 16px; height: 16px; opacity: 0.85; flex-shrink: 0; display: grid; place-items: center; }
+    .nav-row .icon svg { width: 16px; height: 16px; display: block; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+    .nav-row .caret { margin-left: auto; opacity: 0.5; font-size: 10px; }
+
+    .nav-row.is-section-active {
+      color: var(--color-primary-6);
+    }
+    .nav-row.is-section-active .icon { opacity: 1; }
+
+    .nav-children { padding-bottom: 6px; }
+    .nav-child {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px var(--space-2xl) 8px 52px;
+      color: rgba(255,255,255,0.7);
+      font-size: var(--font-body-md-size);
+      cursor: pointer;
+    }
+    .nav-child::before {
+      content: "";
+      width: 6px; height: 6px;
+      background: rgba(255,255,255,0.25);
+      border-radius: 1px;
+      flex-shrink: 0;
+    }
+    .nav-child:hover { color: var(--color-white); }
+    .nav-child.is-active {
+      color: var(--color-white);
+    }
+    .nav-child.is-active::before {
+      background: var(--color-primary-6);
+    }
+
+    .app-user {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      padding: var(--space-lg) var(--space-2xl);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      color: var(--color-white);
+      font-size: var(--font-body-md-size);
+    }
+    .app-user .avatar {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--color-gray-6);
+      display: grid; place-items: center;
+      color: var(--color-white);
+      font-size: 11px;
+    }
+
+    .help-link {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      padding: 10px var(--space-2xl);
+      color: rgba(255,255,255,0.5);
+      font-size: var(--font-body-md-size);
+      cursor: pointer;
+    }
+    .help-link:hover { color: rgba(255,255,255,0.8); }
+    .help-link .icon { width: 16px; height: 16px; display: grid; place-items: center; }
+    .help-link .icon svg { width: 16px; height: 16px; display: block; stroke: currentColor; fill: none; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* ---------- App main ---------- */
+    .app-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      height: 100vh;
+      position: relative;
+    }
+
+    /* ---------- Top bar ---------- */
+    .app-topbar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2xl);
+      padding: 6px var(--space-2xl);
+      background: var(--color-gray-2);
+      border-bottom: 1px solid var(--color-border-default);
+      flex-shrink: 0;
+    }
+    .top-search {
+      flex: 1;
+      max-width: none;
+      position: relative;
+    }
+    .top-search input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px 12px 8px 34px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      background: var(--color-white);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-primary);
+      outline: none;
+    }
+    .top-search input::placeholder { color: var(--color-gray-5); }
+    .top-search .search-icon {
+      position: absolute;
+      left: 12px; top: 50%;
+      transform: translateY(-50%);
+      width: 14px; height: 14px;
+      color: var(--color-gray-5);
+    }
+    .top-customer {
+      display: flex; align-items: center; gap: var(--space-sm);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-9);
+      font-size: var(--font-body-md-size);
+    }
+    .top-customer .swatch {
+      width: 18px; height: 18px;
+      background: var(--color-green-7);
+      border-radius: 3px;
+      transform: rotate(45deg);
+    }
+
+    /* ---------- Left panel ---------- */
+    .left-panel {
+      width: 250px;
+      flex-shrink: 0;
+      border-right: 1px solid var(--color-border-default);
+      background: var(--color-white);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* Category toggle row */
+    .cat-toggle-row {
+      padding: var(--space-sm) var(--space-2xl);
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-border-default);
+      flex-shrink: 0;
+      display: flex;
+      justify-content: center;
+    }
+    .cat-toggle-bar {
+      display: inline-flex;
+      padding: 3px;
+      gap: 2px;
+      background: var(--color-gray-2);
+      border-radius: var(--radius-md);
+    }
+    .cat-toggle {
+      min-width: 90px;
+      padding: 5px 24px;
+      text-align: center;
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-tertiary);
+      background: none;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: var(--font-family-base);
+      transition: background 0.15s, color 0.15s, box-shadow 0.15s;
+    }
+    .cat-toggle:hover { color: var(--color-text-secondary); }
+    .cat-toggle.is-active {
+      background: var(--color-white);
+      color: var(--color-text-primary);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+    }
+
+    /* Ticket list */
+    .ticket-list-section {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-lg) var(--space-xl);
+    }
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-sm) 0;
+      cursor: pointer;
+      user-select: none;
+    }
+    .section-title {
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-blue-7);
+    }
+    .section-caret {
+      font-size: 10px;
+      color: var(--color-gray-5);
+    }
+
+    .ticket-chips-scroll {
+      max-height: 240px;
+      overflow-y: auto;
+      padding: var(--space-xs) 0;
+    }
+
+    .ticket-chip {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 6px 10px;
+      border-radius: var(--radius-sm);
+      margin-bottom: 4px;
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-white);
+      cursor: pointer;
+      transition: opacity 0.15s;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .ticket-chip:hover { opacity: 0.85; }
+    .ticket-chip .ext-icon {
+      margin-left: auto;
+      opacity: 0.7;
+      flex-shrink: 0;
+    }
+    .ticket-chip .ext-icon svg {
+      width: 12px; height: 12px;
+      display: block;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    /* Color coding for ticket types */
+    .chip-inspection    { background: #1ac455; }
+    .chip-pm            { background: #1c7ed6; }
+    .chip-quoted        { background: #f59f00; }
+    .chip-service       { background: #7048e8; }
+    .chip-general       { background: #868e96; }
+    .chip-opportunity   { background: #e64980; }
+    .chip-proposal      { background: #20c997; }
+    .chip-production    { background: #fd7e14; }
+    .chip-schedule      { background: #4dabf7; }
+
+    /* Filter sections */
+    .filter-section {
+      padding: var(--space-lg) 0 var(--space-sm) 0;
+      border-top: 1px solid var(--color-border-default);
+    }
+    .filter-section:first-of-type { border-top: none; }
+    .filter-section-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      user-select: none;
+      padding: var(--space-xs) 0;
+    }
+    .filter-section-title {
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-blue-7);
+    }
+    .filter-section-caret {
+      font-size: 10px;
+      color: var(--color-gray-5);
+    }
+    .filter-section-body {
+      padding: var(--space-sm) 0;
+    }
+    .filter-check {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 2px 0;
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-primary);
+      cursor: pointer;
+    }
+    .filter-check input[type="checkbox"] {
+      width: 14px; height: 14px;
+      accent-color: var(--color-blue-7);
+      cursor: pointer;
+    }
+    .filter-check .color-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Crew / search section */
+    .crew-search-input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 6px 10px 6px 30px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-primary);
+      outline: none;
+      background: var(--color-white);
+    }
+    .crew-search {
+      position: relative;
+      margin-bottom: var(--space-sm);
+    }
+    .crew-search::before {
+      content: "Q";
+      position: absolute;
+      left: 10px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 11px;
+      color: var(--color-gray-5);
+    }
+    .location-select {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 6px 10px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-primary);
+      outline: none;
+      background: var(--color-white);
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%237D89B0' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 5l3 3 3-3'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      margin-bottom: var(--space-sm);
+    }
+
+    /* ---------- Calendar area ---------- */
+    .calendar-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .cal-toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--space-xl) var(--space-2xl);
+      gap: var(--space-sm);
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-border-default);
+      position: relative;
+    }
+    .cal-month-title {
+      font-size: var(--font-h4-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      margin: 0 var(--space-sm);
+    }
+    .cal-nav-btn {
+      background: none;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      width: 28px; height: 28px;
+      display: grid; place-items: center;
+      cursor: pointer;
+      font-size: 14px;
+      color: var(--color-text-secondary);
+    }
+    .cal-nav-btn:hover { background: var(--color-gray-1); }
+    .cal-today-btn {
+      position: absolute;
+      left: var(--space-2xl);
+      padding: 4px 14px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      background: var(--color-white);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-primary);
+      cursor: pointer;
+    }
+    .cal-today-btn:hover { background: var(--color-gray-1); }
+    .cal-date-label {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      margin-left: var(--space-sm);
+    }
+
+    .cal-view-toggle {
+      position: absolute;
+      right: var(--space-2xl);
+      display: flex;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .cal-view-btn {
+      padding: 5px 14px;
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      border: none;
+      background: var(--color-white);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+    }
+    .cal-view-btn + .cal-view-btn { border-left: 1px solid var(--color-border-default); }
+    .cal-view-btn:hover { background: var(--color-gray-1); }
+    .cal-view-btn.is-active {
+      background: var(--color-gray-9);
+      color: var(--color-white);
+    }
+
+    /* Calendar grid */
+    .cal-grid {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+    .cal-header-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      border-bottom: 1px solid var(--color-border-default);
+      background: var(--color-white);
+    }
+    .cal-header-cell {
+      padding: 8px 10px;
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-tertiary);
+      text-align: right;
+    }
+    .cal-body {
+      flex: 1;
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      grid-auto-rows: 1fr;
+      overflow-y: auto;
+    }
+    .cal-day {
+      border-right: 1px solid var(--color-border-default);
+      border-bottom: 1px solid var(--color-border-default);
+      padding: 4px 6px;
+      min-height: 90px;
+      background: var(--color-white);
+      position: relative;
+      overflow: hidden;
+    }
+    .cal-day:nth-child(7n) { border-right: none; }
+    .cal-day.other-month {
+      background: var(--color-gray-1);
+    }
+    .cal-day.other-month .day-num {
+      color: var(--color-gray-4);
+    }
+    .cal-day.is-today {
+      background: #dbeafe;
+      border: 2px solid var(--color-blue-7);
+    }
+    .cal-day.is-today .day-num {
+      color: var(--color-blue-7);
+      font-weight: var(--font-weight-semibold);
+    }
+    .day-num {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-secondary);
+      text-align: right;
+      padding: 2px 4px;
+      line-height: 1;
+    }
+    .day-num .month-label {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      margin-right: 2px;
+    }
+    .cal-event {
+      display: block;
+      padding: 2px 5px;
+      margin: 1px 0;
+      border-radius: 3px;
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-white);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      cursor: pointer;
+      line-height: 1.4;
+    }
+    .cal-event:hover { opacity: 0.85; }
+    .cal-event.ev-start {
+      border-radius: 3px 0 0 3px;
+      margin-right: -6px;
+    }
+    .cal-event.ev-mid {
+      border-radius: 0;
+      margin-left: -6px;
+      margin-right: -6px;
+      text-indent: -9999px;
+    }
+    .cal-event.ev-end {
+      border-radius: 0 3px 3px 0;
+      margin-left: -6px;
+    }
+    .cal-event.ev-thin {
+      padding: 0;
+      height: 6px;
+      line-height: 0;
+      font-size: 0;
+    }
+
+    /* Event colors — match ticket chip colors */
+    .ev-inspection    { background: #1ac455; }
+    .ev-pm            { background: #1c7ed6; }
+    .ev-quoted        { background: #f59f00; }
+    .ev-service       { background: #7048e8; }
+    .ev-general       { background: #868e96; }
+    .ev-opportunity   { background: #e64980; }
+    .ev-proposal      { background: #20c997; }
+    .ev-production    { background: #fd7e14; }
+    .ev-schedule      { background: #4dabf7; }
+
+    /* Sub-tabs (Production: Calendar / Progress) */
+    .sub-tab-bar {
+      display: flex;
+      gap: 0;
+      margin: var(--space-lg) var(--space-xl);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+    .sub-tab {
+      flex: 1;
+      padding: 6px 0;
+      text-align: center;
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      background: var(--color-white);
+      border: none;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .sub-tab + .sub-tab { border-left: 1px solid var(--color-border-default); }
+    .sub-tab:hover { background: var(--color-gray-1); }
+    .sub-tab.is-active {
+      background: var(--color-gray-9);
+      color: var(--color-white);
+    }
+
+    /* ---------- Gantt / Progress view ---------- */
+    .gantt-section {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+      overflow: hidden;
+    }
+    .gantt-toolbar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-xl);
+      flex-shrink: 0;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .gantt-filter {
+      padding: 4px 10px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      background: var(--color-white);
+      outline: none;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12' fill='none' stroke='%237D89B0' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3 5l3 3 3-3'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 6px center;
+      padding-right: 22px;
+    }
+    /* Unified gantt scroll container */
+    .gantt-unified {
+      flex: 1;
+      overflow: auto;
+      position: relative;
+    }
+    .gantt-unified table {
+      border-collapse: collapse;
+      font-size: var(--font-body-sm-size);
+      width: max-content;
+      min-width: 100%;
+    }
+    .gantt-unified th,
+    .gantt-unified td {
+      padding: 6px 12px;
+      border-bottom: 1px solid var(--color-border-default);
+      white-space: nowrap;
+      vertical-align: top;
+    }
+    .gantt-unified th {
+      text-align: left;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-tertiary);
+      position: sticky;
+      top: 0;
+      background: var(--color-white);
+      z-index: 3;
+    }
+    .gantt-unified td {
+      color: var(--color-text-primary);
+    }
+    /* Sticky name column */
+    .gantt-unified .gt-name-col {
+      position: sticky;
+      left: 0;
+      background: var(--color-gray-1);
+      z-index: 2;
+      min-width: 220px;
+      max-width: 280px;
+      border-right: 1px solid var(--color-border-default);
+    }
+    .gantt-unified th.gt-name-col {
+      z-index: 4;
+      background: var(--color-white);
+    }
+    .gantt-unified .gt-name-col .gt-project-name {
+      font-weight: var(--font-weight-semibold);
+    }
+    .gantt-unified .gt-month-col {
+      min-width: 80px;
+      text-align: center;
+      position: relative;
+      border-left: 1px solid var(--color-border-default);
+    }
+    .gantt-unified .parent-row td { font-weight: var(--font-weight-medium); }
+    .gantt-unified .indent { padding-left: 36px; }
+    .gt-sub-info {
+      display: flex;
+      gap: var(--space-lg);
+      margin-top: 2px;
+    }
+    .gt-sub-item {
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+      white-space: nowrap;
+    }
+    /* Bar cell — holds the gantt bar */
+    .gt-bar-cell {
+      position: relative;
+      padding: 0 !important;
+      height: 100%;
+    }
+    .gantt-bar {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      height: 16px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      padding: 0 6px;
+      font-size: 10px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-white);
+      white-space: nowrap;
+      overflow: hidden;
+      z-index: 1;
+    }
+    .gantt-today-marker {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #f59f00;
+      z-index: 2;
+    }
+
+    /* AI FAB */
+    .ai-fab {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: var(--radius-pill);
+      background: var(--color-blue-7);
+      color: var(--color-white);
+      border: none;
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-semibold);
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      z-index: 100;
+    }
+    .ai-fab .bolt {
+      width: 14px; height: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============================================================ -->
+  <!-- Sidebar -->
+  <!-- ============================================================ -->
+  <aside class="app-sidebar">
+    <div class="app-brand">
+      <div class="mark">
+        <div class="glyph">T</div>
+        <div class="name">Terial</div>
+      </div>
+      <button class="collapse" title="Collapse">«</button>
+    </div>
+
+    <nav class="app-nav">
+      <div class="nav-row">
+        <span class="icon"><svg viewBox="0 0 16 16"><path d="M2 7l6-5 6 5v7a1 1 0 0 1-1 1h-3v-5H6v5H3a1 1 0 0 1-1-1z"/></svg></span>
+        Home
+      </div>
+
+      <div class="nav-row is-section-active">
+        <span class="icon"><svg viewBox="0 0 16 16"><rect x="2" y="2" width="12" height="12" rx="1"/><path d="M2 6h12M6 2v4M10 2v4"/></svg></span>
+        Calendar
+      </div>
+
+      <div class="nav-row">
+        <span class="icon"><svg viewBox="0 0 16 16"><rect x="2" y="3" width="12" height="10" rx="1"/><path d="M5 6h6M5 9h6"/></svg></span>
+        Customers
+        <span class="caret">▾</span>
+      </div>
+
+      <div class="nav-row">
+        <span class="icon"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="3"/><circle cx="8" cy="8" r="1" fill="currentColor"/></svg></span>
+        CRM
+        <span class="caret">▾</span>
+      </div>
+
+      <div class="nav-row">
+        <span class="icon"><svg viewBox="0 0 16 16"><path d="M11 4l1 1-7 7-2 .5L3 11l7-7z"/></svg></span>
+        Service
+        <span class="caret">▾</span>
+      </div>
+      <div class="nav-row">
+        <span class="icon"><svg viewBox="0 0 16 16"><path d="M3 13h10M5 13V6l3-2 3 2v7"/></svg></span>
+        Production
+        <span class="caret">▾</span>
+      </div>
+    </nav>
+
+    <div class="help-link">
+      <span class="icon"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M6.5 6.5a1.5 1.5 0 0 1 3 0c0 1-1.5 1-1.5 2"/><circle cx="8" cy="11" r="0.5" fill="currentColor"/></svg></span>
+      Help and Support
+    </div>
+
+    <div class="app-user">
+      <div class="avatar">GC</div>
+      <div>George Chang <span style="opacity:0.6;">(Designer)</span></div>
+    </div>
+  </aside>
+
+  <!-- ============================================================ -->
+  <!-- App main -->
+  <!-- ============================================================ -->
+  <div class="app-main">
+
+    <div class="app-topbar">
+      <div class="top-search">
+        <svg class="search-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="6" cy="6" r="4.5"/>
+          <path d="M9.5 9.5L12 12"/>
+        </svg>
+        <input type="text" placeholder="Search" />
+      </div>
+      <div class="top-customer">
+        <span class="swatch"></span>
+        RoofCo
+      </div>
+    </div>
+
+    <!-- Category toggles — standalone row -->
+    <div class="cat-toggle-row">
+      <div class="cat-toggle-bar">
+        <button class="cat-toggle is-active" data-cat="all">All</button>
+        <button class="cat-toggle" data-cat="crm">CRM</button>
+        <button class="cat-toggle" data-cat="service">Service</button>
+        <button class="cat-toggle" data-cat="production">Production</button>
+      </div>
+    </div>
+
+    <!-- Left panel + Calendar grid -->
+    <div id="calendar-content" style="display:flex;flex:1;min-height:0;overflow:hidden;">
+
+      <!-- ============================================================ -->
+      <!-- Left panel — tickets + filters -->
+      <!-- ============================================================ -->
+      <div class="left-panel">
+        <div id="sub-tab-container"></div>
+        <div class="ticket-list-section" id="left-panel-content">
+          <!-- populated by JS -->
+        </div>
+      </div>
+
+      <!-- ============================================================ -->
+      <!-- Calendar -->
+      <!-- ============================================================ -->
+      <div class="calendar-area">
+        <div class="cal-toolbar">
+          <button class="cal-today-btn" id="cal-today">Today</button>
+          <button class="cal-nav-btn" id="cal-prev" title="Previous">‹</button>
+          <h2 class="cal-month-title" id="cal-month-title">April  2026</h2>
+          <button class="cal-nav-btn" id="cal-next" title="Next">›</button>
+          <div class="cal-view-toggle">
+            <button class="cal-view-btn is-active" data-calview="month">Month</button>
+            <button class="cal-view-btn" data-calview="week">Week</button>
+            <button class="cal-view-btn" data-calview="day">Day</button>
+          </div>
+        </div>
+        <div class="cal-grid">
+          <div class="cal-header-row">
+            <div class="cal-header-cell">Sun</div>
+            <div class="cal-header-cell">Mon</div>
+            <div class="cal-header-cell">Tue</div>
+            <div class="cal-header-cell">Wed</div>
+            <div class="cal-header-cell">Thu</div>
+            <div class="cal-header-cell">Fri</div>
+            <div class="cal-header-cell">Sat</div>
+          </div>
+          <div class="cal-body" id="cal-body">
+            <!-- rendered by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Progress / Gantt view (Production only) -->
+    <div id="progress-content" style="display:none;flex:1;min-height:0;overflow:hidden;">
+      <!-- Left panel (duplicated for progress view) -->
+      <div class="left-panel">
+        <div id="sub-tab-container-progress"></div>
+        <div class="gantt-toolbar" id="gantt-toolbar-area">
+          <button class="cal-nav-btn" title="Zoom">⤢</button>
+          <select class="gantt-filter" style="width:80px;"><option>Year</option></select>
+          <button class="cal-today-btn" style="position:static;">PDF</button>
+        </div>
+        <div class="ticket-list-section" id="left-panel-content-progress">
+        </div>
+      </div>
+      <div style="flex:1;display:flex;flex-direction:column;min-width:0;overflow:hidden;">
+        <div class="gantt-unified" id="gantt-unified">
+          <!-- rendered by JS as a single table -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <button class="ai-fab">
+    <svg class="bolt" viewBox="0 0 14 14" fill="currentColor"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg>
+    Terial AI
+  </button>
+
+  <!-- ============================================================ -->
+  <!-- JavaScript -->
+  <!-- ============================================================ -->
+  <script>
+  (function () {
+    'use strict';
+
+    var TODAY = new Date(2026, 3, 11); // April 11, 2026
+
+    // ================================================================
+    // Ticket / event data
+    // ================================================================
+
+    var allTickets = [
+      // ---- Service tickets ----
+      { id: 1,  name: 'Bloomfield EZ Self Storage — Inspection',         type: 'inspection', cat: 'service', date: '2026-04-01', chipClass: 'chip-inspection', evClass: 'ev-inspection' },
+      { id: 2,  name: 'PM Test Property - APR - Preventative',           type: 'pm',         cat: 'service', date: '2026-04-02', chipClass: 'chip-pm',         evClass: 'ev-pm' },
+      { id: 3,  name: 'Hartford CarMax - Maintenance',                   type: 'pm',         cat: 'service', date: '2026-04-03', chipClass: 'chip-pm',         evClass: 'ev-pm' },
+      { id: 4,  name: 'PM Test Property - MAR - Preventative',           type: 'pm',         cat: 'service', date: '2026-04-05', chipClass: 'chip-pm',         evClass: 'ev-pm' },
+      { id: 5,  name: 'Bloomfield EZ Self Storage - Quoted',             type: 'quoted',     cat: 'service', date: '2026-04-07', chipClass: 'chip-quoted',     evClass: 'ev-quoted' },
+      { id: 6,  name: '1133 Manhattan - Quoted Service',                 type: 'quoted',     cat: 'service', date: '2026-04-08', chipClass: 'chip-quoted',     evClass: 'ev-quoted' },
+      { id: 7,  name: 'Hebron Mobil Station - T&M Service',              type: 'service',    cat: 'service', date: '2026-04-09', chipClass: 'chip-service',    evClass: 'ev-service' },
+      { id: 8,  name: 'Glastonbury Town Hall - Inspection',              type: 'inspection', cat: 'service', date: '2026-04-14', chipClass: 'chip-inspection', evClass: 'ev-inspection' },
+      { id: 9,  name: 'Stamford Plaza - T&M Service',                    type: 'service',    cat: 'service', date: '2026-04-16', chipClass: 'chip-service',    evClass: 'ev-service' },
+      { id: 10, name: 'Danbury Warehouse - Preventative',                type: 'pm',         cat: 'service', date: '2026-04-18', chipClass: 'chip-pm',         evClass: 'ev-pm' },
+      { id: 11, name: 'New Haven Office Park - General',                 type: 'general',    cat: 'service', date: '2026-04-22', chipClass: 'chip-general',    evClass: 'ev-general' },
+      { id: 12, name: 'Bridgeport Mall - Quoted Service',                type: 'quoted',     cat: 'service', date: '2026-04-25', chipClass: 'chip-quoted',     evClass: 'ev-quoted' },
+
+      // ---- CRM tickets ----
+      { id: 20, name: 'Acme Corp - Follow Up Call',                      type: 'opportunity', cat: 'crm', date: '2026-04-02', chipClass: 'chip-opportunity', evClass: 'ev-opportunity' },
+      { id: 21, name: 'Metro Properties - Proposal Review',             type: 'proposal',    cat: 'crm', date: '2026-04-04', chipClass: 'chip-proposal',    evClass: 'ev-proposal' },
+      { id: 22, name: 'Silverline Realty - Contract Renewal',           type: 'opportunity', cat: 'crm', date: '2026-04-08', chipClass: 'chip-opportunity', evClass: 'ev-opportunity' },
+      { id: 23, name: 'Greenfield LLC - New Proposal',                  type: 'proposal',    cat: 'crm', date: '2026-04-10', chipClass: 'chip-proposal',    evClass: 'ev-proposal' },
+      { id: 24, name: 'Valley Tech - Opportunity Stage Update',         type: 'opportunity', cat: 'crm', date: '2026-04-15', chipClass: 'chip-opportunity', evClass: 'ev-opportunity' },
+      { id: 25, name: 'Summit Partners - Proposal Sent',                type: 'proposal',    cat: 'crm', date: '2026-04-17', chipClass: 'chip-proposal',    evClass: 'ev-proposal' },
+      { id: 26, name: 'Oakwood Mgmt - Quarterly Review',                type: 'opportunity', cat: 'crm', date: '2026-04-21', chipClass: 'chip-opportunity', evClass: 'ev-opportunity' },
+      { id: 27, name: 'Beacon Hill Group - Intro Meeting',              type: 'opportunity', cat: 'crm', date: '2026-04-28', chipClass: 'chip-opportunity', evClass: 'ev-opportunity' },
+
+      // ---- Production tickets (month+ spans) ----
+      { id: 30, name: 'Bloomfield EZ - Full Reroof',                     type: 'production', cat: 'production', date: '2026-03-15', endDate: '2026-05-10', chipClass: 'chip-production', evClass: 'ev-production' },
+      { id: 32, name: '1133 Manhattan - Production',                     type: 'production', cat: 'production', date: '2026-04-01', endDate: '2026-06-15', chipClass: 'chip-production', evClass: 'ev-production' },
+      { id: 34, name: 'Danbury Warehouse - Restoration',                 type: 'schedule',   cat: 'production', date: '2026-04-07', endDate: '2026-05-20', chipClass: 'chip-schedule',   evClass: 'ev-schedule' },
+      { id: 36, name: 'New Haven Office - Build Out',                    type: 'production', cat: 'production', date: '2026-04-14', endDate: '2026-06-01', chipClass: 'chip-production', evClass: 'ev-production' },
+      { id: 37, name: 'Bridgeport Mall - Phase 1',                       type: 'schedule',   cat: 'production', date: '2026-04-21', endDate: '2026-07-10', chipClass: 'chip-schedule',   evClass: 'ev-schedule' }
+    ];
+
+    // Filter definitions per category
+    var filterDefs = {
+      all: [
+        {
+          title: 'Assign Events',
+          type: 'assign',
+          filters: [
+            { name: 'Ticket Type', type: 'select' },
+            { name: 'Tags', type: 'select' }
+          ]
+        },
+        {
+          title: 'Event Type',
+          items: [
+            { label: 'Inspection',              color: '#1ac455', checked: true },
+            { label: 'Preventative Maintenance', color: '#1c7ed6', checked: true },
+            { label: 'Quoted Service Work',      color: '#f59f00', checked: true },
+            { label: 'T&M Service Work',         color: '#7048e8', checked: true },
+            { label: 'General Events',           color: '#868e96', checked: true },
+            { label: 'Opportunities',            color: '#e64980', checked: true },
+            { label: 'Proposals',                color: '#20c997', checked: true },
+            { label: 'Production',               color: '#fd7e14', checked: true },
+            { label: 'Scheduling',               color: '#4dabf7', checked: true }
+          ]
+        },
+        {
+          title: 'Ticket Status',
+          items: [
+            { label: 'Awaiting Payment', checked: true },
+            { label: 'Cancelled',        checked: true },
+            { label: 'Closed',           checked: true },
+            { label: 'In Progress',      checked: true },
+            { label: 'On Hold',          checked: true },
+            { label: 'Under Review',     checked: true },
+            { label: 'Unscheduled',      checked: true }
+          ]
+        },
+        {
+          title: 'Priority',
+          items: [
+            { label: 'Remedial',  checked: true },
+            { label: 'Emergency', checked: true }
+          ]
+        },
+        {
+          title: 'Crew',
+          type: 'crew'
+        }
+      ],
+      crm: [
+        {
+          title: 'Assign Opportunities',
+          type: 'assign',
+          filters: [
+            { name: 'Opportunities', type: 'select' }
+          ]
+        },
+        {
+          title: 'Event Type',
+          items: [
+            { label: 'Opportunities', color: '#e64980', checked: true },
+            { label: 'Proposals',     color: '#20c997', checked: true }
+          ]
+        },
+        {
+          title: 'Pipeline Stage',
+          items: [
+            { label: 'Qualification', checked: true },
+            { label: 'Discovery',     checked: true },
+            { label: 'Proposal Sent', checked: true },
+            { label: 'Negotiation',   checked: true },
+            { label: 'Closed Won',    checked: true },
+            { label: 'Closed Lost',   checked: true }
+          ]
+        },
+        {
+          title: 'Assigned To',
+          items: [
+            { label: 'Aaron User',       checked: true },
+            { label: 'Alec Client Admin', checked: true },
+            { label: 'George Chang',      checked: true }
+          ]
+        }
+      ],
+      service: [
+        {
+          title: 'Assign Events',
+          type: 'assign',
+          filters: [
+            { name: 'Ticket Type', type: 'select' },
+            { name: 'Tags', type: 'select' }
+          ]
+        },
+        {
+          title: 'Event Type',
+          items: [
+            { label: 'Inspection',              color: '#1ac455', checked: true },
+            { label: 'Preventative Maintenance', color: '#1c7ed6', checked: true },
+            { label: 'Quoted Service Work',      color: '#f59f00', checked: true },
+            { label: 'T&M Service Work',         color: '#7048e8', checked: true },
+            { label: 'General Events',           color: '#868e96', checked: true }
+          ]
+        },
+        {
+          title: 'Ticket Status',
+          items: [
+            { label: 'Awaiting Payment', checked: true },
+            { label: 'Cancelled',        checked: true },
+            { label: 'Closed',           checked: true },
+            { label: 'In Progress',      checked: true },
+            { label: 'On Hold',          checked: true },
+            { label: 'Under Review',     checked: true },
+            { label: 'Unscheduled',      checked: true }
+          ]
+        },
+        {
+          title: 'Priority',
+          items: [
+            { label: 'Remedial',  checked: true },
+            { label: 'Emergency', checked: true }
+          ]
+        },
+        {
+          title: 'Crew',
+          type: 'crew'
+        }
+      ],
+      production: [
+        {
+          title: 'Filters',
+          type: 'assign',
+          filters: [
+            { name: 'All Projects', type: 'select' },
+            { name: 'Project Managers', type: 'select' },
+            { name: 'All Locations', type: 'select' }
+          ]
+        },
+        {
+          title: 'Event Type',
+          items: [
+            { label: 'Production',  color: '#fd7e14', checked: true },
+            { label: 'Scheduling',  color: '#4dabf7', checked: true }
+          ]
+        },
+        {
+          title: 'Production Status',
+          items: [
+            { label: 'Not Started', checked: true },
+            { label: 'In Progress', checked: true },
+            { label: 'Completed',   checked: true },
+            { label: 'On Hold',     checked: true }
+          ]
+        }
+      ]
+    };
+
+    var currentCat = 'all';
+    var currentYear = 2026;
+    var currentMonth = 3; // April (0-indexed)
+
+    // ================================================================
+    // Helpers
+    // ================================================================
+
+    function iso(d) {
+      var y = d.getFullYear();
+      var m = String(d.getMonth() + 1).padStart(2, '0');
+      var dd = String(d.getDate()).padStart(2, '0');
+      return y + '-' + m + '-' + dd;
+    }
+
+    var DAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    var MONTHS = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+    var MONTHS_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+    function extIcon() {
+      return '';
+    }
+
+    // ================================================================
+    // Render left panel
+    // ================================================================
+
+    function getFilteredTickets() {
+      if (currentCat === 'all') return allTickets.slice();
+      return allTickets.filter(function (t) { return t.cat === currentCat; });
+    }
+
+    function renderLeftPanelInto(wrap) {
+      var html = '';
+      var defs = filterDefs[currentCat];
+
+      // Render all sections
+      var first = true;
+      defs.forEach(function (section) {
+        html += '<div class="filter-section"' + (first ? ' style="border-top:none;"' : '') + '>';
+        html += '<div class="filter-section-head"><span class="filter-section-title">' + section.title + '</span><span class="filter-section-caret">▾</span></div>';
+        html += '<div class="filter-section-body">';
+
+        if (section.type === 'assign') {
+          // Assign section: just dropdowns, no ticket chips
+          section.filters.forEach(function (f) {
+            html += '<select class="location-select"><option>' + f.name + '</option></select>';
+          });
+        } else if (section.type === 'crew') {
+          html += '<div class="crew-search"><input class="crew-search-input" type="text" placeholder="Search Users" /></div>';
+          html += '<select class="location-select"><option>Location</option></select>';
+          html += '<label class="filter-check"><input type="checkbox" checked /> Select All</label>';
+          html += '<label class="filter-check"><input type="checkbox" checked /> Available for Work Orders</label>';
+          html += '<label class="filter-check"><input type="checkbox" checked /> Available for Inspections</label>';
+          html += '<label class="filter-check"><input type="checkbox" checked /> Aaron User</label>';
+          html += '<label class="filter-check"><input type="checkbox" checked /> Alec Client Admin</label>';
+        } else if (section.items) {
+          section.items.forEach(function (item) {
+            var dot = item.color ? '<span class="color-dot" style="background:' + item.color + ';"></span>' : '';
+            html += '<label class="filter-check"><input type="checkbox"' + (item.checked ? ' checked' : '') + ' /> ' + dot + item.label + '</label>';
+          });
+        }
+
+        html += '</div></div>';
+        first = false;
+      });
+
+      wrap.innerHTML = html;
+    }
+
+    function renderLeftPanel() {
+      renderLeftPanelInto(document.getElementById('left-panel-content'));
+    }
+
+    function truncate(s, len) {
+      return s.length > len ? s.substring(0, len) + '…' : s;
+    }
+
+    // ================================================================
+    // Render calendar
+    // ================================================================
+
+    function renderCalendar() {
+      var title = document.getElementById('cal-month-title');
+      title.textContent = MONTHS[currentMonth] + '  ' + currentYear;
+
+      var body = document.getElementById('cal-body');
+
+      // Calculate grid dates
+      var first = new Date(currentYear, currentMonth, 1);
+      var startDay = first.getDay(); // 0=Sun
+      var daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+      // We need 6 rows to cover any month
+      var totalCells = 42;
+      var startDate = new Date(currentYear, currentMonth, 1 - startDay);
+
+      // Build events map by ISO date, handling multi-day spans
+      var tickets = getFilteredTickets();
+      var eventsMap = {};
+
+      tickets.forEach(function (t) {
+        if (t.endDate) {
+          // Multi-day event — add entry for each day in range
+          var s = new Date(t.date + 'T00:00:00');
+          var e = new Date(t.endDate + 'T00:00:00');
+          for (var dt = new Date(s); dt <= e; dt.setDate(dt.getDate() + 1)) {
+            var key = iso(dt);
+            if (!eventsMap[key]) eventsMap[key] = [];
+            var pos = 'mid';
+            if (key === t.date) pos = 'start';
+            else if (key === t.endDate) pos = 'end';
+            eventsMap[key].push({ ticket: t, pos: pos });
+          }
+        } else {
+          // Single-day event
+          if (!eventsMap[t.date]) eventsMap[t.date] = [];
+          eventsMap[t.date].push({ ticket: t, pos: 'single' });
+        }
+      });
+
+      var html = '';
+      for (var i = 0; i < totalCells; i++) {
+        var d = new Date(startDate);
+        d.setDate(d.getDate() + i);
+        var dateStr = iso(d);
+        var isOther = d.getMonth() !== currentMonth;
+        var isToday = dateStr === iso(TODAY);
+
+        var cls = 'cal-day';
+        if (isOther) cls += ' other-month';
+        if (isToday) cls += ' is-today';
+
+        html += '<div class="' + cls + '">';
+
+        // Day number — show month label on 1st of each month
+        html += '<div class="day-num">';
+        if (d.getDate() === 1 && isOther) {
+          html += '<span class="month-label">' + MONTHS_SHORT[d.getMonth()] + '</span>';
+        }
+        html += d.getDate();
+        html += '</div>';
+
+        // Events for this day — multi-day (production) first
+        var dayEvents = (eventsMap[dateStr] || []).slice().sort(function (a, b) {
+          var aMulti = a.pos !== 'single' ? 0 : 1;
+          var bMulti = b.pos !== 'single' ? 0 : 1;
+          return aMulti - bMulti;
+        });
+        var dayOfWeek = d.getDay();
+        dayEvents.forEach(function (entry) {
+          var ev = entry.ticket;
+          var pos = entry.pos;
+          // For multi-day: if it's Sunday (start of row), treat as visual start; if Saturday, treat as visual end
+          var segClass = '';
+          if (pos === 'single') {
+            segClass = '';
+          } else if (pos === 'start') {
+            segClass = dayOfWeek === 6 ? '' : ' ev-start';
+          } else if (pos === 'end') {
+            segClass = dayOfWeek === 0 ? '' : ' ev-end';
+          } else {
+            // mid
+            if (dayOfWeek === 0) segClass = ' ev-start';
+            else if (dayOfWeek === 6) segClass = ' ev-end';
+            else segClass = ' ev-mid';
+          }
+          // Production multi-day: thin bar, no label
+          var isProductionSpan = (ev.cat === 'production' && pos !== 'single');
+          var thinClass = isProductionSpan ? ' ev-thin' : '';
+          var showLabel = !isProductionSpan && (pos === 'single' || pos === 'start' || dayOfWeek === 0);
+          var label = showLabel ? truncate(ev.name, 24) : '';
+          html += '<div class="cal-event ' + ev.evClass + segClass + thinClass + '">' + label + '</div>';
+        });
+
+        html += '</div>';
+      }
+
+      body.innerHTML = html;
+    }
+
+    // ================================================================
+    // Category toggle
+    // ================================================================
+
+    var currentSubTab = 'calendar';
+    var subTabContainer = document.getElementById('sub-tab-container');
+    var calendarContent = document.getElementById('calendar-content');
+    var progressContent = document.getElementById('progress-content');
+
+    var subTabContainerProgress = document.getElementById('sub-tab-container-progress');
+    var leftPanelContentProgress = document.getElementById('left-panel-content-progress');
+
+    function subTabHtml() {
+      return '<div class="sub-tab-bar">' +
+        '<button class="sub-tab' + (currentSubTab === 'calendar' ? ' is-active' : '') + '" data-subtab="calendar">Calendar view</button>' +
+        '<button class="sub-tab' + (currentSubTab === 'progress' ? ' is-active' : '') + '" data-subtab="progress">Progress view</button>' +
+      '</div>';
+    }
+
+    function bindSubTabs(container) {
+      container.querySelectorAll('.sub-tab').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          currentSubTab = btn.getAttribute('data-subtab');
+          updateView();
+        });
+      });
+    }
+
+    function renderSubTabs() {
+      if (currentCat === 'production') {
+        subTabContainer.innerHTML = subTabHtml();
+        subTabContainerProgress.innerHTML = subTabHtml();
+        bindSubTabs(subTabContainer);
+        bindSubTabs(subTabContainerProgress);
+      } else {
+        subTabContainer.innerHTML = '';
+        subTabContainerProgress.innerHTML = '';
+      }
+    }
+
+    function updateView() {
+      renderSubTabs();
+
+      if (currentCat === 'production' && currentSubTab === 'progress') {
+        calendarContent.style.display = 'none';
+        progressContent.style.display = 'flex';
+        // Render filters in progress left panel too
+        renderLeftPanelInto(leftPanelContentProgress);
+        renderGantt();
+      } else {
+        calendarContent.style.display = 'flex';
+        progressContent.style.display = 'none';
+        renderLeftPanel();
+        renderCalendar();
+      }
+    }
+
+    var catBtns = document.querySelectorAll('.cat-toggle');
+    catBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        catBtns.forEach(function (b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        currentCat = btn.getAttribute('data-cat');
+        currentSubTab = 'calendar';
+        updateView();
+      });
+    });
+
+    // ================================================================
+    // Calendar navigation
+    // ================================================================
+
+    document.getElementById('cal-prev').addEventListener('click', function () {
+      currentMonth--;
+      if (currentMonth < 0) { currentMonth = 11; currentYear--; }
+      renderCalendar();
+    });
+
+    document.getElementById('cal-next').addEventListener('click', function () {
+      currentMonth++;
+      if (currentMonth > 11) { currentMonth = 0; currentYear++; }
+      renderCalendar();
+    });
+
+    document.getElementById('cal-today').addEventListener('click', function () {
+      currentMonth = TODAY.getMonth();
+      currentYear = TODAY.getFullYear();
+      renderCalendar();
+    });
+
+    // View toggle (visual only)
+    var viewBtns = document.querySelectorAll('.cal-view-btn');
+    viewBtns.forEach(function (btn) {
+      btn.addEventListener('click', function () {
+        viewBtns.forEach(function (b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+      });
+    });
+
+    // ================================================================
+    // Gantt / Progress view
+    // ================================================================
+
+    var ganttProjects = [
+      { name: 'Romao Test Project',             pm: 'Romao Barbosa',   start: '2024-03-14', end: '',           location: 'New York City' },
+      { name: 'Artificial Intelligence POC',     pm: 'Lluis Canet',     start: '2025-09-01', end: '',           location: '' },
+      { name: 'PJC Test Project — 2901 Linwood', pm: 'Loren Heinbach',  start: '2025-11-17', end: '2025-12-12', location: '', color: '#1c7ed6' },
+      { name: '2901 Linwood Re-Roof',            pm: 'Loren Heinbach',  start: '2025-11-17', end: '2025-12-12', location: '', color: '#1f2937' },
+      { name: 'Linwood Simpler Version',         pm: 'Loren Heinbach',  start: '2025-11-17', end: '2025-12-11', location: '', color: '#e64980' },
+      { name: 'AVCO Test Project: 2901 Lin...',  pm: 'Loren Heinbach',  start: '2025-11-18', end: '2025-12-23', location: '', color: '#20c997' },
+      {
+        name: 'New Roof', pm: 'Theo User', start: '2026-01-01', end: '2026-04-03', location: '',
+        color: '#fd7e14',
+        phases: [
+          { name: 'Phase 1', start: '2026-01-01', end: '2026-02-01', color: '#e8a87c' },
+          { name: 'Phase 4', start: '2026-01-01', end: '2026-01-29', color: '#e8a87c' },
+          { name: 'Phase 2', start: '2026-02-01', end: '2026-03-04', color: '#e8a87c' },
+          { name: 'Phase 3', start: '2026-03-04', end: '2026-04-03', color: '#4dabf7' }
+        ]
+      }
+    ];
+
+    function renderGantt() {
+      var container = document.getElementById('gantt-unified');
+
+      var months = [
+        { label: 'Aug', y: 2025, m: 7 }, { label: 'Sep', y: 2025, m: 8 }, { label: 'Oct', y: 2025, m: 9 },
+        { label: 'Nov', y: 2025, m: 10 }, { label: 'Dec', y: 2025, m: 11 },
+        { label: 'Jan', y: 2026, m: 0 }, { label: 'Feb', y: 2026, m: 1 }, { label: 'Mar', y: 2026, m: 2 },
+        { label: 'Apr', y: 2026, m: 3 }, { label: 'May', y: 2026, m: 4 }
+      ];
+
+      var timeStart = new Date(2025, 7, 1);
+      var timeEnd = new Date(2026, 4, 31);
+      var totalDays = Math.ceil((timeEnd - timeStart) / (1000 * 60 * 60 * 24));
+
+      function dayOffset(dateStr) {
+        var d = new Date(dateStr + 'T00:00:00');
+        return Math.max(0, Math.ceil((d - timeStart) / (1000 * 60 * 60 * 24)));
+      }
+
+      // Each month column = 100px wide
+      var colWidth = 100;
+      var totalTimeWidth = months.length * colWidth;
+
+      function px(dateStr) {
+        return (dayOffset(dateStr) / totalDays * totalTimeWidth);
+      }
+
+      var userIcon = '<svg style="width:12px;height:12px;vertical-align:-1px;margin-right:4px;" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="5" r="3"/><path d="M2 14c0-3 2.5-5 6-5s6 2 6 5"/></svg>';
+      var pinIcon = '<svg style="width:12px;height:12px;vertical-align:-1px;margin-right:4px;" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1C5.2 1 3 3.1 3 5.8 3 9.5 8 15 8 15s5-5.5 5-9.2C13 3.1 10.8 1 8 1z"/><circle cx="8" cy="5.8" r="1.8"/></svg>';
+
+      // Build header row: Name + year label + month columns
+      var html = '<table><thead><tr>';
+      html += '<th class="gt-name-col" rowspan="2" style="vertical-align:bottom;">Name</th>';
+      html += '<th colspan="' + months.length + '" style="font-weight:600;color:var(--color-text-secondary);padding:4px 8px;border-bottom:none;">2025</th>';
+      html += '</tr><tr>';
+      months.forEach(function (mo) {
+        html += '<th class="gt-month-col" style="min-width:' + colWidth + 'px;">' + mo.label + '</th>';
+      });
+      html += '</tr></thead><tbody>';
+
+      // Today marker position
+      var todayLeft = px(TODAY.toISOString().slice(0, 10));
+
+      // Month divider lines helper (vertical lines at each month boundary)
+      function monthDividers() {
+        var divs = '';
+        for (var i = 0; i < months.length; i++) {
+          var xPos = i * colWidth;
+          divs += '<div style="position:absolute;top:0;bottom:0;left:' + xPos + 'px;width:1px;background:var(--color-border-default);z-index:0;"></div>';
+        }
+        // Today indicator
+        divs += '<div class="gantt-today-marker" style="left:' + todayLeft + 'px;"></div>';
+        return divs;
+      }
+
+      // Build rows
+      ganttProjects.forEach(function (p) {
+        var prefix = p.phases ? '<span style="margin-right:4px;">∨</span>' : '';
+        var subInfo = '<div class="gt-sub-info">';
+        if (p.pm) subInfo += '<span class="gt-sub-item">' + userIcon + p.pm + '</span>';
+        if (p.location) subInfo += '<span class="gt-sub-item">' + pinIcon + p.location + '</span>';
+        subInfo += '</div>';
+
+        html += '<tr' + (p.phases ? ' class="parent-row"' : '') + '>';
+        html += '<td class="gt-name-col">' + prefix + '<span class="gt-project-name">' + p.name + '</span>' + subInfo + '</td>';
+
+        // Single cell spanning all month columns for the bar
+        html += '<td class="gt-bar-cell" colspan="' + months.length + '" style="width:' + totalTimeWidth + 'px;min-width:' + totalTimeWidth + 'px;">';
+        html += monthDividers();
+        if (p.end) {
+          var left = px(p.start);
+          var width = px(p.end) - px(p.start);
+          var bgColor = p.color || '#868e96';
+          html += '<div class="gantt-bar" style="left:' + left + 'px;width:' + width + 'px;background:' + bgColor + ';">' + p.name + '</div>';
+        }
+        html += '</td></tr>';
+
+        // Phases
+        if (p.phases) {
+          p.phases.forEach(function (ph) {
+            html += '<tr><td class="gt-name-col indent">' + ph.name + '</td>';
+            html += '<td class="gt-bar-cell" colspan="' + months.length + '" style="width:' + totalTimeWidth + 'px;min-width:' + totalTimeWidth + 'px;">';
+            html += monthDividers();
+            var phLeft = px(ph.start);
+            var phWidth = px(ph.end) - px(ph.start);
+            html += '<div class="gantt-bar" style="left:' + phLeft + 'px;width:' + phWidth + 'px;background:' + (ph.color || '#e8a87c') + ';">' + ph.name + '</div>';
+            html += '</td></tr>';
+          });
+        }
+      });
+
+      html += '</tbody></table>';
+
+      container.innerHTML = html;
+    }
+
+    // ================================================================
+    // Init
+    // ================================================================
+    updateView();
+
+  })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Terial — Workspace</title>
+  <link rel="stylesheet" href="terial-tokens.css" />
+  <style>
+    /* ============================================================
+       Workspace shell
+       ============================================================ */
+    html, body { height: 100%; }
+    body {
+      display: flex;
+      overflow: hidden;
+    }
+
+    /* ---------- Sidebar ---------- */
+    .sidebar {
+      width: 220px;
+      flex-shrink: 0;
+      background: var(--color-white);
+      border-right: 1px solid var(--color-border-default);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      overflow-y: auto;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      padding: var(--space-2xl) var(--space-2xl) var(--space-xl) var(--space-2xl);
+    }
+    .brand .logo {
+      width: 36px; height: 36px;
+      border-radius: var(--radius-md);
+      background: var(--color-primary-6);
+      display: grid; place-items: center;
+      font-weight: 700; font-size: 18px;
+      color: var(--color-gray-9);
+      box-shadow: var(--shadow-sm);
+    }
+    .brand .name {
+      font-size: var(--font-body-xl-semi-size);
+      line-height: var(--font-body-xl-semi-line);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+    }
+    .brand .name small {
+      display: block;
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-regular);
+      color: var(--color-text-tertiary);
+    }
+
+    .nav-section {
+      padding: var(--space-lg) var(--space-lg) var(--space-sm) var(--space-lg);
+    }
+    .nav-section + .nav-section { padding-top: var(--space-2xl); }
+    .nav-section .heading {
+      padding: 0 var(--space-lg);
+      font-size: 11px;
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-gray-5);
+      margin-bottom: var(--space-sm);
+    }
+    .nav-list {
+      list-style: none;
+      margin: 0; padding: 0;
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      padding: 8px var(--space-lg);
+      border-radius: var(--radius-sm);
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      font-size: var(--font-body-md-size);
+      line-height: var(--font-body-md-line);
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+      transition: background 0.12s ease, color 0.12s ease;
+      user-select: none;
+    }
+    .nav-item:hover { background: var(--color-gray-1); color: var(--color-text-primary); }
+    .nav-item.is-active {
+      background: var(--color-gray-9);
+      color: var(--color-white);
+    }
+    .nav-item .icon {
+      width: 16px; height: 16px;
+      flex-shrink: 0;
+      display: grid; place-items: center;
+      color: currentColor;
+    }
+    .nav-item .icon svg { width: 16px; height: 16px; display: block; }
+
+    .new-proto {
+      margin: var(--space-sm) var(--space-lg) 0 var(--space-lg);
+      padding: 8px var(--space-lg);
+      border: 1px dashed var(--color-border-strong);
+      border-radius: var(--radius-sm);
+      color: var(--color-text-tertiary);
+      font-size: var(--font-body-sm-size);
+      line-height: 1.4;
+    }
+    .new-proto code {
+      background: var(--color-gray-2);
+      padding: 1px 4px;
+      border-radius: 3px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 11px;
+      color: var(--color-text-secondary);
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+      padding: var(--space-lg) var(--space-2xl) var(--space-2xl) var(--space-2xl);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+    }
+
+    /* ---------- Content area ---------- */
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+      background: var(--color-bg-page);
+      min-width: 0;
+    }
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--space-lg);
+      padding: var(--space-lg) var(--space-2xl);
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .topbar .crumbs {
+      display: flex; align-items: center; gap: var(--space-sm);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+    }
+    .topbar .crumbs strong {
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-semibold);
+    }
+    .topbar .crumbs .sep { color: var(--color-gray-4); }
+    .topbar .actions { display: flex; gap: var(--space-sm); align-items: center; }
+    .topbar .open-link {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-blue-7);
+      text-decoration: none;
+    }
+
+    .frame-wrap {
+      flex: 1;
+      overflow: auto;
+      background: var(--color-bg-page);
+    }
+    iframe.canvas {
+      width: 100%;
+      height: 100%;
+      border: none;
+      display: block;
+      background: var(--color-bg-page);
+    }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="logo">T</div>
+      <div class="name">Terial<small>Workspace</small></div>
+    </div>
+
+    <div class="nav-section">
+      <div class="heading">Prototypes</div>
+      <ul class="nav-list" id="nav-prototypes">
+        <li>
+          <a class="nav-item" data-page="prototypes/tasks.html" data-label="Tasks">
+            <span class="icon">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 4l1.5 1.5L7 3"/>
+                <path d="M3 9l1.5 1.5L7 8"/>
+                <path d="M9 5h5"/>
+                <path d="M9 10h5"/>
+              </svg>
+            </span>
+            Tasks
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" data-page="prototypes/calendar.html" data-label="Calendar">
+            <span class="icon">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="12" height="12" rx="1"/>
+                <path d="M2 6h12M6 2v4M10 2v4"/>
+              </svg>
+            </span>
+            Calendar
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" data-page="prototypes/ai.html" data-label="AI">
+            <span class="icon">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/>
+              </svg>
+            </span>
+            AI
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="nav-section">
+      <div class="heading">Design system</div>
+      <ul class="nav-list" id="nav-ds">
+        <li>
+          <a class="nav-item" data-page="design-system-style.html" data-label="Style">
+            <span class="icon">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="8" cy="8" r="6"/>
+                <path d="M2 8h12"/>
+              </svg>
+            </span>
+            Style
+          </a>
+        </li>
+        <li>
+          <a class="nav-item" data-page="design-system-components.html" data-label="Components">
+            <span class="icon">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="5" height="5" rx="1"/>
+                <rect x="9" y="2" width="5" height="5" rx="1"/>
+                <rect x="2" y="9" width="5" height="5" rx="1"/>
+                <rect x="9" y="9" width="5" height="5" rx="1"/>
+              </svg>
+            </span>
+            Components
+          </a>
+        </li>
+      </ul>
+    </div>
+
+    <div class="sidebar-footer">
+      Terial · v0.1
+    </div>
+  </aside>
+
+  <main class="content">
+    <div class="topbar">
+      <div class="crumbs">
+        <span id="crumb-section">Prototypes</span>
+        <span class="sep">/</span>
+        <strong id="crumb-page">Tasks</strong>
+      </div>
+      <div class="actions">
+        <a class="open-link" id="open-new" href="prototypes/tasks.html" target="_blank" rel="noopener">Open in new tab ↗</a>
+      </div>
+    </div>
+    <div class="frame-wrap">
+      <iframe class="canvas" id="canvas" src="prototypes/tasks.html" title="Preview"></iframe>
+    </div>
+  </main>
+
+  <script>
+    (function () {
+      var canvas = document.getElementById('canvas');
+      var openNew = document.getElementById('open-new');
+      var crumbPage = document.getElementById('crumb-page');
+      var crumbSection = document.getElementById('crumb-section');
+      var items = document.querySelectorAll('.nav-item');
+
+      function activate(item) {
+        items.forEach(function (el) { el.classList.remove('is-active'); });
+        item.classList.add('is-active');
+
+        var page = item.getAttribute('data-page');
+        var label = item.getAttribute('data-label');
+        var section = item.closest('.nav-section').querySelector('.heading').textContent;
+
+        canvas.src = page;
+        openNew.href = page;
+        crumbPage.textContent = label;
+        crumbSection.textContent = section;
+        location.hash = '#/' + page;
+      }
+
+      items.forEach(function (item) {
+        item.addEventListener('click', function (e) {
+          e.preventDefault();
+          activate(item);
+        });
+      });
+
+      // Initial selection: hash if present, else first prototype
+      var startItem = null;
+      if (location.hash && location.hash.indexOf('#/') === 0) {
+        var target = location.hash.slice(2);
+        items.forEach(function (item) {
+          if (item.getAttribute('data-page') === target) startItem = item;
+        });
+      }
+      if (!startItem) startItem = document.querySelector('#nav-prototypes .nav-item');
+      activate(startItem);
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Starter prototype · Terial</title>
+  <link rel="stylesheet" href="../terial-tokens.css" />
+  <style>
+    /* ---- Page-specific layout (built on top of terial-tokens.css) ---- */
+    .page {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: var(--space-2xl);
+    }
+
+    .breadcrumb {
+      display: flex; gap: var(--space-sm); align-items: center;
+      color: var(--color-text-tertiary);
+      font-size: var(--font-body-sm-size);
+      margin-bottom: var(--space-lg);
+    }
+    .breadcrumb a { color: var(--color-blue-7); text-decoration: none; }
+    .breadcrumb .sep { color: var(--color-gray-4); }
+
+    .page-head {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: var(--space-2xl);
+      margin-bottom: var(--space-2xl);
+    }
+    .page-title { margin: 0 0 6px 0; }
+    .page-sub { margin: 0; color: var(--color-text-tertiary); font-size: var(--font-body-md-size); }
+    .page-actions { display: flex; gap: var(--space-sm); flex-shrink: 0; }
+
+    .badges-row {
+      display: flex; gap: var(--space-sm);
+      margin-bottom: var(--space-2xl);
+      flex-wrap: wrap;
+    }
+
+    .columns {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: var(--space-2xl);
+    }
+    @media (max-width: 800px) {
+      .columns { grid-template-columns: 1fr; }
+    }
+
+    .stack { display: flex; flex-direction: column; gap: var(--space-2xl); }
+
+    .card-head {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: var(--space-lg) var(--space-2xl);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .card-head h3 { margin: 0; }
+    .card-body { padding: var(--space-2xl); }
+
+    .kv-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2xl) var(--space-2xl);
+    }
+    .kv .k {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      margin-bottom: 2px;
+    }
+    .kv .v {
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .progress {
+      height: 8px;
+      background: var(--color-gray-2);
+      border-radius: var(--radius-pill);
+      overflow: hidden;
+      margin-bottom: 6px;
+    }
+    .progress > div {
+      height: 100%;
+      background: var(--color-green-7);
+      border-radius: inherit;
+    }
+    .progress-meta {
+      display: flex; justify-content: space-between;
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+    }
+    .stat {
+      background: var(--color-gray-1);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+    }
+    .stat .label {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+    }
+    .stat .num {
+      font-size: var(--font-h5-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      margin-top: 2px;
+    }
+    .stat .num.green { color: var(--color-green-9); }
+    .stat .num.red { color: var(--color-red-8); }
+
+    .activity { display: flex; flex-direction: column; gap: var(--space-lg); }
+    .activity .item {
+      display: flex; gap: var(--space-lg);
+      padding-bottom: var(--space-lg);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .activity .item:last-child { border-bottom: none; padding-bottom: 0; }
+    .activity .dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      margin-top: 6px; flex-shrink: 0;
+    }
+    .dot.green { background: var(--color-green-7); }
+    .dot.blue  { background: var(--color-blue-7); }
+    .dot.orange { background: var(--color-orange-dark-6); }
+    .activity .who { font-weight: var(--font-weight-semibold); font-size: var(--font-body-md-size); }
+    .activity .what { font-size: var(--font-body-md-size); color: var(--color-text-secondary); }
+    .activity .when { font-size: var(--font-body-sm-size); color: var(--color-text-tertiary); margin-top: 2px; }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <nav class="breadcrumb">
+      <a href="#">Properties</a>
+      <span class="sep">/</span>
+      <span>Empire State Building Needle Repair</span>
+    </nav>
+
+    <header class="page-head">
+      <div>
+        <h1 class="page-title t-h3">Empire State Building Needle Repair</h1>
+        <p class="page-sub">ID 52789 · 20 W 34th St, New York, NY 10001</p>
+      </div>
+      <div class="page-actions">
+        <button class="btn btn-secondary">Export</button>
+        <button class="btn btn-primary">Edit project</button>
+      </div>
+    </header>
+
+    <div class="badges-row">
+      <span class="badge badge-green"><span>Active PM Customer</span></span>
+      <span class="badge badge-blue"><span>Active Warranties</span></span>
+      <span class="badge badge-red"><span>Prevailing Wage</span></span>
+    </div>
+
+    <div class="tabs" style="margin-bottom: var(--space-2xl);">
+      <button class="tab is-active">Overview</button>
+      <button class="tab">Documents</button>
+      <button class="tab">Contracts</button>
+      <button class="tab">Activity</button>
+      <button class="tab">Settings</button>
+    </div>
+
+    <div class="columns">
+
+      <div class="stack">
+        <!-- Property details -->
+        <div class="card">
+          <div class="card-head">
+            <h3 class="t-h5">Property details</h3>
+            <button class="btn btn-ghost btn-sm">Edit</button>
+          </div>
+          <div class="card-body">
+            <div class="kv-grid">
+              <div class="kv"><div class="k">Property Manager</div><div class="v">Brian Chuzet</div></div>
+              <div class="kv"><div class="k">Status</div><div class="v">Pre-Project</div></div>
+              <div class="kv"><div class="k">Area</div><div class="v">1,050.22 sq ft</div></div>
+              <div class="kv"><div class="k">Address</div><div class="v">20 W 34th St, NY 10001</div></div>
+              <div class="kv"><div class="k">Start date</div><div class="v">08/15/2025</div></div>
+              <div class="kv"><div class="k">End date</div><div class="v">10/10/2025</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Budget -->
+        <div class="card">
+          <div class="card-head">
+            <h3 class="t-h5">Budget overview</h3>
+            <span class="badge badge-green"><span>On track</span></span>
+          </div>
+          <div class="card-body">
+            <div class="progress"><div style="width: 32%;"></div></div>
+            <div class="progress-meta">
+              <span>32%</span>
+              <span>45 days left</span>
+            </div>
+
+            <div class="stat-grid" style="margin-top: var(--space-2xl);">
+              <div class="stat">
+                <div class="label">Original budget</div>
+                <div class="num">$427,654.65</div>
+              </div>
+              <div class="stat">
+                <div class="label">Revised budget</div>
+                <div class="num">$605,540.54</div>
+              </div>
+              <div class="stat">
+                <div class="label">Actual costs</div>
+                <div class="num">$472,328.84</div>
+              </div>
+              <div class="stat">
+                <div class="label">Gross profit</div>
+                <div class="num green">+$219,664.99</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team -->
+        <div class="card" style="overflow:hidden;">
+          <div class="card-head">
+            <h3 class="t-h5">Team members</h3>
+            <button class="btn btn-secondary btn-sm">Invite</button>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Role</th>
+                <th>Access</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Brian Chuzet</td>
+                <td>Property Manager</td>
+                <td>All</td>
+                <td><span class="badge badge-green"><span>Active</span></span></td>
+              </tr>
+              <tr>
+                <td>Lila Carter</td>
+                <td>Assistant PM</td>
+                <td>6 properties</td>
+                <td><span class="badge badge-green"><span>Active</span></span></td>
+              </tr>
+              <tr>
+                <td>Pam Asher-Olsker</td>
+                <td>Master Admin</td>
+                <td>All</td>
+                <td><span class="badge badge-orange"><span>Pending</span></span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="stack">
+        <!-- Quick form -->
+        <div class="card">
+          <div class="card-head">
+            <h3 class="t-h5">Add note</h3>
+          </div>
+          <div class="card-body">
+            <label class="label" for="note-title">Title</label>
+            <input class="input" id="note-title" type="text" placeholder="Site visit notes" />
+            <div style="height: var(--space-lg);"></div>
+            <label class="label" for="note-body">Description</label>
+            <input class="input" id="note-body" type="text" placeholder="What happened today?" />
+            <div style="height: var(--space-2xl);"></div>
+            <div class="demo-row" style="display:flex;gap:var(--space-lg);align-items:center;margin-bottom:var(--space-lg);">
+              <label class="switch">
+                <input type="checkbox" checked />
+                <span class="switch-track"></span>
+                <span class="switch-thumb"></span>
+              </label>
+              <span class="t-body-md">Notify the team</span>
+            </div>
+            <div style="display:flex;gap:var(--space-sm);justify-content:flex-end;">
+              <button class="btn btn-ghost">Cancel</button>
+              <button class="btn btn-primary">Save note</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Activity -->
+        <div class="card">
+          <div class="card-head">
+            <h3 class="t-h5">Recent activity</h3>
+          </div>
+          <div class="card-body">
+            <div class="activity">
+              <div class="item">
+                <div class="dot green"></div>
+                <div>
+                  <div class="who">Brian Chuzet</div>
+                  <div class="what">Approved budget revision</div>
+                  <div class="when">2 hours ago</div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="dot blue"></div>
+                <div>
+                  <div class="who">Lila Carter</div>
+                  <div class="what">Uploaded site photos (12)</div>
+                  <div class="when">Yesterday</div>
+                </div>
+              </div>
+              <div class="item">
+                <div class="dot orange"></div>
+                <div>
+                  <div class="who">Pam Asher-Olsker</div>
+                  <div class="what">Flagged warranty for review</div>
+                  <div class="when">2 days ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</body>
+</html>

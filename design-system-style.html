@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Terial — Style</title>
+  <link rel="stylesheet" href="terial-tokens.css" />
+  <style>
+    /* ============================================================
+       Site shell — uses Terial tokens, separated from terial-tokens.css
+       ============================================================ */
+    .shell {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: var(--space-6xl) var(--space-2xl);
+    }
+
+    .site-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-6xl);
+    }
+    .logo {
+      width: 44px; height: 44px;
+      border-radius: var(--radius-md);
+      background: var(--color-primary-6);
+      display: grid; place-items: center;
+      font-weight: 700; font-size: 22px;
+      color: var(--color-gray-9);
+      box-shadow: var(--shadow-sm);
+    }
+    .site-header .title { margin: 0; }
+    .site-header .subtitle {
+      margin: 2px 0 0 0;
+      color: var(--color-text-tertiary);
+    }
+
+    section.section {
+      margin-bottom: var(--space-6xl);
+    }
+    .section-head {
+      display: flex; align-items: baseline; justify-content: space-between;
+      margin-bottom: var(--space-2xl);
+      padding-bottom: var(--space-lg);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .section-head h2 { margin: 0; }
+    .section-head .anchor {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .grid {
+      display: grid;
+      gap: var(--space-2xl);
+    }
+    .grid-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .grid-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .grid-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    @media (max-width: 800px) {
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 520px) {
+      .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    }
+
+    /* ---------- Color tokens ---------- */
+    .swatch {
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+    .swatch-color { height: 88px; }
+    .swatch-meta {
+      padding: var(--space-lg);
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    .swatch-name { font-weight: var(--font-weight-semibold); font-size: var(--font-body-md-size); }
+    .swatch-hex  { color: var(--color-text-tertiary); font-size: var(--font-body-sm-size); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; }
+
+    /* ---------- Type specimen ---------- */
+    .type-row {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      gap: var(--space-2xl);
+      align-items: baseline;
+      padding: var(--space-lg) 0;
+      border-bottom: 1px dashed var(--color-border-default);
+    }
+    .type-row:last-child { border-bottom: none; }
+    .type-meta {
+      color: var(--color-text-tertiary);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: var(--font-body-sm-size);
+    }
+    .type-meta strong {
+      display: block;
+      color: var(--color-text-secondary);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      margin-bottom: 2px;
+    }
+
+    /* ---------- Demo cards ---------- */
+    .demo-label {
+      display: block;
+      font-size: var(--font-body-sm-size);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--color-text-tertiary);
+      margin-bottom: var(--space-lg);
+    }
+    .demo-row {
+      display: flex; flex-wrap: wrap; gap: var(--space-lg);
+      align-items: center;
+    }
+
+    /* ---------- Spacing visualization ---------- */
+    .space-row {
+      display: flex; align-items: center; gap: var(--space-lg);
+      padding: 6px 0;
+    }
+    .space-bar {
+      background: var(--color-primary-6);
+      height: 14px;
+      border-radius: 2px;
+    }
+    .space-row code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      width: 110px;
+    }
+
+    /* ---------- Footer ---------- */
+    .site-footer {
+      margin-top: var(--space-6xl);
+      padding-top: var(--space-2xl);
+      border-top: 1px solid var(--color-border-default);
+      color: var(--color-text-tertiary);
+      font-size: var(--font-body-sm-size);
+    }
+    .site-footer code {
+      background: var(--color-gray-2);
+      padding: 2px 6px;
+      border-radius: var(--radius-sm);
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    }
+
+    /* ---------- TOC ---------- */
+    .toc {
+      display: flex; flex-wrap: wrap; gap: var(--space-sm);
+      margin-bottom: var(--space-6xl);
+    }
+    .toc a {
+      padding: 6px 12px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-pill);
+      color: var(--color-text-secondary);
+      text-decoration: none;
+      font-size: var(--font-body-sm-size);
+      background: var(--color-white);
+    }
+    .toc a:hover {
+      background: var(--color-primary-6);
+      border-color: var(--color-primary-6);
+      color: var(--color-gray-9);
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+
+    <header class="site-header">
+      <div class="logo">T</div>
+      <div>
+        <h1 class="title t-h3">Style</h1>
+        <p class="subtitle t-body-lg">Color, typography, spacing &amp; radius — the visual foundations of Terial.</p>
+      </div>
+    </header>
+
+    <nav class="toc">
+      <a href="#colors">Colors</a>
+      <a href="#typography">Typography</a>
+      <a href="#spacing">Spacing &amp; radius</a>
+    </nav>
+
+    <!-- ============================================================ -->
+    <section class="section" id="colors">
+      <div class="section-head">
+        <h2 class="t-h4">Color</h2>
+        <span class="anchor">01 · Foundations</span>
+      </div>
+
+      <h3 class="t-body-xl-semi" style="margin: 0 0 var(--space-lg) 0;">Primary</h3>
+      <div class="grid grid-4">
+        <div class="swatch">
+          <div class="swatch-color" style="background: var(--color-primary-6);"></div>
+          <div class="swatch-meta">
+            <div class="swatch-name">primary-6</div>
+            <div class="swatch-hex">#FFCA00</div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="t-body-xl-semi" style="margin: var(--space-2xl) 0 var(--space-lg) 0;">Gray</h3>
+      <div class="grid grid-4">
+        <div class="swatch"><div class="swatch-color" style="background:#f7f8fb;border-bottom:1px solid var(--color-border-default);"></div><div class="swatch-meta"><div class="swatch-name">gray-1</div><div class="swatch-hex">#F7F8FB</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#eff1f5;"></div><div class="swatch-meta"><div class="swatch-name">gray-2</div><div class="swatch-hex">#EFF1F5</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#dcdfea;"></div><div class="swatch-meta"><div class="swatch-name">gray-3</div><div class="swatch-hex">#DCDFEA</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#b9c0d4;"></div><div class="swatch-meta"><div class="swatch-name">gray-4</div><div class="swatch-hex">#B9C0D4</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#7d89b0;"></div><div class="swatch-meta"><div class="swatch-name">gray-5</div><div class="swatch-hex">#7D89B0</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#5d6b98;"></div><div class="swatch-meta"><div class="swatch-name">gray-6</div><div class="swatch-hex">#5D6B98</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#4a5578;"></div><div class="swatch-meta"><div class="swatch-name">gray-7</div><div class="swatch-hex">#4A5578</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#272c4c;"></div><div class="swatch-meta"><div class="swatch-name">gray-8</div><div class="swatch-hex">#272C4C</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#212529;"></div><div class="swatch-meta"><div class="swatch-name">gray-9</div><div class="swatch-hex">#212529</div></div></div>
+      </div>
+
+      <h3 class="t-body-xl-semi" style="margin: var(--space-2xl) 0 var(--space-lg) 0;">Semantic</h3>
+      <div class="grid grid-4">
+        <div class="swatch"><div class="swatch-color" style="background:#e5feee;border-bottom:1px solid var(--color-border-default);"></div><div class="swatch-meta"><div class="swatch-name">success bg</div><div class="swatch-hex">#E5FEEE</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#00963c;"></div><div class="swatch-meta"><div class="swatch-name">success fg</div><div class="swatch-hex">#00963C</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#e7f5ff;border-bottom:1px solid var(--color-border-default);"></div><div class="swatch-meta"><div class="swatch-name">info bg</div><div class="swatch-hex">#E7F5FF</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#1c7ed6;"></div><div class="swatch-meta"><div class="swatch-name">info fg</div><div class="swatch-hex">#1C7ED6</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#ffeaec;border-bottom:1px solid var(--color-border-default);"></div><div class="swatch-meta"><div class="swatch-name">danger bg</div><div class="swatch-hex">#FFEAEC</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#b31220;"></div><div class="swatch-meta"><div class="swatch-name">danger fg</div><div class="swatch-hex">#B31220</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#fff0e4;border-bottom:1px solid var(--color-border-default);"></div><div class="swatch-meta"><div class="swatch-name">warning bg</div><div class="swatch-hex">#FFF0E4</div></div></div>
+        <div class="swatch"><div class="swatch-color" style="background:#e62e05;"></div><div class="swatch-meta"><div class="swatch-name">warning fg</div><div class="swatch-hex">#E62E05</div></div></div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="section" id="typography">
+      <div class="section-head">
+        <h2 class="t-h4">Typography</h2>
+        <span class="anchor">02 · Inter</span>
+      </div>
+
+      <div class="card card-padded">
+        <div class="type-row">
+          <div class="type-meta"><strong>title / h3</strong>Inter SemiBold · 30 / 36</div>
+          <div class="t-h3">The quick brown fox</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><strong>title / h4</strong>Inter SemiBold · 20 / 32</div>
+          <div class="t-h4">The quick brown fox</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><strong>title / h5</strong>Inter SemiBold · 16 / 24</div>
+          <div class="t-h5">The quick brown fox</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><strong>body xl semi</strong>Inter Medium · 18 / 22</div>
+          <div class="t-body-xl-semi">The quick brown fox jumps over the lazy dog</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><strong>body md semi</strong>Inter Medium · 14 / 18</div>
+          <div class="t-body-md-semi">The quick brown fox jumps over the lazy dog</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><strong>body lg</strong>Inter Regular · 16 / 20</div>
+          <div class="t-body-lg">The quick brown fox jumps over the lazy dog</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><strong>body md</strong>Inter Regular · 14 / 18</div>
+          <div class="t-body-md">The quick brown fox jumps over the lazy dog</div>
+        </div>
+        <div class="type-row">
+          <div class="type-meta"><strong>body sm</strong>Inter Regular · 12 / 16</div>
+          <div class="t-body-sm">The quick brown fox jumps over the lazy dog</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="section" id="spacing">
+      <div class="section-head">
+        <h2 class="t-h4">Spacing &amp; radius</h2>
+        <span class="anchor">03 · Layout</span>
+      </div>
+
+      <div class="grid grid-2">
+        <div class="card card-padded">
+          <span class="demo-label">Spacing scale</span>
+          <div class="space-row"><code>--space-xxs</code><div class="space-bar" style="width:2px;"></div><span class="t-body-sm">2px</span></div>
+          <div class="space-row"><code>--space-xs</code><div class="space-bar" style="width:4px;"></div><span class="t-body-sm">4px</span></div>
+          <div class="space-row"><code>--space-sm</code><div class="space-bar" style="width:8px;"></div><span class="t-body-sm">8px</span></div>
+          <div class="space-row"><code>--space-lg</code><div class="space-bar" style="width:12px;"></div><span class="t-body-sm">12px</span></div>
+          <div class="space-row"><code>--space-xl</code><div class="space-bar" style="width:16px;"></div><span class="t-body-sm">16px</span></div>
+          <div class="space-row"><code>--space-2xl</code><div class="space-bar" style="width:24px;"></div><span class="t-body-sm">24px</span></div>
+          <div class="space-row"><code>--space-3xl</code><div class="space-bar" style="width:32px;"></div><span class="t-body-sm">32px</span></div>
+          <div class="space-row"><code>--space-6xl</code><div class="space-bar" style="width:48px;"></div><span class="t-body-sm">48px</span></div>
+        </div>
+
+        <div class="card card-padded">
+          <span class="demo-label">Radius</span>
+          <div class="demo-row" style="gap: var(--space-2xl); flex-wrap:wrap;">
+            <div style="text-align:center;">
+              <div style="width:64px;height:64px;background:var(--color-primary-6);border-radius:var(--radius-sm);"></div>
+              <div class="t-body-sm" style="margin-top:8px;color:var(--color-text-tertiary);">sm · 4px</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="width:64px;height:64px;background:var(--color-primary-6);border-radius:var(--radius-md);"></div>
+              <div class="t-body-sm" style="margin-top:8px;color:var(--color-text-tertiary);">md · 8px</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="width:64px;height:64px;background:var(--color-primary-6);border-radius:var(--radius-lg);"></div>
+              <div class="t-body-sm" style="margin-top:8px;color:var(--color-text-tertiary);">lg · 12px</div>
+            </div>
+            <div style="text-align:center;">
+              <div style="width:96px;height:40px;background:var(--color-primary-6);border-radius:var(--radius-pill);"></div>
+              <div class="t-body-sm" style="margin-top:8px;color:var(--color-text-tertiary);">pill</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <p>Terial Design System · Style</p>
+    </footer>
+  </div>
+</body>
+</html>
