@@ -290,7 +290,7 @@
         var label = item.getAttribute('data-label');
         var section = item.closest('.nav-section').querySelector('.heading').textContent;
 
-        canvas.src = page;
+        canvas.src = page + '?v=' + Date.now();
         openNew.href = page;
         crumbPage.textContent = label;
         crumbSection.textContent = section;
