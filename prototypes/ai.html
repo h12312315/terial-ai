@@ -357,6 +357,69 @@
       gap: var(--space-sm);
       margin-bottom: var(--space-xl);
     }
+    .insights-regenerate-btn {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 6px 12px;
+      background: var(--color-primary-6);
+      color: var(--color-gray-9);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-semibold);
+      cursor: pointer;
+      transition: filter 0.15s ease;
+    }
+    .insights-regenerate-btn:hover { filter: brightness(0.92); }
+    .insights-regenerate-btn svg {
+      width: 13px; height: 13px;
+      fill: var(--color-gray-9);
+    }
+    .insights-btn-wrap {
+      margin-left: auto;
+      position: relative;
+    }
+    .insights-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      right: 0;
+      min-width: 220px;
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      z-index: 50;
+      padding: var(--space-xs) 0;
+    }
+    .insights-dropdown.is-visible { display: block; }
+    .insights-dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 9px var(--space-lg);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-primary);
+      cursor: pointer;
+      border: none;
+      background: none;
+      width: 100%;
+      text-align: left;
+      font-family: var(--font-family-base);
+    }
+    .insights-dropdown-item:hover { background: var(--color-gray-1); }
+    .insights-dropdown-item svg {
+      width: 14px; height: 14px;
+      flex-shrink: 0;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.6;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
     .insights-header .insights-icon {
       width: 24px; height: 24px;
       display: grid; place-items: center;
@@ -425,6 +488,32 @@
       background: #fef2f2;
       color: #b91c1c;
     }
+
+    /* Skeleton loading */
+    @keyframes shimmer {
+      0% { background-position: -400px 0; }
+      100% { background-position: 400px 0; }
+    }
+    .insights-grid.is-loading .insight-item { display: none; }
+    .insight-skeleton {
+      display: none;
+      flex-direction: column;
+      gap: var(--space-sm);
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      padding: var(--space-lg);
+    }
+    .insights-grid.is-loading .insight-skeleton { display: flex; }
+    .skeleton-bar {
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--color-gray-1) 25%, var(--color-gray-2) 50%, var(--color-gray-1) 75%);
+      background-size: 800px 100%;
+      animation: shimmer 1.5s infinite linear;
+    }
+    .skeleton-chart { height: 100px; }
+    .skeleton-label { height: 14px; width: 70%; }
+    .skeleton-desc { height: 10px; width: 90%; }
 
     /* Stat cards row */
     .stat-row {
@@ -1380,8 +1469,31 @@
         <div class="insights-header">
           <div class="insights-icon"><svg viewBox="0 0 16 16" fill="none"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z" fill="var(--color-primary-7)"/></svg></div>
           <div class="insights-title">Terial Insights</div>
+          <div class="insights-btn-wrap">
+            <button class="insights-regenerate-btn" id="regenerate-insights">
+              <svg viewBox="0 0 14 14"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg>
+              Refresh insights
+            </button>
+            <div class="insights-dropdown" id="insights-dropdown">
+              <button class="insights-dropdown-item" data-insight-mode="latest">
+                <svg viewBox="0 0 16 16"><path d="M1 8a7 7 0 1 1 1.3 4"/><path d="M1 13V9h4"/></svg>
+                Update to latest
+              </button>
+              <button class="insights-dropdown-item" data-insight-mode="risk">
+                <svg viewBox="0 0 16 16"><path d="M8 1L1 14h14L8 1z"/><path d="M8 6v3M8 11.5v.5"/></svg>
+                Where's the risk
+              </button>
+              <button class="insights-dropdown-item" data-insight-mode="attention">
+                <svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="6"/><path d="M8 5v3M8 10.5v.5"/></svg>
+                What should I pay attention to
+              </button>
+            </div>
+          </div>
         </div>
-        <div class="insights-grid">
+        <div class="insights-grid" id="insights-grid">
+          <div class="insight-skeleton"><div class="skeleton-bar skeleton-chart"></div><div class="skeleton-bar skeleton-label"></div><div class="skeleton-bar skeleton-desc"></div></div>
+          <div class="insight-skeleton"><div class="skeleton-bar skeleton-chart"></div><div class="skeleton-bar skeleton-label"></div><div class="skeleton-bar skeleton-desc"></div></div>
+          <div class="insight-skeleton"><div class="skeleton-bar skeleton-chart"></div><div class="skeleton-bar skeleton-label"></div><div class="skeleton-bar skeleton-desc"></div></div>
           <div class="insight-item">
             <button class="card-ask-btn" data-context="Crew Performance"><svg class="bolt-icon" viewBox="0 0 14 14"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg><span class="card-ask-label">Ask Terial</span></button>
             <div class="insight-chart">
@@ -1999,6 +2111,191 @@
             prompts
           );
         }, 1000 + Math.random() * 500);
+      });
+    });
+
+    // ---- Regenerate Insights ----
+    var insightModes = {
+      latest: [
+        {
+          context: 'Crew Performance',
+          chartSvg: '<svg viewBox="0 0 200 80" preserveAspectRatio="none"><rect x="10" y="50" width="16" height="25" rx="2" fill="#c4b5fd"/><rect x="32" y="35" width="16" height="40" rx="2" fill="#c4b5fd"/><rect x="54" y="20" width="16" height="55" rx="2" fill="#8b5cf6"/><rect x="76" y="30" width="16" height="45" rx="2" fill="#c4b5fd"/><rect x="98" y="10" width="16" height="65" rx="2" fill="#8b5cf6"/><rect x="120" y="25" width="16" height="50" rx="2" fill="#c4b5fd"/><rect x="142" y="15" width="16" height="60" rx="2" fill="#8b5cf6"/><rect x="164" y="40" width="16" height="35" rx="2" fill="#c4b5fd"/></svg>',
+          label: 'Crew Performance', badgeClass: 'up', badgeText: '↑ 12%',
+          desc: 'Top crew completed 18% more jobs this month vs. average'
+        },
+        {
+          context: 'Pipeline Conversion',
+          chartSvg: '<svg viewBox="0 0 200 80" preserveAspectRatio="none"><defs><linearGradient id="ig1" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3b82f6" stop-opacity="0.25"/><stop offset="100%" stop-color="#3b82f6" stop-opacity="0.02"/></linearGradient></defs><path d="M0 65 Q30 55 50 48 T100 30 T150 22 T200 15 V80 H0Z" fill="url(#ig1)"/><path d="M0 65 Q30 55 50 48 T100 30 T150 22 T200 15" fill="none" stroke="#3b82f6" stroke-width="2"/><circle cx="150" cy="22" r="3" fill="#3b82f6"/><text x="140" y="16" font-size="8" fill="#3b82f6" font-weight="600">68%</text></svg>',
+          label: 'Pipeline Conversion', badgeClass: 'up', badgeText: '↑ 5%',
+          desc: 'CRM pipeline conversion rate trending up over 6 weeks'
+        },
+        {
+          context: 'Seasonal Patterns',
+          chartSvg: '<svg viewBox="0 0 200 80" preserveAspectRatio="none"><path d="M0 60 C20 55 40 30 60 25 S100 50 120 45 S160 20 180 18 L200 22" fill="none" stroke="#f59e0b" stroke-width="2"/><path d="M0 60 C20 55 40 30 60 25 S100 50 120 45 S160 20 180 18 L200 22 V80 H0Z" fill="#f59e0b" fill-opacity="0.1"/><line x1="60" y1="25" x2="60" y2="75" stroke="#f59e0b" stroke-dasharray="3 2" stroke-width="0.8" opacity="0.5"/><text x="48" y="73" font-size="7" fill="#92400e">Peak</text></svg>',
+          label: 'Seasonal Patterns', badgeClass: 'down', badgeText: '↓ incoming',
+          desc: 'Storm season expected to increase ticket volume by 30%'
+        }
+      ],
+      risk: [
+        {
+          context: 'Material Cost Trends',
+          chartSvg: '<svg viewBox="0 0 200 80" preserveAspectRatio="none"><rect x="10" y="45" width="20" height="30" rx="2" fill="#86efac"/><rect x="38" y="30" width="20" height="45" rx="2" fill="#86efac"/><rect x="66" y="20" width="20" height="55" rx="2" fill="#22c55e"/><rect x="94" y="35" width="20" height="40" rx="2" fill="#86efac"/><rect x="122" y="15" width="20" height="60" rx="2" fill="#22c55e"/><rect x="150" y="10" width="20" height="65" rx="2" fill="#ef4444"/><rect x="178" y="5" width="16" height="70" rx="2" fill="#ef4444"/></svg>',
+          label: 'Material Cost Trends', badgeClass: 'down', badgeText: '↑ 8% cost',
+          desc: 'Shingle and underlayment costs rising — consider bulk ordering'
+        },
+        {
+          context: 'Warranty Claims',
+          chartSvg: '<svg viewBox="0 0 200 80" preserveAspectRatio="none"><rect x="10" y="55" width="20" height="20" rx="2" fill="#fca5a5"/><rect x="38" y="45" width="20" height="30" rx="2" fill="#fca5a5"/><rect x="66" y="50" width="20" height="25" rx="2" fill="#fca5a5"/><rect x="94" y="40" width="20" height="35" rx="2" fill="#ef4444"/><rect x="122" y="55" width="20" height="20" rx="2" fill="#fca5a5"/><rect x="150" y="60" width="20" height="15" rx="2" fill="#86efac"/><rect x="178" y="62" width="16" height="13" rx="2" fill="#86efac"/></svg>',
+          label: 'Warranty Claims', badgeClass: 'up', badgeText: '↓ 40%',
+          desc: 'Claims dropped significantly after new QC checklist rollout'
+        },
+        {
+          context: 'Schedule Gaps',
+          chartSvg: '<svg viewBox="0 0 200 80" preserveAspectRatio="none"><defs><linearGradient id="ig5" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ef4444" stop-opacity="0.2"/><stop offset="100%" stop-color="#ef4444" stop-opacity="0.02"/></linearGradient></defs><path d="M0 40 Q30 45 60 55 T120 60 T180 65 L200 70 V80 H0Z" fill="url(#ig5)"/><path d="M0 40 Q30 45 60 55 T120 60 T180 65 L200 70" fill="none" stroke="#ef4444" stroke-width="2"/><text x="150" y="58" font-size="8" fill="#b91c1c" font-weight="600">18 gaps</text></svg>',
+          label: 'Schedule Gaps', badgeClass: 'down', badgeText: '↑ 18 this week',
+          desc: '3 crews have unassigned blocks — risk of underutilization'
+        }
+      ],
+      attention: [
+        {
+          context: 'Overdue Invoices',
+          chartSvg: '<svg viewBox="0 0 200 80" preserveAspectRatio="none"><rect x="10" y="50" width="24" height="25" rx="2" fill="#fbbf24"/><rect x="42" y="35" width="24" height="40" rx="2" fill="#fbbf24"/><rect x="74" y="20" width="24" height="55" rx="2" fill="#f59e0b"/><rect x="106" y="10" width="24" height="65" rx="2" fill="#ef4444"/><rect x="138" y="5" width="24" height="70" rx="2" fill="#ef4444"/><rect x="170" y="8" width="24" height="67" rx="2" fill="#ef4444"/></svg>',
+          label: 'Overdue Invoices', badgeClass: 'down', badgeText: '↑ $82K overdue',
+          desc: '12 invoices past 30 days — largest is $18.4K from Cunningham'
+        },
+        {
+          context: 'Lead Response Time',
+          chartSvg: '<svg viewBox="0 0 200 80" preserveAspectRatio="none"><defs><linearGradient id="ig4" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ef4444" stop-opacity="0.2"/><stop offset="100%" stop-color="#22c55e" stop-opacity="0.1"/></linearGradient></defs><path d="M0 20 Q30 25 60 35 T120 50 T180 55 L200 58 V80 H0Z" fill="url(#ig4)"/><path d="M0 20 Q30 25 60 35 T120 50 T180 55 L200 58" fill="none" stroke="#22c55e" stroke-width="2"/><text x="5" y="16" font-size="7" fill="#b91c1c">4.2h</text><text x="170" y="54" font-size="7" fill="#15803d">1.1h</text></svg>',
+          label: 'Lead Response Time', badgeClass: 'up', badgeText: '↓ 3.1h faster',
+          desc: 'Average first response dropped from 4.2h to 1.1h'
+        },
+        {
+          context: 'Expiring Permits',
+          chartSvg: '<svg viewBox="0 0 200 80" preserveAspectRatio="none"><rect x="20" y="25" width="30" height="50" rx="2" fill="#fbbf24"/><rect x="60" y="40" width="30" height="35" rx="2" fill="#86efac"/><rect x="100" y="15" width="30" height="60" rx="2" fill="#ef4444"/><rect x="140" y="35" width="30" height="40" rx="2" fill="#fbbf24"/><text x="100" y="10" font-size="7" fill="#b91c1c" font-weight="600">7 expiring</text></svg>',
+          label: 'Expiring Permits', badgeClass: 'down', badgeText: '7 this month',
+          desc: '7 project permits expiring within 30 days — action needed'
+        }
+      ]
+    };
+
+    // Add context prompts for new insight sets
+    contextPrompts['Material Cost Trends'] = [
+      'Which materials have increased the most?',
+      'Show me cost trends over the past 12 months',
+      'What suppliers offer the best pricing right now?'
+    ];
+    contextPrompts['Customer Satisfaction'] = [
+      'Which projects received the lowest ratings?',
+      'Show me satisfaction trends by service type',
+      'What are the most common complaints?'
+    ];
+    contextPrompts['Schedule Efficiency'] = [
+      'Which crews have the most idle time?',
+      'Show me scheduling gaps for next week',
+      'How does our efficiency compare month over month?'
+    ];
+    contextPrompts['Revenue per Crew'] = [
+      'Which crew generates the most revenue?',
+      'Compare revenue per crew over the last 3 months',
+      'Are there crews that need more jobs assigned?'
+    ];
+    contextPrompts['Lead Response Time'] = [
+      'Which leads had the slowest response?',
+      'Show me response time by sales rep',
+      'How does response time correlate with conversion?'
+    ];
+    contextPrompts['Warranty Claims'] = [
+      'What are the most common warranty issues?',
+      'Which projects have the most claims?',
+      'Show me claims trend before and after QC rollout'
+    ];
+
+    contextPrompts['Schedule Gaps'] = [
+      'Which crews have gaps in their schedule?',
+      'Show me unassigned time blocks this week',
+      'What is the revenue impact of schedule gaps?'
+    ];
+    contextPrompts['Overdue Invoices'] = [
+      'Which invoices are most overdue?',
+      'Show me overdue amounts by customer',
+      'What is the total outstanding past 30 days?'
+    ];
+    contextPrompts['Expiring Permits'] = [
+      'Which permits are expiring soonest?',
+      'Show me projects affected by expiring permits',
+      'What is the renewal process for these permits?'
+    ];
+
+    var insightsGrid = document.getElementById('insights-grid');
+    var insightsDropdown = document.getElementById('insights-dropdown');
+
+    function renderInsightSet(set) {
+      var html = '';
+      // Always keep skeletons
+      html += '<div class="insight-skeleton"><div class="skeleton-bar skeleton-chart"></div><div class="skeleton-bar skeleton-label"></div><div class="skeleton-bar skeleton-desc"></div></div>';
+      html += '<div class="insight-skeleton"><div class="skeleton-bar skeleton-chart"></div><div class="skeleton-bar skeleton-label"></div><div class="skeleton-bar skeleton-desc"></div></div>';
+      html += '<div class="insight-skeleton"><div class="skeleton-bar skeleton-chart"></div><div class="skeleton-bar skeleton-label"></div><div class="skeleton-bar skeleton-desc"></div></div>';
+      set.forEach(function (item) {
+        html +=
+          '<div class="insight-item">' +
+            '<button class="card-ask-btn" data-context="' + escapeHtml(item.context) + '"><svg class="bolt-icon" viewBox="0 0 14 14"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg><span class="card-ask-label">Ask Terial</span></button>' +
+            '<div class="insight-chart">' + item.chartSvg + '</div>' +
+            '<div class="insight-label">' + escapeHtml(item.label) + ' <span class="insight-badge ' + item.badgeClass + '">' + item.badgeText + '</span></div>' +
+            '<div class="insight-desc">' + escapeHtml(item.desc) + '</div>' +
+          '</div>';
+      });
+      insightsGrid.innerHTML = html;
+
+      // Rebind card-ask-btn handlers
+      insightsGrid.querySelectorAll('.card-ask-btn').forEach(function (btn) {
+        btn.addEventListener('click', function () {
+          var context = btn.getAttribute('data-context');
+          messagesEl.innerHTML = '';
+          openPanel();
+          addUserMessage('I have a question about ' + context);
+          showTyping();
+          setTimeout(function () {
+            removeTyping();
+            var prompts = contextPrompts[context] || [
+              'Tell me more about this section',
+              'Show me a summary',
+              'Are there any issues I should know about?'
+            ];
+            addAiMessage(
+              'Great! What would you like to know about <strong>' + escapeHtml(context) + '</strong>? Here are a few things I can help with:',
+              prompts
+            );
+          }, 1000 + Math.random() * 500);
+        });
+      });
+    }
+
+    // Toggle dropdown on button click
+    document.getElementById('regenerate-insights').addEventListener('click', function (e) {
+      e.stopPropagation();
+      insightsDropdown.classList.toggle('is-visible');
+    });
+
+    // Close dropdown on click outside
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.insights-btn-wrap')) {
+        insightsDropdown.classList.remove('is-visible');
+      }
+    });
+
+    // Handle dropdown item clicks
+    insightsDropdown.querySelectorAll('.insights-dropdown-item').forEach(function (item) {
+      item.addEventListener('click', function () {
+        var mode = item.getAttribute('data-insight-mode');
+        insightsDropdown.classList.remove('is-visible');
+
+        // Show skeleton loading
+        insightsGrid.classList.add('is-loading');
+
+        setTimeout(function () {
+          renderInsightSet(insightModes[mode]);
+          insightsGrid.classList.remove('is-loading');
+        }, 1500);
       });
     });
 
