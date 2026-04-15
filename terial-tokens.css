@@ -334,6 +334,37 @@ body {
   border-bottom-color: var(--color-primary-6);
 }
 
+/* Tab Box */
+.tab-box {
+  display: inline-flex;
+  padding: 3px;
+  background: var(--color-gray-2);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-sm);
+}
+.tab-box-item {
+  padding: 6px 14px;
+  font-family: var(--font-family-base);
+  font-size: var(--font-body-md-size);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-gray-6);
+  background: none;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.tab-box-item:hover {
+  color: var(--color-text-secondary);
+}
+.tab-box-item.is-active {
+  background: var(--color-white);
+  color: var(--color-text-primary);
+  box-shadow: var(--shadow-sm);
+}
+
 /* Table */
 .table {
   width: 100%;

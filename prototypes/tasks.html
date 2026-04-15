@@ -193,11 +193,1138 @@
       padding: var(--space-2xl) var(--space-2xl) 80px var(--space-2xl);
     }
 
+    /* Templates page */
+    .templates-page { display: none; }
+    .templates-page.is-visible { display: block; }
+    .templates-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--color-border-default);
+      margin-bottom: var(--space-2xl);
+    }
+    .templates-tab {
+      padding: 10px var(--space-xl);
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--font-family-base);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color 0.15s ease, border-color 0.15s ease;
+    }
+    .templates-tab:hover { color: var(--color-text-primary); }
+    .templates-tab.is-active {
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-semibold);
+      border-bottom-color: var(--color-primary-6);
+    }
+    .templates-empty {
+      text-align: center;
+      padding: 80px var(--space-2xl);
+      color: var(--color-text-tertiary);
+      font-size: var(--font-body-md-size);
+    }
+
+    /* Template list table */
+    .tpl-list-header {
+      display: flex;
+      justify-content: flex-end;
+      margin-bottom: var(--space-xl);
+    }
+    .tpl-table-wrap {
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .tpl-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--font-body-md-size);
+    }
+    .tpl-table thead th {
+      padding: 12px var(--space-lg);
+      text-align: left;
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-7);
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-border-default);
+      font-size: var(--font-body-sm-size);
+    }
+    .tpl-table tbody tr {
+      cursor: pointer;
+    }
+    .tpl-table tbody tr:hover { background: var(--color-gray-1); }
+    .tpl-table tbody td {
+      padding: 12px var(--space-lg);
+      border-bottom: 1px solid var(--color-border-default);
+      color: var(--color-text-primary);
+    }
+    .tpl-table tbody tr:last-child td { border-bottom: none; }
+    .tpl-table .tpl-name-cell { font-weight: var(--font-weight-medium); color: var(--color-primary-7); }
+
+    /* Create template dropdown */
+    .create-tpl-wrap { position: relative; }
+    .create-tpl-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 4px;
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-md);
+      z-index: 50;
+      min-width: 200px;
+      overflow: hidden;
+    }
+    .create-tpl-dropdown.is-open { display: block; }
+    .create-tpl-dropdown-item {
+      display: block;
+      width: 100%;
+      padding: 8px 14px;
+      border: none;
+      background: none;
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-primary);
+      text-align: left;
+      cursor: pointer;
+    }
+    .create-tpl-dropdown-item:hover { background: var(--color-gray-1); }
+
+    /* "From opp" modal — opp list table */
+    .opp-pick-search {
+      width: 100%;
+      padding: 8px 12px;
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--space-lg);
+    }
+    .opp-pick-search:focus { outline: none; border-color: var(--color-primary-6); }
+    .opp-pick-table { width: 100%; border-collapse: collapse; }
+    .opp-pick-table th {
+      text-align: left;
+      padding: 8px var(--space-lg);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-tertiary);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .opp-pick-table td {
+      padding: 10px var(--space-lg);
+      font-size: var(--font-body-md-size);
+      border-bottom: 1px solid var(--color-border-default);
+      cursor: pointer;
+    }
+    .opp-pick-table tbody tr:hover { background: var(--color-gray-1); }
+    .opp-pick-table tbody tr.is-selected { background: var(--color-primary-1, #fef9e7); }
+
+    /* Template detail pill badges (smaller, no dot) */
+    .tpl-pill {
+      display: inline-flex;
+      align-items: center;
+      padding: 3px 10px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-pill);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      background: var(--color-gray-1, #f6f8fa);
+    }
+
+    /* Template detail page */
+    .tpl-detail-page { display: none; }
+    .tpl-detail-page.is-visible { display: block; }
+    .tpl-detail-breadcrumb {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      margin-bottom: var(--space-lg);
+    }
+    .tpl-detail-breadcrumb a { color: var(--color-primary-7); text-decoration: none; cursor: pointer; }
+    .tpl-detail-breadcrumb a:hover { text-decoration: underline; }
+    .tpl-detail-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-2xl);
+    }
+    .tpl-detail-task-list {
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .tpl-detail-task {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 12px var(--space-lg);
+      border-bottom: 1px solid var(--color-border-default);
+      cursor: pointer;
+    }
+    .tpl-detail-task:last-child { border-bottom: none; }
+    .tpl-detail-task:hover { background: var(--color-gray-1); }
+    .tpl-detail-task .tpl-dt-name {
+      flex: 1;
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-primary);
+    }
+    .tpl-detail-task .tpl-dt-role {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      margin-right: var(--space-sm);
+    }
+    .tpl-dt-remove {
+      background: none;
+      border: none;
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+      padding: 2px;
+      display: grid;
+      place-items: center;
+    }
+    .tpl-dt-remove:hover { color: var(--color-danger-fg, #dc2626); }
+    .tpl-dt-remove svg { width: 14px; height: 14px; }
+
     .page-head {
       display: flex; align-items: center; justify-content: space-between;
       margin-bottom: var(--space-2xl);
     }
     .page-head h1 { margin: 0; }
+
+    /* ========== Opportunities page ========== */
+    .opps-page { display: none; }
+    .opps-page.is-visible { display: block; }
+
+    .opps-toolbar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-lg);
+      flex-wrap: wrap;
+    }
+    .opps-view-toggle {
+      display: flex;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .opps-view-toggle button {
+      display: flex; align-items: center; gap: 4px;
+      padding: 7px 12px;
+      border: none;
+      background: var(--color-white);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+    }
+    .opps-view-toggle button + button { border-left: 1px solid var(--color-border-default); }
+    .opps-view-toggle button.is-active {
+      background: var(--color-gray-8);
+      color: var(--color-white);
+    }
+    .opps-view-toggle button svg {
+      width: 14px; height: 14px;
+      stroke: currentColor; fill: none;
+      stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+    }
+    .opps-sort-btn {
+      display: flex; align-items: center; gap: 4px;
+      padding: 7px 12px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      background: var(--color-white);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+    }
+    .opps-sort-btn svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+    .opps-search-input {
+      padding: 7px 12px 7px 30px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      background: var(--color-white);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-primary);
+      outline: none;
+      width: 200px;
+    }
+    .opps-search-input::placeholder { color: var(--color-gray-5); }
+    .opps-filter-select {
+      padding: 7px 24px 7px 10px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      background: var(--color-white);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-secondary);
+      appearance: auto;
+      cursor: pointer;
+    }
+    .opps-filter-pill {
+      display: flex; align-items: center; gap: 4px;
+      padding: 6px 10px;
+      border: 1px solid var(--color-primary-6);
+      border-radius: var(--radius-sm);
+      background: var(--color-primary-1);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-medium);
+    }
+    .opps-filter-pill .pill-x {
+      cursor: pointer;
+      color: var(--color-text-tertiary);
+      font-size: 14px;
+      line-height: 1;
+    }
+    .opps-filters-row2 {
+      display: flex;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-xl);
+      flex-wrap: wrap;
+    }
+    .opps-filter-ghost {
+      padding: 6px 10px;
+      border: 1px dashed var(--color-border-default);
+      border-radius: var(--radius-sm);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      background: none;
+      cursor: pointer;
+      font-family: var(--font-family-base);
+      display: flex; align-items: center; gap: 4px;
+    }
+    .opps-filter-ghost svg { width: 12px; height: 12px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+
+    .opps-summary-bar {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-xl);
+    }
+    .opps-summary-text {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-secondary);
+    }
+    .opps-summary-text strong { color: var(--color-text-primary); font-weight: var(--font-weight-semibold); }
+    .opps-new-btn {
+      padding: 8px 16px;
+      background: var(--color-primary-6);
+      color: var(--color-gray-9);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-semibold);
+      cursor: pointer;
+    }
+    .opps-kebab {
+      width: 30px; height: 30px;
+      display: grid; place-items: center;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      background: var(--color-primary-6);
+      color: var(--color-gray-9);
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* Kanban columns */
+    .opps-kanban {
+      display: flex;
+      gap: var(--space-lg);
+      overflow-x: auto;
+      padding-bottom: var(--space-xl);
+    }
+    .opps-col {
+      min-width: 240px;
+      width: 240px;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+    }
+    .opps-col-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-sm) 0;
+      margin-bottom: var(--space-sm);
+      border-bottom: 3px solid var(--color-primary-6);
+    }
+    .opps-col-title {
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+    }
+    .opps-col-value {
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+    }
+    .opps-col-count {
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+    }
+    .opps-col-add {
+      width: 22px; height: 22px;
+      display: grid; place-items: center;
+      border: none;
+      background: none;
+      color: var(--color-text-tertiary);
+      font-size: 18px;
+      cursor: pointer;
+    }
+    .opps-col-add:hover { color: var(--color-text-primary); }
+    .opps-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-sm);
+      cursor: pointer;
+      transition: box-shadow 0.15s ease;
+    }
+    .opps-card:hover { box-shadow: var(--shadow-md); }
+    .opps-card-name {
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: 2px;
+    }
+    .opps-card-value {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-primary);
+      margin-bottom: 4px;
+    }
+    .opps-card-company {
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+      margin-bottom: var(--space-sm);
+    }
+    .opps-card-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-bottom: var(--space-sm); }
+    .opps-tag {
+      padding: 2px 6px;
+      border-radius: 3px;
+      font-size: 10px;
+      font-weight: var(--font-weight-semibold);
+      text-transform: uppercase;
+    }
+    .opps-tag.new-lead { background: #fef2f2; color: #dc2626; border: 1px solid #fca5a5; }
+    .opps-card-assignee {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 2px 6px;
+      border: 1px solid var(--color-border-default);
+      border-radius: 3px;
+      font-size: 10px;
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-sm);
+    }
+    .opps-card-assignee svg { width: 10px; height: 10px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+    .opps-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+      padding-top: var(--space-sm);
+      border-top: 1px solid var(--color-border-default);
+    }
+    .opps-card-footer svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 1.6; margin-right: 2px; }
+    .opps-end-list {
+      text-align: center;
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+      padding: var(--space-lg) 0;
+    }
+    .opps-no-items {
+      text-align: center;
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      padding: var(--space-2xl) 0;
+    }
+    .opps-card-kebab {
+      float: right;
+      background: none; border: none;
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+      font-size: 16px;
+      padding: 0 2px;
+      line-height: 1;
+    }
+
+    /* ========== Opportunity Detail page ========== */
+    .opp-detail-page { display: none; }
+    .opp-detail-page.is-visible { display: block; }
+    .opp-breadcrumb {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      margin-bottom: var(--space-sm);
+    }
+    .opp-breadcrumb a { color: var(--color-primary-7); text-decoration: none; }
+    .opp-breadcrumb a:hover { text-decoration: underline; }
+    .opp-detail-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-sm);
+    }
+    .opp-detail-header h1 { margin: 0; }
+    .opp-header-actions { display: flex; gap: var(--space-sm); }
+    .opp-btn-lost, .opp-btn-won {
+      padding: 8px 16px;
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-semibold);
+      cursor: pointer;
+    }
+    .opp-btn-lost { background: #ef4444; color: white; }
+    .opp-btn-won { background: var(--color-primary-6); color: var(--color-gray-9); }
+    .opp-created {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      margin-bottom: var(--space-xl);
+    }
+
+    /* Stage progress */
+    .opp-stages {
+      display: flex;
+      margin-bottom: var(--space-2xl);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      height: 28px;
+    }
+    .opp-stage {
+      flex: 1;
+      display: grid;
+      place-items: center;
+      font-size: 11px;
+      font-weight: var(--font-weight-semibold);
+      color: white;
+      background: var(--color-gray-3);
+    }
+    .opp-stage.is-active { background: #22c55e; }
+    .opp-stage.is-past { background: #22c55e; }
+
+    /* Detail layout */
+    .opp-detail-body {
+      display: grid;
+      grid-template-columns: 2fr 3fr;
+      gap: var(--space-2xl);
+    }
+    .opp-summary {
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      padding: var(--space-xl) var(--space-2xl);
+    }
+    .opp-summary-title {
+      font-size: var(--font-body-lg-semi-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-xl);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .opp-summary-title svg {
+      width: 14px; height: 14px;
+      stroke: var(--color-text-tertiary); fill: none;
+      stroke-width: 1.6; cursor: pointer;
+    }
+    .opp-field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg) var(--space-2xl);
+    }
+    .opp-field-label {
+      font-size: 11px;
+      color: var(--color-primary-7);
+      margin-bottom: 2px;
+    }
+    .opp-field-value {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-primary);
+    }
+    .opp-field-value a { color: var(--color-primary-7); text-decoration: none; }
+    .opp-field-value a:hover { text-decoration: underline; }
+    .opp-field-full { grid-column: 1 / -1; }
+
+    /* Right panel top tabs */
+    .opp-right-panel { display: flex; flex-direction: column; }
+    .opp-right-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--color-border-default);
+      margin-bottom: var(--space-xl);
+    }
+    .opp-right-tab {
+      padding: 10px var(--space-xl);
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--font-family-base);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+    .opp-right-tab:hover { color: var(--color-text-primary); }
+    .opp-right-tab.is-active {
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-semibold);
+      border-bottom-color: var(--color-gray-8);
+    }
+    .opp-right-tab-panel { display: none; }
+    .opp-right-tab-panel.is-visible { display: block; }
+
+    /* Activity panel */
+    .opp-activity {
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      padding: var(--space-xl) var(--space-2xl);
+    }
+    .opp-activity-tabs {
+      display: flex;
+      gap: var(--space-lg);
+      border-bottom: 1px solid var(--color-border-default);
+      margin-bottom: var(--space-xl);
+    }
+    .opp-activity-tab {
+      display: flex; align-items: center; gap: 4px;
+      padding: 8px 0;
+      border: none;
+      background: none;
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+    .opp-activity-tab.is-active {
+      color: var(--color-text-primary);
+      border-bottom-color: var(--color-primary-6);
+    }
+    .opp-activity-tab svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+
+    /* Right panel: Materials tab */
+    .opp-materials-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      padding: var(--space-xl) var(--space-2xl);
+    }
+    .opp-upload-zone {
+      border: 1px dashed var(--color-border-default);
+      border-radius: var(--radius-md);
+      background: var(--color-gray-0, #fafafa);
+      padding: var(--space-3xl, 40px) var(--space-2xl);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-xl);
+    }
+    .opp-upload-icon {
+      width: 40px; height: 40px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      display: grid; place-items: center;
+      margin-bottom: var(--space-sm);
+    }
+    .opp-upload-icon svg { width: 20px; height: 20px; }
+    .opp-upload-text {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-secondary);
+    }
+    .opp-upload-text a {
+      color: var(--color-primary-7);
+      font-weight: var(--font-weight-semibold);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .opp-upload-text a:hover { text-decoration: underline; }
+    .opp-upload-hint {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+    }
+
+    /* Right panel: Tasks tab */
+    .opp-tasks-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      padding: var(--space-xl) var(--space-2xl);
+    }
+    .opp-tasks-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-xl);
+    }
+    .opp-tasks-card-title {
+      font-size: var(--font-body-lg-semi-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+    }
+    .opp-add-task-btn {
+      padding: 6px 14px;
+      background: var(--color-white);
+      color: var(--color-text-primary);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+    }
+    .opp-add-task-btn:hover { background: var(--color-gray-1); }
+    .opp-tasks-list {
+      display: flex;
+      flex-direction: column;
+    }
+    .opp-task-panel {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .opp-note-input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 10px 12px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-primary);
+      outline: none;
+      margin-bottom: var(--space-sm);
+    }
+    .opp-note-input::placeholder { color: var(--color-gray-5); }
+    .opp-save-btn {
+      padding: 6px 16px;
+      background: var(--color-primary-6);
+      color: var(--color-gray-9);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-semibold);
+      cursor: pointer;
+      margin-bottom: var(--space-xl);
+    }
+    .opp-activity-title {
+      font-size: var(--font-body-lg-semi-size);
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: var(--space-lg);
+    }
+    .opp-activity-filters {
+      display: flex;
+      gap: var(--space-xs);
+      flex-wrap: wrap;
+      margin-bottom: var(--space-xl);
+    }
+    .opp-af-btn {
+      padding: 4px 10px;
+      border: 1px solid var(--color-border-default);
+      border-radius: 20px;
+      background: var(--color-white);
+      font-family: var(--font-family-base);
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      display: flex; align-items: center; gap: 3px;
+    }
+    .opp-af-btn.is-active { background: var(--color-gray-8); color: var(--color-white); border-color: var(--color-gray-8); }
+    .opp-af-btn svg { width: 11px; height: 11px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+
+    /* Activity items */
+    .opp-activity-item {
+      display: flex;
+      gap: var(--space-lg);
+      padding: var(--space-lg) 0;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .opp-activity-item:last-child { border-bottom: none; }
+    .opp-ai-avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: grid; place-items: center;
+      font-size: 11px; font-weight: 600; color: white;
+    }
+    .opp-ai-avatar.orange { background: #f97316; }
+    .opp-ai-avatar.green { background: #22c55e; }
+    .opp-ai-avatar.blue { background: #3b82f6; }
+    .opp-ai-content { flex: 1; min-width: 0; }
+    .opp-ai-name { font-size: var(--font-body-sm-size); color: var(--color-primary-7); font-weight: var(--font-weight-medium); }
+    .opp-ai-action { font-size: var(--font-body-sm-size); color: var(--color-text-secondary); }
+    .opp-ai-time { font-size: 11px; color: var(--color-text-tertiary); margin-bottom: var(--space-xs); }
+    .opp-ai-note {
+      background: var(--color-gray-1);
+      border-radius: var(--radius-sm);
+      padding: var(--space-sm) var(--space-lg);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-primary);
+      margin-top: var(--space-xs);
+    }
+    .opp-ai-file {
+      display: flex; align-items: center; gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-lg);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      font-size: var(--font-body-sm-size);
+      margin-top: var(--space-xs);
+    }
+    .opp-ai-file svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 1.6; }
+    .opp-ai-file .file-size { margin-left: auto; color: var(--color-text-tertiary); font-size: 11px; }
+    .opp-ai-photo {
+      width: 140px;
+      height: 100px;
+      border-radius: var(--radius-sm);
+      background: var(--color-gray-3);
+      margin-top: var(--space-xs);
+      overflow: hidden;
+      display: grid; place-items: center;
+      color: var(--color-text-tertiary);
+      font-size: 11px;
+    }
+
+    /* Opp detail: sections (Tasks, Contacts) */
+    .opp-section {
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      margin-top: var(--space-xl);
+    }
+    .opp-section-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-lg);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .opp-section-caret { font-size: 10px; color: var(--color-text-tertiary); }
+    .opp-section-title {
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+    }
+    .opp-section-add {
+      margin-left: auto;
+      background: none; border: none;
+      color: var(--color-text-tertiary);
+      font-size: 18px; cursor: pointer;
+    }
+    .opp-task-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-sm);
+      padding: var(--space-lg);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .opp-task-item:last-child { border-bottom: none; }
+    .opp-task-check {
+      width: 20px; height: 20px;
+      border: 1.5px solid var(--color-border-default);
+      border-radius: 50%;
+      display: grid; place-items: center;
+      font-size: 0;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .opp-task-content { flex: 1; min-width: 0; }
+    .opp-task-name { font-size: var(--font-body-sm-size); color: var(--color-text-primary); font-weight: var(--font-weight-medium); }
+    .opp-task-meta { font-size: 11px; color: var(--color-text-tertiary); }
+    .opp-task-kebab { background: none; border: none; color: var(--color-text-tertiary); cursor: pointer; font-size: 16px; padding: 0 4px; }
+
+    .opp-contact-item {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: var(--space-lg);
+    }
+    .opp-contact-name { font-size: var(--font-body-sm-size); font-weight: var(--font-weight-semibold); color: var(--color-text-primary); margin-bottom: 2px; }
+    .opp-primary-badge {
+      display: inline-block;
+      padding: 1px 6px;
+      border: 1px solid var(--color-border-default);
+      border-radius: 3px;
+      font-size: 9px;
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-secondary);
+      text-transform: uppercase;
+      vertical-align: middle;
+      margin-left: 4px;
+    }
+    .opp-contact-role { font-size: var(--font-body-sm-size); color: var(--color-text-secondary); margin-bottom: 4px; }
+    .opp-contact-detail { font-size: var(--font-body-sm-size); }
+    .opp-contact-detail a { color: var(--color-primary-7); text-decoration: none; }
+    .opp-contact-detail a:hover { text-decoration: underline; }
+    .opp-contact-gear { background: none; border: none; color: var(--color-text-tertiary); cursor: pointer; font-size: 14px; }
+
+    /* Template modal */
+    .tpl-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: 200;
+      display: none;
+      place-items: center;
+    }
+    .tpl-modal-overlay.is-open { display: grid; }
+    .tpl-modal {
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      width: 480px;
+      max-height: 80vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .tpl-modal-header {
+      padding: var(--space-xl) var(--space-2xl);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .tpl-modal-title {
+      font-size: var(--font-body-lg-semi-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+    }
+    .tpl-modal-body {
+      padding: var(--space-xl) var(--space-2xl);
+      overflow-y: auto;
+      flex: 1;
+    }
+    .tpl-modal-label {
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-sm);
+    }
+    .tpl-modal-input {
+      width: 100%;
+      box-sizing: border-box;
+      padding: 8px 12px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-primary);
+      outline: none;
+      margin-bottom: var(--space-xl);
+    }
+    .tpl-modal-input:focus { border-color: var(--color-primary-6); }
+    .tpl-modal-input::placeholder { color: var(--color-gray-5); }
+    .tpl-task-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .tpl-task-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-lg);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+    }
+    .tpl-task-row input[type="checkbox"] {
+      width: 16px; height: 16px;
+      accent-color: var(--color-primary-6);
+      flex-shrink: 0;
+    }
+    .tpl-task-row .tpl-task-name {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-primary);
+    }
+    .tpl-task-row .tpl-task-meta {
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+      margin-left: auto;
+    }
+    .tpl-modal-footer {
+      padding: var(--space-lg) var(--space-2xl);
+      border-top: 1px solid var(--color-border-default);
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--space-sm);
+    }
+    .tpl-modal-cancel {
+      padding: 8px 16px;
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-primary);
+      cursor: pointer;
+    }
+    .tpl-modal-cancel:hover { background: var(--color-gray-1); }
+    .tpl-modal-create {
+      padding: 8px 16px;
+      background: var(--color-primary-6);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-gray-9);
+      cursor: pointer;
+    }
+    .tpl-modal-create:hover { background: var(--color-primary-7); }
+    .tpl-modal-create:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    /* Add task dropdown */
+    .add-task-dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      margin-top: 4px;
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-md);
+      z-index: 50;
+      min-width: 160px;
+      overflow: hidden;
+    }
+    .add-task-dropdown.is-open { display: block; }
+    .add-task-dropdown-item {
+      display: block;
+      width: 100%;
+      padding: 8px 14px;
+      border: none;
+      background: none;
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-primary);
+      text-align: left;
+      cursor: pointer;
+    }
+    .add-task-dropdown-item:hover { background: var(--color-gray-1); }
+
+    /* Bottom tabs: Photos/Documents/Proposals/Tickets */
+    .opp-bottom-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--color-border-default);
+      margin-bottom: var(--space-xl);
+    }
+    .opp-bottom-tab {
+      padding: 10px var(--space-xl);
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+      border: none;
+      background: none;
+      font-family: var(--font-family-base);
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+    .opp-bottom-tab:hover { color: var(--color-text-primary); }
+    .opp-bottom-tab.is-active {
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-semibold);
+      border-bottom-color: var(--color-gray-8);
+    }
+    .opp-photos-toolbar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-xl);
+    }
+    .opp-photos-search {
+      padding: 7px 12px 7px 12px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      background: var(--color-white);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-primary);
+      outline: none;
+      width: 180px;
+    }
+    .opp-photos-search::placeholder { color: var(--color-gray-5); }
+    .opp-add-photos-btn {
+      margin-left: auto;
+      padding: 7px 14px;
+      background: var(--color-gray-8);
+      color: var(--color-white);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-semibold);
+      cursor: pointer;
+    }
+    .opp-photo-date {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-primary);
+      margin-bottom: var(--space-lg);
+    }
+    .opp-photo-date input { width: 16px; height: 16px; }
+    .opp-photo-item { display: inline-block; margin-bottom: var(--space-lg); }
+    .opp-photo-thumb {
+      width: 160px;
+      height: 120px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border-default);
+      overflow: hidden;
+      position: relative;
+      background: linear-gradient(135deg, #e0e7ff, #c7d2fe, #a5b4fc);
+    }
+    .opp-photo-placeholder {
+      width: 100%; height: 100%;
+      display: grid; place-items: center;
+      font-size: 40px;
+    }
+    .opp-photo-kebab {
+      position: absolute;
+      top: 4px; right: 4px;
+      background: rgba(255,255,255,0.8);
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+      font-size: 14px;
+      padding: 1px 4px;
+      color: var(--color-text-secondary);
+    }
+    .opp-photo-caption {
+      font-size: 11px;
+      color: var(--color-text-tertiary);
+      margin-top: 4px;
+    }
+    .opp-photo-caption a { color: var(--color-primary-7); text-decoration: none; }
+    .opp-end-list {
+      text-align: center;
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      padding: var(--space-2xl) 0;
+    }
 
     /* ---------- Filters ---------- */
     .filters {
@@ -641,28 +1768,23 @@
       position: fixed; inset: 0;
       background: rgba(20, 25, 50, 0.35);
       z-index: 1000;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity 0.25s ease, visibility 0.25s ease;
+      display: none;
+      place-items: center;
     }
     .drawer-overlay.is-open {
-      opacity: 1;
-      visibility: visible;
+      display: grid;
     }
     .drawer {
-      position: fixed;
-      top: 0; right: 0; bottom: 0;
-      width: 520px;
+      width: 580px;
       max-width: 92vw;
+      max-height: 85vh;
       background: var(--color-white);
-      box-shadow: -4px 0 24px rgba(0,0,0,0.12);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
       display: flex;
       flex-direction: column;
-      transform: translateX(100%);
-      transition: transform 0.25s ease;
-      z-index: 1001;
+      overflow: hidden;
     }
-    .drawer-overlay.is-open .drawer { transform: translateX(0); }
     .drawer-head {
       display: flex; align-items: flex-start; justify-content: space-between;
       padding: var(--space-2xl);
@@ -1241,6 +2363,18 @@
         Production
         <span class="caret">▾</span>
       </div>
+
+      <div class="nav-row" id="nav-admin-toggle">
+        <span class="icon"><svg viewBox="0 0 16 16"><path d="M8 1a2.5 2.5 0 0 0 0 5 2.5 2.5 0 0 0 0-5zM3 14v-1a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v1"/><circle cx="13" cy="4" r="2"/></svg></span>
+        Admin
+        <span class="caret" id="admin-caret">▾</span>
+      </div>
+      <div class="nav-children" id="nav-admin-children" style="display:none;">
+        <div class="nav-child" data-page="users">Users</div>
+        <div class="nav-child" data-page="roles">Roles</div>
+        <div class="nav-child" data-page="templates">Templates</div>
+        <div class="nav-child" data-page="integrations">Integrations</div>
+      </div>
     </nav>
 
     <div class="app-user">
@@ -1269,6 +2403,640 @@
     </div>
 
     <div class="app-content">
+      <!-- Templates page (hidden by default) -->
+      <div class="templates-page" id="templates-page">
+        <div class="page-head">
+          <h1 class="t-h3">Templates</h1>
+        </div>
+        <div class="templates-tabs" style="display:flex;align-items:center;">
+          <button class="templates-tab is-active">Tasks</button>
+          <button class="templates-tab">Proposal</button>
+          <button class="templates-tab">Folders</button>
+          <div class="create-tpl-wrap" style="margin-left:auto;margin-bottom:-1px;">
+            <button class="btn btn-primary btn-sm" id="create-new-tpl-btn">+ Create new template</button>
+            <div class="create-tpl-dropdown" id="create-tpl-dropdown">
+              <button class="create-tpl-dropdown-item" id="create-tpl-blank">Blank template</button>
+              <button class="create-tpl-dropdown-item" id="create-tpl-from-opp">From existing opportunity</button>
+            </div>
+          </div>
+        </div>
+        <div id="templates-content">
+          <div class="tpl-table-wrap">
+            <table class="tpl-table">
+              <thead>
+                <tr>
+                  <th>Template Name</th>
+                  <th>Tasks</th>
+                  <th>Assignee</th>
+                  <th>Created By</th>
+                  <th>Last Modified</th>
+                </tr>
+              </thead>
+              <tbody id="tpl-table-body">
+                <tr data-tpl-detail="roofing">
+                  <td class="tpl-name-cell">Roofing Project Tasks</td>
+                  <td>5</td>
+                  <td>Account Rep, Estimator</td>
+                  <td>Valeriia Kovalenko</td>
+                  <td>Apr 10, 2026</td>
+                </tr>
+                <tr data-tpl-detail="inspection">
+                  <td class="tpl-name-cell">Site Inspection Checklist</td>
+                  <td>4</td>
+                  <td>Project Manager, Estimator</td>
+                  <td>Alec McGovern</td>
+                  <td>Apr 8, 2026</td>
+                </tr>
+                <tr data-tpl-detail="bidprep">
+                  <td class="tpl-name-cell">Bid Preparation</td>
+                  <td>3</td>
+                  <td>Estimator, Account Rep</td>
+                  <td>Romao Barbosa</td>
+                  <td>Mar 28, 2026</td>
+                </tr>
+                <tr data-tpl-detail="closeout">
+                  <td class="tpl-name-cell">Project Closeout</td>
+                  <td>6</td>
+                  <td>Project Manager, Account Rep</td>
+                  <td>Valeriia Admin</td>
+                  <td>Mar 15, 2026</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Template detail page -->
+      <div class="tpl-detail-page" id="tpl-detail-page">
+        <div class="tpl-detail-breadcrumb"><a id="tpl-back-link">Templates</a>  /  <span id="tpl-detail-name-crumb">Template Name</span></div>
+        <div class="tpl-detail-header">
+          <h1 class="t-h3" id="tpl-detail-title">Template Name</h1>
+          <button class="opp-add-task-btn" id="tpl-add-new-task-btn">+ Add new task</button>
+        </div>
+        <div style="display:flex;gap:var(--space-sm);margin-bottom:var(--space-2xl);" id="tpl-detail-badges">
+          <span class="tpl-pill">Tasks</span>
+          <span class="tpl-pill" id="tpl-detail-opp-badge">From opportunity: Smart Construction Hub</span>
+        </div>
+        <div class="tpl-detail-task-list" id="tpl-detail-tasks">
+          <!-- populated by JS -->
+        </div>
+      </div>
+
+      <!-- Opportunities page -->
+      <div class="opps-page" id="opps-page">
+        <!-- Toolbar -->
+        <div class="opps-toolbar">
+          <div class="opps-view-toggle">
+            <button class="is-active"><svg viewBox="0 0 14 14"><rect x="1.5" y="2" width="3" height="10" rx="0.5"/><rect x="5.5" y="2" width="3" height="6" rx="0.5"/><rect x="9.5" y="2" width="3" height="8" rx="0.5"/></svg></button>
+            <button><svg viewBox="0 0 14 14"><path d="M2 4h10M2 7h10M2 10h10"/></svg></button>
+          </div>
+          <button class="opps-sort-btn"><svg viewBox="0 0 14 14"><path d="M2 4h10M4 7h6M6 10h2"/></svg> Sort</button>
+          <input class="opps-search-input" type="text" placeholder="Search Opportunities" />
+          <select class="opps-filter-select"><option>Location</option></select>
+          <select class="opps-filter-select"><option>Account Rep</option></select>
+          <select class="opps-filter-select"><option>Estimator</option></select>
+          <div class="opps-filter-pill">Open <span class="pill-x">×</span></div>
+          <select class="opps-filter-select"><option>Lead Source</option></select>
+          <select class="opps-filter-select"><option>Filter by Roof Type</option></select>
+        </div>
+        <div class="opps-filters-row2">
+          <button class="opps-filter-ghost"><svg viewBox="0 0 14 14"><rect x="2" y="2" width="10" height="10" rx="1"/><path d="M5 2v10M9 2v10"/></svg> Created At Date Range</button>
+          <button class="opps-filter-ghost"><svg viewBox="0 0 14 14"><rect x="2" y="2" width="10" height="10" rx="1"/><path d="M5 2v10M9 2v10"/></svg> Closed At Date Range</button>
+          <button class="opps-filter-ghost"><svg viewBox="0 0 14 14"><path d="M2 4h10M2 7h10M2 10h4"/></svg> Tags</button>
+        </div>
+        <!-- Summary bar -->
+        <div class="opps-summary-bar">
+          <span class="opps-summary-text"><strong>$15,000.00</strong> · 1 Opportunity</span>
+          <select class="opps-filter-select"><option>Hiring</option></select>
+          <button class="opps-new-btn">New Opportunity</button>
+          <button class="opps-kebab">!</button>
+        </div>
+        <!-- Kanban -->
+        <div class="opps-kanban">
+          <div class="opps-col">
+            <div class="opps-col-header">
+              <div>
+                <div class="opps-col-title">Resume Received</div>
+                <div class="opps-col-value">$15,000.00</div>
+                <div class="opps-col-count">1 Opportunity</div>
+              </div>
+              <button class="opps-col-add">+</button>
+            </div>
+            <div class="opps-card" id="opp-card-1">
+              <button class="opps-card-kebab">⋮</button>
+              <div class="opps-card-name">Smart Construction Hub</div>
+              <div class="opps-card-value">$15,000.00</div>
+              <div class="opps-card-company">ABC Architectural Builders & Construction Solutions</div>
+              <div class="opps-card-tags">
+                <span class="opps-tag new-lead">NEW LEAD</span>
+              </div>
+              <div class="opps-card-assignee"><svg viewBox="0 0 12 12"><circle cx="6" cy="4" r="2.5"/><path d="M1.5 11a4.5 4.5 0 0 1 9 0"/></svg> VALERIIA USER</div>
+              <div class="opps-card-footer">
+                <span><svg viewBox="0 0 12 12"><rect x="1" y="1" width="10" height="10" rx="1"/><path d="M4 4h4M4 6h4M4 8h2"/></svg> 2</span>
+                <span><svg viewBox="0 0 12 12"><rect x="1" y="2" width="10" height="8" rx="1"/><path d="M4 1v2M8 1v2M1 5h10"/></svg> Jun 28</span>
+              </div>
+            </div>
+            <div class="opps-end-list">(End of the list)</div>
+          </div>
+          <div class="opps-col">
+            <div class="opps-col-header">
+              <div>
+                <div class="opps-col-title">Phone Screen</div>
+                <div class="opps-col-value">$0.00</div>
+                <div class="opps-col-count">0 Opportunities</div>
+              </div>
+              <button class="opps-col-add">+</button>
+            </div>
+            <div class="opps-no-items">(No items)</div>
+          </div>
+          <div class="opps-col">
+            <div class="opps-col-header">
+              <div>
+                <div class="opps-col-title">1 hour interview</div>
+                <div class="opps-col-value">$0.00</div>
+                <div class="opps-col-count">0 Opportunities</div>
+              </div>
+              <button class="opps-col-add">+</button>
+            </div>
+            <div class="opps-no-items">(No items)</div>
+          </div>
+          <div class="opps-col">
+            <div class="opps-col-header">
+              <div>
+                <div class="opps-col-title">Take Home Assignment</div>
+                <div class="opps-col-value">$0.00</div>
+                <div class="opps-col-count">0 Opportunities</div>
+              </div>
+              <button class="opps-col-add">+</button>
+            </div>
+            <div class="opps-no-items">(No items)</div>
+          </div>
+          <div class="opps-col">
+            <div class="opps-col-header">
+              <div>
+                <div class="opps-col-title">Offer Sent</div>
+                <div class="opps-col-value">$0.00</div>
+                <div class="opps-col-count">0 Opportunities</div>
+              </div>
+              <button class="opps-col-add">+</button>
+            </div>
+            <div class="opps-no-items">(No items)</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Opportunity Detail page -->
+      <div class="opp-detail-page" id="opp-detail-page">
+        <div class="opp-breadcrumb"><a href="#" id="opp-back-link">Opportunities</a>  /  Smart Construction Hub</div>
+        <div class="opp-detail-header">
+          <h1 class="t-h3">Smart Construction Hub</h1>
+          <div class="opp-header-actions">
+            <button class="opp-btn-lost">Mark as Lost</button>
+            <button class="opp-btn-won">Mark as Won</button>
+            <button class="opps-kebab">!</button>
+          </div>
+        </div>
+        <div class="opp-created">Created by Valeriia Kovalenko at 4/15/2026 3:56 pm</div>
+
+        <!-- Stage progress -->
+        <div class="opp-stages">
+          <div class="opp-stage is-active">0 days</div>
+          <div class="opp-stage"></div>
+          <div class="opp-stage"></div>
+          <div class="opp-stage"></div>
+          <div class="opp-stage"></div>
+        </div>
+
+        <!-- Two-column body -->
+        <div class="opp-detail-body">
+          <!-- Summary -->
+          <div class="opp-summary">
+            <div class="opp-summary-title">Summary <svg viewBox="0 0 16 16"><path d="M11 4l1 1-7 7-2 .5.5-2z"/></svg></div>
+            <div class="opp-field-grid">
+              <div><div class="opp-field-label">Location</div><div class="opp-field-value">New York City</div></div>
+              <div><div class="opp-field-label">ID</div><div class="opp-field-value">NYC-CRM-7366</div></div>
+              <div><div class="opp-field-label">Stage</div><div class="opp-field-value">Resume Received</div></div>
+              <div><div class="opp-field-label">Pipeline</div><div class="opp-field-value"><a href="#">Hiring</a></div></div>
+              <div><div class="opp-field-label">Status</div><div class="opp-field-value">Open</div></div>
+              <div></div>
+              <div><div class="opp-field-label">Estimated Value</div><div class="opp-field-value">$15,000.00</div></div>
+              <div><div class="opp-field-label">Estimated Margin</div><div class="opp-field-value">15.05%</div></div>
+              <div><div class="opp-field-label">Roof Type</div><div class="opp-field-value">BUR</div></div>
+              <div><div class="opp-field-label">Total Area (Sq Ft)</div><div class="opp-field-value">5,000</div></div>
+              <div><div class="opp-field-label">Pre-Bid Date</div><div class="opp-field-value">6/10/2026</div></div>
+              <div><div class="opp-field-label">Bid Due Date</div><div class="opp-field-value">6/28/2026</div></div>
+              <div><div class="opp-field-label">Estimated Start Date</div><div class="opp-field-value">6/15/2026</div></div>
+              <div><div class="opp-field-label">Estimated Completion Date</div><div class="opp-field-value">4/22/2026</div></div>
+              <div class="opp-field-full"><div class="opp-field-label">Company</div><div class="opp-field-value"><a href="#">ABC Architectural Builders & Construction Solutions</a></div></div>
+              <div class="opp-field-full"><div class="opp-field-label">Property</div><div class="opp-field-value"><a href="#">Green Valley Estate</a></div></div>
+              <div class="opp-field-full"><div class="opp-field-label">Tags</div><div class="opp-field-value"><span class="opps-tag new-lead" style="background:#dbeafe;color:#1d4ed8;border-color:#93c5fd;">REAL ESTATE DEVELOPER</span> <span class="opps-tag new-lead" style="background:#dbeafe;color:#1d4ed8;border-color:#93c5fd;">GENERAL CONTRACTOR</span></div></div>
+              <div class="opp-field-full"><div class="opp-field-label">Primary Contact</div><div class="opp-field-value"><a href="#">Michael Anderson</a></div></div>
+              <div class="opp-field-full"><div class="opp-field-label">General Contractor(s)</div><div class="opp-field-value"><a href="#">ABC Architectural Builders & Construction Solutions</a></div></div>
+              <div class="opp-field-full"><div class="opp-field-label">Manufacturer</div><div class="opp-field-value"><a href="#">TAMKO</a></div></div>
+              <div><div class="opp-field-label">Account Representative</div><div class="opp-field-value"><a href="#">Valeriia User</a></div></div>
+              <div><div class="opp-field-label">Estimator</div><div class="opp-field-value"><a href="#">Valeriia Admin</a></div></div>
+              <div class="opp-field-full"><div class="opp-field-label">Lead Source</div><div class="opp-field-value">New Lead</div></div>
+              <div class="opp-field-full"><div class="opp-field-label" style="color:var(--color-primary-7);">Description</div><div class="opp-field-value">Adding a note for the opportunity update: Changed estimated value to $15,000 and updated the opportunity name. Follow-up required next week.</div></div>
+            </div>
+
+            <!-- Contacts section -->
+            <div class="opp-section">
+              <div class="opp-section-header">
+                <span class="opp-section-caret">⌃</span>
+                <span class="opp-section-title">Contacts</span>
+                <button class="opp-section-add">+</button>
+              </div>
+              <div class="opp-section-body">
+                <div class="opp-contact-item">
+                  <div class="opp-contact-info">
+                    <div class="opp-contact-name">Michael Anderson <span class="opp-primary-badge">PRIMARY</span></div>
+                    <div class="opp-contact-role">Construction Manager</div>
+                    <div class="opp-contact-detail"><a href="#">+19876543210</a></div>
+                    <div class="opp-contact-detail"><a href="#">michael.anderson@example.com</a></div>
+                  </div>
+                  <button class="opp-contact-gear">⚙</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right panel -->
+          <div class="opp-right-panel">
+            <div class="opp-right-tabs">
+              <button class="opp-right-tab is-active" data-right-tab="activities">Activities</button>
+              <button class="opp-right-tab" data-right-tab="materials">Materials</button>
+              <button class="opp-right-tab" data-right-tab="tasks">Tasks</button>
+            </div>
+
+            <!-- Activities tab -->
+            <div class="opp-right-tab-panel is-visible" id="opp-tab-activities">
+              <div class="opp-activity">
+                <div class="opp-activity-tabs">
+                  <button class="opp-activity-tab is-active"><svg viewBox="0 0 14 14"><rect x="2" y="2" width="10" height="10" rx="1"/><path d="M5 5h4M5 7h4M5 9h2"/></svg> Notes</button>
+                  <button class="opp-activity-tab"><svg viewBox="0 0 14 14"><path d="M2 4l5 3 5-3"/><rect x="2" y="3" width="10" height="8" rx="1"/></svg> Emails</button>
+                </div>
+                <input class="opp-note-input" type="text" placeholder="Add a note" />
+                <button class="opp-save-btn">Save</button>
+
+                <div class="opp-activity-title">Activity</div>
+                <div class="opp-activity-filters">
+                  <button class="opp-af-btn is-active">All</button>
+                  <button class="opp-af-btn"><svg viewBox="0 0 12 12"><rect x="1" y="1" width="10" height="10" rx="1"/><path d="M4 4h4M4 6h4"/></svg> Notes</button>
+                  <button class="opp-af-btn"><svg viewBox="0 0 12 12"><path d="M1 3l5 3 5-3"/><rect x="1" y="2" width="10" height="8" rx="1"/></svg> Emails</button>
+                  <button class="opp-af-btn"><svg viewBox="0 0 12 12"><path d="M2 6h8M6 2v8"/></svg> Stage Changes</button>
+                  <button class="opp-af-btn"><svg viewBox="0 0 12 12"><circle cx="6" cy="6" r="4"/><path d="M6 4v2l1.5 1.5"/></svg> Tasks</button>
+                </div>
+
+                <!-- Activity items -->
+                <div class="opp-activity-item">
+                  <div class="opp-ai-avatar orange">VK</div>
+                  <div class="opp-ai-content">
+                    <div class="opp-ai-name">Valeriia Kovalenko</div>
+                    <div class="opp-ai-action">Added a note</div>
+                    <div class="opp-ai-time">18 minutes ago</div>
+                    <div class="opp-ai-note">Urgent roof inspection needed - multiple structural issues identified requiring immediate attention.</div>
+                  </div>
+                </div>
+                <div class="opp-activity-item">
+                  <div class="opp-ai-avatar orange">VK</div>
+                  <div class="opp-ai-content">
+                    <div class="opp-ai-name">Valeriia Kovalenko</div>
+                    <div class="opp-ai-action">Uploaded 1 document</div>
+                    <div class="opp-ai-time">18 minutes ago</div>
+                    <div class="opp-ai-file"><svg viewBox="0 0 14 14"><path d="M8 1v4h4"/><path d="M4 2H3a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1V5L8 1H4z"/></svg> roof_text.pdf <span class="file-size">1.26 KB</span></div>
+                  </div>
+                </div>
+                <div class="opp-activity-item">
+                  <div class="opp-ai-avatar green">VK</div>
+                  <div class="opp-ai-content">
+                    <div class="opp-ai-name">Valeriia Kovalenko</div>
+                    <div class="opp-ai-action">Uploaded 1 photo</div>
+                    <div class="opp-ai-time">18 minutes ago</div>
+                    <div class="opp-ai-photo">🏠 Roof photo</div>
+                  </div>
+                </div>
+                <div class="opp-activity-item">
+                  <div class="opp-ai-avatar blue" style="font-size:10px;">VK</div>
+                  <div class="opp-ai-content">
+                    <div class="opp-ai-name">Valeriia Kovalenko</div>
+                    <div class="opp-ai-action">Created the opportunity with stage Resume Received</div>
+                    <div class="opp-ai-time">19 minutes ago</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Materials tab -->
+            <div class="opp-right-tab-panel" id="opp-tab-materials">
+              <div class="opp-materials-card">
+                <div class="opp-upload-zone">
+                  <div class="opp-upload-icon">
+                    <svg viewBox="0 0 20 20" fill="none">
+                      <path d="M10 13V3m0 0L6 7m4-4l4 4" stroke="var(--color-primary-7)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                      <path d="M3 13v2a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2" stroke="var(--color-primary-7)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                  </div>
+                  <div class="opp-upload-text"><a href="#">Upload files</a>  or drag and drop</div>
+                  <div class="opp-upload-hint">(max. 500 MB)</div>
+                </div>
+                <div class="opp-bottom-tabs">
+                  <button class="opp-bottom-tab is-active">Photos</button>
+                  <button class="opp-bottom-tab">Documents</button>
+                  <button class="opp-bottom-tab">Proposals</button>
+                  <button class="opp-bottom-tab">Tickets</button>
+                </div>
+                <div class="opp-photos-toolbar">
+                  <input class="opp-photos-search" type="text" placeholder="Search Photos" />
+                  <select class="opps-filter-select"><option>Uploaded by</option></select>
+                  <button class="opps-filter-ghost"><svg viewBox="0 0 14 14"><rect x="2" y="2" width="10" height="10" rx="1"/><path d="M5 2v10M9 2v10"/></svg> Date Range</button>
+                  <button class="opp-add-photos-btn">+ Add Photos</button>
+                </div>
+                <div class="opp-photos-grid">
+                  <div class="opp-photo-date"><input type="checkbox" /> <strong>4/15/2026</strong></div>
+                  <div class="opp-photo-item">
+                    <div class="opp-photo-thumb">
+                      <div class="opp-photo-placeholder">🏢</div>
+                      <button class="opp-photo-kebab">⋮</button>
+                    </div>
+                    <div class="opp-photo-caption">3:56 pm · <a href="#">Valeriia Kovalenko</a></div>
+                  </div>
+                </div>
+                <div class="opp-end-list">(End of the list)</div>
+              </div>
+            </div>
+
+            <!-- Tasks tab -->
+            <div class="opp-right-tab-panel" id="opp-tab-tasks">
+              <div class="opp-tasks-card">
+                <div class="opp-tasks-card-header">
+                  <div class="opp-tasks-card-title">Tasks</div>
+                  <div style="display:flex;gap:var(--space-sm);margin-left:auto;">
+                    <button class="opp-add-task-btn" id="create-tpl-tasks-btn">Create template tasks</button>
+                    <div style="position:relative;">
+                      <button class="opp-add-task-btn" id="add-task-dropdown-btn">+ Add new task</button>
+                      <div class="add-task-dropdown" id="add-task-dropdown">
+                        <button class="add-task-dropdown-item" id="add-task-from-tpl">From template</button>
+                        <button class="add-task-dropdown-item" id="add-task-blank">New blank task</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="range-toggle" id="opp-task-status-tabs" style="margin-bottom: var(--space-xl);">
+                  <button class="is-active" data-task-status="open">Open</button>
+                  <button data-task-status="overdue">Overdue</button>
+                  <button data-task-status="completed">Completed</button>
+                </div>
+                <div class="opp-tasks-list" id="opp-tasks-list">
+                  <!-- Open tasks -->
+                  <div class="opp-task-panel" data-status-panel="open">
+                    <div class="kanban-card" data-opp-task="opp-task-1">
+                      <div class="card-top-row">
+                        <div class="card-title">Test task description</div>
+                        <div class="card-due-row"><span class="date-pill is-open"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="10" height="9" rx="1"/><path d="M2 6h10M5 1.5v2M9 1.5v2"/></svg>Apr 28</span></div>
+                      </div>
+                      <div class="card-meta-row">
+                        <svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="5" r="2.5"/><path d="M2.5 12c.8-2.2 2.6-3.3 4.5-3.3S10.7 9.8 11.5 12"/></svg>
+                        Valeriia Kovalenko
+                      </div>
+                      <div class="card-meta-row">
+                        <svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a3 3 0 0 0 4.2 0l2-2a3 3 0 0 0-4.2-4.2L7 2.8"/><path d="M8 6a3 3 0 0 0-4.2 0l-2 2a3 3 0 0 0 4.2 4.2L7 11.2"/></svg>
+                        Smart Construction Hub
+                      </div>
+                      <div class="card-divider"></div>
+                      <div class="card-comment-count">
+                        <span class="card-comment-avatars"><span class="card-comment-avatar">VK</span></span>
+                        1
+                      </div>
+                    </div>
+                    <div class="kanban-card" data-opp-task="opp-task-2">
+                      <div class="card-top-row">
+                        <div class="card-title">ABC edited task name</div>
+                        <div class="card-due-row"><span class="date-pill is-open"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="10" height="9" rx="1"/><path d="M2 6h10M5 1.5v2M9 1.5v2"/></svg>Apr 28</span></div>
+                      </div>
+                      <div class="card-meta-row">
+                        <svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="5" r="2.5"/><path d="M2.5 12c.8-2.2 2.6-3.3 4.5-3.3S10.7 9.8 11.5 12"/></svg>
+                        Valeriia Admin
+                      </div>
+                      <div class="card-meta-row">
+                        <svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a3 3 0 0 0 4.2 0l2-2a3 3 0 0 0-4.2-4.2L7 2.8"/><path d="M8 6a3 3 0 0 0-4.2 0l-2 2a3 3 0 0 0 4.2 4.2L7 11.2"/></svg>
+                        Smart Construction Hub
+                      </div>
+                      <div class="card-divider"></div>
+                      <div class="card-comment-count">
+                        <span class="card-comment-avatars"><span class="card-comment-avatar">VA</span></span>
+                        2
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Overdue tasks -->
+                  <div class="opp-task-panel" data-status-panel="overdue" style="display:none;">
+                    <div class="kanban-card" data-opp-task="opp-task-3">
+                      <div class="card-top-row">
+                        <div class="card-title">PROD - Site inspection report</div>
+                        <div class="card-due-row"><span class="date-pill is-overdue"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1L1 10h10L6 1zM6 4.5v2.5M6 8.5v.5"/></svg>Apr 5</span></div>
+                      </div>
+                      <div class="card-meta-row">
+                        <svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="5" r="2.5"/><path d="M2.5 12c.8-2.2 2.6-3.3 4.5-3.3S10.7 9.8 11.5 12"/></svg>
+                        Romao Barbosa
+                      </div>
+                      <div class="card-meta-row">
+                        <svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a3 3 0 0 0 4.2 0l2-2a3 3 0 0 0-4.2-4.2L7 2.8"/><path d="M8 6a3 3 0 0 0-4.2 0l-2 2a3 3 0 0 0 4.2 4.2L7 11.2"/></svg>
+                        Smart Construction Hub
+                      </div>
+                      <div class="card-divider"></div>
+                      <div class="card-comment-count">
+                        <span class="card-comment-avatars"><span class="card-comment-avatar">RB</span></span>
+                        1
+                      </div>
+                    </div>
+                    <div class="kanban-card" data-opp-task="opp-task-4">
+                      <div class="card-top-row">
+                        <div class="card-title">Submit material order list</div>
+                        <div class="card-due-row"><span class="date-pill is-overdue"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1L1 10h10L6 1zM6 4.5v2.5M6 8.5v.5"/></svg>Mar 20</span></div>
+                      </div>
+                      <div class="card-meta-row">
+                        <svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="5" r="2.5"/><path d="M2.5 12c.8-2.2 2.6-3.3 4.5-3.3S10.7 9.8 11.5 12"/></svg>
+                        Valeriia Kovalenko
+                      </div>
+                      <div class="card-meta-row">
+                        <svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a3 3 0 0 0 4.2 0l2-2a3 3 0 0 0-4.2-4.2L7 2.8"/><path d="M8 6a3 3 0 0 0-4.2 0l-2 2a3 3 0 0 0 4.2 4.2L7 11.2"/></svg>
+                        Smart Construction Hub
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Completed tasks -->
+                  <div class="opp-task-panel" data-status-panel="completed" style="display:none;">
+                    <div class="kanban-card is-done" data-opp-task="opp-task-5">
+                      <div class="card-top-row">
+                        <div class="card-title">Initial site assessment</div>
+                        <div class="card-due-row"><span class="date-pill is-completed"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5l2.5 2.5L9 4"/></svg>Apr 9</span></div>
+                      </div>
+                      <div class="card-meta-row">
+                        <svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="5" r="2.5"/><path d="M2.5 12c.8-2.2 2.6-3.3 4.5-3.3S10.7 9.8 11.5 12"/></svg>
+                        Alec McGovern
+                      </div>
+                      <div class="card-meta-row">
+                        <svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a3 3 0 0 0 4.2 0l2-2a3 3 0 0 0-4.2-4.2L7 2.8"/><path d="M8 6a3 3 0 0 0-4.2 0l-2 2a3 3 0 0 0 4.2 4.2L7 11.2"/></svg>
+                        Smart Construction Hub
+                      </div>
+                      <div class="card-divider"></div>
+                      <div class="card-comment-count">
+                        <span class="card-comment-avatars"><span class="card-comment-avatar">AM</span></span>
+                        1
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Template tasks modal -->
+      <div class="tpl-modal-overlay" id="tpl-modal-overlay">
+        <div class="tpl-modal">
+          <div class="tpl-modal-header">
+            <div class="tpl-modal-title t-h4">Create template tasks from this opportunity</div>
+          </div>
+          <div class="tpl-modal-body">
+            <div class="tpl-modal-label t-h5">Template name</div>
+            <input class="tpl-modal-input" id="tpl-name-input" type="text" placeholder="e.g. Roofing project tasks" />
+            <div class="tpl-modal-label t-h5">Tasks (5)</div>
+            <div class="tpl-task-list" id="tpl-task-list">
+              <div class="tpl-task-row">
+                <input class="checkbox" type="checkbox" checked />
+                <span class="tpl-task-name">Test task description</span>
+                <span class="tpl-task-meta">Valeriia Kovalenko</span>
+              </div>
+              <div class="tpl-task-row">
+                <input class="checkbox" type="checkbox" checked />
+                <span class="tpl-task-name">ABC edited task name</span>
+                <span class="tpl-task-meta">Valeriia Admin</span>
+              </div>
+              <div class="tpl-task-row">
+                <input class="checkbox" type="checkbox" checked />
+                <span class="tpl-task-name">PROD - Site inspection report</span>
+                <span class="tpl-task-meta">Romao Barbosa</span>
+              </div>
+              <div class="tpl-task-row">
+                <input class="checkbox" type="checkbox" checked />
+                <span class="tpl-task-name">Submit material order list</span>
+                <span class="tpl-task-meta">Valeriia Kovalenko</span>
+              </div>
+              <div class="tpl-task-row">
+                <input class="checkbox" type="checkbox" checked />
+                <span class="tpl-task-name">Initial site assessment</span>
+                <span class="tpl-task-meta">Alec McGovern</span>
+              </div>
+            </div>
+          </div>
+          <div class="tpl-modal-footer">
+            <button class="tpl-modal-cancel" id="tpl-modal-cancel">Cancel</button>
+            <button class="tpl-modal-create" id="tpl-modal-create">Create</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add from template modal -->
+      <div class="tpl-modal-overlay" id="add-tpl-modal-overlay">
+        <div class="tpl-modal">
+          <div class="tpl-modal-header">
+            <div class="tpl-modal-title t-h4">Add tasks from template</div>
+          </div>
+          <div class="tpl-modal-body">
+            <div class="tpl-modal-label t-h5">Templates</div>
+            <div class="tpl-task-list" id="add-tpl-list">
+              <div class="tpl-task-row">
+                <input class="checkbox add-tpl-cb" type="checkbox" data-tpl="roofing" />
+                <span class="tpl-task-name">Roofing Project Tasks</span>
+                <span class="tpl-task-meta">5 tasks</span>
+              </div>
+              <div class="tpl-task-row">
+                <input class="checkbox add-tpl-cb" type="checkbox" data-tpl="inspection" />
+                <span class="tpl-task-name">Site Inspection Checklist</span>
+                <span class="tpl-task-meta">4 tasks</span>
+              </div>
+              <div class="tpl-task-row">
+                <input class="checkbox add-tpl-cb" type="checkbox" data-tpl="bidprep" />
+                <span class="tpl-task-name">Bid Preparation</span>
+                <span class="tpl-task-meta">3 tasks</span>
+              </div>
+              <div class="tpl-task-row">
+                <input class="checkbox add-tpl-cb" type="checkbox" data-tpl="closeout" />
+                <span class="tpl-task-name">Project Closeout</span>
+                <span class="tpl-task-meta">6 tasks</span>
+              </div>
+            </div>
+          </div>
+          <div class="tpl-modal-footer">
+            <button class="tpl-modal-cancel" id="add-tpl-cancel">Cancel</button>
+            <button class="tpl-modal-create" id="add-tpl-add" disabled>Add</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- "From existing opportunity" modal -->
+      <div class="tpl-modal-overlay" id="opp-pick-modal-overlay">
+        <div class="tpl-modal" style="max-width:600px;">
+          <div class="tpl-modal-header">
+            <div class="tpl-modal-title t-h4">Create task template from existing opportunity</div>
+          </div>
+          <div class="tpl-modal-body">
+            <input class="opp-pick-search" id="opp-pick-search" type="text" placeholder="Search opportunities..." />
+            <table class="opp-pick-table">
+              <thead>
+                <tr>
+                  <th>Opportunity</th>
+                  <th>Company</th>
+                  <th>Tasks</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="opp-pick-tbody">
+                <tr data-opp-key="smart-construction">
+                  <td>Smart Construction Hub</td>
+                  <td>ABC Architectural Builders</td>
+                  <td>5</td>
+                  <td>Open</td>
+                </tr>
+                <tr data-opp-key="madison-garden">
+                  <td>Madison Square Garden Re-Roof</td>
+                  <td>Madison Properties LLC</td>
+                  <td>8</td>
+                  <td>Open</td>
+                </tr>
+                <tr data-opp-key="riverside-repair">
+                  <td>Riverside Office Park Repair</td>
+                  <td>Riverside Holdings</td>
+                  <td>4</td>
+                  <td>Open</td>
+                </tr>
+                <tr data-opp-key="lakewood-reno">
+                  <td>Lakewood Mall Renovation</td>
+                  <td>Lakewood Retail Group</td>
+                  <td>6</td>
+                  <td>Pending</td>
+                </tr>
+                <tr data-opp-key="harbor-waterproof">
+                  <td>Harbor Tower Waterproofing</td>
+                  <td>Harbor Development Co</td>
+                  <td>3</td>
+                  <td>Open</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="tpl-modal-footer">
+            <button class="tpl-modal-cancel" id="opp-pick-cancel">Cancel</button>
+            <button class="tpl-modal-create" id="opp-pick-select" disabled>Select</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tasks page -->
+      <div id="tasks-page">
       <div class="page-head">
         <h1 class="t-h3">Tasks</h1>
       </div>
@@ -1378,7 +3146,7 @@
         <button class="page-num is-active">1</button>
         <button class="page-arrow" disabled>›</button>
       </div>
-    </div>
+    </div><!-- /tasks-page -->
 
     <button class="ai-fab">
       <svg class="bolt" viewBox="0 0 14 14" fill="currentColor"><path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/></svg>
@@ -1452,13 +3220,16 @@
           </div>
         </div>
 
-        <!-- Assignee + Due At inline -->
+        <!-- Role + Due At inline -->
         <div class="drawer-inline-row">
           <div class="field">
-            <label class="field-label">Assignee</label>
-            <div class="chip-input" id="drawer-assignee-chips">
-              <span class="chip">Romao Barbosa <button>✕</button></span>
-            </div>
+            <label class="field-label">Assigned Role</label>
+            <select class="field-select" id="drawer-role-select">
+              <option value="">— Select role —</option>
+              <option value="Account Rep">Account Rep</option>
+              <option value="Estimator">Estimator</option>
+              <option value="Project Manager">Project Manager</option>
+            </select>
           </div>
           <div class="field">
             <label class="field-label">Due At</label>
@@ -1605,7 +3376,7 @@
     var drawerTitleDisplay = document.getElementById('drawer-title-display');
     var drawerTitleEditWrap = document.getElementById('drawer-title-edit');
     var drawerTitleInput = document.getElementById('drawer-title-input');
-    var drawerAssigneeChips = document.getElementById('drawer-assignee-chips');
+    var drawerRoleSelect = document.getElementById('drawer-role-select');
     var drawerDueInput = document.getElementById('drawer-due-input');
     var drawerOppSelect = document.getElementById('drawer-opp-select');
     // drawer-creator removed from body; creator shown in header meta only
@@ -1735,9 +3506,7 @@
       statusDropdown.classList.remove('is-open');
       if (t && t.task) {
         drawerTitleDisplay.textContent = t.task;
-        drawerAssigneeChips.innerHTML = t.assignee
-          ? '<span class="chip">' + t.assignee + ' <button>✕</button></span>'
-          : '';
+        drawerRoleSelect.value = t.role || '';
         drawerDueInput.value = t.iso || '';
         drawerOppSelect.value = t.opp || '';
 
@@ -1760,7 +3529,7 @@
       enterTitleEdit();
       drawerTitleInput.value = '';
       drawerTitleInput.placeholder = 'Task name';
-      drawerAssigneeChips.innerHTML = '';
+      drawerRoleSelect.value = '';
       drawerDueInput.value = '';
       drawerOppSelect.value = '';
 
@@ -2035,6 +3804,479 @@
     renderOpen();
     renderKanban();
     setView('kanban');
+
+    // ====== Page navigation ======
+    var adminToggle = document.getElementById('nav-admin-toggle');
+    var adminChildren = document.getElementById('nav-admin-children');
+    var adminCaret = document.getElementById('admin-caret');
+    var tasksPage = document.getElementById('tasks-page');
+    var templatesPage = document.getElementById('templates-page');
+    var oppsPage = document.getElementById('opps-page');
+    var oppDetailPage = document.getElementById('opp-detail-page');
+    var tplDetailPage = document.getElementById('tpl-detail-page');
+
+    function hideAllPages() {
+      tasksPage.style.display = 'none';
+      templatesPage.classList.remove('is-visible');
+      oppsPage.classList.remove('is-visible');
+      oppDetailPage.classList.remove('is-visible');
+      tplDetailPage.classList.remove('is-visible');
+    }
+
+    function showPage(name) {
+      hideAllPages();
+      if (name === 'tasks') tasksPage.style.display = '';
+      else if (name === 'templates') templatesPage.classList.add('is-visible');
+      else if (name === 'opportunities') oppsPage.classList.add('is-visible');
+      else if (name === 'opp-detail') oppDetailPage.classList.add('is-visible');
+      else if (name === 'tpl-detail') tplDetailPage.classList.add('is-visible');
+    }
+
+    // Admin toggle
+    adminToggle.addEventListener('click', function () {
+      var isOpen = adminChildren.style.display !== 'none';
+      adminChildren.style.display = isOpen ? 'none' : '';
+      adminCaret.textContent = isOpen ? '▾' : '▴';
+      adminToggle.classList.toggle('is-section-active', !isOpen);
+    });
+
+    // Admin child nav clicks
+    adminChildren.querySelectorAll('.nav-child').forEach(function (child) {
+      child.addEventListener('click', function () {
+        var page = child.getAttribute('data-page');
+        document.querySelectorAll('.nav-child').forEach(function (c) { c.classList.remove('is-active'); });
+        child.classList.add('is-active');
+        var crmRow = document.querySelector('.nav-row.is-section-active');
+        if (crmRow && crmRow !== adminToggle) crmRow.classList.remove('is-section-active');
+        adminToggle.classList.add('is-section-active');
+        showPage(page === 'templates' ? 'templates' : 'tasks');
+      });
+    });
+
+    // CRM nav children
+    document.querySelectorAll('.nav-children:not(#nav-admin-children) .nav-child').forEach(function (child) {
+      child.addEventListener('click', function () {
+        document.querySelectorAll('.nav-child').forEach(function (c) { c.classList.remove('is-active'); });
+        child.classList.add('is-active');
+        adminToggle.classList.remove('is-section-active');
+        document.querySelectorAll('.nav-row').forEach(function (r) {
+          if (r.textContent.trim().indexOf('CRM') === 0) r.classList.add('is-section-active');
+        });
+        var label = child.textContent.trim();
+        if (label === 'Opportunities') {
+          showPage('opportunities');
+        } else {
+          showPage('tasks');
+        }
+      });
+    });
+
+    // Opp card click → detail page
+    document.getElementById('opp-card-1').addEventListener('click', function (e) {
+      if (e.target.closest('.opps-card-kebab')) return;
+      showPage('opp-detail');
+    });
+
+    // Back link from detail → opportunities
+    document.getElementById('opp-back-link').addEventListener('click', function (e) {
+      e.preventDefault();
+      showPage('opportunities');
+    });
+
+    // Templates tab switching
+    document.querySelectorAll('.templates-tab').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        document.querySelectorAll('.templates-tab').forEach(function (t) { t.classList.remove('is-active'); });
+        tab.classList.add('is-active');
+      });
+    });
+
+    document.querySelectorAll('.opp-bottom-tab').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        document.querySelectorAll('.opp-bottom-tab').forEach(function (t) { t.classList.remove('is-active'); });
+        tab.classList.add('is-active');
+      });
+    });
+
+    // Right panel tab switching (Activities / Materials / Tasks)
+    document.querySelectorAll('.opp-right-tab').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        document.querySelectorAll('.opp-right-tab').forEach(function (t) { t.classList.remove('is-active'); });
+        tab.classList.add('is-active');
+        document.querySelectorAll('.opp-right-tab-panel').forEach(function (p) { p.classList.remove('is-visible'); });
+        var target = tab.getAttribute('data-right-tab');
+        document.getElementById('opp-tab-' + target).classList.add('is-visible');
+      });
+    });
+
+    // Opp detail: task status tab box switching
+    document.querySelectorAll('#opp-task-status-tabs button').forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        document.querySelectorAll('#opp-task-status-tabs button').forEach(function (t) { t.classList.remove('is-active'); });
+        tab.classList.add('is-active');
+        var status = tab.getAttribute('data-task-status');
+        document.querySelectorAll('#opp-tasks-list .opp-task-panel').forEach(function (p) { p.style.display = 'none'; });
+        document.querySelector('#opp-tasks-list .opp-task-panel[data-status-panel="' + status + '"]').style.display = '';
+      });
+    });
+
+    // Opp detail task cards → open drawer
+    var oppTaskData = {
+      'opp-task-1': { id: 'opp-t1', task: 'Test task description', assignee: 'Valeriia Kovalenko', role: 'Account Rep', opp: 'Smart Construction Hub', dd: 'Apr 28', iso: '2026-04-28', status: 'open', creator: 'Valeriia Kovalenko', desc: '' },
+      'opp-task-2': { id: 'opp-t2', task: 'ABC edited task name', assignee: 'Valeriia Admin', role: 'Estimator', opp: 'Smart Construction Hub', dd: 'Apr 28', iso: '2026-04-28', status: 'open', creator: 'Valeriia Admin', desc: '' },
+      'opp-task-3': { id: 'opp-t3', task: 'PROD - Site inspection report', assignee: 'Romao Barbosa', role: 'Project Manager', opp: 'Smart Construction Hub', dd: 'Apr 5', iso: '2026-04-05', status: 'overdue', creator: 'Romao Barbosa', desc: '' },
+      'opp-task-4': { id: 'opp-t4', task: 'Submit material order list', assignee: 'Valeriia Kovalenko', role: 'Account Rep', opp: 'Smart Construction Hub', dd: 'Mar 20', iso: '2026-03-20', status: 'overdue', creator: 'Valeriia Kovalenko', desc: '' },
+      'opp-task-5': { id: 'opp-t5', task: 'Initial site assessment', assignee: 'Alec McGovern', role: 'Estimator', opp: 'Smart Construction Hub', dd: 'Apr 9', iso: '2026-04-09', status: 'completed', creator: 'Alec McGovern', desc: '' }
+    };
+    document.querySelectorAll('#opp-tasks-list .kanban-card').forEach(function (card) {
+      card.style.cursor = 'pointer';
+      card.addEventListener('click', function () {
+        var key = card.getAttribute('data-opp-task');
+        var t = oppTaskData[key];
+        if (t) openDrawer(t);
+      });
+    });
+
+    // Template detail data
+    var tplDetailData = {
+      roofing: {
+        name: 'Roofing Project Tasks',
+        tasks: [
+          { task: 'Roof measurement and documentation', role: 'Estimator' },
+          { task: 'Material specification review', role: 'Account Rep' },
+          { task: 'Safety plan preparation', role: 'Project Manager' },
+          { task: 'Crew scheduling and assignment', role: 'Project Manager' },
+          { task: 'Permits and compliance check', role: 'Estimator' }
+        ]
+      },
+      inspection: {
+        name: 'Site Inspection Checklist',
+        tasks: [
+          { task: 'Structural integrity assessment', role: 'Project Manager' },
+          { task: 'Moisture and leak detection', role: 'Estimator' },
+          { task: 'Flashing and sealant inspection', role: 'Account Rep' },
+          { task: 'Photo documentation of findings', role: 'Project Manager' }
+        ]
+      },
+      bidprep: {
+        name: 'Bid Preparation',
+        tasks: [
+          { task: 'Cost estimation and takeoff', role: 'Estimator' },
+          { task: 'Subcontractor quotes collection', role: 'Account Rep' },
+          { task: 'Proposal document drafting', role: 'Estimator' }
+        ]
+      },
+      closeout: {
+        name: 'Project Closeout',
+        tasks: [
+          { task: 'Final inspection walkthrough', role: 'Project Manager' },
+          { task: 'Punch list completion', role: 'Estimator' },
+          { task: 'Warranty documentation', role: 'Account Rep' },
+          { task: 'Client sign-off meeting', role: 'Project Manager' },
+          { task: 'Invoice and payment processing', role: 'Account Rep' },
+          { task: 'Project archive and closeout report', role: 'Estimator' }
+        ]
+      }
+    };
+
+    function renderTplDetail(key) {
+      var tpl = tplDetailData[key];
+      if (!tpl) return;
+      document.getElementById('tpl-detail-title').textContent = tpl.name;
+      document.getElementById('tpl-detail-name-crumb').textContent = tpl.name;
+      document.getElementById('tpl-detail-opp-badge').textContent = 'From opportunity: ' + (tpl.opp || 'Smart Construction Hub');
+      var container = document.getElementById('tpl-detail-tasks');
+      container.innerHTML = '';
+      // Column header
+      var header = document.createElement('div');
+      header.className = 'tpl-detail-task';
+      header.style.cursor = 'default';
+      header.style.fontWeight = '600';
+      header.style.fontSize = 'var(--font-body-sm-size)';
+      header.style.color = 'var(--color-gray-7)';
+      header.style.borderBottom = '1px solid var(--color-border-default)';
+      header.innerHTML = '<span style="width:20px;flex-shrink:0;"></span>' +
+        '<span class="tpl-dt-name" style="font-weight:600;color:var(--color-gray-7);">Task Name</span>' +
+        '<span class="tpl-dt-role" style="font-weight:600;color:var(--color-gray-7);">Assigned Role</span>' +
+        '<span style="width:18px;flex-shrink:0;"></span>';
+      container.appendChild(header);
+      tpl.tasks.forEach(function (t) {
+        var row = document.createElement('div');
+        row.className = 'tpl-detail-task';
+        row.innerHTML = '<input class="checkbox" type="checkbox" />' +
+          '<span class="tpl-dt-name">' + t.task + '</span>' +
+          '<span class="tpl-dt-role">' + t.role + '</span>' +
+          '<button class="tpl-dt-remove" title="Remove"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h10M5 4V2.5h4V4M3 4v8a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4"/></svg></button>';
+        // Click task name → open detail modal
+        row.querySelector('.tpl-dt-name').addEventListener('click', function (e) {
+          e.stopPropagation();
+          openDrawer({ id: 'tpl-d-' + Math.random(), task: t.task, role: t.role, opp: '', dd: '', iso: '', status: 'open', creator: '', desc: '' });
+        });
+        // Remove button
+        row.querySelector('.tpl-dt-remove').addEventListener('click', function (e) {
+          e.stopPropagation();
+          row.remove();
+        });
+        container.appendChild(row);
+      });
+    }
+
+    // Template table row clicks → detail page
+    document.querySelectorAll('#tpl-table-body tr').forEach(function (row) {
+      row.addEventListener('click', function () {
+        var key = row.getAttribute('data-tpl-detail');
+        renderTplDetail(key);
+        showPage('tpl-detail');
+      });
+    });
+
+    // Back link from template detail → templates list
+    document.getElementById('tpl-back-link').addEventListener('click', function () {
+      showPage('templates');
+    });
+
+    // "Create new template" dropdown
+    var createTplDropdown = document.getElementById('create-tpl-dropdown');
+    document.getElementById('create-new-tpl-btn').addEventListener('click', function (e) {
+      e.stopPropagation();
+      createTplDropdown.classList.toggle('is-open');
+    });
+    document.addEventListener('click', function () {
+      createTplDropdown.classList.remove('is-open');
+    });
+
+    // Blank template → go to detail page with empty tasks
+    document.getElementById('create-tpl-blank').addEventListener('click', function (e) {
+      e.stopPropagation();
+      createTplDropdown.classList.remove('is-open');
+      document.getElementById('tpl-detail-title').textContent = 'Untitled Template';
+      document.getElementById('tpl-detail-name-crumb').textContent = 'Untitled Template';
+      document.getElementById('tpl-detail-opp-badge').style.display = 'none';
+      var container = document.getElementById('tpl-detail-tasks');
+      container.innerHTML = '';
+      // Column header
+      var header = document.createElement('div');
+      header.className = 'tpl-detail-task';
+      header.style.cursor = 'default';
+      header.style.fontWeight = '600';
+      header.style.fontSize = 'var(--font-body-sm-size)';
+      header.style.color = 'var(--color-gray-7)';
+      header.style.borderBottom = '1px solid var(--color-border-default)';
+      header.innerHTML = '<span style="width:20px;flex-shrink:0;"></span>' +
+        '<span class="tpl-dt-name" style="font-weight:600;color:var(--color-gray-7);">Task Name</span>' +
+        '<span class="tpl-dt-role" style="font-weight:600;color:var(--color-gray-7);">Assigned Role</span>' +
+        '<span style="width:18px;flex-shrink:0;"></span>';
+      container.appendChild(header);
+      showPage('tpl-detail');
+    });
+
+    // From existing opportunity → open modal
+    var oppPickOverlay = document.getElementById('opp-pick-modal-overlay');
+    var oppPickSelectBtn = document.getElementById('opp-pick-select');
+    var selectedOppKey = null;
+
+    document.getElementById('create-tpl-from-opp').addEventListener('click', function (e) {
+      e.stopPropagation();
+      createTplDropdown.classList.remove('is-open');
+      selectedOppKey = null;
+      oppPickSelectBtn.disabled = true;
+      document.getElementById('opp-pick-search').value = '';
+      document.querySelectorAll('#opp-pick-tbody tr').forEach(function (r) {
+        r.classList.remove('is-selected');
+        r.style.display = '';
+      });
+      oppPickOverlay.classList.add('is-open');
+    });
+
+    // Row selection in opp picker
+    document.querySelectorAll('#opp-pick-tbody tr').forEach(function (row) {
+      row.addEventListener('click', function () {
+        document.querySelectorAll('#opp-pick-tbody tr').forEach(function (r) { r.classList.remove('is-selected'); });
+        row.classList.add('is-selected');
+        selectedOppKey = row.getAttribute('data-opp-key');
+        oppPickSelectBtn.disabled = false;
+      });
+    });
+
+    // Search filter
+    document.getElementById('opp-pick-search').addEventListener('input', function () {
+      var q = this.value.toLowerCase();
+      document.querySelectorAll('#opp-pick-tbody tr').forEach(function (r) {
+        r.style.display = r.textContent.toLowerCase().indexOf(q) !== -1 ? '' : 'none';
+      });
+    });
+
+    // Cancel
+    document.getElementById('opp-pick-cancel').addEventListener('click', function () {
+      oppPickOverlay.classList.remove('is-open');
+    });
+    oppPickOverlay.addEventListener('click', function (e) {
+      if (e.target === oppPickOverlay) oppPickOverlay.classList.remove('is-open');
+    });
+
+    // Select → go to template detail with that opp's name
+    oppPickSelectBtn.addEventListener('click', function () {
+      var selectedRow = document.querySelector('#opp-pick-tbody tr.is-selected');
+      if (!selectedRow) return;
+      var oppName = selectedRow.querySelector('td').textContent;
+      oppPickOverlay.classList.remove('is-open');
+      document.getElementById('tpl-detail-title').textContent = oppName + ' Tasks';
+      document.getElementById('tpl-detail-name-crumb').textContent = oppName + ' Tasks';
+      var oppBadge = document.getElementById('tpl-detail-opp-badge');
+      oppBadge.style.display = '';
+      oppBadge.textContent = 'From opportunity: ' + oppName;
+      var container = document.getElementById('tpl-detail-tasks');
+      container.innerHTML = '';
+      // Column header
+      var header = document.createElement('div');
+      header.className = 'tpl-detail-task';
+      header.style.cursor = 'default';
+      header.style.fontWeight = '600';
+      header.style.fontSize = 'var(--font-body-sm-size)';
+      header.style.color = 'var(--color-gray-7)';
+      header.style.borderBottom = '1px solid var(--color-border-default)';
+      header.innerHTML = '<span style="width:20px;flex-shrink:0;"></span>' +
+        '<span class="tpl-dt-name" style="font-weight:600;color:var(--color-gray-7);">Task Name</span>' +
+        '<span class="tpl-dt-role" style="font-weight:600;color:var(--color-gray-7);">Assigned Role</span>' +
+        '<span style="width:18px;flex-shrink:0;"></span>';
+      container.appendChild(header);
+      showPage('tpl-detail');
+    });
+
+    // Template tasks modal
+    var tplOverlay = document.getElementById('tpl-modal-overlay');
+    document.getElementById('create-tpl-tasks-btn').addEventListener('click', function () {
+      document.getElementById('tpl-name-input').value = '';
+      tplOverlay.querySelectorAll('input[type="checkbox"]').forEach(function (cb) { cb.checked = true; });
+      tplOverlay.classList.add('is-open');
+    });
+    document.getElementById('tpl-modal-cancel').addEventListener('click', function () {
+      tplOverlay.classList.remove('is-open');
+    });
+    document.getElementById('tpl-modal-create').addEventListener('click', function () {
+      tplOverlay.classList.remove('is-open');
+    });
+    tplOverlay.addEventListener('click', function (e) {
+      if (e.target === tplOverlay) tplOverlay.classList.remove('is-open');
+    });
+
+    // Add new task dropdown
+    var addTaskDropdown = document.getElementById('add-task-dropdown');
+    document.getElementById('add-task-dropdown-btn').addEventListener('click', function (e) {
+      e.stopPropagation();
+      addTaskDropdown.classList.toggle('is-open');
+    });
+    document.addEventListener('click', function () {
+      addTaskDropdown.classList.remove('is-open');
+    });
+
+    // "New blank task" → open blank drawer
+    document.getElementById('add-task-blank').addEventListener('click', function () {
+      addTaskDropdown.classList.remove('is-open');
+      openBlankDrawer();
+    });
+
+    // "From template" modal
+    var addTplOverlay = document.getElementById('add-tpl-modal-overlay');
+    var addTplAddBtn = document.getElementById('add-tpl-add');
+
+    document.getElementById('add-task-from-tpl').addEventListener('click', function () {
+      addTaskDropdown.classList.remove('is-open');
+      addTplOverlay.querySelectorAll('.add-tpl-cb').forEach(function (cb) { cb.checked = false; });
+      addTplAddBtn.disabled = true;
+      addTplOverlay.classList.add('is-open');
+    });
+    document.getElementById('add-tpl-cancel').addEventListener('click', function () {
+      addTplOverlay.classList.remove('is-open');
+    });
+    addTplOverlay.addEventListener('click', function (e) {
+      if (e.target === addTplOverlay) addTplOverlay.classList.remove('is-open');
+    });
+
+    // Toggle Add button based on checkbox state
+    addTplOverlay.querySelectorAll('.add-tpl-cb').forEach(function (cb) {
+      cb.addEventListener('change', function () {
+        var anyChecked = false;
+        addTplOverlay.querySelectorAll('.add-tpl-cb').forEach(function (c) { if (c.checked) anyChecked = true; });
+        addTplAddBtn.disabled = !anyChecked;
+      });
+    });
+
+    // Template task data to inject
+    var templateTasks = {
+      roofing: [
+        { task: 'Roof measurement and documentation', assignee: 'Alec McGovern' },
+        { task: 'Material specification review', assignee: 'Valeriia Kovalenko' },
+        { task: 'Safety plan preparation', assignee: 'Romao Barbosa' },
+        { task: 'Crew scheduling and assignment', assignee: 'Valeriia Admin' },
+        { task: 'Permits and compliance check', assignee: 'Alec McGovern' }
+      ],
+      inspection: [
+        { task: 'Structural integrity assessment', assignee: 'Romao Barbosa' },
+        { task: 'Moisture and leak detection', assignee: 'Alec McGovern' },
+        { task: 'Flashing and sealant inspection', assignee: 'Valeriia Kovalenko' },
+        { task: 'Photo documentation of findings', assignee: 'Romao Barbosa' }
+      ],
+      bidprep: [
+        { task: 'Cost estimation and takeoff', assignee: 'Valeriia Admin' },
+        { task: 'Subcontractor quotes collection', assignee: 'Valeriia Kovalenko' },
+        { task: 'Proposal document drafting', assignee: 'Alec McGovern' }
+      ],
+      closeout: [
+        { task: 'Final inspection walkthrough', assignee: 'Romao Barbosa' },
+        { task: 'Punch list completion', assignee: 'Alec McGovern' },
+        { task: 'Warranty documentation', assignee: 'Valeriia Kovalenko' },
+        { task: 'Client sign-off meeting', assignee: 'Valeriia Admin' },
+        { task: 'Invoice and payment processing', assignee: 'Valeriia Kovalenko' },
+        { task: 'Project archive and closeout report', assignee: 'Alec McGovern' }
+      ]
+    };
+
+    // Add button: inject tasks into Open tab
+    addTplAddBtn.addEventListener('click', function () {
+      var openPanel = document.querySelector('#opp-tasks-list .opp-task-panel[data-status-panel="open"]');
+      var selected = [];
+      addTplOverlay.querySelectorAll('.add-tpl-cb:checked').forEach(function (cb) {
+        var key = cb.getAttribute('data-tpl');
+        if (templateTasks[key]) selected = selected.concat(templateTasks[key]);
+      });
+      selected.forEach(function (t) {
+        var card = document.createElement('div');
+        card.className = 'kanban-card';
+        card.style.cursor = 'pointer';
+        card.innerHTML = '<div class="card-top-row">' +
+          '<div class="card-title">' + t.task + '</div>' +
+          '<div class="card-due-row"><span class="date-pill is-open">' +
+          '<svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+          '<rect x="1" y="2" width="10" height="9" rx="1"/><path d="M2 6h10M5 1.5v2M9 1.5v2"/></svg>Apr 28</span></div>' +
+          '</div>' +
+          '<div class="card-meta-row">' +
+          '<svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+          '<circle cx="7" cy="5" r="2.5"/><path d="M2.5 12c.8-2.2 2.6-3.3 4.5-3.3S10.7 9.8 11.5 12"/></svg>' +
+          t.assignee +
+          '</div>' +
+          '<div class="card-meta-row">' +
+          '<svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
+          '<path d="M6 8a3 3 0 0 0 4.2 0l2-2a3 3 0 0 0-4.2-4.2L7 2.8"/>' +
+          '<path d="M8 6a3 3 0 0 0-4.2 0l-2 2a3 3 0 0 0 4.2 4.2L7 11.2"/></svg>' +
+          'Smart Construction Hub</div>';
+        card.addEventListener('click', function () {
+          openDrawer({ id: 'tpl-' + Math.random(), task: t.task, assignee: t.assignee, role: t.role || '', opp: 'Smart Construction Hub', dd: 'Apr 28', iso: '2026-04-28', status: 'open', creator: t.assignee, desc: '' });
+        });
+        openPanel.appendChild(card);
+      });
+      // Switch to Open tab
+      document.querySelectorAll('#opp-task-status-tabs button').forEach(function (b) { b.classList.remove('is-active'); });
+      document.querySelector('#opp-task-status-tabs button[data-task-status="open"]').classList.add('is-active');
+      document.querySelectorAll('#opp-tasks-list .opp-task-panel').forEach(function (p) { p.style.display = 'none'; });
+      openPanel.style.display = '';
+      addTplOverlay.classList.remove('is-open');
+    });
+
+    // Template detail: "Add new task" button → open blank drawer
+    document.getElementById('tpl-add-new-task-btn').addEventListener('click', function () {
+      openBlankDrawer();
+    });
   </script>
 </body>
 </html>
