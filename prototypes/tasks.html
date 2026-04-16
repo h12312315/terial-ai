@@ -1923,6 +1923,14 @@
       text-align: left;
     }
     .status-option:hover { background: var(--color-gray-1); }
+    .status-option .status-check {
+      width: 14px; height: 14px;
+      flex-shrink: 0;
+      margin-left: auto;
+      color: var(--color-text-primary);
+      visibility: hidden;
+    }
+    .status-option.is-selected .status-check { visibility: visible; }
     .status-dot {
       width: 8px; height: 8px;
       border-radius: 50%;
@@ -1963,6 +1971,87 @@
       border-color: var(--color-blue-7);
       box-shadow: 0 0 0 3px rgba(28, 126, 214, 0.12);
     }
+
+    /* Attachments section in drawer */
+    .drawer-attachments {
+      margin-top: var(--space-lg);
+    }
+    .drawer-attach-label {
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--space-sm);
+    }
+    .drawer-attach-upload {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 8px 12px;
+      border: 1px dashed var(--color-border-default);
+      border-radius: var(--radius-sm);
+      background: var(--color-gray-0, #fafafa);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+      margin-bottom: var(--space-lg);
+    }
+    .drawer-attach-upload:hover { border-color: var(--color-gray-5); color: var(--color-text-secondary); }
+    .drawer-attach-upload svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .drawer-attach-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .drawer-attach-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 8px 10px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      background: var(--color-white);
+      font-size: var(--font-body-sm-size);
+    }
+    .drawer-attach-item .attach-icon {
+      width: 28px;
+      height: 28px;
+      border-radius: 4px;
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+    }
+    .drawer-attach-item .attach-icon svg { width: 14px; height: 14px; }
+    .drawer-attach-item .attach-icon.icon-photo { background: var(--color-info-bg); color: var(--color-info-fg); }
+    .drawer-attach-thumbs {
+      display: flex;
+      gap: var(--space-sm);
+      margin-bottom: var(--space-sm);
+    }
+    .drawer-attach-thumb {
+      width: 120px;
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+    }
+    .drawer-attach-thumb img {
+      width: 120px;
+      height: 120px;
+      object-fit: cover;
+      display: block;
+      border-radius: var(--radius-sm);
+    }
+    .drawer-attach-thumb-info {
+      padding: 3px 0;
+      font-size: 11px;
+      color: var(--color-text-secondary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .drawer-attach-item .attach-icon.icon-doc { background: var(--color-warning-bg); color: var(--color-warning-fg); }
+    .drawer-attach-item .attach-name { flex: 1; color: var(--color-text-primary); font-weight: var(--font-weight-medium); }
+    .drawer-attach-item .attach-meta { color: var(--color-text-tertiary); font-size: 11px; }
+
     /* Creator value with icon */
     .creator-value {
       display: flex;
@@ -2182,6 +2271,84 @@
       border-color: var(--color-blue-7);
       box-shadow: 0 0 0 3px rgba(28, 126, 214, 0.12);
     }
+    /* Assignee multi-select pills */
+    .assignee-field-wrap {
+      position: relative;
+    }
+    .assignee-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      min-height: 38px;
+      padding: 6px 8px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      background: var(--color-white);
+      cursor: pointer;
+      align-items: center;
+    }
+    .assignee-pills:hover { border-color: var(--color-gray-5); }
+    .assignee-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 3px 8px;
+      background: var(--color-gray-2);
+      border-radius: var(--radius-pill);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-primary);
+    }
+    .assignee-pill .pill-role {
+      color: var(--color-text-tertiary);
+      font-size: 11px;
+    }
+    .assignee-pill .pill-remove {
+      width: 14px; height: 14px;
+      background: none; border: none;
+      color: var(--color-gray-5);
+      cursor: pointer;
+      padding: 0;
+      display: grid; place-items: center;
+    }
+    .assignee-pill .pill-remove:hover { color: var(--color-text-primary); }
+    .assignee-placeholder {
+      color: var(--color-gray-5);
+      font-size: var(--font-body-md-size);
+    }
+    .assignee-dropdown {
+      display: none;
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      box-shadow: var(--shadow-md);
+      z-index: 20;
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .assignee-dropdown.is-open { display: block; }
+    .assignee-dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      cursor: pointer;
+      font-size: var(--font-body-md-size);
+    }
+    .assignee-dropdown-item:hover { background: var(--color-gray-1); }
+    .assignee-dropdown-item .dd-name { color: var(--color-text-primary); }
+    .assignee-dropdown-item .dd-role { color: var(--color-text-tertiary); font-size: var(--font-body-sm-size); }
+    .assignee-dropdown-item .dd-check {
+      margin-left: auto;
+      width: 14px; height: 14px;
+      color: var(--color-text-primary);
+      visibility: hidden;
+    }
+    .assignee-dropdown-item.is-selected .dd-check { visibility: visible; }
+
     .field-with-clear {
       position: relative;
     }
@@ -3185,10 +3352,16 @@
             </button>
             <div class="status-menu" id="status-menu">
               <button data-status="open" class="status-option">
-                <span class="status-dot dot-open"></span> Open / Overdue
+                <span class="status-dot dot-open"></span> Open
+                <svg class="status-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-6"/></svg>
+              </button>
+              <button data-status="overdue" class="status-option">
+                <span class="status-dot dot-overdue"></span> Overdue
+                <svg class="status-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-6"/></svg>
               </button>
               <button data-status="completed" class="status-option">
                 <span class="status-dot dot-completed"></span> Completed
+                <svg class="status-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-6"/></svg>
               </button>
             </div>
           </div>
@@ -3220,9 +3393,20 @@
           </div>
         </div>
 
-        <!-- Role + Due At inline -->
+        <!-- Assignee / Role + Due At inline -->
         <div class="drawer-inline-row">
-          <div class="field">
+          <!-- Mode 1: Assignee (multi-user pills) — shown for non-template tasks -->
+          <div class="field" id="drawer-assignee-field">
+            <label class="field-label">Assignee</label>
+            <div class="assignee-field-wrap">
+              <div class="assignee-pills" id="drawer-assignee-pills">
+                <span class="assignee-placeholder">Select assignees...</span>
+              </div>
+              <div class="assignee-dropdown" id="drawer-assignee-dropdown"></div>
+            </div>
+          </div>
+          <!-- Mode 2: Assigned Role (select) — shown for template tasks -->
+          <div class="field" id="drawer-role-field" style="display:none;">
             <label class="field-label">Assigned Role</label>
             <select class="field-select" id="drawer-role-select">
               <option value="">— Select role —</option>
@@ -3240,7 +3424,19 @@
         <!-- Description -->
         <div class="field">
           <label class="field-label">Description</label>
-          <textarea class="field-textarea" id="drawer-description" placeholder="Add a description…"></textarea>
+          <textarea class="field-textarea" id="drawer-description" placeholder="Add a description..."></textarea>
+        </div>
+
+        <!-- Attachments -->
+        <div class="drawer-attachments" id="drawer-attachments">
+          <div class="drawer-attach-label">Attachments</div>
+          <button class="drawer-attach-upload">
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2v10M2 7h10"/></svg>
+            Upload files
+          </button>
+          <div class="drawer-attach-list" id="drawer-attach-list">
+            <!-- populated by JS -->
+          </div>
         </div>
 
         <!-- Divider + Comments -->
@@ -3390,6 +3586,96 @@
     var statusDropdown = document.getElementById('status-dropdown');
     var statusMenu = document.getElementById('status-menu');
     var currentDrawerTask = null;
+    var drawerIsTemplateMode = false;
+    var drawerAssigneeField = document.getElementById('drawer-assignee-field');
+    var drawerRoleField = document.getElementById('drawer-role-field');
+    var drawerAssigneePills = document.getElementById('drawer-assignee-pills');
+    var drawerAssigneeDropdown = document.getElementById('drawer-assignee-dropdown');
+
+    // Available users with roles
+    var availableUsers = [
+      { name: 'Alec McGovern', role: 'Account Rep' },
+      { name: 'Valeriia Kovalenko', role: 'Account Rep' },
+      { name: 'Romao Barbosa', role: 'Project Manager' },
+      { name: 'Valeriia Admin', role: 'Estimator' },
+      { name: 'Aaron Weinstein', role: 'Estimator' },
+      { name: 'Matt Billard', role: 'Project Manager' },
+      { name: 'Theo Weller', role: 'Account Rep' },
+      { name: 'Alec Client Admin', role: 'Estimator' }
+    ];
+    var selectedAssignees = [];
+
+    // Build dropdown items
+    function buildAssigneeDropdown() {
+      drawerAssigneeDropdown.innerHTML = '';
+      availableUsers.forEach(function (u) {
+        var item = document.createElement('div');
+        item.className = 'assignee-dropdown-item';
+        if (selectedAssignees.indexOf(u.name) !== -1) item.classList.add('is-selected');
+        item.innerHTML = '<span class="dd-name">' + u.name + '</span>' +
+          '<span class="dd-role">' + u.role + '</span>' +
+          '<svg class="dd-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-6"/></svg>';
+        item.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var idx = selectedAssignees.indexOf(u.name);
+          if (idx !== -1) {
+            selectedAssignees.splice(idx, 1);
+          } else {
+            selectedAssignees.push(u.name);
+          }
+          renderAssigneePills();
+          buildAssigneeDropdown();
+        });
+        drawerAssigneeDropdown.appendChild(item);
+      });
+    }
+
+    function renderAssigneePills() {
+      drawerAssigneePills.innerHTML = '';
+      if (selectedAssignees.length === 0) {
+        drawerAssigneePills.innerHTML = '<span class="assignee-placeholder">Select assignees...</span>';
+        return;
+      }
+      selectedAssignees.forEach(function (name) {
+        var user = availableUsers.find(function (u) { return u.name === name; });
+        var role = user ? user.role : '';
+        var pill = document.createElement('span');
+        pill.className = 'assignee-pill';
+        pill.innerHTML = name + ' <span class="pill-role">· ' + role + '</span>' +
+          '<button class="pill-remove" title="Remove">×</button>';
+        pill.querySelector('.pill-remove').addEventListener('click', function (e) {
+          e.stopPropagation();
+          var idx = selectedAssignees.indexOf(name);
+          if (idx !== -1) selectedAssignees.splice(idx, 1);
+          renderAssigneePills();
+          buildAssigneeDropdown();
+        });
+        drawerAssigneePills.appendChild(pill);
+      });
+    }
+
+    // Toggle dropdown on pills click
+    drawerAssigneePills.addEventListener('click', function (e) {
+      e.stopPropagation();
+      drawerAssigneeDropdown.classList.toggle('is-open');
+      if (drawerAssigneeDropdown.classList.contains('is-open')) buildAssigneeDropdown();
+    });
+    document.addEventListener('click', function () {
+      drawerAssigneeDropdown.classList.remove('is-open');
+    });
+
+    function setDrawerMode(isTemplate) {
+      drawerIsTemplateMode = isTemplate;
+      if (isTemplate) {
+        drawerAssigneeField.style.display = 'none';
+        drawerRoleField.style.display = '';
+        document.getElementById('drawer-attachments').style.display = 'none';
+      } else {
+        drawerAssigneeField.style.display = '';
+        drawerRoleField.style.display = 'none';
+        document.getElementById('drawer-attachments').style.display = '';
+      }
+    }
 
     // Sample comments per task (prototype data)
     var taskComments = {
@@ -3434,9 +3720,15 @@
       else { label = 'Open'; cls = 'is-open'; }
       return '<span class="date-pill ' + cls + '" style="font-size:12px;">' + label + '</span>';
     }
+    var currentDrawerStatus = 'open';
     function setDrawerStatus(cat) {
+      currentDrawerStatus = cat;
       statusTriggerPill.innerHTML = statusPillForCategory(cat);
       statusDropdown.classList.remove('is-open');
+      // Update checkmarks
+      statusMenu.querySelectorAll('.status-option').forEach(function (opt) {
+        opt.classList.toggle('is-selected', opt.getAttribute('data-status') === cat);
+      });
     }
     statusTrigger.addEventListener('click', function (e) {
       e.stopPropagation();
@@ -3454,6 +3746,7 @@
       // Update task data
       if (currentDrawerTask) {
         if (newStatus === 'open') currentDrawerTask.status = 'due-today';
+        else if (newStatus === 'overdue') currentDrawerTask.status = 'overdue';
         else currentDrawerTask.status = newStatus;
         renderKanban();
         renderOpen();
@@ -3500,36 +3793,108 @@
     var drawerHeadDate = document.getElementById('drawer-head-date');
     var drawerHeadMeta = document.getElementById('drawer-head-meta');
 
-    function openDrawer(t) {
+    // Render attachments in the drawer
+    function renderDrawerAttachments(showFiles) {
+      var list = document.getElementById('drawer-attach-list');
+      list.innerHTML = '';
+      if (!showFiles) return;
+      // 3 photo attachments as image previews
+      var photos = [
+        { src: 'https://images.unsplash.com/photo-1632759145351-1d592919f522?w=240&h=240&fit=crop', name: 'Site_exterior.jpg' },
+        { src: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=240&h=240&fit=crop', name: 'Roof_detail.jpg' },
+        { src: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=240&h=240&fit=crop', name: 'Damage_area.jpg' }
+      ];
+      var thumbRow = document.createElement('div');
+      thumbRow.className = 'drawer-attach-thumbs';
+      photos.forEach(function (p) {
+        var thumb = document.createElement('div');
+        thumb.className = 'drawer-attach-thumb';
+        thumb.innerHTML = '<img src="' + p.src + '" alt="' + p.name + '" />' +
+          '<div class="drawer-attach-thumb-info">' + p.name + '</div>';
+        thumbRow.appendChild(thumb);
+      });
+      list.appendChild(thumbRow);
+      // 1 document attachment
+      var doc = document.createElement('div');
+      doc.className = 'drawer-attach-item';
+      doc.innerHTML = '<div class="attach-icon icon-doc"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1H3.5A1.5 1.5 0 0 0 2 2.5v9A1.5 1.5 0 0 0 3.5 13h7a1.5 1.5 0 0 0 1.5-1.5V5L8 1z"/><path d="M8 1v4h4"/><path d="M5 8h4M5 10h2"/></svg></div>' +
+        '<span class="attach-name">Inspection_report_v2.pdf</span>' +
+        '<span class="attach-meta">340 KB</span>';
+      list.appendChild(doc);
+    }
+
+    // Default descriptions for kanban tasks (by id)
+    var defaultDescs = {
+      1: 'Investigate and resolve CRM sync issue affecting task status updates. Check API logs for failed webhook payloads and verify the integration credentials are still valid.',
+      2: 'Verify that CRM task records match the production database entries. Run a comparison report and flag any orphaned or mismatched records for manual review.',
+      3: 'Review task creation workflow in the CRM test environment. Document any field mapping errors and confirm that required fields are properly enforced.',
+      4: 'Debug the task assignment notification pipeline. Confirm that email and in-app alerts trigger correctly when tasks are reassigned between team members.',
+      5: 'Validate that completed task notifications are being sent to all stakeholders. Check the notification queue for backlog or delivery failures.',
+      6: 'Schedule and prepare agenda items for the next project sync meeting. Include status updates on all open tasks and highlight any blockers or resource constraints.',
+      7: 'Follow up on outstanding action items from the previous review. Confirm all assigned owners have acknowledged their tasks and provided estimated completion dates.',
+      8: 'Coordinate with the field team to verify that all site measurements have been recorded accurately. Cross-check against the original survey data.',
+      9: 'Run a quick validation test on the latest build to confirm no regressions were introduced. Document results and share with the QA lead.',
+      10: 'Send a follow-up email if no response has been received within two weeks of the initial outreach. Reference the original proposal and offer to schedule a brief call.',
+      11: 'Plan and coordinate weekend work activities. Confirm crew availability, equipment reservations, and any permit requirements for after-hours access.',
+      12: 'Complete the assigned deliverable and update the project tracker. Notify the team lead once the milestone has been reached.',
+      13: 'Compile quarterly performance metrics and prepare the review presentation. Include project budget vs. actuals, timeline adherence, and customer satisfaction scores.',
+      14: 'Send a payment reminder for the outstanding invoice. Include the original invoice number, amount due, and preferred payment methods.',
+      15: 'Task completed successfully. Final deliverables have been reviewed and approved by the project manager.'
+    };
+
+    function openDrawer(t, isTemplate) {
       currentDrawerTask = t;
       exitTitleEdit(false);
       statusDropdown.classList.remove('is-open');
+      drawerAssigneeDropdown.classList.remove('is-open');
+      setDrawerMode(!!isTemplate);
       if (t && t.task) {
         drawerTitleDisplay.textContent = t.task;
-        drawerRoleSelect.value = t.role || '';
+        if (isTemplate) {
+          drawerRoleSelect.value = t.role || '';
+        } else {
+          // Parse assignee string into array
+          selectedAssignees = [];
+          if (t.assignee) {
+            t.assignee.split(',').forEach(function (a) {
+              var name = a.replace('...and 2 more', '').trim();
+              if (name && availableUsers.some(function (u) { return u.name === name; })) {
+                selectedAssignees.push(name);
+              }
+            });
+          }
+          renderAssigneePills();
+        }
         drawerDueInput.value = t.iso || '';
         drawerOppSelect.value = t.opp || '';
 
         drawerCompanySelect.value = t.company || '';
         setDrawerStatus(drawerStatusCategory(t));
-        drawerDescription.value = t.desc || '';
+        var desc = t.desc || defaultDescs[t.id] || '';
+        drawerDescription.value = desc;
         // Header meta
         drawerHeadCreator.textContent = t.creator || '-';
         drawerHeadDate.textContent = t.dd ? 'Created ' + t.dd : '';
         drawerHeadMeta.style.display = '';
         renderComments(t.id);
+        // Attachments
+        renderDrawerAttachments(true);
       }
       drawer.classList.add('is-open');
     }
-    function openBlankDrawer() {
+    function openBlankDrawer(isTemplate) {
       currentDrawerTask = null;
       exitTitleEdit(false);
       statusDropdown.classList.remove('is-open');
+      drawerAssigneeDropdown.classList.remove('is-open');
+      setDrawerMode(!!isTemplate);
       drawerTitleDisplay.textContent = 'New Task';
       enterTitleEdit();
       drawerTitleInput.value = '';
       drawerTitleInput.placeholder = 'Task name';
       drawerRoleSelect.value = '';
+      selectedAssignees = [];
+      renderAssigneePills();
       drawerDueInput.value = '';
       drawerOppSelect.value = '';
 
@@ -3539,6 +3904,8 @@
       drawerComments.innerHTML = '';
       drawerCommentsLabel.textContent = 'Comments (0)';
       drawerHeadMeta.style.display = 'none';
+      // Clear attachments for blank state
+      renderDrawerAttachments(false);
       drawer.classList.add('is-open');
     }
     function closeDrawer() {
@@ -3922,11 +4289,11 @@
 
     // Opp detail task cards → open drawer
     var oppTaskData = {
-      'opp-task-1': { id: 'opp-t1', task: 'Test task description', assignee: 'Valeriia Kovalenko', role: 'Account Rep', opp: 'Smart Construction Hub', dd: 'Apr 28', iso: '2026-04-28', status: 'open', creator: 'Valeriia Kovalenko', desc: '' },
-      'opp-task-2': { id: 'opp-t2', task: 'ABC edited task name', assignee: 'Valeriia Admin', role: 'Estimator', opp: 'Smart Construction Hub', dd: 'Apr 28', iso: '2026-04-28', status: 'open', creator: 'Valeriia Admin', desc: '' },
-      'opp-task-3': { id: 'opp-t3', task: 'PROD - Site inspection report', assignee: 'Romao Barbosa', role: 'Project Manager', opp: 'Smart Construction Hub', dd: 'Apr 5', iso: '2026-04-05', status: 'overdue', creator: 'Romao Barbosa', desc: '' },
-      'opp-task-4': { id: 'opp-t4', task: 'Submit material order list', assignee: 'Valeriia Kovalenko', role: 'Account Rep', opp: 'Smart Construction Hub', dd: 'Mar 20', iso: '2026-03-20', status: 'overdue', creator: 'Valeriia Kovalenko', desc: '' },
-      'opp-task-5': { id: 'opp-t5', task: 'Initial site assessment', assignee: 'Alec McGovern', role: 'Estimator', opp: 'Smart Construction Hub', dd: 'Apr 9', iso: '2026-04-09', status: 'completed', creator: 'Alec McGovern', desc: '' }
+      'opp-task-1': { id: 'opp-t1', task: 'Test task description', assignee: 'Valeriia Kovalenko', role: 'Account Rep', opp: 'Smart Construction Hub', dd: 'Apr 28', iso: '2026-04-28', status: 'open', creator: 'Valeriia Kovalenko', desc: 'Review and validate the scope of work outlined in the initial proposal. Confirm measurements match the field report and flag any discrepancies before the estimator finalizes pricing.' },
+      'opp-task-2': { id: 'opp-t2', task: 'ABC edited task name', assignee: 'Valeriia Admin', role: 'Estimator', opp: 'Smart Construction Hub', dd: 'Apr 28', iso: '2026-04-28', status: 'open', creator: 'Valeriia Admin', desc: 'Prepare a detailed cost breakdown including labor, materials, and equipment. Cross-reference supplier quotes from the last 30 days and apply volume discount tiers where applicable.' },
+      'opp-task-3': { id: 'opp-t3', task: 'PROD - Site inspection report', assignee: 'Romao Barbosa', role: 'Project Manager', opp: 'Smart Construction Hub', dd: 'Apr 5', iso: '2026-04-05', status: 'overdue', creator: 'Romao Barbosa', desc: 'Complete the on-site inspection report documenting current roof conditions, drainage issues, and structural concerns. Include photo documentation of all areas requiring repair or replacement.' },
+      'opp-task-4': { id: 'opp-t4', task: 'Submit material order list', assignee: 'Valeriia Kovalenko', role: 'Account Rep', opp: 'Smart Construction Hub', dd: 'Mar 20', iso: '2026-03-20', status: 'overdue', creator: 'Valeriia Kovalenko', desc: 'Compile and submit the final material order list to the approved supplier. Ensure all quantities match the takeoff sheet and confirm lead times for specialty items.' },
+      'opp-task-5': { id: 'opp-t5', task: 'Initial site assessment', assignee: 'Alec McGovern', role: 'Estimator', opp: 'Smart Construction Hub', dd: 'Apr 9', iso: '2026-04-09', status: 'completed', creator: 'Alec McGovern', desc: 'Conducted initial walkthrough of the property to assess overall roof condition, identify access points, and determine equipment requirements for the full inspection phase.' }
     };
     document.querySelectorAll('#opp-tasks-list .kanban-card').forEach(function (card) {
       card.style.cursor = 'pointer';
@@ -4010,7 +4377,7 @@
         // Click task name → open detail modal
         row.querySelector('.tpl-dt-name').addEventListener('click', function (e) {
           e.stopPropagation();
-          openDrawer({ id: 'tpl-d-' + Math.random(), task: t.task, role: t.role, opp: '', dd: '', iso: '', status: 'open', creator: '', desc: '' });
+          openDrawer({ id: 'tpl-d-' + Math.random(), task: t.task, role: t.role, opp: '', dd: '', iso: '', status: 'open', creator: '', desc: '' }, true);
         });
         // Remove button
         row.querySelector('.tpl-dt-remove').addEventListener('click', function (e) {
@@ -4275,7 +4642,7 @@
 
     // Template detail: "Add new task" button → open blank drawer
     document.getElementById('tpl-add-new-task-btn').addEventListener('click', function () {
-      openBlankDrawer();
+      openBlankDrawer(true);
     });
   </script>
 </body>
