@@ -265,6 +265,14 @@
     }
     .tpl-table tbody tr:last-child td { border-bottom: none; }
     .tpl-table .tpl-name-cell { font-weight: var(--font-weight-medium); color: var(--color-primary-7); }
+    .tpl-table .tpl-name-cell .tpl-doc-icon {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+      color: var(--color-text-tertiary);
+      vertical-align: -2px;
+      margin-right: 8px;
+    }
 
     /* Create template dropdown */
     .create-tpl-wrap { position: relative; }
@@ -354,29 +362,81 @@
       align-items: center;
       justify-content: space-between;
       margin-bottom: var(--space-2xl);
+      gap: var(--space-md);
     }
+    .tpl-detail-title {
+      cursor: text;
+      padding: 4px 8px;
+      margin: 0 -8px 0 -8px;
+      border-radius: var(--radius-sm);
+      flex: 1;
+      min-width: 0;
+    }
+    .tpl-detail-title:hover { background: var(--color-gray-1); }
+    .tpl-detail-title.is-editing { display: none; }
+    .tpl-detail-title-input {
+      display: none;
+      flex: 1;
+      min-width: 0;
+      padding: 4px 8px;
+      margin: 0 -8px 0 -8px;
+      font-family: var(--font-family-base);
+      font-size: var(--font-h3-size);
+      line-height: var(--font-h3-line);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      background: var(--color-white);
+      border: 1px solid var(--color-blue-7);
+      border-radius: var(--radius-sm);
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(28, 126, 214, 0.12);
+    }
+    .tpl-detail-title-input.is-editing { display: block; }
     .tpl-detail-task-list {
+      background: transparent;
+      border: none;
+      border-radius: 0;
+    }
+
+    /* Row action buttons for template detail */
+    .tpl-row-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 4px 10px;
       background: var(--color-white);
       border: 1px solid var(--color-border-default);
       border-radius: var(--radius-sm);
-      overflow: hidden;
-    }
-    .tpl-detail-task {
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-      padding: 12px var(--space-lg);
-      border-bottom: 1px solid var(--color-border-default);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-secondary);
       cursor: pointer;
     }
-    .tpl-detail-task:last-child { border-bottom: none; }
-    .tpl-detail-task:hover { background: var(--color-gray-1); }
-    .tpl-detail-task .tpl-dt-name {
-      flex: 1;
-      font-size: var(--font-body-md-size);
-      color: var(--color-text-primary);
+    .tpl-row-btn:hover { background: var(--color-gray-1); }
+    .tpl-row-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
+    .tpl-row-actions-cell {
+      display: flex;
+      gap: 6px;
+      justify-content: flex-end;
     }
-    .tpl-detail-task .tpl-dt-role {
+
+    /* Drawer body: row actions (Duplicate/Delete) */
+    .drawer-row-actions {
+      display: flex;
+      gap: 6px;
+      margin-bottom: var(--space-lg);
+    }
+
+    /* Bulk action toolbar */
+    .tpl-bulk-toolbar {
+      display: none;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 8px 0;
+      margin-bottom: var(--space-sm);
+    }
+    .tpl-bulk-toolbar.is-visible { display: flex; }
+    .tpl-bulk-toolbar .tpl-bulk-count {
       font-size: var(--font-body-sm-size);
       color: var(--color-text-tertiary);
       margin-right: var(--space-sm);
@@ -885,6 +945,9 @@
       color: var(--color-text-primary);
     }
     .opp-add-task-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       padding: 6px 14px;
       background: var(--color-white);
       color: var(--color-text-primary);
@@ -895,6 +958,7 @@
       font-weight: var(--font-weight-medium);
       cursor: pointer;
     }
+    .opp-add-task-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
     .opp-add-task-btn:hover { background: var(--color-gray-1); }
     .opp-tasks-list {
       display: flex;
@@ -1103,7 +1167,8 @@
       border-bottom: 1px solid var(--color-border-default);
     }
     .tpl-modal-title {
-      font-size: var(--font-body-lg-semi-size);
+      font-size: var(--font-h4-size);
+      line-height: var(--font-h4-line);
       font-weight: var(--font-weight-semibold);
       color: var(--color-text-primary);
     }
@@ -1369,6 +1434,9 @@
       background-repeat: no-repeat;
     }
     .add-task-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       background: var(--color-gray-9);
       color: var(--color-white);
       border: none;
@@ -1379,6 +1447,14 @@
       font-weight: var(--font-weight-semibold);
       cursor: pointer;
     }
+    .add-task-btn svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .add-task-btn-white {
+      background: var(--color-white);
+      color: var(--color-text-primary);
+      border: 1px solid var(--color-border-default);
+    }
+    .add-task-btn-white:hover { background: var(--color-gray-1); }
+    .tasks-add-wrap { display: flex; gap: var(--space-sm); position: relative; }
 
     /* ---------- Toolbar row (view + range toggles) ---------- */
     .toolbar-row {
@@ -1418,6 +1494,35 @@
       background: var(--color-white);
       color: var(--color-text-primary);
       box-shadow: var(--shadow-sm);
+    }
+
+    /* Status filter tabs (underline style) */
+    #task-status-tabs {
+      display: flex;
+      padding: 0;
+      background: transparent;
+      border: none;
+      border-radius: 0;
+      border-bottom: 1px solid var(--color-border-default);
+      gap: 0;
+    }
+    #task-status-tabs button {
+      padding: 10px var(--space-xl);
+      background: none;
+      color: var(--color-text-tertiary);
+      border-radius: 0;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      font-weight: var(--font-weight-medium);
+      box-shadow: none;
+    }
+    #task-status-tabs button:hover { color: var(--color-text-primary); background: none; }
+    #task-status-tabs button.is-active {
+      background: none;
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-semibold);
+      border-bottom-color: var(--color-primary-6);
+      box-shadow: none;
     }
     .view-toggle .v-icon {
       width: 14px; height: 14px;
@@ -1681,14 +1786,23 @@
       border: 1.5px solid var(--color-gray-4);
       display: grid; place-items: center;
       background: var(--color-white);
+      cursor: pointer;
+      transition: background 0.1s ease, border-color 0.1s ease;
+    }
+    .check-circle:hover {
+      border-color: var(--color-success-fg);
+      background: var(--color-success-bg);
+    }
+    .check-circle svg {
+      width: 12px; height: 12px;
+      color: var(--color-white);
+      opacity: 0;
     }
     .check-circle.is-done {
-      background: var(--color-green-7);
-      border-color: var(--color-green-7);
-      color: var(--color-white);
-      font-size: 12px;
-      font-weight: 700;
+      background: var(--color-success-fg);
+      border-color: var(--color-success-fg);
     }
+    .check-circle.is-done svg { opacity: 1; }
 
     .row-overdue td { color: var(--color-red-8); }
     .row-overdue td.t-default { color: var(--color-text-primary); }
@@ -1792,6 +1906,13 @@
       gap: var(--space-lg);
     }
     .drawer-head-left { flex: 1; min-width: 0; }
+    .drawer-title-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .drawer-title-row .date-pill { font-size: 12px; }
     .drawer-title-display {
       margin: 0;
       font-size: var(--font-h5-size);
@@ -1822,25 +1943,41 @@
       outline: none;
       box-shadow: 0 0 0 3px rgba(28, 126, 214, 0.12);
     }
-    .drawer-title-actions {
-      display: flex; gap: 6px; margin-top: 8px;
-    }
-    .drawer-title-actions button {
-      padding: 4px 12px;
+    /* Complete button */
+    .drawer-complete-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
       border-radius: var(--radius-sm);
       font-family: var(--font-family-base);
       font-size: var(--font-body-sm-size);
       font-weight: var(--font-weight-medium);
-      cursor: pointer;
-      border: none;
-    }
-    .drawer-title-actions .title-save {
-      background: var(--color-gray-9);
-      color: var(--color-white);
-    }
-    .drawer-title-actions .title-cancel-btn {
-      background: var(--color-gray-3);
       color: var(--color-text-secondary);
+      cursor: pointer;
+    }
+    .drawer-complete-btn:hover {
+      background: var(--color-gray-1);
+    }
+    .drawer-complete-btn .complete-icon {
+      width: 16px; height: 16px;
+      color: var(--color-gray-5);
+    }
+    .drawer-complete-btn .complete-check {
+      opacity: 0;
+    }
+    .drawer-complete-btn.is-completed {
+      background: var(--color-success-bg);
+      border-color: var(--color-success-fg);
+      color: var(--color-success-fg);
+    }
+    .drawer-complete-btn.is-completed .complete-icon {
+      color: var(--color-success-fg);
+    }
+    .drawer-complete-btn.is-completed .complete-check {
+      opacity: 1;
     }
     .drawer-head-meta {
       display: flex;
@@ -2452,11 +2589,23 @@
 
     .drawer-foot {
       display: flex;
-      justify-content: flex-end;
+      align-items: center;
+      justify-content: space-between;
       gap: var(--space-sm);
       padding: var(--space-lg) var(--space-2xl) var(--space-2xl) var(--space-2xl);
       border-top: 1px solid var(--color-border-default);
     }
+    .drawer-foot .drawer-row-actions { margin-bottom: 0; }
+    .drawer-foot-right { display: flex; gap: var(--space-sm); }
+    .drawer-foot .tpl-row-btn {
+      padding: 9px 8px;
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-semibold);
+      background: none;
+      border: none;
+    }
+    .drawer-foot .tpl-row-btn:hover { background: var(--color-gray-1); }
+    .drawer-foot .tpl-row-btn svg { width: 14px; height: 14px; }
     .btn-cancel {
       padding: 9px 18px;
       background: var(--color-gray-3);
@@ -2579,8 +2728,26 @@
           <button class="templates-tab is-active">Tasks</button>
           <button class="templates-tab">Proposal</button>
           <button class="templates-tab">Folders</button>
-          <div class="create-tpl-wrap" style="margin-left:auto;margin-bottom:-1px;">
-            <button class="btn btn-primary btn-sm" id="create-new-tpl-btn">+ Create new template</button>
+        </div>
+        <div style="display:flex;align-items:center;margin-top:var(--space-lg);margin-bottom:var(--space-lg);">
+          <!-- Bulk action toolbar (left) -->
+          <div class="tpl-bulk-toolbar" id="tpl-list-bulk-toolbar" style="margin-bottom:0;">
+            <span class="tpl-bulk-count">0 selected</span>
+            <button type="button" class="tpl-row-btn" id="tpl-list-bulk-duplicate">
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="8" height="8" rx="1"/><path d="M2 10V3a1 1 0 0 1 1-1h7"/></svg>
+              Duplicate
+            </button>
+            <button type="button" class="tpl-row-btn" id="tpl-list-bulk-delete">
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h10M5 4V2.5h4V4M3 4v8a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4"/></svg>
+              Delete
+            </button>
+          </div>
+          <!-- Build new template (right) -->
+          <div class="create-tpl-wrap" style="margin-left:auto;">
+            <button class="add-task-btn" id="create-new-tpl-btn">
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2v10M2 7h10"/></svg>
+              New template
+            </button>
             <div class="create-tpl-dropdown" id="create-tpl-dropdown">
               <button class="create-tpl-dropdown-item" id="create-tpl-blank">Blank template</button>
               <button class="create-tpl-dropdown-item" id="create-tpl-from-opp">From existing opportunity</button>
@@ -2592,41 +2759,63 @@
             <table class="tpl-table">
               <thead>
                 <tr>
+                  <th class="col-check"><input type="checkbox" class="checkbox" id="tpl-list-select-all" title="Select all" /></th>
                   <th>Template Name</th>
                   <th>Tasks</th>
                   <th>Assignee</th>
                   <th>Created By</th>
                   <th>Last Modified</th>
+                  <th></th>
                 </tr>
               </thead>
               <tbody id="tpl-table-body">
                 <tr data-tpl-detail="roofing">
-                  <td class="tpl-name-cell">Roofing Project Tasks</td>
+                  <td><input type="checkbox" class="checkbox tpl-list-select" /></td>
+                  <td class="tpl-name-cell"><svg class="tpl-doc-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1H3.5A1.5 1.5 0 0 0 2 2.5v9A1.5 1.5 0 0 0 3.5 13h7a1.5 1.5 0 0 0 1.5-1.5V5L8 1z"/><path d="M8 1v4h4"/><path d="M4.5 8h5M4.5 10h3"/></svg>Roofing Project Tasks</td>
                   <td>5</td>
                   <td>Account Rep, Estimator</td>
                   <td>Valeriia Kovalenko</td>
                   <td>Apr 10, 2026</td>
+                  <td class="tpl-row-actions-cell">
+                    <button type="button" class="tpl-row-btn tpl-list-row-duplicate"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="8" height="8" rx="1"/><path d="M2 10V3a1 1 0 0 1 1-1h7"/></svg>Duplicate</button>
+                    <button type="button" class="tpl-row-btn tpl-list-row-delete"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h10M5 4V2.5h4V4M3 4v8a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4"/></svg>Delete</button>
+                  </td>
                 </tr>
                 <tr data-tpl-detail="inspection">
-                  <td class="tpl-name-cell">Site Inspection Checklist</td>
+                  <td><input type="checkbox" class="checkbox tpl-list-select" /></td>
+                  <td class="tpl-name-cell"><svg class="tpl-doc-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1H3.5A1.5 1.5 0 0 0 2 2.5v9A1.5 1.5 0 0 0 3.5 13h7a1.5 1.5 0 0 0 1.5-1.5V5L8 1z"/><path d="M8 1v4h4"/><path d="M4.5 8h5M4.5 10h3"/></svg>Site Inspection Checklist</td>
                   <td>4</td>
                   <td>Project Manager, Estimator</td>
                   <td>Alec McGovern</td>
                   <td>Apr 8, 2026</td>
+                  <td class="tpl-row-actions-cell">
+                    <button type="button" class="tpl-row-btn tpl-list-row-duplicate"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="8" height="8" rx="1"/><path d="M2 10V3a1 1 0 0 1 1-1h7"/></svg>Duplicate</button>
+                    <button type="button" class="tpl-row-btn tpl-list-row-delete"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h10M5 4V2.5h4V4M3 4v8a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4"/></svg>Delete</button>
+                  </td>
                 </tr>
                 <tr data-tpl-detail="bidprep">
-                  <td class="tpl-name-cell">Bid Preparation</td>
+                  <td><input type="checkbox" class="checkbox tpl-list-select" /></td>
+                  <td class="tpl-name-cell"><svg class="tpl-doc-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1H3.5A1.5 1.5 0 0 0 2 2.5v9A1.5 1.5 0 0 0 3.5 13h7a1.5 1.5 0 0 0 1.5-1.5V5L8 1z"/><path d="M8 1v4h4"/><path d="M4.5 8h5M4.5 10h3"/></svg>Bid Preparation</td>
                   <td>3</td>
                   <td>Estimator, Account Rep</td>
                   <td>Romao Barbosa</td>
                   <td>Mar 28, 2026</td>
+                  <td class="tpl-row-actions-cell">
+                    <button type="button" class="tpl-row-btn tpl-list-row-duplicate"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="8" height="8" rx="1"/><path d="M2 10V3a1 1 0 0 1 1-1h7"/></svg>Duplicate</button>
+                    <button type="button" class="tpl-row-btn tpl-list-row-delete"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h10M5 4V2.5h4V4M3 4v8a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4"/></svg>Delete</button>
+                  </td>
                 </tr>
                 <tr data-tpl-detail="closeout">
-                  <td class="tpl-name-cell">Project Closeout</td>
+                  <td><input type="checkbox" class="checkbox tpl-list-select" /></td>
+                  <td class="tpl-name-cell"><svg class="tpl-doc-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1H3.5A1.5 1.5 0 0 0 2 2.5v9A1.5 1.5 0 0 0 3.5 13h7a1.5 1.5 0 0 0 1.5-1.5V5L8 1z"/><path d="M8 1v4h4"/><path d="M4.5 8h5M4.5 10h3"/></svg>Project Closeout</td>
                   <td>6</td>
                   <td>Project Manager, Account Rep</td>
                   <td>Valeriia Admin</td>
                   <td>Mar 15, 2026</td>
+                  <td class="tpl-row-actions-cell">
+                    <button type="button" class="tpl-row-btn tpl-list-row-duplicate"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="8" height="8" rx="1"/><path d="M2 10V3a1 1 0 0 1 1-1h7"/></svg>Duplicate</button>
+                    <button type="button" class="tpl-row-btn tpl-list-row-delete"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h10M5 4V2.5h4V4M3 4v8a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4"/></svg>Delete</button>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -2638,8 +2827,10 @@
       <div class="tpl-detail-page" id="tpl-detail-page">
         <div class="tpl-detail-breadcrumb"><a id="tpl-back-link">Templates</a>  /  <span id="tpl-detail-name-crumb">Template Name</span></div>
         <div class="tpl-detail-header">
-          <h1 class="t-h3" id="tpl-detail-title">Template Name</h1>
-          <button class="opp-add-task-btn" id="tpl-add-new-task-btn">+ Add new task</button>
+          <h1 class="t-h3 tpl-detail-title" id="tpl-detail-title" title="Click to rename">Template Name</h1>
+          <input class="tpl-detail-title-input" id="tpl-detail-title-input" type="text" />
+          <button class="opp-add-task-btn" id="tpl-add-new-task-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2v10M2 7h10"/></svg>
+                      New task</button>
         </div>
         <div style="display:flex;gap:var(--space-sm);margin-bottom:var(--space-2xl);" id="tpl-detail-badges">
           <span class="tpl-pill">Tasks</span>
@@ -2833,7 +3024,7 @@
             <div class="opp-right-tabs">
               <button class="opp-right-tab is-active" data-right-tab="activities">Activities</button>
               <button class="opp-right-tab" data-right-tab="materials">Materials</button>
-              <button class="opp-right-tab" data-right-tab="tasks">Tasks</button>
+              <button class="opp-right-tab" data-right-tab="tasks">Tasks (<span id="opp-tasks-tab-count">0</span>)</button>
             </div>
 
             <!-- Activities tab -->
@@ -2936,12 +3127,20 @@
             <!-- Tasks tab -->
             <div class="opp-right-tab-panel" id="opp-tab-tasks">
               <div class="opp-tasks-card">
-                <div class="opp-tasks-card-header">
-                  <div class="opp-tasks-card-title">Tasks</div>
+                <div style="display:flex;align-items:center;margin-bottom:var(--space-xl);gap:var(--space-sm);">
+                  <div class="range-toggle" id="opp-task-status-tabs">
+                    <button class="is-active" data-task-status="open">Open</button>
+                    <button data-task-status="overdue">Overdue</button>
+                    <button data-task-status="completed">Completed</button>
+                  </div>
                   <div style="display:flex;gap:var(--space-sm);margin-left:auto;">
-                    <button class="opp-add-task-btn" id="create-tpl-tasks-btn">Create template tasks</button>
+                    <button class="opp-add-task-btn" id="create-tpl-tasks-btn">
+                      <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 2l1.5 1.5L5 10.5l-2 .5.5-2L10.5 2z"/></svg>
+                      Build new template from this
+                    </button>
                     <div style="position:relative;">
-                      <button class="opp-add-task-btn" id="add-task-dropdown-btn">+ Add new task</button>
+                      <button class="opp-add-task-btn" id="add-task-dropdown-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2v10M2 7h10"/></svg>
+                      New task</button>
                       <div class="add-task-dropdown" id="add-task-dropdown">
                         <button class="add-task-dropdown-item" id="add-task-from-tpl">From template</button>
                         <button class="add-task-dropdown-item" id="add-task-blank">New blank task</button>
@@ -2949,109 +3148,142 @@
                     </div>
                   </div>
                 </div>
-                <div class="range-toggle" id="opp-task-status-tabs" style="margin-bottom: var(--space-xl);">
-                  <button class="is-active" data-task-status="open">Open</button>
-                  <button data-task-status="overdue">Overdue</button>
-                  <button data-task-status="completed">Completed</button>
-                </div>
                 <div class="opp-tasks-list" id="opp-tasks-list">
                   <!-- Open tasks -->
                   <div class="opp-task-panel" data-status-panel="open">
-                    <div class="kanban-card" data-opp-task="opp-task-1">
-                      <div class="card-top-row">
-                        <div class="card-title">Test task description</div>
-                        <div class="card-due-row"><span class="date-pill is-open"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="10" height="9" rx="1"/><path d="M2 6h10M5 1.5v2M9 1.5v2"/></svg>Apr 28</span></div>
-                      </div>
-                      <div class="card-meta-row">
-                        <svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="5" r="2.5"/><path d="M2.5 12c.8-2.2 2.6-3.3 4.5-3.3S10.7 9.8 11.5 12"/></svg>
-                        Valeriia Kovalenko
-                      </div>
-                      <div class="card-meta-row">
-                        <svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a3 3 0 0 0 4.2 0l2-2a3 3 0 0 0-4.2-4.2L7 2.8"/><path d="M8 6a3 3 0 0 0-4.2 0l-2 2a3 3 0 0 0 4.2 4.2L7 11.2"/></svg>
-                        Smart Construction Hub
-                      </div>
-                      <div class="card-divider"></div>
-                      <div class="card-comment-count">
-                        <span class="card-comment-avatars"><span class="card-comment-avatar">VK</span></span>
-                        1
-                      </div>
-                    </div>
-                    <div class="kanban-card" data-opp-task="opp-task-2">
-                      <div class="card-top-row">
-                        <div class="card-title">ABC edited task name</div>
-                        <div class="card-due-row"><span class="date-pill is-open"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="10" height="9" rx="1"/><path d="M2 6h10M5 1.5v2M9 1.5v2"/></svg>Apr 28</span></div>
-                      </div>
-                      <div class="card-meta-row">
-                        <svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="5" r="2.5"/><path d="M2.5 12c.8-2.2 2.6-3.3 4.5-3.3S10.7 9.8 11.5 12"/></svg>
-                        Valeriia Admin
-                      </div>
-                      <div class="card-meta-row">
-                        <svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a3 3 0 0 0 4.2 0l2-2a3 3 0 0 0-4.2-4.2L7 2.8"/><path d="M8 6a3 3 0 0 0-4.2 0l-2 2a3 3 0 0 0 4.2 4.2L7 11.2"/></svg>
-                        Smart Construction Hub
-                      </div>
-                      <div class="card-divider"></div>
-                      <div class="card-comment-count">
-                        <span class="card-comment-avatars"><span class="card-comment-avatar">VA</span></span>
-                        2
-                      </div>
+                    <div class="data-table-wrap">
+                      <table class="data-table">
+                        <thead>
+                          <tr>
+                            <th class="col-check"><span style="font-size:14px;color:var(--color-gray-5);">✓</span></th>
+                            <th>Due Date <span class="sort">▲</span></th>
+                            <th>Task</th>
+                            <th>Task Assignees</th>
+                            <th>Created By</th>
+                            <th class="row-actions">⋮</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr data-opp-task="opp-task-1">
+                            <td><div class="check-circle" title="Mark complete"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-6"/></svg></div></td>
+                            <td><span class="date-pill is-open"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="10" height="9" rx="1"/><path d="M2 6h10M5 1.5v2M9 1.5v2"/></svg>Apr 28</span></td>
+                            <td>Test task description</td>
+                            <td><a class="link" href="#" onclick="event.stopPropagation();return false;">Valeriia Kovalenko</a></td>
+                            <td><a class="link" href="#" onclick="event.stopPropagation();return false;">Valeriia Kovalenko</a></td>
+                            <td class="row-actions">⋮</td>
+                          </tr>
+                          <tr data-opp-task="opp-task-2">
+                            <td><div class="check-circle" title="Mark complete"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-6"/></svg></div></td>
+                            <td><span class="date-pill is-open"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="10" height="9" rx="1"/><path d="M2 6h10M5 1.5v2M9 1.5v2"/></svg>Apr 28</span></td>
+                            <td>ABC edited task name</td>
+                            <td><a class="link" href="#" onclick="event.stopPropagation();return false;">Valeriia Admin</a></td>
+                            <td><a class="link" href="#" onclick="event.stopPropagation();return false;">Valeriia Admin</a></td>
+                            <td class="row-actions">⋮</td>
+                          </tr>
+                          <tr data-opp-task="opp-task-6">
+                            <td><div class="check-circle" title="Mark complete"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-6"/></svg></div></td>
+                            <td><span class="date-pill is-open"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="10" height="9" rx="1"/><path d="M2 6h10M5 1.5v2M9 1.5v2"/></svg>May 1</span></td>
+                            <td>Draft final proposal for client review</td>
+                            <td><a class="link" href="#" onclick="event.stopPropagation();return false;">Alec McGovern</a></td>
+                            <td><a class="link" href="#" onclick="event.stopPropagation();return false;">Alec McGovern</a></td>
+                            <td class="row-actions">⋮</td>
+                          </tr>
+                          <tr data-opp-task="opp-task-7">
+                            <td><div class="check-circle" title="Mark complete"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-6"/></svg></div></td>
+                            <td><span class="date-pill is-open"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="10" height="9" rx="1"/><path d="M2 6h10M5 1.5v2M9 1.5v2"/></svg>May 3</span></td>
+                            <td>Schedule kickoff meeting with crew lead</td>
+                            <td><a class="link" href="#" onclick="event.stopPropagation();return false;">Romao Barbosa</a></td>
+                            <td><a class="link" href="#" onclick="event.stopPropagation();return false;">Romao Barbosa</a></td>
+                            <td class="row-actions">⋮</td>
+                          </tr>
+                          <tr data-opp-task="opp-task-8">
+                            <td><div class="check-circle" title="Mark complete"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-6"/></svg></div></td>
+                            <td><span class="date-pill is-open"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="10" height="9" rx="1"/><path d="M2 6h10M5 1.5v2M9 1.5v2"/></svg>May 5</span></td>
+                            <td>Confirm supplier delivery timeline</td>
+                            <td><a class="link" href="#" onclick="event.stopPropagation();return false;">Valeriia Admin</a></td>
+                            <td><a class="link" href="#" onclick="event.stopPropagation();return false;">Valeriia Admin</a></td>
+                            <td class="row-actions">⋮</td>
+                          </tr>
+                          <tr data-opp-task="opp-task-9">
+                            <td><div class="check-circle" title="Mark complete"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-6"/></svg></div></td>
+                            <td><span class="date-pill is-open"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="10" height="9" rx="1"/><path d="M2 6h10M5 1.5v2M9 1.5v2"/></svg>May 8</span></td>
+                            <td>Finalize scope change memo</td>
+                            <td><a class="link" href="#" onclick="event.stopPropagation();return false;">Aaron Weinstein</a></td>
+                            <td><a class="link" href="#" onclick="event.stopPropagation();return false;">Aaron Weinstein</a></td>
+                            <td class="row-actions">⋮</td>
+                          </tr>
+                          <tr data-opp-task="opp-task-10">
+                            <td><div class="check-circle" title="Mark complete"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-6"/></svg></div></td>
+                            <td><span class="date-pill is-open"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="10" height="9" rx="1"/><path d="M2 6h10M5 1.5v2M9 1.5v2"/></svg>May 12</span></td>
+                            <td>Review permit application draft</td>
+                            <td><a class="link" href="#" onclick="event.stopPropagation();return false;">Matt Billard</a></td>
+                            <td><a class="link" href="#" onclick="event.stopPropagation();return false;">Matt Billard</a></td>
+                            <td class="row-actions">⋮</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                   <!-- Overdue tasks -->
                   <div class="opp-task-panel" data-status-panel="overdue" style="display:none;">
-                    <div class="kanban-card" data-opp-task="opp-task-3">
-                      <div class="card-top-row">
-                        <div class="card-title">PROD - Site inspection report</div>
-                        <div class="card-due-row"><span class="date-pill is-overdue"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1L1 10h10L6 1zM6 4.5v2.5M6 8.5v.5"/></svg>Apr 5</span></div>
-                      </div>
-                      <div class="card-meta-row">
-                        <svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="5" r="2.5"/><path d="M2.5 12c.8-2.2 2.6-3.3 4.5-3.3S10.7 9.8 11.5 12"/></svg>
-                        Romao Barbosa
-                      </div>
-                      <div class="card-meta-row">
-                        <svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a3 3 0 0 0 4.2 0l2-2a3 3 0 0 0-4.2-4.2L7 2.8"/><path d="M8 6a3 3 0 0 0-4.2 0l-2 2a3 3 0 0 0 4.2 4.2L7 11.2"/></svg>
-                        Smart Construction Hub
-                      </div>
-                      <div class="card-divider"></div>
-                      <div class="card-comment-count">
-                        <span class="card-comment-avatars"><span class="card-comment-avatar">RB</span></span>
-                        1
-                      </div>
-                    </div>
-                    <div class="kanban-card" data-opp-task="opp-task-4">
-                      <div class="card-top-row">
-                        <div class="card-title">Submit material order list</div>
-                        <div class="card-due-row"><span class="date-pill is-overdue"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1L1 10h10L6 1zM6 4.5v2.5M6 8.5v.5"/></svg>Mar 20</span></div>
-                      </div>
-                      <div class="card-meta-row">
-                        <svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="5" r="2.5"/><path d="M2.5 12c.8-2.2 2.6-3.3 4.5-3.3S10.7 9.8 11.5 12"/></svg>
-                        Valeriia Kovalenko
-                      </div>
-                      <div class="card-meta-row">
-                        <svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a3 3 0 0 0 4.2 0l2-2a3 3 0 0 0-4.2-4.2L7 2.8"/><path d="M8 6a3 3 0 0 0-4.2 0l-2 2a3 3 0 0 0 4.2 4.2L7 11.2"/></svg>
-                        Smart Construction Hub
-                      </div>
+                    <div class="data-table-wrap">
+                      <table class="data-table">
+                        <thead>
+                          <tr>
+                            <th class="col-check"><span style="font-size:14px;color:var(--color-gray-5);">✓</span></th>
+                            <th>Due Date <span class="sort">▲</span></th>
+                            <th>Task</th>
+                            <th>Task Assignees</th>
+                            <th>Created By</th>
+                            <th class="row-actions">⋮</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr data-opp-task="opp-task-3" class="row-overdue">
+                            <td><div class="check-circle" title="Mark complete"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-6"/></svg></div></td>
+                            <td><span class="date-pill is-overdue"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1L1 10h10L6 1zM6 4.5v2.5M6 8.5v.5"/></svg>Apr 5</span></td>
+                            <td class="t-default">PROD - Site inspection report</td>
+                            <td><a class="link" href="#" onclick="event.stopPropagation();return false;">Romao Barbosa</a></td>
+                            <td><a class="link" href="#" onclick="event.stopPropagation();return false;">Romao Barbosa</a></td>
+                            <td class="row-actions">⋮</td>
+                          </tr>
+                          <tr data-opp-task="opp-task-4" class="row-overdue">
+                            <td><div class="check-circle" title="Mark complete"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-6"/></svg></div></td>
+                            <td><span class="date-pill is-overdue"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 1L1 10h10L6 1zM6 4.5v2.5M6 8.5v.5"/></svg>Mar 20</span></td>
+                            <td class="t-default">Submit material order list</td>
+                            <td><a class="link" href="#" onclick="event.stopPropagation();return false;">Valeriia Kovalenko</a></td>
+                            <td><a class="link" href="#" onclick="event.stopPropagation();return false;">Valeriia Kovalenko</a></td>
+                            <td class="row-actions">⋮</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                   <!-- Completed tasks -->
                   <div class="opp-task-panel" data-status-panel="completed" style="display:none;">
-                    <div class="kanban-card is-done" data-opp-task="opp-task-5">
-                      <div class="card-top-row">
-                        <div class="card-title">Initial site assessment</div>
-                        <div class="card-due-row"><span class="date-pill is-completed"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5l2.5 2.5L9 4"/></svg>Apr 9</span></div>
-                      </div>
-                      <div class="card-meta-row">
-                        <svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="5" r="2.5"/><path d="M2.5 12c.8-2.2 2.6-3.3 4.5-3.3S10.7 9.8 11.5 12"/></svg>
-                        Alec McGovern
-                      </div>
-                      <div class="card-meta-row">
-                        <svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a3 3 0 0 0 4.2 0l2-2a3 3 0 0 0-4.2-4.2L7 2.8"/><path d="M8 6a3 3 0 0 0-4.2 0l-2 2a3 3 0 0 0 4.2 4.2L7 11.2"/></svg>
-                        Smart Construction Hub
-                      </div>
-                      <div class="card-divider"></div>
-                      <div class="card-comment-count">
-                        <span class="card-comment-avatars"><span class="card-comment-avatar">AM</span></span>
-                        1
-                      </div>
+                    <div class="data-table-wrap">
+                      <table class="data-table">
+                        <thead>
+                          <tr>
+                            <th class="col-check"><span style="font-size:14px;color:var(--color-gray-5);">✓</span></th>
+                            <th>Due Date <span class="sort">▲</span></th>
+                            <th>Task</th>
+                            <th>Task Assignees</th>
+                            <th>Created By</th>
+                            <th class="row-actions">⋮</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr data-opp-task="opp-task-5">
+                            <td><div class="check-circle is-done" title="Mark incomplete"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-6"/></svg></div></td>
+                            <td><span class="date-pill is-completed"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5l2.5 2.5L9 4"/></svg>Apr 9</span></td>
+                            <td style="text-decoration:line-through;color:var(--color-text-tertiary);">Initial site assessment</td>
+                            <td><a class="link" href="#" onclick="event.stopPropagation();return false;">Alec McGovern</a></td>
+                            <td><a class="link" href="#" onclick="event.stopPropagation();return false;">Alec McGovern</a></td>
+                            <td class="row-actions">⋮</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
                 </div>
@@ -3065,7 +3297,7 @@
       <div class="tpl-modal-overlay" id="tpl-modal-overlay">
         <div class="tpl-modal">
           <div class="tpl-modal-header">
-            <div class="tpl-modal-title t-h4">Create template tasks from this opportunity</div>
+            <div class="tpl-modal-title t-h3">Build new template from this</div>
           </div>
           <div class="tpl-modal-body">
             <div class="tpl-modal-label t-h5">Template name</div>
@@ -3215,24 +3447,45 @@
         <select class="filter-select"><option>Assigned to</option></select>
         <select class="filter-select"><option>Pipeline</option></select>
         <select class="filter-select"><option>Opportunity</option></select>
-        <button class="add-task-btn">+ Task</button>
+        <div class="tasks-add-wrap">
+          <div class="create-tpl-wrap">
+            <button class="add-task-btn add-task-btn-white" id="tasks-build-tpl-btn">
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M10.5 2l1.5 1.5L5 10.5l-2 .5.5-2L10.5 2z"/></svg>
+              New template
+            </button>
+            <div class="create-tpl-dropdown" id="tasks-build-tpl-dropdown">
+              <button class="create-tpl-dropdown-item" id="tasks-create-tpl-blank">Blank template</button>
+              <button class="create-tpl-dropdown-item" id="tasks-create-tpl-from-opp">From existing opportunity</button>
+            </div>
+          </div>
+          <div style="position:relative;">
+            <button class="add-task-btn" id="tasks-new-task-btn">
+              <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 2v10M2 7h10"/></svg>
+              New task
+            </button>
+            <div class="add-task-dropdown" id="tasks-new-task-dropdown">
+              <button class="add-task-dropdown-item" id="tasks-add-from-tpl">From template</button>
+              <button class="add-task-dropdown-item" id="tasks-add-blank">New blank task</button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div class="toolbar-row">
         <div class="view-toggle" role="tablist" aria-label="View">
-          <button class="is-active" data-view="kanban">
+          <button class="is-active" data-view="list">
+            <svg class="v-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M2 4h10M2 7h10M2 10h10"/>
+            </svg>
+            List
+          </button>
+          <button data-view="kanban">
             <svg class="v-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
               <rect x="1.5" y="2" width="3" height="10" rx="0.5"/>
               <rect x="5.5" y="2" width="3" height="6" rx="0.5"/>
               <rect x="9.5" y="2" width="3" height="8" rx="0.5"/>
             </svg>
             Kanban
-          </button>
-          <button data-view="list">
-            <svg class="v-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-              <path d="M2 4h10M2 7h10M2 10h10"/>
-            </svg>
-            List
           </button>
         </div>
 
@@ -3241,6 +3494,14 @@
           <button data-range="this-month">This month</button>
           <button data-range="this-year">This year</button>
         </div>
+      </div>
+
+      <!-- Status filter tabs -->
+      <div class="range-toggle" id="task-status-tabs" role="tablist" aria-label="Status filter" style="margin-bottom:var(--space-lg);">
+        <button class="is-active" data-task-status="open">Open</button>
+        <button data-task-status="due-today">Due today</button>
+        <button data-task-status="overdue">Overdue</button>
+        <button data-task-status="completed">Completed</button>
       </div>
 
       <!-- ============== OPEN tasks (List view) ============== -->
@@ -3326,18 +3587,15 @@
   <!-- ============================================================ -->
   <div class="drawer-overlay" id="task-drawer">
     <div class="drawer" role="dialog" aria-modal="true">
-      <!-- Header — editable title + status badge + close -->
+      <!-- Header — editable title + inline status + complete button + close -->
       <div class="drawer-head">
         <div class="drawer-head-left">
           <h2 class="drawer-title-display" id="drawer-title-display">Task Name</h2>
           <div class="drawer-title-edit" id="drawer-title-edit">
             <input type="text" id="drawer-title-input" value="" />
-            <div class="drawer-title-actions">
-              <button class="title-save" id="title-save-btn">Save</button>
-              <button class="title-cancel-btn" id="title-cancel-btn">Cancel</button>
-            </div>
           </div>
           <div class="drawer-head-meta" id="drawer-head-meta">
+            <span id="drawer-status-pill"></span>
             <svg class="creator-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="5" r="2.5"/><path d="M2.5 12c.8-2.2 2.6-3.3 4.5-3.3s3.7 1.1 4.5 3.3"/></svg>
             <span id="drawer-head-creator">-</span>
             <span class="drawer-head-sep">·</span>
@@ -3345,26 +3603,13 @@
           </div>
         </div>
         <div class="drawer-head-right">
-          <div class="status-dropdown" id="status-dropdown">
-            <button class="status-trigger" id="status-trigger">
-              <span id="status-trigger-pill"></span>
-              <svg class="status-arrow" viewBox="0 0 10 6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1l4 4 4-4"/></svg>
-            </button>
-            <div class="status-menu" id="status-menu">
-              <button data-status="open" class="status-option">
-                <span class="status-dot dot-open"></span> Open
-                <svg class="status-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-6"/></svg>
-              </button>
-              <button data-status="overdue" class="status-option">
-                <span class="status-dot dot-overdue"></span> Overdue
-                <svg class="status-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-6"/></svg>
-              </button>
-              <button data-status="completed" class="status-option">
-                <span class="status-dot dot-completed"></span> Completed
-                <svg class="status-check" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-6"/></svg>
-              </button>
-            </div>
-          </div>
+          <button class="drawer-complete-btn" id="drawer-complete-btn" type="button">
+            <svg class="complete-icon" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="9" cy="9" r="7"/>
+              <path class="complete-check" d="M5.5 9l2.5 2.5L12.5 7"/>
+            </svg>
+            <span class="complete-label">Complete</span>
+          </button>
           <button class="drawer-close" id="drawer-close-x">✕</button>
         </div>
       </div>
@@ -3372,11 +3617,12 @@
       <!-- Body -->
       <div class="drawer-body">
         <!-- Opportunity + Company -->
-        <div class="drawer-inline-row">
+        <div class="drawer-inline-row" id="drawer-opp-company-row">
           <div class="field">
             <label class="field-label">Opportunity</label>
             <select class="field-select" id="drawer-opp-select">
               <option value="">— Select opportunity —</option>
+              <option value="Smart Construction Hub">Smart Construction Hub</option>
               <option value="Romao Test Opportunity">Romao Test Opportunity</option>
               <option value="Madison Square Garden Re-Roof">Madison Square Garden Re-Roof</option>
               <option value="Albert Einstein">Albert Einstein</option>
@@ -3386,6 +3632,7 @@
             <label class="field-label">Company</label>
             <select class="field-select" id="drawer-company-select">
               <option value="">— Select company —</option>
+              <option value="ABC Architectural Builders & Construction Solutions">ABC Architectural Builders & Construction Solutions</option>
               <option value="CT Storage Units">CT Storage Units</option>
               <option value="New York City Building Management">New York City Building Management</option>
               <option value="Terial">Terial</option>
@@ -3415,9 +3662,16 @@
               <option value="Project Manager">Project Manager (Suggested)</option>
             </select>
           </div>
-          <div class="field">
+          <div class="field" id="drawer-due-field-regular">
             <label class="field-label">Due At</label>
             <input class="field-input" id="drawer-due-input" type="date" value="" />
+          </div>
+          <div class="field" id="drawer-due-field-template" style="display:none;">
+            <label class="field-label">Due At</label>
+            <div style="display:flex;align-items:center;gap:var(--space-sm);">
+              <input class="field-input" id="drawer-due-days-input" type="number" min="0" value="3" style="width:72px;flex:none;" />
+              <span style="font-size:var(--font-body-md-size);color:var(--color-text-secondary);">days after creation</span>
+            </div>
           </div>
         </div>
 
@@ -3464,8 +3718,20 @@
       </div>
 
       <div class="drawer-foot">
-        <button class="btn-cancel" id="drawer-cancel">Cancel</button>
-        <button class="btn-save">Save</button>
+        <div class="drawer-row-actions" id="drawer-row-actions">
+          <button type="button" class="tpl-row-btn" id="drawer-duplicate-btn">
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="8" height="8" rx="1"/><path d="M2 10V3a1 1 0 0 1 1-1h7"/></svg>
+            Duplicate
+          </button>
+          <button type="button" class="tpl-row-btn" id="drawer-delete-btn">
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h10M5 4V2.5h4V4M3 4v8a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4"/></svg>
+            Delete
+          </button>
+        </div>
+        <div class="drawer-foot-right">
+          <button class="btn-cancel" id="drawer-cancel">Cancel</button>
+          <button class="btn-save" id="drawer-save-btn">Save</button>
+        </div>
       </div>
     </div>
   </div>
@@ -3523,9 +3789,19 @@
       return true;
     }
 
-    // List view shows all non-completed tasks (respecting date range filter)
+    // Status filter for the Tasks page (separate from kanban columns)
+    var currentStatusFilter = 'open';
+
+    // List view shows tasks matching the current status filter (respecting date range)
     function getOpenTasks() {
-      return tasks.filter(function (t) { return t.status !== 'completed' && inDateRange(t); });
+      return tasks.filter(function (t) {
+        if (!inDateRange(t)) return false;
+        if (currentStatusFilter === 'open') return t.status !== 'completed';
+        if (currentStatusFilter === 'due-today') return t.status === 'due-today';
+        if (currentStatusFilter === 'overdue') return t.status === 'overdue';
+        if (currentStatusFilter === 'completed') return t.status === 'completed';
+        return true;
+      });
     }
     // Backward-compat alias used by older render code
     var openTasks = getOpenTasks();
@@ -3541,8 +3817,9 @@
           if (asLink) return '<td><a class="link" href="#" onclick="event.stopPropagation();return false;">' + v + '</a></td>';
           return '<td class="t-default">' + v + '</td>';
         }
+        var doneCls = t.status === 'completed' ? ' is-done' : '';
         html += '<tr class="' + rowCls + '">' +
-          '<td><div class="check-circle"></div></td>' +
+          '<td><div class="check-circle' + doneCls + '" title="Mark complete"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-6"/></svg></div></td>' +
           '<td>' + datePillHtml(t) + '</td>' +
           '<td>' + (t.task || '') + '</td>' +
           cell(t.assignee, true) +
@@ -3556,10 +3833,20 @@
       });
       tbody.innerHTML = html;
 
-      // Bind row clicks → open drawer
+      // Bind row clicks → open drawer; circle clicks → mark complete
       tbody.querySelectorAll('tr').forEach(function (row, i) {
+        var circle = row.querySelector('.check-circle');
+        if (circle) {
+          circle.addEventListener('click', function (e) {
+            e.stopPropagation();
+            openTasks[i].status = 'completed';
+            circle.classList.add('is-done');
+            renderKanban();
+            renderOpen();
+          });
+        }
         row.addEventListener('click', function () {
-          openDrawer(openTasks[i]);
+          openDrawer(openTasks[i], false, row);
         });
       });
 
@@ -3581,10 +3868,6 @@
     var drawerComments = document.getElementById('drawer-comments');
     var drawerCommentsLabel = document.getElementById('drawer-comments-label');
     var drawerCommentInput = document.getElementById('drawer-comment-input');
-    var statusTrigger = document.getElementById('status-trigger');
-    var statusTriggerPill = document.getElementById('status-trigger-pill');
-    var statusDropdown = document.getElementById('status-dropdown');
-    var statusMenu = document.getElementById('status-menu');
     var currentDrawerTask = null;
     var drawerIsTemplateMode = false;
     var drawerAssigneeField = document.getElementById('drawer-assignee-field');
@@ -3666,14 +3949,29 @@
 
     function setDrawerMode(isTemplate) {
       drawerIsTemplateMode = isTemplate;
+      var oppCompanyRow = document.getElementById('drawer-opp-company-row');
+      var dueFieldRegular = document.getElementById('drawer-due-field-regular');
+      var dueFieldTemplate = document.getElementById('drawer-due-field-template');
+      var statusPill = document.getElementById('drawer-status-pill');
+      var completeBtn = document.getElementById('drawer-complete-btn');
       if (isTemplate) {
         drawerAssigneeField.style.display = 'none';
         drawerRoleField.style.display = '';
-        document.getElementById('drawer-attachments').style.display = 'none';
+        document.getElementById('drawer-attachments').style.display = '';
+        if (oppCompanyRow) oppCompanyRow.style.display = 'none';
+        if (dueFieldRegular) dueFieldRegular.style.display = 'none';
+        if (dueFieldTemplate) dueFieldTemplate.style.display = '';
+        if (statusPill) statusPill.style.display = 'none';
+        if (completeBtn) completeBtn.style.display = 'none';
       } else {
         drawerAssigneeField.style.display = '';
         drawerRoleField.style.display = 'none';
         document.getElementById('drawer-attachments').style.display = '';
+        if (oppCompanyRow) oppCompanyRow.style.display = '';
+        if (dueFieldRegular) dueFieldRegular.style.display = '';
+        if (dueFieldTemplate) dueFieldTemplate.style.display = 'none';
+        if (statusPill) statusPill.style.display = '';
+        if (completeBtn) completeBtn.style.display = '';
       }
     }
 
@@ -3721,43 +4019,189 @@
       return '<span class="date-pill ' + cls + '" style="font-size:12px;">' + label + '</span>';
     }
     var currentDrawerStatus = 'open';
+    var previousDrawerStatus = 'open'; // remembered so "Complete" can toggle back
+    var drawerStatusPill = document.getElementById('drawer-status-pill');
+    var drawerCompleteBtn = document.getElementById('drawer-complete-btn');
+
     function setDrawerStatus(cat) {
+      // Track the last non-completed status so toggling Complete off restores it
+      if (cat !== 'completed') previousDrawerStatus = cat;
       currentDrawerStatus = cat;
-      statusTriggerPill.innerHTML = statusPillForCategory(cat);
-      statusDropdown.classList.remove('is-open');
-      // Update checkmarks
-      statusMenu.querySelectorAll('.status-option').forEach(function (opt) {
-        opt.classList.toggle('is-selected', opt.getAttribute('data-status') === cat);
+      if (drawerStatusPill) drawerStatusPill.innerHTML = statusPillForCategory(cat);
+      if (drawerCompleteBtn) {
+        drawerCompleteBtn.classList.toggle('is-completed', cat === 'completed');
+        drawerCompleteBtn.querySelector('.complete-label').textContent = cat === 'completed' ? 'Completed' : 'Complete';
+      }
+    }
+
+    // Toggle Complete button
+    if (drawerCompleteBtn) {
+      drawerCompleteBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var newStatus = currentDrawerStatus === 'completed' ? previousDrawerStatus : 'completed';
+        setDrawerStatus(newStatus);
+        if (currentDrawerTask) {
+          if (newStatus === 'open') currentDrawerTask.status = 'due-today';
+          else currentDrawerTask.status = newStatus;
+          if (typeof renderKanban === 'function') renderKanban();
+          if (typeof renderOpen === 'function') renderOpen();
+        }
       });
     }
-    statusTrigger.addEventListener('click', function (e) {
-      e.stopPropagation();
-      statusDropdown.classList.toggle('is-open');
-    });
-    document.addEventListener('click', function () {
-      statusDropdown.classList.remove('is-open');
-    });
-    statusMenu.addEventListener('click', function (e) {
-      var btn = e.target.closest('.status-option');
-      if (!btn) return;
-      e.stopPropagation();
-      var newStatus = btn.getAttribute('data-status');
-      setDrawerStatus(newStatus);
-      // Update task data
-      if (currentDrawerTask) {
-        if (newStatus === 'open') currentDrawerTask.status = 'due-today';
-        else if (newStatus === 'overdue') currentDrawerTask.status = 'overdue';
-        else currentDrawerTask.status = newStatus;
-        renderKanban();
-        renderOpen();
-      }
-    });
 
-    // Editable title
+    // Drawer Save button: for blank-state drawer, create a new task in the appropriate table
+    (function () {
+      var saveBtn = document.getElementById('drawer-save-btn');
+      if (!saveBtn) return;
+      saveBtn.addEventListener('click', function () {
+        // Only create a task when in blank/new state (no existing task bound)
+        if (currentDrawerTask) { closeDrawer(); return; }
+        var titleFromInput = (drawerTitleInput.value || '').trim();
+        var titleFromDisplay = (drawerTitleDisplay.textContent || '').trim();
+        var title = titleFromInput || (titleFromDisplay && titleFromDisplay !== 'New Task' ? titleFromDisplay : '');
+        if (!title) { closeDrawer(); return; }
+
+        // Template detail page: append a row to the current template's table
+        if (drawerNewTaskTarget === 'tpl') {
+          var tplTasksContainer = document.getElementById('tpl-detail-tasks');
+          var tplTbody = tplTasksContainer && tplTasksContainer.querySelector('table.data-table tbody');
+          if (tplTbody) {
+            var role = drawerRoleSelect ? drawerRoleSelect.value : '';
+            var days = parseInt((document.getElementById('drawer-due-days-input') || {}).value, 10);
+            if (isNaN(days)) days = 3;
+            addTplTaskRow(tplTbody, { task: title, role: role || 'Account Rep', days: days }, tplTbody.children.length);
+          }
+          closeDrawer();
+          return;
+        }
+
+        // Opportunity detail Tasks tab: append a row to the Open panel's table
+        if (drawerNewTaskTarget === 'opp') {
+          var openPanel = document.querySelector('#opp-tasks-list .opp-task-panel[data-status-panel="open"]');
+          var oppTbody = openPanel && openPanel.querySelector('table.data-table tbody');
+          if (oppTbody) {
+            var assignee = (selectedAssignees || []).join(', ') || 'You';
+            var dueIsoOpp = drawerDueInput.value || '2026-04-28';
+            var ddOpp = (function () {
+              var p = dueIsoOpp.split('-');
+              var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+              return months[parseInt(p[1],10)-1] + ' ' + parseInt(p[2],10);
+            })();
+            var row = document.createElement('tr');
+            row.style.cursor = 'pointer';
+            row.innerHTML =
+              '<td><div class="check-circle" title="Mark complete"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-6"/></svg></div></td>' +
+              '<td><span class="date-pill is-open"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="10" height="9" rx="1"/><path d="M2 6h10M5 1.5v2M9 1.5v2"/></svg>' + ddOpp + '</span></td>' +
+              '<td>' + title + '</td>' +
+              '<td><a class="link" href="#" onclick="event.stopPropagation();return false;">' + assignee + '</a></td>' +
+              '<td><a class="link" href="#" onclick="event.stopPropagation();return false;">You</a></td>' +
+              '<td class="row-actions">⋮</td>';
+            var circle = row.querySelector('.check-circle');
+            circle.addEventListener('click', function (e) {
+              e.stopPropagation();
+              var wasDone = circle.classList.contains('is-done');
+              circle.classList.toggle('is-done');
+              var cell = row.querySelector('td:nth-child(3)');
+              if (wasDone) { cell.style.textDecoration = ''; cell.style.color = ''; }
+              else { cell.style.textDecoration = 'line-through'; cell.style.color = 'var(--color-text-tertiary)'; }
+            });
+            var desc = drawerDescription.value || '';
+            row.addEventListener('click', function () {
+              openDrawer({ id: 'opp-new-' + Math.random(), task: title, assignee: assignee, role: '', opp: 'Smart Construction Hub', dd: ddOpp, iso: dueIsoOpp, status: 'open', creator: 'You', desc: desc }, false, row);
+            });
+            oppTbody.appendChild(row);
+            if (typeof updateOppTasksCount === 'function') updateOppTasksCount();
+          }
+          closeDrawer();
+          return;
+        }
+
+        // Main Tasks page: add to the tasks array and re-render
+        var maxId = tasks.reduce(function (m, x) { return (typeof x.id === 'number' && x.id > m) ? x.id : m; }, 0);
+        var iso = drawerDueInput.value || '2026-04-20';
+        var dd = (function () {
+          var p = iso.split('-');
+          var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+          return months[parseInt(p[1],10)-1] + ' ' + parseInt(p[2],10);
+        })();
+        var newTask = {
+          id: maxId + 1,
+          iso: iso,
+          dd: dd,
+          task: title,
+          assignee: (selectedAssignees || []).join(', '),
+          opp: drawerOppSelect.value || '',
+          touch: '',
+          contact: '',
+          company: drawerCompanySelect.value || '',
+          creator: 'You',
+          status: 'due-today'
+        };
+        tasks.unshift(newTask);
+        if (typeof renderOpen === 'function') renderOpen();
+        if (typeof renderKanban === 'function') renderKanban();
+        closeDrawer();
+      });
+    })();
+
+    // Drawer row actions: Duplicate + Delete
+    (function () {
+      var delBtn = document.getElementById('drawer-delete-btn');
+      var dupBtn = document.getElementById('drawer-duplicate-btn');
+      if (!delBtn || !dupBtn) return;
+
+      delBtn.addEventListener('click', function () {
+        // 1. If the source row has an individual delete button (template rows), trigger it
+        if (currentDrawerSourceEl) {
+          var tplRemove = currentDrawerSourceEl.querySelector && currentDrawerSourceEl.querySelector('.tpl-row-remove');
+          if (tplRemove) { tplRemove.click(); closeDrawer(); return; }
+        }
+        // 2. If the drawer is bound to a main task by numeric id, remove from tasks[] and re-render
+        if (currentDrawerTask && typeof currentDrawerTask.id === 'number') {
+          var idx = tasks.findIndex(function (x) { return x.id === currentDrawerTask.id; });
+          if (idx !== -1) {
+            tasks.splice(idx, 1);
+            if (typeof renderKanban === 'function') renderKanban();
+            if (typeof renderOpen === 'function') renderOpen();
+          }
+        } else if (currentDrawerSourceEl) {
+          // 3. Fallback: just remove the source DOM element
+          currentDrawerSourceEl.remove();
+        }
+        closeDrawer();
+      });
+
+      dupBtn.addEventListener('click', function () {
+        if (currentDrawerSourceEl) {
+          var tplDup = currentDrawerSourceEl.querySelector && currentDrawerSourceEl.querySelector('.tpl-row-duplicate');
+          if (tplDup) { tplDup.click(); closeDrawer(); return; }
+        }
+        if (currentDrawerTask && typeof currentDrawerTask.id === 'number') {
+          var src = currentDrawerTask;
+          var maxId = tasks.reduce(function (m, x) { return (typeof x.id === 'number' && x.id > m) ? x.id : m; }, 0);
+          var newTask = Object.assign({}, src, { id: maxId + 1 });
+          var srcIdx = tasks.findIndex(function (x) { return x.id === src.id; });
+          if (srcIdx !== -1) tasks.splice(srcIdx + 1, 0, newTask);
+          else tasks.push(newTask);
+          if (typeof renderKanban === 'function') renderKanban();
+          if (typeof renderOpen === 'function') renderOpen();
+        } else if (currentDrawerSourceEl && currentDrawerSourceEl.parentNode) {
+          // Fallback: clone the DOM element
+          var clone = currentDrawerSourceEl.cloneNode(true);
+          currentDrawerSourceEl.parentNode.insertBefore(clone, currentDrawerSourceEl.nextSibling);
+        }
+        closeDrawer();
+      });
+    })();
+
+    // Editable title — click out to save (no save/cancel buttons)
     function enterTitleEdit() {
       drawerTitleInput.value = drawerTitleDisplay.textContent;
       drawerTitleDisplay.classList.add('is-editing');
       drawerTitleEditWrap.classList.add('is-editing');
+      // Also hide the inline status pill while editing title
+      var pill = document.getElementById('drawer-status-pill');
+      if (pill) pill.style.display = 'none';
       drawerTitleInput.focus();
       drawerTitleInput.select();
     }
@@ -3768,12 +4212,13 @@
       }
       drawerTitleDisplay.classList.remove('is-editing');
       drawerTitleEditWrap.classList.remove('is-editing');
+      var pill = document.getElementById('drawer-status-pill');
+      if (pill) pill.style.display = '';
     }
     drawerTitleDisplay.addEventListener('click', enterTitleEdit);
-    document.getElementById('title-save-btn').addEventListener('click', function () { exitTitleEdit(true); });
-    document.getElementById('title-cancel-btn').addEventListener('click', function () { exitTitleEdit(false); });
+    drawerTitleInput.addEventListener('blur', function () { exitTitleEdit(true); });
     drawerTitleInput.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') exitTitleEdit(true);
+      if (e.key === 'Enter') { e.preventDefault(); drawerTitleInput.blur(); }
       if (e.key === 'Escape') { e.stopPropagation(); exitTitleEdit(false); }
     });
 
@@ -3842,10 +4287,14 @@
       15: 'Task completed successfully. Final deliverables have been reviewed and approved by the project manager.'
     };
 
-    function openDrawer(t, isTemplate) {
+    var currentDrawerSourceEl = null;
+
+    function openDrawer(t, isTemplate, sourceEl) {
+      currentDrawerSourceEl = sourceEl || null;
       currentDrawerTask = t;
+      var rowActions = document.getElementById('drawer-row-actions');
+      if (rowActions) rowActions.style.display = '';
       exitTitleEdit(false);
-      statusDropdown.classList.remove('is-open');
       drawerAssigneeDropdown.classList.remove('is-open');
       setDrawerMode(!!isTemplate);
       if (t && t.task) {
@@ -3877,17 +4326,26 @@
         drawerHeadDate.textContent = t.dd ? 'Created ' + t.dd : '';
         drawerHeadMeta.style.display = '';
         renderComments(t.id);
-        // Attachments
-        renderDrawerAttachments(true);
+        // Attachments — show sample files only for non-template tasks
+        renderDrawerAttachments(!isTemplate);
       }
       drawer.classList.add('is-open');
     }
-    function openBlankDrawer(isTemplate) {
+    var drawerNewTaskTarget = 'main'; // 'main' | 'opp' | 'tpl'
+
+    function openBlankDrawer(isTemplate, opts) {
+      opts = opts || {};
+      drawerNewTaskTarget = opts.target || (isTemplate ? 'tpl' : 'main');
+      currentDrawerSourceEl = null;
       currentDrawerTask = null;
       exitTitleEdit(false);
-      statusDropdown.classList.remove('is-open');
       drawerAssigneeDropdown.classList.remove('is-open');
       setDrawerMode(!!isTemplate);
+      var rowActions = document.getElementById('drawer-row-actions');
+      if (rowActions) rowActions.style.display = 'none';
+      // New tasks can't be "completed" yet — hide the Complete button
+      var completeBtn = document.getElementById('drawer-complete-btn');
+      if (completeBtn) completeBtn.style.display = 'none';
       drawerTitleDisplay.textContent = 'New Task';
       enterTitleEdit();
       drawerTitleInput.value = '';
@@ -3896,9 +4354,8 @@
       selectedAssignees = [];
       renderAssigneePills();
       drawerDueInput.value = '';
-      drawerOppSelect.value = '';
-
-      drawerCompanySelect.value = '';
+      drawerOppSelect.value = opts.opp || '';
+      drawerCompanySelect.value = opts.company || '';
       setDrawerStatus('open');
       drawerDescription.value = '';
       drawerComments.innerHTML = '';
@@ -3911,7 +4368,6 @@
     function closeDrawer() {
       drawer.classList.remove('is-open');
       exitTitleEdit(false);
-      statusDropdown.classList.remove('is-open');
     }
     document.getElementById('drawer-close-x').addEventListener('click', closeDrawer);
     document.getElementById('drawer-cancel').addEventListener('click', closeDrawer);
@@ -3996,7 +4452,7 @@
       var dragMoved = false;
       card.addEventListener('click', function () {
         if (dragMoved) { dragMoved = false; return; }
-        openDrawer(t);
+        openDrawer(t, false, card);
       });
 
       // Drag handlers
@@ -4135,14 +4591,17 @@
       viewBtns.forEach(function (b) {
         b.classList.toggle('is-active', b.getAttribute('data-view') === view);
       });
+      var statusTabs = document.getElementById('task-status-tabs');
       if (view === 'kanban') {
         listPane.hidden = true;
         listPagination.hidden = true;
         kanbanEl.hidden = false;
+        if (statusTabs) statusTabs.style.display = 'none';
       } else {
         listPane.hidden = false;
         listPagination.hidden = false;
         kanbanEl.hidden = true;
+        if (statusTabs) statusTabs.style.display = '';
       }
     }
 
@@ -4153,7 +4612,7 @@
     });
 
     // ====== Date range toggle ======
-    var rangeBtns = document.querySelectorAll('.range-toggle button');
+    var rangeBtns = document.querySelectorAll('.range-toggle[aria-label="Date range"] button');
     rangeBtns.forEach(function (b) {
       b.addEventListener('click', function () {
         rangeBtns.forEach(function (x) { x.classList.remove('is-active'); });
@@ -4164,13 +4623,76 @@
       });
     });
 
+    // ====== Status filter toggle ======
+    var statusTabBtns = document.querySelectorAll('#task-status-tabs button');
+    statusTabBtns.forEach(function (b) {
+      b.addEventListener('click', function () {
+        statusTabBtns.forEach(function (x) { x.classList.remove('is-active'); });
+        b.classList.add('is-active');
+        currentStatusFilter = b.getAttribute('data-task-status');
+        renderOpen();
+      });
+    });
+
     // ====== "+" buttons → open blank modal ======
     document.getElementById('col-add-open').addEventListener('click', openBlankDrawer);
-    document.querySelector('.add-task-btn').addEventListener('click', openBlankDrawer);
+
+    // ====== Tasks page: Build new template + New task dropdown ======
+    var tasksNewTaskDropdown = document.getElementById('tasks-new-task-dropdown');
+    document.getElementById('tasks-new-task-btn').addEventListener('click', function (e) {
+      e.stopPropagation();
+      tasksNewTaskDropdown.classList.toggle('is-open');
+    });
+    document.addEventListener('click', function () {
+      tasksNewTaskDropdown.classList.remove('is-open');
+    });
+
+    // Tasks page: "Build new template" dropdown — reuses Templates page flows
+    var tasksBuildTplDropdown = document.getElementById('tasks-build-tpl-dropdown');
+    document.getElementById('tasks-build-tpl-btn').addEventListener('click', function (e) {
+      e.stopPropagation();
+      tasksBuildTplDropdown.classList.toggle('is-open');
+    });
+    document.addEventListener('click', function () {
+      tasksBuildTplDropdown.classList.remove('is-open');
+    });
+    document.getElementById('tasks-create-tpl-blank').addEventListener('click', function (e) {
+      e.stopPropagation();
+      tasksBuildTplDropdown.classList.remove('is-open');
+      // Trigger the existing Templates-page "Blank template" handler
+      document.getElementById('create-tpl-blank').click();
+    });
+    document.getElementById('tasks-create-tpl-from-opp').addEventListener('click', function (e) {
+      e.stopPropagation();
+      tasksBuildTplDropdown.classList.remove('is-open');
+      // Trigger the existing Templates-page "From existing opportunity" handler
+      document.getElementById('create-tpl-from-opp').click();
+    });
+
+    // "New blank task" (Tasks page) → open blank drawer (no opp/company prefill)
+    document.getElementById('tasks-add-blank').addEventListener('click', function () {
+      tasksNewTaskDropdown.classList.remove('is-open');
+      openBlankDrawer();
+    });
+
+    // Global target for Add-from-template modal: 'main' or 'opp'
+    var addTplTarget = 'opp';
+
+    // "From template" (Tasks page) → reuse the same Add-from-template modal, targeting main tasks list
+    document.getElementById('tasks-add-from-tpl').addEventListener('click', function () {
+      tasksNewTaskDropdown.classList.remove('is-open');
+      addTplTarget = 'main';
+      var addTplOverlayEl = document.getElementById('add-tpl-modal-overlay');
+      var addTplAddBtnEl = document.getElementById('add-tpl-add');
+      addTplOverlayEl.querySelectorAll('.add-tpl-cb').forEach(function (cb) { cb.checked = false; });
+      addTplAddBtnEl.disabled = true;
+      addTplOverlayEl.classList.add('is-open');
+    });
+
 
     renderOpen();
     renderKanban();
-    setView('kanban');
+    setView('list');
 
     // ====== Page navigation ======
     var adminToggle = document.getElementById('nav-admin-toggle');
@@ -4293,16 +4815,80 @@
       'opp-task-2': { id: 'opp-t2', task: 'ABC edited task name', assignee: 'Valeriia Admin', role: 'Estimator', opp: 'Smart Construction Hub', dd: 'Apr 28', iso: '2026-04-28', status: 'open', creator: 'Valeriia Admin', desc: 'Prepare a detailed cost breakdown including labor, materials, and equipment. Cross-reference supplier quotes from the last 30 days and apply volume discount tiers where applicable.' },
       'opp-task-3': { id: 'opp-t3', task: 'PROD - Site inspection report', assignee: 'Romao Barbosa', role: 'Project Manager', opp: 'Smart Construction Hub', dd: 'Apr 5', iso: '2026-04-05', status: 'overdue', creator: 'Romao Barbosa', desc: 'Complete the on-site inspection report documenting current roof conditions, drainage issues, and structural concerns. Include photo documentation of all areas requiring repair or replacement.' },
       'opp-task-4': { id: 'opp-t4', task: 'Submit material order list', assignee: 'Valeriia Kovalenko', role: 'Account Rep', opp: 'Smart Construction Hub', dd: 'Mar 20', iso: '2026-03-20', status: 'overdue', creator: 'Valeriia Kovalenko', desc: 'Compile and submit the final material order list to the approved supplier. Ensure all quantities match the takeoff sheet and confirm lead times for specialty items.' },
-      'opp-task-5': { id: 'opp-t5', task: 'Initial site assessment', assignee: 'Alec McGovern', role: 'Estimator', opp: 'Smart Construction Hub', dd: 'Apr 9', iso: '2026-04-09', status: 'completed', creator: 'Alec McGovern', desc: 'Conducted initial walkthrough of the property to assess overall roof condition, identify access points, and determine equipment requirements for the full inspection phase.' }
+      'opp-task-5': { id: 'opp-t5', task: 'Initial site assessment', assignee: 'Alec McGovern', role: 'Estimator', opp: 'Smart Construction Hub', dd: 'Apr 9', iso: '2026-04-09', status: 'completed', creator: 'Alec McGovern', desc: 'Conducted initial walkthrough of the property to assess overall roof condition, identify access points, and determine equipment requirements for the full inspection phase.' },
+      'opp-task-6': { id: 'opp-t6', task: 'Draft final proposal for client review', assignee: 'Alec McGovern', role: 'Account Rep', opp: 'Smart Construction Hub', dd: 'May 1', iso: '2026-05-01', status: 'open', creator: 'Alec McGovern', desc: 'Compile the final proposal package including scope, pricing, timeline, and warranty details. Submit to the client for review ahead of the signing meeting.' },
+      'opp-task-7': { id: 'opp-t7', task: 'Schedule kickoff meeting with crew lead', assignee: 'Romao Barbosa', role: 'Project Manager', opp: 'Smart Construction Hub', dd: 'May 3', iso: '2026-05-03', status: 'open', creator: 'Romao Barbosa', desc: 'Coordinate with the crew lead to schedule the project kickoff meeting. Confirm attendees, review safety protocols, and align on the first-day deliverables.' },
+      'opp-task-8': { id: 'opp-t8', task: 'Confirm supplier delivery timeline', assignee: 'Valeriia Admin', role: 'Estimator', opp: 'Smart Construction Hub', dd: 'May 5', iso: '2026-05-05', status: 'open', creator: 'Valeriia Admin', desc: 'Contact the primary supplier to confirm the material delivery window. Flag any long-lead items and coordinate staging logistics with the project manager.' },
+      'opp-task-9': { id: 'opp-t9', task: 'Finalize scope change memo', assignee: 'Aaron Weinstein', role: 'Account Rep', opp: 'Smart Construction Hub', dd: 'May 8', iso: '2026-05-08', status: 'open', creator: 'Aaron Weinstein', desc: 'Incorporate the latest client feedback into the scope change memo. Circulate to stakeholders for sign-off before updating the master contract.' },
+      'opp-task-10': { id: 'opp-t10', task: 'Review permit application draft', assignee: 'Matt Billard', role: 'Project Manager', opp: 'Smart Construction Hub', dd: 'May 12', iso: '2026-05-12', status: 'open', creator: 'Matt Billard', desc: 'Walk through the permit application with the city liaison and verify all attached drawings and specifications are current. Flag any outstanding items for the estimator.' }
     };
-    document.querySelectorAll('#opp-tasks-list .kanban-card').forEach(function (card) {
-      card.style.cursor = 'pointer';
-      card.addEventListener('click', function () {
-        var key = card.getAttribute('data-opp-task');
+    function updateOppTasksCount() {
+      var openPanel = document.querySelector('#opp-tasks-list .opp-task-panel[data-status-panel="open"]');
+      var overduePanel = document.querySelector('#opp-tasks-list .opp-task-panel[data-status-panel="overdue"]');
+      var openCount = openPanel ? openPanel.querySelectorAll('table.data-table tbody tr').length : 0;
+      var overdueCount = overduePanel ? overduePanel.querySelectorAll('table.data-table tbody tr').length : 0;
+      var el = document.getElementById('opp-tasks-tab-count');
+      if (el) el.textContent = openCount + overdueCount;
+    }
+
+    function wireOppTaskRow(row) {
+      row.style.cursor = 'pointer';
+      // Check circle → toggle complete and move row to the matching panel
+      var circle = row.querySelector('.check-circle');
+      if (circle) {
+        circle.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var key = row.getAttribute('data-opp-task');
+          var t = oppTaskData[key];
+          if (!t) return;
+          var wasCompleted = circle.classList.contains('is-done');
+          circle.classList.toggle('is-done');
+          // Determine destination status: if it was completed, restore its original (pre-completion) status
+          // (the original status is tracked on the task data if we previously saved it)
+          var destStatus;
+          if (wasCompleted) {
+            destStatus = t._priorStatus || 'open';
+            t.status = destStatus;
+          } else {
+            t._priorStatus = t.status;
+            destStatus = 'completed';
+            t.status = 'completed';
+          }
+          // Style the task cell
+          var taskCell = row.querySelector('td:nth-child(3)');
+          if (taskCell) {
+            if (destStatus === 'completed') {
+              taskCell.style.textDecoration = 'line-through';
+              taskCell.style.color = 'var(--color-text-tertiary)';
+            } else {
+              taskCell.style.textDecoration = '';
+              taskCell.style.color = '';
+            }
+          }
+          // Update the date-pill to reflect the status
+          var pill = row.querySelector('.date-pill');
+          if (pill) {
+            pill.classList.remove('is-open', 'is-overdue', 'is-completed');
+            if (destStatus === 'completed') pill.classList.add('is-completed');
+            else if (destStatus === 'overdue') pill.classList.add('is-overdue');
+            else pill.classList.add('is-open');
+          }
+          // Move the row to the destination panel's tbody
+          var destPanelName = destStatus === 'completed' ? 'completed' : (destStatus === 'overdue' ? 'overdue' : 'open');
+          var destPanel = document.querySelector('#opp-tasks-list .opp-task-panel[data-status-panel="' + destPanelName + '"]');
+          var destTbody = destPanel && destPanel.querySelector('table.data-table tbody');
+          if (destTbody) destTbody.appendChild(row);
+          updateOppTasksCount();
+        });
+      }
+      row.addEventListener('click', function () {
+        var key = row.getAttribute('data-opp-task');
         var t = oppTaskData[key];
-        if (t) openDrawer(t);
+        if (t) openDrawer(t, false, row);
       });
-    });
+    }
+    document.querySelectorAll('#opp-tasks-list tr[data-opp-task]').forEach(wireOppTaskRow);
+    updateOppTasksCount();
 
     // Template detail data
     var tplDetailData = {
@@ -4346,56 +4932,247 @@
       }
     };
 
+    function buildTplDetailTable() {
+      var outer = document.createElement('div');
+
+      // Bulk action toolbar (hidden until at least one row is selected)
+      var toolbar = document.createElement('div');
+      toolbar.className = 'tpl-bulk-toolbar';
+      toolbar.innerHTML =
+        '<span class="tpl-bulk-count">0 selected</span>' +
+        '<button type="button" class="tpl-row-btn tpl-bulk-duplicate">' +
+          '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="8" height="8" rx="1"/><path d="M2 10V3a1 1 0 0 1 1-1h7"/></svg>' +
+          'Duplicate' +
+        '</button>' +
+        '<button type="button" class="tpl-row-btn tpl-bulk-delete">' +
+          '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h10M5 4V2.5h4V4M3 4v8a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4"/></svg>' +
+          'Delete' +
+        '</button>';
+      outer.appendChild(toolbar);
+
+      // The actual table
+      var wrap = document.createElement('div');
+      wrap.className = 'data-table-wrap';
+      wrap.innerHTML = '<table class="data-table">' +
+        '<thead><tr>' +
+        '<th class="col-check"><input type="checkbox" class="checkbox tpl-bulk-select-all" title="Select all" /></th>' +
+        '<th>Due Date <span class="sort">▲</span></th>' +
+        '<th>Task</th>' +
+        '<th>Task Assignees</th>' +
+        '<th></th>' +
+        '</tr></thead>' +
+        '<tbody></tbody>' +
+        '</table>';
+      outer.appendChild(wrap);
+
+      var tbody = wrap.querySelector('tbody');
+      var selectAll = wrap.querySelector('.tpl-bulk-select-all');
+
+      function updateToolbar() {
+        var checked = tbody.querySelectorAll('.tpl-row-select:checked').length;
+        var total = tbody.querySelectorAll('.tpl-row-select').length;
+        toolbar.querySelector('.tpl-bulk-count').textContent = checked + ' selected';
+        toolbar.classList.toggle('is-visible', checked > 0);
+        // Sync select-all
+        selectAll.checked = checked > 0 && checked === total;
+        selectAll.indeterminate = checked > 0 && checked < total;
+      }
+
+      // Listen to row checkbox changes
+      outer.addEventListener('change', function (e) {
+        if (e.target.classList && e.target.classList.contains('tpl-row-select')) {
+          updateToolbar();
+        }
+      });
+
+      // Select-all toggle
+      selectAll.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var shouldCheck = selectAll.checked;
+        tbody.querySelectorAll('.tpl-row-select').forEach(function (cb) {
+          cb.checked = shouldCheck;
+        });
+        updateToolbar();
+      });
+
+      // Bulk delete
+      toolbar.querySelector('.tpl-bulk-delete').addEventListener('click', function () {
+        tbody.querySelectorAll('.tpl-row-select:checked').forEach(function (cb) {
+          var tr = cb.closest('tr');
+          if (tr) tr.remove();
+        });
+        updateToolbar();
+      });
+
+      // Bulk duplicate — reuse individual row duplicate logic
+      toolbar.querySelector('.tpl-bulk-duplicate').addEventListener('click', function () {
+        var selectedRows = Array.prototype.slice.call(tbody.querySelectorAll('.tpl-row-select:checked'))
+          .map(function (cb) { return cb.closest('tr'); });
+        selectedRows.forEach(function (row) {
+          var btn = row.querySelector('.tpl-row-duplicate');
+          if (btn) btn.click();
+        });
+        // Clear selection after duplicating
+        tbody.querySelectorAll('.tpl-row-select').forEach(function (cb) { cb.checked = false; });
+        updateToolbar();
+      });
+
+      // Expose so external mutations (like post-render) can refresh
+      outer._updateBulkToolbar = updateToolbar;
+      return outer;
+    }
+
+    function addTplTaskRow(tbody, t, i) {
+      var days = t.days != null ? t.days : (i + 1) * 2;
+      var row = document.createElement('tr');
+      row.style.cursor = 'pointer';
+      row.innerHTML =
+        '<td><input type="checkbox" class="checkbox tpl-row-select" /></td>' +
+        '<td><span class="date-pill is-open"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="10" height="9" rx="1"/><path d="M2 6h10M5 1.5v2M9 1.5v2"/></svg>' + days + 'd after</span></td>' +
+        '<td>' + t.task + '</td>' +
+        '<td><a class="link" href="#" onclick="event.stopPropagation();return false;">' + t.role + '</a></td>' +
+        '<td class="tpl-row-actions-cell">' +
+          '<button class="tpl-row-btn tpl-row-duplicate" title="Duplicate">' +
+            '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="8" height="8" rx="1"/><path d="M2 10V3a1 1 0 0 1 1-1h7"/></svg>' +
+            'Duplicate' +
+          '</button>' +
+          '<button class="tpl-row-btn tpl-row-remove" title="Delete">' +
+            '<svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h10M5 4V2.5h4V4M3 4v8a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4"/></svg>' +
+            'Delete' +
+          '</button>' +
+        '</td>';
+      row.addEventListener('click', function () {
+        openDrawer({ id: 'tpl-d-' + Math.random(), task: t.task, role: t.role, opp: '', dd: '', iso: '', status: 'open', creator: '', desc: '' }, true, row);
+      });
+      // Prevent row click when interacting with the checkbox
+      row.querySelector('.tpl-row-select').addEventListener('click', function (e) {
+        e.stopPropagation();
+      });
+      // Delete button
+      row.querySelector('.tpl-row-remove').addEventListener('click', function (e) {
+        e.stopPropagation();
+        row.remove();
+      });
+      // Duplicate button
+      row.querySelector('.tpl-row-duplicate').addEventListener('click', function (e) {
+        e.stopPropagation();
+        var tbodyRef = row.parentNode;
+        var dupRow = document.createElement('tr');
+        dupRow.style.cursor = 'pointer';
+        // Clone and re-wire the row
+        addTplTaskRow(tbodyRef, t, i);
+        var newRow = tbodyRef.lastElementChild;
+        // Move the duplicate right after the source row
+        row.parentNode.insertBefore(newRow, row.nextSibling);
+      });
+      tbody.appendChild(row);
+    }
+
     function renderTplDetail(key) {
       var tpl = tplDetailData[key];
       if (!tpl) return;
       document.getElementById('tpl-detail-title').textContent = tpl.name;
       document.getElementById('tpl-detail-name-crumb').textContent = tpl.name;
-      document.getElementById('tpl-detail-opp-badge').textContent = 'From opportunity: ' + (tpl.opp || 'Smart Construction Hub');
+      var oppBadge = document.getElementById('tpl-detail-opp-badge');
+      oppBadge.style.display = '';
+      oppBadge.textContent = 'From opportunity: ' + (tpl.opp || 'Smart Construction Hub');
       var container = document.getElementById('tpl-detail-tasks');
       container.innerHTML = '';
-      // Column header
-      var header = document.createElement('div');
-      header.className = 'tpl-detail-task';
-      header.style.cursor = 'default';
-      header.style.fontWeight = '600';
-      header.style.fontSize = 'var(--font-body-sm-size)';
-      header.style.color = 'var(--color-gray-7)';
-      header.style.borderBottom = '1px solid var(--color-border-default)';
-      header.innerHTML = '<span style="width:20px;flex-shrink:0;"></span>' +
-        '<span class="tpl-dt-name" style="font-weight:600;color:var(--color-gray-7);">Task Name</span>' +
-        '<span class="tpl-dt-role" style="font-weight:600;color:var(--color-gray-7);">Assigned Role</span>' +
-        '<span style="width:18px;flex-shrink:0;"></span>';
-      container.appendChild(header);
-      tpl.tasks.forEach(function (t) {
-        var row = document.createElement('div');
-        row.className = 'tpl-detail-task';
-        row.innerHTML = '<input class="checkbox" type="checkbox" />' +
-          '<span class="tpl-dt-name">' + t.task + '</span>' +
-          '<span class="tpl-dt-role">' + t.role + '</span>' +
-          '<button class="tpl-dt-remove" title="Remove"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h10M5 4V2.5h4V4M3 4v8a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4"/></svg></button>';
-        // Click task name → open detail modal
-        row.querySelector('.tpl-dt-name').addEventListener('click', function (e) {
-          e.stopPropagation();
-          openDrawer({ id: 'tpl-d-' + Math.random(), task: t.task, role: t.role, opp: '', dd: '', iso: '', status: 'open', creator: '', desc: '' }, true);
-        });
-        // Remove button
-        row.querySelector('.tpl-dt-remove').addEventListener('click', function (e) {
-          e.stopPropagation();
-          row.remove();
-        });
-        container.appendChild(row);
-      });
+      var tableWrap = buildTplDetailTable();
+      container.appendChild(tableWrap);
+      var tbody = tableWrap.querySelector('tbody');
+      tpl.tasks.forEach(function (t, i) { addTplTaskRow(tbody, t, i); });
     }
 
-    // Template table row clicks → detail page
-    document.querySelectorAll('#tpl-table-body tr').forEach(function (row) {
-      row.addEventListener('click', function () {
-        var key = row.getAttribute('data-tpl-detail');
-        renderTplDetail(key);
-        showPage('tpl-detail');
+    // Template list: row click → detail page; checkboxes for bulk select; per-row Duplicate/Delete
+    (function () {
+      var tbody = document.getElementById('tpl-table-body');
+      var bulkToolbar = document.getElementById('tpl-list-bulk-toolbar');
+      var bulkCount = bulkToolbar.querySelector('.tpl-bulk-count');
+      var selectAll = document.getElementById('tpl-list-select-all');
+
+      function updateBulkToolbar() {
+        var boxes = tbody.querySelectorAll('.tpl-list-select');
+        var checked = tbody.querySelectorAll('.tpl-list-select:checked');
+        bulkCount.textContent = checked.length + ' selected';
+        bulkToolbar.classList.toggle('is-visible', checked.length > 0);
+        selectAll.checked = checked.length > 0 && checked.length === boxes.length;
+        selectAll.indeterminate = checked.length > 0 && checked.length < boxes.length;
+      }
+
+      function wireRow(row) {
+        row.addEventListener('click', function () {
+          var key = row.getAttribute('data-tpl-detail');
+          if (key) { renderTplDetail(key); showPage('tpl-detail'); }
+        });
+        var cb = row.querySelector('.tpl-list-select');
+        if (cb) {
+          cb.addEventListener('click', function (e) { e.stopPropagation(); });
+          cb.addEventListener('change', updateBulkToolbar);
+        }
+        var delBtn = row.querySelector('.tpl-list-row-delete');
+        if (delBtn) {
+          delBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            row.remove();
+            updateBulkToolbar();
+          });
+        }
+        var dupBtn = row.querySelector('.tpl-list-row-duplicate');
+        if (dupBtn) {
+          dupBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            var clone = row.cloneNode(true);
+            // Uncheck duplicate's checkbox
+            var cloneCb = clone.querySelector('.tpl-list-select');
+            if (cloneCb) cloneCb.checked = false;
+            // Append "(copy)" to the name for clarity
+            var nameCell = clone.querySelector('.tpl-name-cell');
+            if (nameCell) {
+              var icon = nameCell.querySelector('.tpl-doc-icon');
+              var text = nameCell.textContent.trim() + ' (copy)';
+              nameCell.innerHTML = '';
+              if (icon) nameCell.appendChild(icon.cloneNode(true));
+              nameCell.appendChild(document.createTextNode(text));
+            }
+            row.parentNode.insertBefore(clone, row.nextSibling);
+            wireRow(clone);
+            updateBulkToolbar();
+          });
+        }
+      }
+
+      tbody.querySelectorAll('tr').forEach(wireRow);
+
+      // Select-all header checkbox
+      selectAll.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var shouldCheck = selectAll.checked;
+        tbody.querySelectorAll('.tpl-list-select').forEach(function (cb) { cb.checked = shouldCheck; });
+        updateBulkToolbar();
       });
-    });
+
+      // Bulk delete
+      document.getElementById('tpl-list-bulk-delete').addEventListener('click', function () {
+        tbody.querySelectorAll('.tpl-list-select:checked').forEach(function (cb) {
+          var tr = cb.closest('tr');
+          if (tr) tr.remove();
+        });
+        updateBulkToolbar();
+      });
+
+      // Bulk duplicate
+      document.getElementById('tpl-list-bulk-duplicate').addEventListener('click', function () {
+        var selectedRows = Array.prototype.slice.call(tbody.querySelectorAll('.tpl-list-select:checked'))
+          .map(function (cb) { return cb.closest('tr'); });
+        selectedRows.forEach(function (row) {
+          var btn = row.querySelector('.tpl-list-row-duplicate');
+          if (btn) btn.click();
+        });
+        tbody.querySelectorAll('.tpl-list-select').forEach(function (cb) { cb.checked = false; });
+        updateBulkToolbar();
+      });
+    })();
 
     // Back link from template detail → templates list
     document.getElementById('tpl-back-link').addEventListener('click', function () {
@@ -4421,19 +5198,7 @@
       document.getElementById('tpl-detail-opp-badge').style.display = 'none';
       var container = document.getElementById('tpl-detail-tasks');
       container.innerHTML = '';
-      // Column header
-      var header = document.createElement('div');
-      header.className = 'tpl-detail-task';
-      header.style.cursor = 'default';
-      header.style.fontWeight = '600';
-      header.style.fontSize = 'var(--font-body-sm-size)';
-      header.style.color = 'var(--color-gray-7)';
-      header.style.borderBottom = '1px solid var(--color-border-default)';
-      header.innerHTML = '<span style="width:20px;flex-shrink:0;"></span>' +
-        '<span class="tpl-dt-name" style="font-weight:600;color:var(--color-gray-7);">Task Name</span>' +
-        '<span class="tpl-dt-role" style="font-weight:600;color:var(--color-gray-7);">Assigned Role</span>' +
-        '<span style="width:18px;flex-shrink:0;"></span>';
-      container.appendChild(header);
+      container.appendChild(buildTplDetailTable());
       showPage('tpl-detail');
     });
 
@@ -4494,19 +5259,7 @@
       oppBadge.textContent = 'From opportunity: ' + oppName;
       var container = document.getElementById('tpl-detail-tasks');
       container.innerHTML = '';
-      // Column header
-      var header = document.createElement('div');
-      header.className = 'tpl-detail-task';
-      header.style.cursor = 'default';
-      header.style.fontWeight = '600';
-      header.style.fontSize = 'var(--font-body-sm-size)';
-      header.style.color = 'var(--color-gray-7)';
-      header.style.borderBottom = '1px solid var(--color-border-default)';
-      header.innerHTML = '<span style="width:20px;flex-shrink:0;"></span>' +
-        '<span class="tpl-dt-name" style="font-weight:600;color:var(--color-gray-7);">Task Name</span>' +
-        '<span class="tpl-dt-role" style="font-weight:600;color:var(--color-gray-7);">Assigned Role</span>' +
-        '<span style="width:18px;flex-shrink:0;"></span>';
-      container.appendChild(header);
+      container.appendChild(buildTplDetailTable());
       showPage('tpl-detail');
     });
 
@@ -4521,7 +5274,32 @@
       tplOverlay.classList.remove('is-open');
     });
     document.getElementById('tpl-modal-create').addEventListener('click', function () {
+      var name = document.getElementById('tpl-name-input').value.trim() || 'Untitled Template';
+      var oppName = 'Smart Construction Hub';
+      var createdTasks = [];
+      tplOverlay.querySelectorAll('.tpl-task-row').forEach(function (tr) {
+        var cb = tr.querySelector('input[type="checkbox"]');
+        if (!cb || !cb.checked) return;
+        var taskName = tr.querySelector('.tpl-task-name').textContent.trim();
+        var assignee = tr.querySelector('.tpl-task-meta').textContent.trim();
+        var user = (typeof availableUsers !== 'undefined') ? availableUsers.find(function (u) { return u.name === assignee; }) : null;
+        var role = user ? user.role : 'Account Rep';
+        createdTasks.push({ task: taskName, role: role });
+      });
       tplOverlay.classList.remove('is-open');
+      // Populate the template detail page
+      document.getElementById('tpl-detail-title').textContent = name;
+      document.getElementById('tpl-detail-name-crumb').textContent = name;
+      var oppBadge = document.getElementById('tpl-detail-opp-badge');
+      oppBadge.style.display = '';
+      oppBadge.textContent = 'From opportunity: ' + oppName;
+      var container = document.getElementById('tpl-detail-tasks');
+      container.innerHTML = '';
+      var tableWrap = buildTplDetailTable();
+      container.appendChild(tableWrap);
+      var tbody = tableWrap.querySelector('tbody');
+      createdTasks.forEach(function (t, i) { addTplTaskRow(tbody, t, i); });
+      showPage('tpl-detail');
     });
     tplOverlay.addEventListener('click', function (e) {
       if (e.target === tplOverlay) tplOverlay.classList.remove('is-open');
@@ -4537,10 +5315,14 @@
       addTaskDropdown.classList.remove('is-open');
     });
 
-    // "New blank task" → open blank drawer
+    // "New blank task" → open blank drawer, pre-selecting this opportunity + company
     document.getElementById('add-task-blank').addEventListener('click', function () {
       addTaskDropdown.classList.remove('is-open');
-      openBlankDrawer();
+      openBlankDrawer(false, {
+        target: 'opp',
+        opp: 'Smart Construction Hub',
+        company: 'ABC Architectural Builders & Construction Solutions'
+      });
     });
 
     // "From template" modal
@@ -4549,6 +5331,7 @@
 
     document.getElementById('add-task-from-tpl').addEventListener('click', function () {
       addTaskDropdown.classList.remove('is-open');
+      addTplTarget = 'opp';
       addTplOverlay.querySelectorAll('.add-tpl-cb').forEach(function (cb) { cb.checked = false; });
       addTplAddBtn.disabled = true;
       addTplOverlay.classList.add('is-open');
@@ -4599,39 +5382,66 @@
       ]
     };
 
-    // Add button: inject tasks into Open tab
+    // Add button: inject tasks into Open tab OR into main tasks list depending on target
     addTplAddBtn.addEventListener('click', function () {
-      var openPanel = document.querySelector('#opp-tasks-list .opp-task-panel[data-status-panel="open"]');
       var selected = [];
       addTplOverlay.querySelectorAll('.add-tpl-cb:checked').forEach(function (cb) {
         var key = cb.getAttribute('data-tpl');
         if (templateTasks[key]) selected = selected.concat(templateTasks[key]);
       });
-      selected.forEach(function (t) {
-        var card = document.createElement('div');
-        card.className = 'kanban-card';
-        card.style.cursor = 'pointer';
-        card.innerHTML = '<div class="card-top-row">' +
-          '<div class="card-title">' + t.task + '</div>' +
-          '<div class="card-due-row"><span class="date-pill is-open">' +
-          '<svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
-          '<rect x="1" y="2" width="10" height="9" rx="1"/><path d="M2 6h10M5 1.5v2M9 1.5v2"/></svg>Apr 28</span></div>' +
-          '</div>' +
-          '<div class="card-meta-row">' +
-          '<svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
-          '<circle cx="7" cy="5" r="2.5"/><path d="M2.5 12c.8-2.2 2.6-3.3 4.5-3.3S10.7 9.8 11.5 12"/></svg>' +
-          t.assignee +
-          '</div>' +
-          '<div class="card-meta-row">' +
-          '<svg class="meta-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">' +
-          '<path d="M6 8a3 3 0 0 0 4.2 0l2-2a3 3 0 0 0-4.2-4.2L7 2.8"/>' +
-          '<path d="M8 6a3 3 0 0 0-4.2 0l-2 2a3 3 0 0 0 4.2 4.2L7 11.2"/></svg>' +
-          'Smart Construction Hub</div>';
-        card.addEventListener('click', function () {
-          openDrawer({ id: 'tpl-' + Math.random(), task: t.task, assignee: t.assignee, role: t.role || '', opp: 'Smart Construction Hub', dd: 'Apr 28', iso: '2026-04-28', status: 'open', creator: t.assignee, desc: '' });
+
+      // Main Tasks page: add to the tasks array and re-render
+      if (addTplTarget === 'main') {
+        var maxId = tasks.reduce(function (m, x) { return (typeof x.id === 'number' && x.id > m) ? x.id : m; }, 0);
+        selected.forEach(function (t, i) {
+          tasks.unshift({
+            id: maxId + 1 + i,
+            iso: '2026-04-28',
+            dd: 'Apr 28',
+            task: t.task,
+            assignee: t.assignee || '',
+            opp: '',
+            touch: '',
+            contact: '',
+            company: '',
+            creator: t.assignee || 'You',
+            status: 'due-today'
+          });
         });
-        openPanel.appendChild(card);
+        if (typeof renderOpen === 'function') renderOpen();
+        if (typeof renderKanban === 'function') renderKanban();
+        addTplOverlay.classList.remove('is-open');
+        return;
+      }
+
+      // Opportunity detail Tasks tab: existing behavior — inject table rows into the Open panel
+      var openPanel = document.querySelector('#opp-tasks-list .opp-task-panel[data-status-panel="open"]');
+      var tbody = openPanel.querySelector('table.data-table tbody');
+      selected.forEach(function (t) {
+        var row = document.createElement('tr');
+        row.style.cursor = 'pointer';
+        row.innerHTML =
+          '<td><div class="check-circle" title="Mark complete"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 7.5l3 3 6-6"/></svg></div></td>' +
+          '<td><span class="date-pill is-open"><svg class="pill-icon" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="10" height="9" rx="1"/><path d="M2 6h10M5 1.5v2M9 1.5v2"/></svg>Apr 28</span></td>' +
+          '<td>' + t.task + '</td>' +
+          '<td><a class="link" href="#" onclick="event.stopPropagation();return false;">' + t.assignee + '</a></td>' +
+          '<td><a class="link" href="#" onclick="event.stopPropagation();return false;">' + t.assignee + '</a></td>' +
+          '<td class="row-actions">⋮</td>';
+        var circle = row.querySelector('.check-circle');
+        circle.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var wasDone = circle.classList.contains('is-done');
+          circle.classList.toggle('is-done');
+          var cell = row.querySelector('td:nth-child(3)');
+          if (wasDone) { cell.style.textDecoration = ''; cell.style.color = ''; }
+          else { cell.style.textDecoration = 'line-through'; cell.style.color = 'var(--color-text-tertiary)'; }
+        });
+        row.addEventListener('click', function () {
+          openDrawer({ id: 'tpl-' + Math.random(), task: t.task, assignee: t.assignee, role: t.role || '', opp: 'Smart Construction Hub', dd: 'Apr 28', iso: '2026-04-28', status: 'open', creator: t.assignee, desc: '' }, false, row);
+        });
+        tbody.appendChild(row);
       });
+      if (typeof updateOppTasksCount === 'function') updateOppTasksCount();
       // Switch to Open tab
       document.querySelectorAll('#opp-task-status-tabs button').forEach(function (b) { b.classList.remove('is-active'); });
       document.querySelector('#opp-task-status-tabs button[data-task-status="open"]').classList.add('is-active');
@@ -4639,6 +5449,39 @@
       openPanel.style.display = '';
       addTplOverlay.classList.remove('is-open');
     });
+
+    // Template detail: editable title — click to edit, blur/Enter to save, Esc to cancel
+    (function () {
+      var titleEl = document.getElementById('tpl-detail-title');
+      var inputEl = document.getElementById('tpl-detail-title-input');
+      var crumbEl = document.getElementById('tpl-detail-name-crumb');
+      if (!titleEl || !inputEl) return;
+
+      function enterEdit() {
+        inputEl.value = titleEl.textContent;
+        titleEl.classList.add('is-editing');
+        inputEl.classList.add('is-editing');
+        inputEl.focus();
+        inputEl.select();
+      }
+      function exitEdit(save) {
+        if (save) {
+          var v = inputEl.value.trim();
+          if (v) {
+            titleEl.textContent = v;
+            if (crumbEl) crumbEl.textContent = v;
+          }
+        }
+        titleEl.classList.remove('is-editing');
+        inputEl.classList.remove('is-editing');
+      }
+      titleEl.addEventListener('click', enterEdit);
+      inputEl.addEventListener('blur', function () { exitEdit(true); });
+      inputEl.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') { e.preventDefault(); inputEl.blur(); }
+        if (e.key === 'Escape') { e.stopPropagation(); exitEdit(false); }
+      });
+    })();
 
     // Template detail: "Add new task" button → open blank drawer
     document.getElementById('tpl-add-new-task-btn').addEventListener('click', function () {
