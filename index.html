@@ -60,14 +60,70 @@
     }
     .nav-section + .nav-section { padding-top: var(--space-2xl); }
     .nav-section .heading {
-      padding: 0 var(--space-lg);
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2px var(--space-lg);
+      background: none;
+      border: none;
+      font-family: inherit;
       font-size: 11px;
       font-weight: var(--font-weight-semibold);
       letter-spacing: 0.08em;
       text-transform: uppercase;
       color: var(--color-gray-5);
       margin-bottom: var(--space-sm);
+      cursor: pointer;
+      text-align: left;
     }
+    .nav-section .heading .caret {
+      font-size: 9px;
+      color: var(--color-gray-5);
+      transition: transform 0.15s ease;
+    }
+    .nav-section.is-open .heading .caret { transform: rotate(90deg); }
+    .nav-section .section-body { display: none; }
+    .nav-section.is-open .section-body { display: block; }
+
+    .nav-feature + .nav-feature { margin-top: 2px; }
+    .nav-feature .feature-heading {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      padding: 8px var(--space-lg);
+      background: none;
+      border: none;
+      border-radius: var(--radius-sm);
+      color: var(--color-text-secondary);
+      font-family: inherit;
+      font-size: var(--font-body-md-size);
+      line-height: var(--font-body-md-line);
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+      text-align: left;
+    }
+    .nav-feature .feature-heading:hover { background: var(--color-gray-1); color: var(--color-text-primary); }
+    .nav-feature .feature-heading .icon {
+      width: 16px; height: 16px;
+      flex-shrink: 0;
+      display: grid; place-items: center;
+    }
+    .nav-feature .feature-heading .count {
+      margin-left: auto;
+      font-size: 11px;
+      font-weight: var(--font-weight-regular);
+      color: var(--color-gray-5);
+    }
+    .nav-feature .feature-heading .caret {
+      font-size: 10px;
+      color: var(--color-gray-5);
+      transition: transform 0.15s ease;
+    }
+    .nav-feature.is-open .feature-heading .caret { transform: rotate(90deg); }
+    .nav-feature .feature-body { display: none; padding: 2px 0 4px 28px; }
+    .nav-feature.is-open .feature-body { display: block; }
     .nav-list {
       list-style: none;
       margin: 0; padding: 0;
@@ -183,96 +239,69 @@
       <div class="name">Terial<small>Workspace</small></div>
     </div>
 
-    <div class="nav-section">
-      <div class="heading">Prototypes</div>
-      <ul class="nav-list" id="nav-prototypes">
-        <li>
-          <a class="nav-item" data-page="prototypes/tasks.html" data-label="Tasks">
-            <span class="icon">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M3 4l1.5 1.5L7 3"/>
-                <path d="M3 9l1.5 1.5L7 8"/>
-                <path d="M9 5h5"/>
-                <path d="M9 10h5"/>
-              </svg>
-            </span>
+    <div class="nav-section is-open" data-section="prototypes">
+      <button type="button" class="heading" data-toggle="section">Prototypes<span class="caret">▸</span></button>
+      <div class="section-body">
+        <div class="nav-feature is-open" data-feature="crm-ai">
+          <button type="button" class="feature-heading" data-toggle="feature">
+            CRM AI
+            <span class="caret">▸</span>
+          </button>
+          <ul class="nav-list feature-body">
+            <li><a class="nav-item" data-page="prototypes/crm-ai-1.html" data-label="CRM AI - 1" data-feature-label="CRM AI">CRM AI - 1</a></li>
+            <li><a class="nav-item" data-page="prototypes/crm-ai-2.html" data-label="CRM AI - 2" data-feature-label="CRM AI">CRM AI - 2</a></li>
+          </ul>
+        </div>
+        <div class="nav-feature" data-feature="omni-search">
+          <button type="button" class="feature-heading" data-toggle="feature">
+            Omni search
+            <span class="caret">▸</span>
+          </button>
+          <ul class="nav-list feature-body">
+            <li><a class="nav-item" data-page="prototypes/omnisearch.html" data-label="Omni search - 1" data-feature-label="Omni search">Omni search - 1</a></li>
+            <li><a class="nav-item" data-page="prototypes/omnisearch-2.html" data-label="Omni search - 2" data-feature-label="Omni search">Omni search - 2</a></li>
+            <li><a class="nav-item" data-page="prototypes/ai.html" data-label="[Archive] Search" data-feature-label="Omni search">[Archive] Search</a></li>
+          </ul>
+        </div>
+        <div class="nav-feature" data-feature="tasks">
+          <button type="button" class="feature-heading" data-toggle="feature">
             Tasks
-          </a>
-        </li>
-        <li>
-          <a class="nav-item" data-page="prototypes/omnisearch.html" data-label="Omni search - 1">
-            <span class="icon">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="7" cy="7" r="5"/>
-                <path d="M11 11l3 3"/>
-              </svg>
-            </span>
-            Omni search - 1
-          </a>
-        </li>
-        <li>
-          <a class="nav-item" data-page="prototypes/omnisearch-2.html" data-label="Omni search - 2">
-            <span class="icon">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="7" cy="7" r="5"/>
-                <path d="M11 11l3 3"/>
-              </svg>
-            </span>
-            Omni search - 2
-          </a>
-        </li>
-        <li>
-          <a class="nav-item" data-page="prototypes/calendar.html" data-label="Calendar">
-            <span class="icon">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="2" width="12" height="12" rx="1"/>
-                <path d="M2 6h12M6 2v4M10 2v4"/>
-              </svg>
-            </span>
+            <span class="caret">▸</span>
+          </button>
+          <ul class="nav-list feature-body">
+            <li><a class="nav-item" data-page="prototypes/tasks.html" data-label="Tasks" data-feature-label="Tasks">Tasks</a></li>
+          </ul>
+        </div>
+        <div class="nav-feature" data-feature="calendar">
+          <button type="button" class="feature-heading" data-toggle="feature">
             Calendar
-          </a>
-        </li>
-        <li>
-          <a class="nav-item" data-page="prototypes/ai.html" data-label="AI">
-            <span class="icon">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M8 1L2 8h4l-1 5 6-7H7l1-5z"/>
-              </svg>
-            </span>
-            AI
-          </a>
-        </li>
-      </ul>
+            <span class="caret">▸</span>
+          </button>
+          <ul class="nav-list feature-body">
+            <li><a class="nav-item" data-page="prototypes/calendar.html" data-label="Calendar" data-feature-label="Calendar">Calendar</a></li>
+          </ul>
+        </div>
+      </div>
     </div>
 
-    <div class="nav-section">
-      <div class="heading">Design system</div>
-      <ul class="nav-list" id="nav-ds">
-        <li>
-          <a class="nav-item" data-page="design-system-style.html" data-label="Style">
-            <span class="icon">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="8" cy="8" r="6"/>
-                <path d="M2 8h12"/>
-              </svg>
-            </span>
-            Style
-          </a>
-        </li>
-        <li>
-          <a class="nav-item" data-page="design-system-components.html" data-label="Components">
-            <span class="icon">
-              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="2" y="2" width="5" height="5" rx="1"/>
-                <rect x="9" y="2" width="5" height="5" rx="1"/>
-                <rect x="2" y="9" width="5" height="5" rx="1"/>
-                <rect x="9" y="9" width="5" height="5" rx="1"/>
-              </svg>
-            </span>
-            Components
-          </a>
-        </li>
-      </ul>
+    <div class="nav-section" data-section="design-system">
+      <button type="button" class="heading" data-toggle="section">Design system<span class="caret">▸</span></button>
+      <div class="section-body">
+        <ul class="nav-list" id="nav-ds">
+          <li>
+            <a class="nav-item" data-page="design-system-style.html" data-label="Style">
+              <span class="icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="8" r="6"/><path d="M2 8h12"/></svg></span>
+              Style
+            </a>
+          </li>
+          <li>
+            <a class="nav-item" data-page="design-system-components.html" data-label="Components">
+              <span class="icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg></span>
+              Components
+            </a>
+          </li>
+        </ul>
+      </div>
     </div>
 
     <div class="sidebar-footer">
@@ -304,18 +333,57 @@
       var crumbSection = document.getElementById('crumb-section');
       var items = document.querySelectorAll('.nav-item');
 
+      // Inject count badge in each feature heading based on number of versions inside
+      document.querySelectorAll('.nav-feature').forEach(function (feature) {
+        var heading = feature.querySelector('.feature-heading');
+        var items = feature.querySelectorAll('.feature-body .nav-item');
+        if (!heading || heading.querySelector('.count')) return;
+        var caret = heading.querySelector('.caret');
+        var countEl = document.createElement('span');
+        countEl.className = 'count';
+        countEl.textContent = items.length;
+        if (caret) heading.insertBefore(countEl, caret);
+        else heading.appendChild(countEl);
+      });
+
+      // Section collapse/expand
+      document.querySelectorAll('[data-toggle="section"]').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          var section = btn.closest('.nav-section');
+          section.classList.toggle('is-open');
+        });
+      });
+      // Feature collapse/expand
+      document.querySelectorAll('[data-toggle="feature"]').forEach(function (btn) {
+        btn.addEventListener('click', function (e) {
+          e.preventDefault();
+          e.stopPropagation();
+          var feature = btn.closest('.nav-feature');
+          feature.classList.toggle('is-open');
+        });
+      });
+
       function activate(item) {
         items.forEach(function (el) { el.classList.remove('is-active'); });
         item.classList.add('is-active');
 
         var page = item.getAttribute('data-page');
         var label = item.getAttribute('data-label');
-        var section = item.closest('.nav-section').querySelector('.heading').textContent;
+        var sectionEl = item.closest('.nav-section');
+        var sectionName = sectionEl ? sectionEl.querySelector('.heading').textContent.replace(/[▸▾]/g, '').trim() : '';
+        var featureLabel = item.getAttribute('data-feature-label') || '';
+
+        // Ensure the containing section & feature are open
+        if (sectionEl) sectionEl.classList.add('is-open');
+        var featureEl = item.closest('.nav-feature');
+        if (featureEl) featureEl.classList.add('is-open');
 
         canvas.src = page + '?v=' + Date.now();
         openNew.href = page;
         crumbPage.textContent = label;
-        crumbSection.textContent = section;
+        crumbSection.textContent = featureLabel ? (sectionName + ' / ' + featureLabel) : sectionName;
         location.hash = '#/' + page;
       }
 
@@ -326,15 +394,9 @@
         });
       });
 
-      // Initial selection: hash if present, else first prototype
-      var startItem = null;
-      if (location.hash && location.hash.indexOf('#/') === 0) {
-        var target = location.hash.slice(2);
-        items.forEach(function (item) {
-          if (item.getAttribute('data-page') === target) startItem = item;
-        });
-      }
-      if (!startItem) startItem = document.querySelector('#nav-prototypes .nav-item');
+      // Always default to the top-most prototype on load
+      var startItem = document.querySelector('.nav-feature .feature-body .nav-item')
+        || document.querySelector('.nav-item');
       activate(startItem);
     })();
   </script>
