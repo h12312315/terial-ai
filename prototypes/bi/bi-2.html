@@ -1633,6 +1633,723 @@
     }
     .report-sql-cancel:hover { background: rgba(255,255,255,0.1); }
 
+    /* ========== Home page ========== */
+    .home-page { display: none; padding: 0; margin: calc(-1 * var(--space-2xl)) calc(-1 * var(--space-2xl)) calc(-80px) calc(-1 * var(--space-2xl)); }
+    .home-page.is-visible { display: block; }
+
+    /* View tabs at top of home */
+    .home-view-tabs {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      border-bottom: 1px solid var(--color-border-default);
+      padding: 0 var(--space-2xl);
+      background: none;
+    }
+    .home-view-tab {
+      padding: 12px 20px;
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .home-view-tab:hover { color: var(--color-text-primary); }
+    .home-view-tab.is-active {
+      color: var(--color-text-primary);
+      border-bottom-color: var(--color-primary-6);
+      font-weight: var(--font-weight-semibold);
+    }
+    .home-view-tab.is-new {
+      color: var(--color-text-tertiary);
+      font-weight: var(--font-weight-medium);
+    }
+    .home-view-tab.is-new:hover { color: var(--color-text-secondary); }
+
+    .home-tab-panel { display: none; }
+    .home-tab-panel.is-active { display: block; }
+
+    /* View-level action bar */
+    .home-view-actions {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: var(--space-md) 0 var(--space-lg);
+    }
+    .home-view-desc {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+    }
+    .home-view-actions-right {
+      display: flex;
+      gap: var(--space-sm);
+    }
+    .home-view-action-btn {
+      padding: 4px 10px;
+      font-size: 11px;
+      font-family: inherit;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      background: var(--color-white);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .home-view-action-btn svg { width: 12px; height: 12px; }
+    .home-view-action-btn:hover { background: var(--color-gray-1); color: var(--color-text-primary); }
+    .home-view-action-btn.is-danger:hover { background: #fef2f2; color: #dc2626; border-color: #fca5a5; }
+
+    /* New view modal */
+    .home-new-view-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.3);
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+    }
+    .home-new-view-modal {
+      background: var(--color-white);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      width: 400px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+    }
+    .home-new-view-modal h3 {
+      margin: 0 0 20px;
+      font-size: 18px;
+    }
+    .modal-field {
+      margin-bottom: 16px;
+    }
+    .modal-field label {
+      display: block;
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-primary);
+      margin-bottom: 6px;
+    }
+    .modal-optional {
+      font-weight: normal;
+      color: var(--color-text-tertiary);
+    }
+    .modal-field input {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      font-size: var(--font-body-md-size);
+      font-family: inherit;
+      box-sizing: border-box;
+    }
+    .modal-field input:focus {
+      outline: none;
+      border-color: var(--color-primary-6);
+    }
+    .modal-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: var(--space-sm);
+      margin-top: 24px;
+    }
+    .modal-cancel {
+      padding: 8px 16px;
+      background: none;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: var(--font-body-sm-size);
+    }
+    .modal-create {
+      padding: 8px 16px;
+      background: var(--color-gray-9);
+      color: white;
+      border: none;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+    }
+
+    /* Tickets view */
+    .tickets-view { padding: var(--space-2xl); }
+    .tickets-filter-bar {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      margin-bottom: var(--space-lg);
+    }
+    .tickets-search {
+      flex: 1;
+      max-width: 320px;
+      padding: 8px 12px 8px 32px;
+      font-size: var(--font-body-md-size);
+      font-family: inherit;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      background: var(--color-white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' fill='none' stroke='%239ca3af' stroke-width='1.6' stroke-linecap='round'%3E%3Ccircle cx='6' cy='6' r='4.5'/%3E%3Cpath d='M9.5 9.5 13 13'/%3E%3C/svg%3E") 10px center no-repeat;
+      outline: none;
+    }
+    .tickets-search:focus { border-color: var(--color-primary-6); box-shadow: 0 0 0 2px rgba(37,99,235,0.12); }
+    .tickets-filter-select {
+      padding: 8px 28px 8px 12px;
+      font-size: var(--font-body-md-size);
+      font-family: inherit;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      background: var(--color-white);
+      color: var(--color-text-primary);
+      cursor: pointer;
+      appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' fill='none' stroke='%236b7280' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M1 1l4 4 4-4'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+    }
+    .tickets-table-wrap {
+      background: var(--color-white);
+      border: 1px solid var(--color-gray-3);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .tickets-table {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+    }
+    .tickets-table th {
+      text-align: left;
+      padding: 12px 20px;
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-secondary);
+      background: var(--color-gray-1);
+      border-bottom: 1px solid var(--color-border-default);
+      white-space: nowrap;
+    }
+    .tickets-table td {
+      padding: 14px 20px;
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-primary);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .tickets-table tr:last-child td { border-bottom: none; }
+    .tickets-table tbody tr:hover td { background: var(--color-gray-1); }
+    .tickets-table .ticket-id {
+      font-weight: var(--font-weight-medium);
+      color: var(--color-primary-6);
+    }
+    .ticket-pill {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: var(--radius-pill);
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      white-space: nowrap;
+    }
+    .ticket-pill.priority-critical { background: #fef2f2; color: #dc2626; }
+    .ticket-pill.priority-high { background: #fff7ed; color: #ea580c; }
+    .ticket-pill.priority-medium { background: #eff6ff; color: #2563eb; }
+    .ticket-pill.priority-low { background: var(--color-gray-2); color: var(--color-text-tertiary); }
+    .ticket-pill.status-open { background: #eff6ff; color: #2563eb; }
+    .ticket-pill.status-in-progress { background: #fffbeb; color: #d97706; }
+    .ticket-pill.status-completed { background: #f0fdf4; color: #16a34a; }
+    .ticket-pill.status-pending { background: var(--color-gray-2); color: var(--color-text-tertiary); }
+    .ticket-pill.status-scheduled { background: #faf5ff; color: #9333ea; }
+
+    /* Empty view state */
+    .empty-view-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 20px;
+      color: var(--color-text-tertiary);
+    }
+    .empty-view-state svg { width: 56px; height: 56px; margin-bottom: var(--space-lg); opacity: 0.4; }
+    .empty-view-state p {
+      font-size: var(--font-body-md-size);
+      margin: 0;
+    }
+
+    /* Home content */
+    .home-content { padding: var(--space-2xl); }
+
+    .home-greeting {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: var(--space-2xl) var(--space-2xl) var(--space-lg);
+      margin-bottom: 0;
+    }
+    .home-greeting h1 {
+      font-size: 24px;
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      margin: 0;
+    }
+    .home-greeting-actions {
+      display: flex;
+      gap: var(--space-md);
+    }
+    .home-action-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 16px;
+      border: 1.5px solid var(--color-primary-6);
+      border-radius: var(--radius-md);
+      background: transparent;
+      color: var(--color-text-primary);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .home-action-btn:hover { background: rgba(255,202,0,0.08); }
+    .home-action-btn svg { width: 14px; height: 14px; }
+
+    /* Stat cards */
+    .home-stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-lg);
+      margin-bottom: var(--space-xl);
+    }
+    .home-stat-card {
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      padding: 16px 20px;
+      position: relative;
+    }
+    .home-stat-card .stat-label {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      margin-bottom: 4px;
+    }
+    .home-stat-card .stat-value {
+      font-size: 22px;
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+    }
+    .home-stat-card .stat-info {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 18px;
+      height: 18px;
+      display: grid;
+      place-items: center;
+      font-size: 14px;
+      color: var(--color-text-tertiary);
+      cursor: help;
+    }
+
+    /* Middle row: 3 columns */
+    .home-middle-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: var(--space-lg);
+      margin-bottom: var(--space-xl);
+    }
+    .home-panel {
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .home-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px 10px;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .home-panel-title {
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+    }
+    .home-panel-toggle {
+      display: flex;
+      gap: 0;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+    }
+    .home-panel-toggle button {
+      padding: 4px 10px;
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      border: none;
+      background: none;
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+    }
+    .home-panel-toggle button.is-active {
+      background: var(--color-bg-muted);
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-semibold);
+    }
+    .home-panel-info {
+      width: 18px; height: 18px; display: grid; place-items: center;
+      font-size: 14px; color: var(--color-text-tertiary); cursor: help;
+    }
+    .home-panel-body {
+      padding: 16px;
+    }
+
+    /* Tickets panel tabs */
+    .home-tickets-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .home-tickets-tab {
+      padding: 10px 16px;
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+    .home-tickets-tab.is-active {
+      color: var(--color-text-primary);
+      border-bottom-color: var(--color-primary-6);
+    }
+    .home-empty-state {
+      text-align: center;
+      padding: 32px 16px;
+      color: var(--color-text-tertiary);
+      font-size: var(--font-body-sm-size);
+    }
+
+    /* Bar chart placeholder */
+    .home-bar-chart {
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      height: 140px;
+      padding-top: 8px;
+    }
+    .home-bar-col {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+    }
+    .home-bar {
+      width: 100%;
+      max-width: 28px;
+      border-radius: 3px 3px 0 0;
+      background: var(--color-blue-5);
+      min-height: 2px;
+    }
+    .home-bar-label {
+      font-size: 9px;
+      color: var(--color-text-tertiary);
+    }
+
+    /* Pie chart */
+    .home-pie-wrap {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .home-pie-legend {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      font-size: 11px;
+      color: var(--color-text-secondary);
+    }
+    .home-pie-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .home-pie-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    /* Calendar section */
+    .home-calendar-link {
+      text-align: right;
+      margin-bottom: var(--space-md);
+    }
+    .home-calendar-link a {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-blue-7);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .home-calendar-link a:hover { text-decoration: underline; }
+
+    .home-calendar {
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      margin-bottom: var(--space-xl);
+    }
+    .home-cal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .home-cal-header-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .home-cal-header-left .cal-month {
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+    }
+    .home-cal-btn {
+      padding: 4px 10px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      background: var(--color-bg-surface);
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+    }
+    .home-cal-btn:hover { background: var(--color-bg-muted); }
+    .home-cal-btn.is-active {
+      background: var(--color-bg-muted);
+      font-weight: var(--font-weight-semibold);
+    }
+    .home-cal-nav {
+      display: flex;
+      gap: 2px;
+    }
+    .home-cal-nav button {
+      padding: 4px 8px;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      background: var(--color-bg-surface);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+      font-size: 12px;
+    }
+    .home-cal-nav button:hover { background: var(--color-bg-muted); }
+    .home-cal-views {
+      display: flex;
+      gap: 2px;
+    }
+
+    .home-cal-day-label {
+      padding: 8px 16px;
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+
+    .home-cal-grid {
+      display: grid;
+      grid-template-columns: 60px repeat(6, 1fr);
+      font-size: 11px;
+      min-height: 320px;
+    }
+    .home-cal-grid .cal-time-col {
+      border-right: 1px solid var(--color-border-default);
+    }
+    .home-cal-grid .cal-time-slot {
+      height: 32px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: flex-end;
+      padding: 0 6px;
+      color: var(--color-text-tertiary);
+      font-size: 10px;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .home-cal-grid .cal-user-col {
+      border-right: 1px solid var(--color-border-default);
+      position: relative;
+    }
+    .home-cal-grid .cal-user-col:last-child { border-right: none; }
+    .home-cal-grid .cal-user-header {
+      height: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      border-bottom: 1px solid var(--color-border-default);
+      background: var(--color-bg-muted);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 4px;
+    }
+    .home-cal-grid .cal-user-body {
+      position: relative;
+    }
+    .home-cal-grid .cal-user-slot {
+      height: 32px;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .home-cal-time-indicator {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--color-red-8);
+      z-index: 2;
+      pointer-events: none;
+    }
+    .home-cal-time-indicator::before {
+      content: '';
+      position: absolute;
+      left: -4px;
+      top: -3px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--color-red-8);
+    }
+    .home-cal-time-label {
+      position: absolute;
+      left: -54px;
+      top: -6px;
+      font-size: 9px;
+      color: var(--color-red-8);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    /* Bottom row */
+    .home-bottom-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-lg);
+    }
+    .home-tasks-panel {
+      background: var(--color-bg-surface);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .home-tasks-panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px 0;
+    }
+    .home-tasks-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .home-tasks-tab {
+      padding: 10px 16px;
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+    }
+    .home-tasks-tab.is-active {
+      color: var(--color-text-primary);
+      border-bottom-color: var(--color-primary-6);
+    }
+    .home-tasks-body {
+      padding: 16px;
+    }
+    .home-tasks-subtitle {
+      font-size: 12px;
+      color: var(--color-text-tertiary);
+      margin-bottom: 8px;
+    }
+    .home-tasks-links {
+      display: flex;
+      gap: 16px;
+      margin-top: 12px;
+    }
+    .home-tasks-links a {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-blue-7);
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .home-tasks-links a:hover { text-decoration: underline; }
+    .home-tasks-add-btn {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      border: 1px solid var(--color-border-default);
+      background: var(--color-bg-surface);
+      color: var(--color-text-tertiary);
+      font-size: 16px;
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+    }
+    .home-tasks-add-btn:hover { background: var(--color-bg-muted); }
+
+    /* Terial AI floating button */
+    .home-ai-fab {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 18px;
+      background: var(--color-gray-8);
+      color: var(--color-white);
+      border: none;
+      border-radius: 24px;
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      z-index: 100;
+    }
+    .home-ai-fab:hover { background: var(--color-gray-9); }
+
+    /* Sales tab inside home */
+    .home-sales-content {
+      padding: var(--space-2xl);
+    }
+    .home-sales-content .dash-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: var(--space-xl);
+    }
+    .home-sales-content .dash-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: var(--space-lg);
+    }
+
     /* ========== Dashboards ========== */
     .dashboards-page { display: none; padding: var(--space-2xl); }
     .dashboards-page.is-visible { display: block; }
@@ -6330,7 +7047,7 @@
     </div>
 
     <nav class="app-nav">
-      <div class="nav-row">
+      <div class="nav-row is-section-active" id="nav-home-row">
         <span class="icon"><svg viewBox="0 0 16 16"><path d="M2 7l6-5 6 5v7a1 1 0 0 1-1 1h-3v-5H6v5H3a1 1 0 0 1-1-1z"/></svg></span>
         Home
       </div>
@@ -6358,16 +7075,16 @@
         <span class="caret">▾</span>
       </div>
 
-      <div class="nav-row is-section-active">
+      <div class="nav-row" id="nav-reports-toggle">
         <span class="icon"><svg viewBox="0 0 16 16"><path d="M2 3h12v2H2zM2 7h8v2H2zM2 11h10v2H2z"/></svg></span>
         Reports
-        <span class="caret">▴</span>
+        <span class="caret" id="reports-caret">▾</span>
       </div>
-      <div class="nav-children" id="nav-reports-children">
-        <div class="nav-child is-active">Custom reports</div>
+      <div class="nav-children" id="nav-reports-children" style="display:none;">
+        <div class="nav-child">Custom reports</div>
       </div>
 
-      <div class="nav-row" id="nav-dashboards-toggle">
+      <div class="nav-row" id="nav-dashboards-toggle" style="display:none;">
         <span class="icon"><svg viewBox="0 0 16 16"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg></span>
         Dashboards
         <span class="caret" id="dashboards-caret">▾</span>
@@ -6797,6 +7514,397 @@
     </div>
 
     <div class="app-content">
+
+      <!-- ============================================================ -->
+      <!-- Home page -->
+      <!-- ============================================================ -->
+      <div class="home-page" id="home-page">
+        <!-- Greeting -->
+        <div class="home-greeting">
+          <h1>Hello, George</h1>
+          <div class="home-greeting-actions">
+            <button class="home-action-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="7" y1="3" x2="7" y2="11"/><line x1="3" y1="7" x2="11" y2="7"/></svg> Create Opportunity</button>
+            <button class="home-action-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><line x1="7" y1="3" x2="7" y2="11"/><line x1="3" y1="7" x2="11" y2="7"/></svg> Create Service Ticket</button>
+          </div>
+        </div>
+
+        <!-- View tabs -->
+        <div class="home-view-tabs">
+          <button class="home-view-tab is-active" data-home-tab="home">Home</button>
+          <button class="home-view-tab" data-home-tab="sales">Sales</button>
+          <button class="home-view-tab" data-home-tab="tickets">Tickets</button>
+          <button class="home-view-tab is-new" data-home-tab="new">+ New view</button>
+        </div>
+
+        <!-- Tab panel: Home -->
+        <div class="home-tab-panel is-active" id="home-tab-home">
+          <div class="home-content">
+
+            <!-- Stat cards -->
+            <div class="home-stat-row">
+              <div class="home-stat-card">
+                <div class="stat-label">Active Tickets</div>
+                <div class="stat-value">97</div>
+                <span class="stat-info" title="Info">&#9432;</span>
+              </div>
+              <div class="home-stat-card">
+                <div class="stat-label">Tickets Under Review</div>
+                <div class="stat-value">5</div>
+                <span class="stat-info" title="Info">&#9432;</span>
+              </div>
+              <div class="home-stat-card">
+                <div class="stat-label">Invoices to Collect</div>
+                <div class="stat-value">51</div>
+                <span class="stat-info" title="Info">&#9432;</span>
+              </div>
+              <div class="home-stat-card">
+                <div class="stat-label">Invoice Value to Collect</div>
+                <div class="stat-value">$448,599.38</div>
+                <span class="stat-info" title="Info">&#9432;</span>
+              </div>
+            </div>
+
+            <!-- Middle row: Tickets / Service Revenue / Ticket Type -->
+            <div class="home-middle-row">
+
+              <!-- Tickets panel -->
+              <div class="home-panel">
+                <div class="home-tickets-tabs">
+                  <button class="home-tickets-tab is-active">Service</button>
+                  <button class="home-tickets-tab">Production</button>
+                </div>
+                <div class="home-panel-body">
+                  <div style="font-size:12px;color:var(--color-text-secondary);font-weight:600;margin-bottom:8px;">Tickets Assigned to Me - Action Required</div>
+                  <div class="home-empty-state">No tickets requiring action</div>
+                </div>
+              </div>
+
+              <!-- Service Revenue chart -->
+              <div class="home-panel">
+                <div class="home-panel-header">
+                  <div class="home-panel-title">Service Revenue</div>
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <div class="home-panel-toggle">
+                      <button>Week</button>
+                      <button class="is-active">Month</button>
+                      <button>YTD</button>
+                    </div>
+                    <span class="home-panel-info" title="Info">&#9432;</span>
+                  </div>
+                </div>
+                <div class="home-panel-body">
+                  <div class="home-bar-chart">
+                    <div class="home-bar-col"><div class="home-bar" style="height:12px;"></div><div class="home-bar-label">Jun</div></div>
+                    <div class="home-bar-col"><div class="home-bar" style="height:8px;"></div><div class="home-bar-label">Jul</div></div>
+                    <div class="home-bar-col"><div class="home-bar" style="height:10px;"></div><div class="home-bar-label">Aug</div></div>
+                    <div class="home-bar-col"><div class="home-bar" style="height:6px;"></div><div class="home-bar-label">Sep</div></div>
+                    <div class="home-bar-col"><div class="home-bar" style="height:14px;"></div><div class="home-bar-label">Oct</div></div>
+                    <div class="home-bar-col"><div class="home-bar" style="height:8px;"></div><div class="home-bar-label">Nov</div></div>
+                    <div class="home-bar-col"><div class="home-bar" style="height:10px;"></div><div class="home-bar-label">Dec</div></div>
+                    <div class="home-bar-col"><div class="home-bar" style="height:16px;"></div><div class="home-bar-label">Jan</div></div>
+                    <div class="home-bar-col"><div class="home-bar" style="height:90px;"></div><div class="home-bar-label">Feb</div></div>
+                    <div class="home-bar-col"><div class="home-bar" style="height:75px;"></div><div class="home-bar-label">Mar</div></div>
+                    <div class="home-bar-col"><div class="home-bar" style="height:18px;"></div><div class="home-bar-label">Apr</div></div>
+                    <div class="home-bar-col"><div class="home-bar" style="height:12px;"></div><div class="home-bar-label">May</div></div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Ticket Type pie chart -->
+              <div class="home-panel">
+                <div class="home-panel-header">
+                  <div class="home-panel-title">Ticket Type</div>
+                  <div style="display:flex;align-items:center;gap:8px;">
+                    <div class="home-panel-toggle">
+                      <button class="is-active">YTD</button>
+                      <button>MTD</button>
+                    </div>
+                    <span class="home-panel-info" title="Info">&#9432;</span>
+                  </div>
+                </div>
+                <div class="home-panel-body">
+                  <div class="home-pie-wrap">
+                    <svg viewBox="0 0 120 120" width="120" height="120">
+                      <!-- Inspection 71.4% = 257.04 deg -->
+                      <circle cx="60" cy="60" r="50" fill="none" stroke="#93c5fd" stroke-width="20"
+                        stroke-dasharray="223.05 351.86" stroke-dashoffset="0" transform="rotate(-90 60 60)"/>
+                      <!-- Preventative Maintenance 4.8% = 17.28 deg -->
+                      <circle cx="60" cy="60" r="50" fill="none" stroke="#3b82f6" stroke-width="20"
+                        stroke-dasharray="15.08 559.83" stroke-dashoffset="-223.05" transform="rotate(-90 60 60)"/>
+                      <!-- Quoted Service Work 19.0% = 68.4 deg -->
+                      <circle cx="60" cy="60" r="50" fill="none" stroke="#1e3a5f" stroke-width="20"
+                        stroke-dasharray="59.69 515.22" stroke-dashoffset="-238.13" transform="rotate(-90 60 60)"/>
+                      <!-- T&M Service Work 4.8% -->
+                      <circle cx="60" cy="60" r="50" fill="none" stroke="#94a3b8" stroke-width="20"
+                        stroke-dasharray="16.09 558.82" stroke-dashoffset="-297.82" transform="rotate(-90 60 60)"/>
+                    </svg>
+                    <div class="home-pie-legend">
+                      <div class="home-pie-legend-item"><span class="home-pie-dot" style="background:#93c5fd;"></span> Inspection (71.4%)</div>
+                      <div class="home-pie-legend-item"><span class="home-pie-dot" style="background:#3b82f6;"></span> Preventative Maintenance (4.8%)</div>
+                      <div class="home-pie-legend-item"><span class="home-pie-dot" style="background:#1e3a5f;"></span> Quoted Service Work (19.0%)</div>
+                      <div class="home-pie-legend-item"><span class="home-pie-dot" style="background:#94a3b8;"></span> T&amp;M Service Work (4.8%)</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Go To Calendar link -->
+            <div class="home-calendar-link"><a href="#">Go To Calendar &rarr;</a></div>
+
+            <!-- Calendar -->
+            <div class="home-calendar">
+              <div class="home-cal-header">
+                <div class="home-cal-header-left">
+                  <span class="cal-month">May 2026</span>
+                  <button class="home-cal-btn">Today</button>
+                  <div class="home-cal-nav">
+                    <button>&lt;</button>
+                    <button>&gt;</button>
+                  </div>
+                </div>
+                <div class="home-cal-views">
+                  <button class="home-cal-btn">Month</button>
+                  <button class="home-cal-btn">Week</button>
+                  <button class="home-cal-btn is-active">Day</button>
+                </div>
+              </div>
+              <div class="home-cal-day-label">Tuesday, 5/12/2026</div>
+              <div class="home-cal-grid">
+                <!-- Time column -->
+                <div class="cal-time-col">
+                  <div class="cal-time-slot" style="height:28px;"></div><!-- header spacer -->
+                  <div class="cal-time-slot">8 am</div>
+                  <div class="cal-time-slot">9 am</div>
+                  <div class="cal-time-slot">10 am</div>
+                  <div class="cal-time-slot">11 am</div>
+                  <div class="cal-time-slot">12 pm</div>
+                  <div class="cal-time-slot">1 pm</div>
+                  <div class="cal-time-slot">2 pm</div>
+                  <div class="cal-time-slot">3 pm</div>
+                  <div class="cal-time-slot">4 pm</div>
+                  <div class="cal-time-slot">5 pm</div>
+                </div>
+                <!-- User columns -->
+                <div class="cal-user-col">
+                  <div class="cal-user-header">Alec Client Admin</div>
+                  <div class="cal-user-body">
+                    <div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div>
+                  </div>
+                </div>
+                <div class="cal-user-col">
+                  <div class="cal-user-header">Alec User</div>
+                  <div class="cal-user-body">
+                    <div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div>
+                  </div>
+                </div>
+                <div class="cal-user-col">
+                  <div class="cal-user-header">Brian Cluzet Admin</div>
+                  <div class="cal-user-body">
+                    <div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div>
+                  </div>
+                </div>
+                <div class="cal-user-col">
+                  <div class="cal-user-header">George Chang</div>
+                  <div class="cal-user-body">
+                    <div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div>
+                    <!-- Current time indicator at ~8:51am = about 51/60 of the first hour slot -->
+                    <div class="home-cal-time-indicator" style="top:calc(0px + 27px);"><span class="home-cal-time-label">8:51 am</span></div>
+                  </div>
+                </div>
+                <div class="cal-user-col">
+                  <div class="cal-user-header">Giovani de Matos Ad...</div>
+                  <div class="cal-user-body">
+                    <div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div>
+                  </div>
+                </div>
+                <div class="cal-user-col">
+                  <div class="cal-user-header">Jessica Admin</div>
+                  <div class="cal-user-body">
+                    <div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div><div class="cal-user-slot"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bottom row: Tasks + spacer -->
+            <div class="home-bottom-row">
+              <div class="home-tasks-panel">
+                <div class="home-tasks-panel-header">
+                  <span style="font-size:var(--font-body-md-size);font-weight:var(--font-weight-semibold);color:var(--color-text-primary);">Tasks</span>
+                  <button class="home-tasks-add-btn" title="Add task">+</button>
+                </div>
+                <div class="home-tasks-tabs">
+                  <button class="home-tasks-tab is-active">Projects</button>
+                  <button class="home-tasks-tab">CRM</button>
+                </div>
+                <div class="home-tasks-body">
+                  <div class="home-tasks-subtitle">Tasks Assigned to Me - Upcoming and overdue</div>
+                  <div class="home-empty-state">No pending tasks</div>
+                  <div class="home-tasks-links">
+                    <a href="#">See All</a>
+                    <a href="#">Show Recently Completed</a>
+                  </div>
+                </div>
+              </div>
+              <div><!-- spacer column --></div>
+            </div>
+
+          </div><!-- /.home-content -->
+        </div><!-- /#home-tab-home -->
+
+        <!-- Tab panel: Sales Dashboard -->
+        <div class="home-tab-panel" id="home-tab-sales">
+          <div class="home-sales-content" style="padding: 0 var(--space-2xl) var(--space-2xl);">
+            <div class="home-view-actions">
+              <span class="home-view-desc">Weekly overview of sales performance, pipeline health, and rep activity.</span>
+              <div class="home-view-actions-right">
+                <button class="home-view-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button>
+                <button class="home-view-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button>
+              </div>
+            </div>
+            <div class="dash-grid" id="home-sales-grid">
+              <!-- Populated by JS from the existing sales dashboard content -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Tab panel: Tickets -->
+        <div class="home-tab-panel" id="home-tab-tickets">
+          <div class="tickets-view">
+            <div class="home-view-actions">
+              <span class="home-view-desc">All service tickets assigned to your team, filterable by status and priority.</span>
+              <div class="home-view-actions-right">
+                <button class="home-view-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button>
+                <button class="home-view-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button>
+              </div>
+            </div>
+            <div class="tickets-filter-bar">
+              <input type="text" class="tickets-search" placeholder="Search tickets..." id="tickets-search-input">
+              <select class="tickets-filter-select" id="tickets-status-filter">
+                <option value="">All Statuses</option>
+                <option value="open">Open</option>
+                <option value="in-progress">In Progress</option>
+                <option value="completed">Completed</option>
+                <option value="pending">Pending</option>
+                <option value="scheduled">Scheduled</option>
+              </select>
+            </div>
+            <div class="tickets-table-wrap">
+              <table class="tickets-table">
+                <thead>
+                  <tr>
+                    <th>Ticket #</th>
+                    <th>Subject</th>
+                    <th>Customer</th>
+                    <th>Assigned To</th>
+                    <th>Priority</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                  </tr>
+                </thead>
+                <tbody id="tickets-table-body">
+                  <tr data-priority="high" data-status="open">
+                    <td class="ticket-id">TK-1042</td>
+                    <td>Roof leak inspection needed</td>
+                    <td>Summit Ridge HOA</td>
+                    <td>George Chang</td>
+                    <td><span class="ticket-pill priority-high">High</span></td>
+                    <td><span class="ticket-pill status-open">Open</span></td>
+                    <td>May 8, 2026</td>
+                  </tr>
+                  <tr data-priority="medium" data-status="in-progress">
+                    <td class="ticket-id">TK-1038</td>
+                    <td>Annual maintenance review</td>
+                    <td>Meridian Office Complex</td>
+                    <td>Valeriia User</td>
+                    <td><span class="ticket-pill priority-medium">Medium</span></td>
+                    <td><span class="ticket-pill status-in-progress">In Progress</span></td>
+                    <td>May 5, 2026</td>
+                  </tr>
+                  <tr data-priority="critical" data-status="open">
+                    <td class="ticket-id">TK-1035</td>
+                    <td>Emergency repair - storm damage</td>
+                    <td>Lakewood Plaza</td>
+                    <td>Sheri Li</td>
+                    <td><span class="ticket-pill priority-critical">Critical</span></td>
+                    <td><span class="ticket-pill status-open">Open</span></td>
+                    <td>May 3, 2026</td>
+                  </tr>
+                  <tr data-priority="low" data-status="pending">
+                    <td class="ticket-id">TK-1031</td>
+                    <td>Gutter replacement quote</td>
+                    <td>Harbor View Condos</td>
+                    <td>Karl Mills</td>
+                    <td><span class="ticket-pill priority-low">Low</span></td>
+                    <td><span class="ticket-pill status-pending">Pending</span></td>
+                    <td>Apr 29, 2026</td>
+                  </tr>
+                  <tr data-priority="medium" data-status="completed">
+                    <td class="ticket-id">TK-1028</td>
+                    <td>Post-installation inspection</td>
+                    <td>Riverdale Medical Ctr</td>
+                    <td>Alec McGovern</td>
+                    <td><span class="ticket-pill priority-medium">Medium</span></td>
+                    <td><span class="ticket-pill status-completed">Completed</span></td>
+                    <td>Apr 25, 2026</td>
+                  </tr>
+                  <tr data-priority="high" data-status="in-progress">
+                    <td class="ticket-id">TK-1024</td>
+                    <td>Warranty claim follow-up</td>
+                    <td>Greenfield Industrial</td>
+                    <td>George Chang</td>
+                    <td><span class="ticket-pill priority-high">High</span></td>
+                    <td><span class="ticket-pill status-in-progress">In Progress</span></td>
+                    <td>Apr 22, 2026</td>
+                  </tr>
+                  <tr data-priority="medium" data-status="scheduled">
+                    <td class="ticket-id">TK-1019</td>
+                    <td>Preventative maintenance</td>
+                    <td>CT Storage Units</td>
+                    <td>Valeriia User</td>
+                    <td><span class="ticket-pill priority-medium">Medium</span></td>
+                    <td><span class="ticket-pill status-scheduled">Scheduled</span></td>
+                    <td>Apr 18, 2026</td>
+                  </tr>
+                  <tr data-priority="low" data-status="open">
+                    <td class="ticket-id">TK-1015</td>
+                    <td>Roof coating assessment</td>
+                    <td>New York City Building</td>
+                    <td>Sheri Li</td>
+                    <td><span class="ticket-pill priority-low">Low</span></td>
+                    <td><span class="ticket-pill status-open">Open</span></td>
+                    <td>Apr 15, 2026</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Terial AI FAB -->
+        <button class="home-ai-fab">&#9889; Terial AI</button>
+
+        <!-- New view modal -->
+        <div class="home-new-view-overlay" id="home-new-view-overlay">
+          <div class="home-new-view-modal">
+            <h3>Create new view</h3>
+            <div class="modal-field">
+              <label>Name</label>
+              <input type="text" id="new-view-name" placeholder="View name" />
+            </div>
+            <div class="modal-field">
+              <label>Description <span class="modal-optional">(Optional)</span></label>
+              <input type="text" id="new-view-desc" placeholder="Describe this view..." />
+            </div>
+            <div class="modal-actions">
+              <button class="modal-cancel" id="new-view-cancel">Cancel</button>
+              <button class="modal-create" id="new-view-create">Create</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <!-- Templates page (hidden by default) -->
       <div class="templates-page" id="templates-page">
         <div class="page-head">
@@ -8933,6 +10041,7 @@ ORDER BY "Total Revenue" DESC;</pre>
     var adminToggle = document.getElementById('nav-admin-toggle');
     var adminChildren = document.getElementById('nav-admin-children');
     var adminCaret = document.getElementById('admin-caret');
+    var homePage = document.getElementById('home-page');
     var tasksPage = document.getElementById('tasks-page');
     var templatesPage = document.getElementById('templates-page');
     var oppsPage = document.getElementById('opps-page');
@@ -9406,6 +10515,7 @@ ORDER BY "Total Revenue" DESC;</pre>
     var dashDetailPage = document.getElementById('dash-detail-page');
 
     function hideAllPages() {
+      if (homePage) homePage.classList.remove('is-visible');
       tasksPage.style.display = 'none';
       templatesPage.classList.remove('is-visible');
       if (oppsPage) oppsPage.classList.remove('is-visible');
@@ -9422,7 +10532,8 @@ ORDER BY "Total Revenue" DESC;</pre>
 
     function showPage(name) {
       hideAllPages();
-      if (name === 'tasks') tasksPage.style.display = '';
+      if (name === 'home' && homePage) homePage.classList.add('is-visible');
+      else if (name === 'tasks') tasksPage.style.display = '';
       else if (name === 'templates') templatesPage.classList.add('is-visible');
       else if (name === 'opportunities' && oppsPage) oppsPage.classList.add('is-visible');
       else if (name === 'opp-detail' && oppDetailPage) oppDetailPage.classList.add('is-visible');
@@ -9434,8 +10545,319 @@ ORDER BY "Total Revenue" DESC;</pre>
       else if (name === 'ai-review') { var rp = document.getElementById('ai-review-page'); if (rp) { rp.classList.add('is-visible'); rp.style.display = ''; } }
     }
 
-    // Default landing page for BI - 1 is Reports
-    showPage('reports');
+    // Default landing page is Home
+    showPage('home');
+
+    // --- Home nav click ---
+    var navHomeRow = document.getElementById('nav-home-row');
+    navHomeRow.addEventListener('click', function () {
+      document.querySelectorAll('.nav-child').forEach(function (c) { c.classList.remove('is-active'); });
+      document.querySelectorAll('.nav-row.is-section-active').forEach(function (r) { r.classList.remove('is-section-active'); });
+      navHomeRow.classList.add('is-section-active');
+      // Collapse Reports children if open
+      var rc = document.getElementById('nav-reports-children');
+      if (rc) rc.style.display = 'none';
+      var rcaret = document.getElementById('reports-caret');
+      if (rcaret) rcaret.textContent = '▾';
+      // Reset home tabs to show Home tab
+      document.querySelectorAll('.home-view-tab').forEach(function (t) { t.classList.remove('is-active'); });
+      var homeTab = document.querySelector('.home-view-tab[data-home-tab="home"]');
+      if (homeTab) homeTab.classList.add('is-active');
+      document.querySelectorAll('.home-tab-panel').forEach(function (p) { p.classList.remove('is-active'); });
+      var homePanel = document.getElementById('home-tab-home');
+      if (homePanel) homePanel.classList.add('is-active');
+      showPage('home');
+    });
+
+    // --- Reports toggle ---
+    var reportsToggle = document.getElementById('nav-reports-toggle');
+    var reportsChildren = document.getElementById('nav-reports-children');
+    var reportsCaret = document.getElementById('reports-caret');
+    if (reportsToggle) {
+      reportsToggle.addEventListener('click', function () {
+        var isOpen = reportsChildren.style.display !== 'none';
+        reportsChildren.style.display = isOpen ? 'none' : '';
+        reportsCaret.textContent = isOpen ? '▾' : '▴';
+        reportsToggle.classList.toggle('is-section-active', !isOpen);
+      });
+    }
+
+    // --- Home page view tabs ---
+    (function () {
+      var viewTabs = document.querySelectorAll('.home-view-tab');
+      var panels = {
+        home: document.getElementById('home-tab-home'),
+        sales: document.getElementById('home-tab-sales'),
+        tickets: document.getElementById('home-tab-tickets')
+      };
+      var newViewCounter = 0;
+      // Populate sales grid with content from the existing dash-grid (deferred - salesGridHTML not yet declared)
+      var homeSalesGrid = document.getElementById('home-sales-grid');
+
+      // Modal elements
+      var overlay = document.getElementById('home-new-view-overlay');
+      var nameInput = document.getElementById('new-view-name');
+      var descInput = document.getElementById('new-view-desc');
+      var cancelBtn = document.getElementById('new-view-cancel');
+      var createBtn = document.getElementById('new-view-create');
+
+      function switchToTab(target) {
+        document.querySelectorAll('.home-view-tab').forEach(function (t) { t.classList.remove('is-active'); });
+        var activeBtn = document.querySelector('.home-view-tab[data-home-tab="' + target + '"]');
+        if (activeBtn) activeBtn.classList.add('is-active');
+        Object.keys(panels).forEach(function (k) {
+          if (panels[k]) panels[k].classList.toggle('is-active', k === target);
+        });
+      }
+
+      // SVG icons for action buttons
+      var duplicateSvg = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>';
+      var removeSvg = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>';
+
+      function buildActionBarHTML(desc) {
+        return '<div class="home-view-actions">' +
+          '<span class="home-view-desc">' + (desc || '') + '</span>' +
+          '<div class="home-view-actions-right">' +
+            '<button class="home-view-action-btn" data-action="duplicate">' + duplicateSvg + 'Duplicate</button>' +
+            '<button class="home-view-action-btn is-danger" data-action="remove">' + removeSvg + 'Remove</button>' +
+          '</div>' +
+        '</div>';
+      }
+
+      function createNewView(tabName, tabDesc) {
+        newViewCounter++;
+        var tabId = 'custom-' + newViewCounter;
+
+        // Create tab button
+        var newTabBtn = document.createElement('button');
+        newTabBtn.className = 'home-view-tab';
+        newTabBtn.setAttribute('data-home-tab', tabId);
+        newTabBtn.textContent = tabName;
+
+        // Insert before the "+ New view" button
+        var newViewBtn = document.querySelector('.home-view-tab[data-home-tab="new"]');
+        newViewBtn.parentNode.insertBefore(newTabBtn, newViewBtn);
+
+        // Create panel
+        var newPanel = document.createElement('div');
+        newPanel.className = 'home-tab-panel';
+        newPanel.id = 'home-tab-' + tabId;
+        newPanel.innerHTML =
+          '<div style="padding: 0 var(--space-2xl) var(--space-2xl);">' +
+            buildActionBarHTML(tabDesc) +
+            '<div class="empty-view-state">' +
+              '<svg viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="6" width="44" height="44" rx="6"/><path d="M6 18h44"/><path d="M20 30h16M28 22v16"/></svg>' +
+              '<p>This view is empty. Use the AI builder to add cards.</p>' +
+            '</div>' +
+          '</div>';
+
+        // Find the container for tab panels (insert after the last .home-tab-panel)
+        var allPanels = document.querySelectorAll('.home-tab-panel');
+        var lastPanel = allPanels[allPanels.length - 1];
+        lastPanel.parentNode.insertBefore(newPanel, lastPanel.nextSibling);
+
+        // Register in panels map
+        panels[tabId] = newPanel;
+
+        // Attach click handler
+        attachTabClick(newTabBtn);
+
+        // Switch to the new tab
+        switchToTab(tabId);
+      }
+
+      // --- Modal handlers ---
+      function showModal() {
+        overlay.style.display = 'flex';
+        nameInput.value = '';
+        descInput.value = '';
+        nameInput.focus();
+      }
+
+      function hideModal() {
+        overlay.style.display = 'none';
+        nameInput.value = '';
+        descInput.value = '';
+      }
+
+      if (cancelBtn) cancelBtn.addEventListener('click', hideModal);
+
+      if (overlay) overlay.addEventListener('click', function (e) {
+        if (e.target === overlay) hideModal();
+      });
+
+      if (createBtn) createBtn.addEventListener('click', function () {
+        var name = nameInput.value.trim();
+        if (!name) {
+          nameInput.focus();
+          return;
+        }
+        var desc = descInput.value.trim();
+        createNewView(name, desc);
+        hideModal();
+      });
+
+      // Allow Enter in name input to create
+      if (nameInput) nameInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          createBtn.click();
+        }
+      });
+      if (descInput) descInput.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          createBtn.click();
+        }
+      });
+
+      // --- Duplicate / Remove via event delegation ---
+      var homePage = document.getElementById('home-page');
+      if (homePage) homePage.addEventListener('click', function (e) {
+        var btn = e.target.closest('.home-view-action-btn[data-action]');
+        if (!btn) return;
+        var action = btn.getAttribute('data-action');
+        // Find which panel this button belongs to
+        var panel = btn.closest('.home-tab-panel');
+        if (!panel) return;
+        var panelId = panel.id; // e.g. "home-tab-sales"
+        // Find the tab key from panels map
+        var tabKey = null;
+        Object.keys(panels).forEach(function (k) {
+          if (panels[k] === panel) tabKey = k;
+        });
+        if (!tabKey) return;
+
+        if (action === 'duplicate') {
+          // Get the tab's display name
+          var origTab = document.querySelector('.home-view-tab[data-home-tab="' + tabKey + '"]');
+          var origName = origTab ? origTab.textContent : 'View';
+          var copyName = origName + ' (copy)';
+
+          // Get description from current panel
+          var descEl = panel.querySelector('.home-view-desc');
+          var copyDesc = descEl ? descEl.textContent : '';
+
+          newViewCounter++;
+          var newTabId = 'custom-' + newViewCounter;
+
+          // Create tab button
+          var newTabBtn = document.createElement('button');
+          newTabBtn.className = 'home-view-tab';
+          newTabBtn.setAttribute('data-home-tab', newTabId);
+          newTabBtn.textContent = copyName;
+
+          // Insert before "+ New view"
+          var newViewBtn = document.querySelector('.home-view-tab[data-home-tab="new"]');
+          newViewBtn.parentNode.insertBefore(newTabBtn, newViewBtn);
+
+          // Clone the panel
+          var newPanel = panel.cloneNode(true);
+          newPanel.className = 'home-tab-panel';
+          newPanel.id = 'home-tab-' + newTabId;
+          newPanel.classList.remove('is-active');
+
+          // Insert after current panel
+          panel.parentNode.insertBefore(newPanel, panel.nextSibling);
+
+          // Register
+          panels[newTabId] = newPanel;
+          attachTabClick(newTabBtn);
+          switchToTab(newTabId);
+
+        } else if (action === 'remove') {
+          // Don't allow removing Home tab
+          if (tabKey === 'home') return;
+
+          // Remove tab button
+          var tabBtn = document.querySelector('.home-view-tab[data-home-tab="' + tabKey + '"]');
+          if (tabBtn) tabBtn.parentNode.removeChild(tabBtn);
+
+          // Remove panel
+          if (panel.parentNode) panel.parentNode.removeChild(panel);
+
+          // Remove from panels map
+          delete panels[tabKey];
+
+          // Switch to Home
+          switchToTab('home');
+        }
+      });
+
+      function attachTabClick(tab) {
+        tab.addEventListener('click', function () {
+          var target = tab.getAttribute('data-home-tab');
+          if (target === 'new') {
+            showModal();
+            return;
+          }
+          switchToTab(target);
+        });
+      }
+
+      viewTabs.forEach(function (tab) {
+        attachTabClick(tab);
+      });
+
+      // Fallback: event delegation on the tabs container
+      var tabsContainer = document.querySelector('.home-view-tabs');
+      if (tabsContainer) tabsContainer.addEventListener('click', function (e) {
+        var tab = e.target.closest('.home-view-tab');
+        if (!tab) return;
+        var target = tab.getAttribute('data-home-tab');
+        if (target === 'new') {
+          showModal();
+          return;
+        }
+        if (target && panels[target]) {
+          switchToTab(target);
+        }
+      });
+
+      // --- Tickets table filtering ---
+      var ticketsSearchInput = document.getElementById('tickets-search-input');
+      var ticketsStatusFilter = document.getElementById('tickets-status-filter');
+      function filterTickets() {
+        var search = (ticketsSearchInput.value || '').toLowerCase();
+        var status = ticketsStatusFilter.value;
+        var rows = document.querySelectorAll('#tickets-table-body tr');
+        rows.forEach(function (row) {
+          var text = row.textContent.toLowerCase();
+          var rowStatus = row.getAttribute('data-status') || '';
+          var matchSearch = !search || text.indexOf(search) !== -1;
+          var matchStatus = !status || rowStatus === status;
+          row.style.display = (matchSearch && matchStatus) ? '' : 'none';
+        });
+      }
+      if (ticketsSearchInput) ticketsSearchInput.addEventListener('input', filterTickets);
+      if (ticketsStatusFilter) ticketsStatusFilter.addEventListener('change', filterTickets);
+
+      // Toggle buttons inside home panels (Service/Production tabs, Week/Month/YTD, etc.)
+      document.querySelectorAll('.home-tickets-tabs, .home-tasks-tabs').forEach(function (tabBar) {
+        tabBar.querySelectorAll('button').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            tabBar.querySelectorAll('button').forEach(function (b) { b.classList.remove('is-active'); });
+            btn.classList.add('is-active');
+          });
+        });
+      });
+      document.querySelectorAll('.home-panel-toggle').forEach(function (toggle) {
+        toggle.querySelectorAll('button').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            toggle.querySelectorAll('button').forEach(function (b) { b.classList.remove('is-active'); });
+            btn.classList.add('is-active');
+          });
+        });
+      });
+      document.querySelectorAll('.home-cal-views').forEach(function (views) {
+        views.querySelectorAll('button').forEach(function (btn) {
+          btn.addEventListener('click', function () {
+            views.querySelectorAll('button').forEach(function (b) { b.classList.remove('is-active'); });
+            btn.classList.add('is-active');
+          });
+        });
+      });
+    })();
 
     // Admin toggle
     adminToggle.addEventListener('click', function () {
@@ -9463,10 +10885,9 @@ ORDER BY "Total Revenue" DESC;</pre>
       child.addEventListener('click', function () {
         document.querySelectorAll('.nav-child').forEach(function (c) { c.classList.remove('is-active'); });
         child.classList.add('is-active');
-        adminToggle.classList.remove('is-section-active');
-        document.querySelectorAll('.nav-row').forEach(function (r) {
-          if (r.textContent.trim().indexOf('Reports') === 0) r.classList.add('is-section-active');
-        });
+        document.querySelectorAll('.nav-row.is-section-active').forEach(function (r) { r.classList.remove('is-section-active'); });
+        var rToggle = document.getElementById('nav-reports-toggle');
+        if (rToggle) rToggle.classList.add('is-section-active');
         var label = child.textContent.trim();
         if (label === 'Custom reports') {
           showPage('reports');
@@ -9486,6 +10907,12 @@ ORDER BY "Total Revenue" DESC;</pre>
     var salesGridHTML = dashGrid ? dashGrid.innerHTML : '';
     var salesTitleText = 'Sales Dashboard';
     var salesDescText = 'Weekly overview of sales performance, pipeline health, and rep activity.';
+
+    // Populate the home page sales tab grid
+    var homeSalesGridEl = document.getElementById('home-sales-grid');
+    if (homeSalesGridEl && salesGridHTML) {
+      homeSalesGridEl.innerHTML = salesGridHTML;
+    }
 
     dashToggle.addEventListener('click', function () {
       var isOpen = dashChildren.style.display !== 'none';
