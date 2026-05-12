@@ -2335,6 +2335,16 @@
     .home-ai-fab:hover { background: var(--color-gray-9); }
 
     /* Sales tab inside home */
+    .home-sales-body {
+      display: flex;
+      height: 100%;
+    }
+    .home-sales-main {
+      flex: 1;
+      padding: 0 var(--space-2xl) var(--space-2xl);
+      overflow-y: auto;
+      min-width: 0;
+    }
     .home-sales-content {
       padding: var(--space-2xl);
     }
@@ -7755,16 +7765,30 @@
 
         <!-- Tab panel: Sales Dashboard -->
         <div class="home-tab-panel" id="home-tab-sales">
-          <div class="home-sales-content" style="padding: 0 var(--space-2xl) var(--space-2xl);">
-            <div class="home-view-actions">
-              <span class="home-view-desc">Weekly overview of sales performance, pipeline health, and rep activity.</span>
-              <div class="home-view-actions-right">
-                <button class="home-view-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button>
-                <button class="home-view-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button>
+          <div class="home-sales-body">
+            <div class="home-sales-main">
+              <div class="home-view-actions">
+                <span class="home-view-desc">Weekly overview of sales performance, pipeline health, and rep activity.</span>
+                <div class="home-view-actions-right">
+                  <button class="home-view-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button>
+                  <button class="home-view-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button>
+                </div>
+              </div>
+              <div class="dash-grid" id="home-sales-grid">
+                <!-- Populated by JS from the existing sales dashboard content -->
               </div>
             </div>
-            <div class="dash-grid" id="home-sales-grid">
-              <!-- Populated by JS from the existing sales dashboard content -->
+            <div class="dash-chat-panel is-collapsed" id="home-dash-chat-panel">
+              <div class="dash-chat-header">
+                <span class="dash-chat-header-title">Terial AI</span>
+              </div>
+              <div class="dash-chat-messages" id="home-dash-chat-messages"></div>
+              <div class="dash-chat-input-wrap">
+                <textarea class="dash-chat-input" id="home-dash-chat-input" placeholder="Ask Terial AI..." rows="1"></textarea>
+                <button class="dash-chat-send" id="home-dash-chat-send">
+                  <svg viewBox="0 0 16 16" fill="currentColor"><path d="M1.7 1.4l13 6.3c.4.2.4.7 0 .9l-13 6.3c-.5.2-1-.2-.8-.7L3 8 .9 2.1c-.2-.5.3-1 .8-.7zM4 8.5l9.3-.5L4 7.5v1z"/></svg>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -10913,6 +10937,135 @@ ORDER BY "Total Revenue" DESC;</pre>
     if (homeSalesGridEl && salesGridHTML) {
       homeSalesGridEl.innerHTML = salesGridHTML;
     }
+
+    // Home Sales tab card interactions
+    (function() {
+      var homeSalesGrid = document.getElementById('home-sales-grid');
+      var homeChatPanel = document.getElementById('home-dash-chat-panel');
+      var homeChatMessages = document.getElementById('home-dash-chat-messages');
+      var homeChatInput = document.getElementById('home-dash-chat-input');
+      var homeChatSend = document.getElementById('home-dash-chat-send');
+      var homeSalesTab = document.getElementById('home-tab-sales');
+
+      if (!homeSalesGrid || !homeChatPanel) return;
+
+      // Card selection
+      homeSalesTab.addEventListener('click', function(e) {
+        var card = e.target.closest('.dash-card');
+        var actionBtn = e.target.closest('.dash-card-action-btn');
+
+        if (actionBtn) return; // handled separately
+
+        if (card && homeSalesGrid.contains(card)) {
+          var wasSelected = card.classList.contains('is-selected');
+          homeSalesGrid.querySelectorAll('.dash-card').forEach(function(c) { c.classList.remove('is-selected'); });
+          if (!wasSelected) {
+            card.classList.add('is-selected');
+            homeChatPanel.classList.remove('is-collapsed');
+            homeChatMessages.innerHTML = '';
+            var cardTitle = card.querySelector('.dash-card-title');
+            var name = cardTitle ? cardTitle.textContent : 'this card';
+            setTimeout(function() {
+              var msg = document.createElement('div');
+              msg.className = 'chat-msg is-ai is-fade-in';
+              msg.innerHTML = '<div class="chat-msg-label">Terial AI</div>You\'re editing <strong>' + name + '</strong>. What would you like to change or adjust?';
+              homeChatMessages.appendChild(msg);
+            }, 300);
+          } else {
+            homeChatPanel.classList.add('is-collapsed');
+            homeChatMessages.innerHTML = '';
+          }
+          return;
+        }
+
+        // Click outside cards - deselect
+        if (!e.target.closest('.dash-chat-panel') && !e.target.closest('.home-view-actions')) {
+          homeSalesGrid.querySelectorAll('.dash-card').forEach(function(c) { c.classList.remove('is-selected'); });
+          homeChatPanel.classList.add('is-collapsed');
+          homeChatMessages.innerHTML = '';
+        }
+      });
+
+      // Card action buttons
+      homeSalesGrid.addEventListener('click', function(e) {
+        var btn = e.target.closest('.dash-card-action-btn');
+        if (!btn) return;
+        e.stopPropagation();
+        var card = btn.closest('.dash-card');
+        if (!card) return;
+        var action = btn.getAttribute('data-action');
+        if (action === 'remove') {
+          card.remove();
+          homeChatPanel.classList.add('is-collapsed');
+          homeChatMessages.innerHTML = '';
+        } else if (action === 'duplicate') {
+          var clone = card.cloneNode(true);
+          clone.classList.remove('is-selected');
+          homeSalesGrid.appendChild(clone);
+        } else if (action === 'export') {
+          var dropdown = btn.closest('.dash-card-export-wrap').querySelector('.dash-card-export-dropdown');
+          dropdown.classList.toggle('is-open');
+        }
+      });
+
+      // Export item click
+      homeSalesGrid.addEventListener('click', function(e) {
+        var item = e.target.closest('.dash-card-export-item');
+        if (!item) return;
+        e.stopPropagation();
+        item.closest('.dash-card-export-dropdown').classList.remove('is-open');
+      });
+
+      // Chat send
+      var aiResponses = [
+        'Got it! I\'ve updated the chart to reflect your changes.',
+        'Done — the card has been refreshed. Want me to tweak anything else?',
+        'Updated! I can also change the chart type if you\'d like.',
+        'Changes applied. Would you like to adjust the color scheme?'
+      ];
+
+      function sendHomeChat() {
+        var text = homeChatInput.value.trim();
+        if (!text) return;
+        homeChatInput.value = '';
+        // User message
+        var userMsg = document.createElement('div');
+        userMsg.className = 'chat-msg is-user';
+        userMsg.textContent = text;
+        homeChatMessages.appendChild(userMsg);
+        homeChatMessages.scrollTop = homeChatMessages.scrollHeight;
+        // AI response
+        var selectedCard = homeSalesGrid.querySelector('.dash-card.is-selected');
+        if (selectedCard) {
+          // Add loading overlay
+          var loader = document.createElement('div');
+          loader.className = 'dash-card-loader';
+          loader.innerHTML = '<div class="spinner"></div><span>Updating…</span>';
+          selectedCard.classList.add('is-loading');
+          selectedCard.appendChild(loader);
+        }
+        setTimeout(function() {
+          if (selectedCard) {
+            selectedCard.classList.remove('is-loading');
+            var loaderEl = selectedCard.querySelector('.dash-card-loader');
+            if (loaderEl) loaderEl.remove();
+          }
+          var aiMsg = document.createElement('div');
+          aiMsg.className = 'chat-msg is-ai is-fade-in';
+          aiMsg.innerHTML = '<div class="chat-msg-label">Terial AI</div>' + aiResponses[Math.floor(Math.random() * aiResponses.length)];
+          homeChatMessages.appendChild(aiMsg);
+          homeChatMessages.scrollTop = homeChatMessages.scrollHeight;
+        }, 1500);
+      }
+
+      if (homeChatSend) homeChatSend.addEventListener('click', sendHomeChat);
+      if (homeChatInput) homeChatInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter' && !e.shiftKey) {
+          e.preventDefault();
+          sendHomeChat();
+        }
+      });
+    })();
 
     dashToggle.addEventListener('click', function () {
       var isOpen = dashChildren.style.display !== 'none';
