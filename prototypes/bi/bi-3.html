@@ -1325,6 +1325,11 @@
       align-items: center;
       gap: var(--space-sm);
     }
+    .report-preview-toolbar-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
     .report-preview-toolbar button {
       display: inline-flex;
       align-items: center;
@@ -1599,6 +1604,21 @@
     .report-sql-view.is-visible { display: block; }
     .report-table-view { display: block; }
     .report-table-view.is-hidden { display: none; }
+    .report-chart-view { display: none; padding: var(--space-lg) 0; }
+    .report-chart-view.is-visible { display: block; }
+    .report-view-toggle { display: inline-flex; border: 1px solid var(--color-border-default); border-radius: var(--radius-sm); overflow: hidden; margin-right: var(--space-sm); }
+    .report-view-toggle button { padding: 5px 12px; border: none; background: var(--color-white); font-family: inherit; font-size: var(--font-body-sm-size); color: var(--color-text-tertiary); cursor: pointer; display: flex; align-items: center; gap: 4px; }
+    .report-view-toggle button:not(:last-child) { border-right: 1px solid var(--color-border-default); }
+    .report-view-toggle button.is-active { background: var(--color-gray-2); color: var(--color-text-primary); font-weight: var(--font-weight-medium); }
+    .report-view-toggle button svg { width: 14px; height: 14px; }
+    .report-chart-bar-row { display: flex; align-items: center; gap: var(--space-md); margin-bottom: var(--space-sm); }
+    .report-chart-bar-label { width: 100px; font-size: var(--font-body-sm-size); color: var(--color-text-secondary); text-align: right; flex-shrink: 0; }
+    .report-chart-bar-track { flex: 1; height: 28px; background: var(--color-gray-1); border-radius: 4px; overflow: hidden; position: relative; }
+    .report-chart-bar-fill { height: 100%; border-radius: 4px; display: flex; align-items: center; padding-left: 8px; }
+    .report-chart-bar-value { font-size: var(--font-body-sm-size); font-weight: var(--font-weight-medium); color: var(--color-white); white-space: nowrap; }
+    .report-chart-legend { display: flex; gap: var(--space-xl); margin-top: var(--space-lg); padding-top: var(--space-md); border-top: 1px solid var(--color-border-default); }
+    .report-chart-legend-item { display: flex; align-items: center; gap: 6px; font-size: var(--font-body-sm-size); color: var(--color-text-secondary); }
+    .report-chart-legend-dot { width: 10px; height: 10px; border-radius: 2px; }
     .report-sql-wrap {
       position: relative;
     }
@@ -7252,6 +7272,45 @@
             </div>
             <div class="report-preview-toolbar" id="report-preview-toolbar">
               <div class="report-preview-toolbar-left">
+                <div class="report-view-toggle" id="report-view-toggle">
+                  <button class="is-active" data-view="table"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="1" width="12" height="12" rx="1.5"/><path d="M1 5h12M1 9h12M5 5v8"/></svg>Table</button>
+                  <button data-view="chart"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="8" width="2.5" height="5" rx="0.5"/><rect x="5.75" y="4" width="2.5" height="9" rx="0.5"/><rect x="10.5" y="1" width="2.5" height="12" rx="0.5"/></svg>Chart</button>
+                </div>
+                <div style="position:relative;">
+                  <button class="dash-filter-btn" data-dr-btn="report-detail"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="12" height="11" rx="1"/><path d="M1 5.5h12M4 1v2M10 1v2"/></svg> <span data-dr-label="report-detail">This Week</span></button>
+                  <div class="dash-daterange-dropdown" data-dr-dropdown="report-detail">
+                    <div class="dash-daterange-body">
+                      <div class="dash-daterange-quick">
+                        <div class="dash-daterange-quick-title">Quick Select</div>
+                        <div class="dash-daterange-quick-item is-active">This Week</div>
+                        <div class="dash-daterange-quick-item">This Month</div>
+                        <div class="dash-daterange-quick-item">This Quarter</div>
+                        <div class="dash-daterange-quick-sep"></div>
+                        <div class="dash-daterange-quick-item">Last Week</div>
+                        <div class="dash-daterange-quick-item">Last Month</div>
+                        <div class="dash-daterange-quick-item">Last Quarter</div>
+                        <div class="dash-daterange-quick-sep"></div>
+                        <div class="dash-daterange-quick-item">Year to Date</div>
+                        <div class="dash-daterange-quick-item">Next 30 Days</div>
+                        <div class="dash-daterange-quick-item">Next 90 Days</div>
+                      </div>
+                      <div class="dash-daterange-cal">
+                        <div class="dash-daterange-cal-header">
+                          <button class="dash-daterange-cal-nav" data-dr-prev="report-detail">&lsaquo;</button>
+                          <span data-dr-month="report-detail">May 2026</span>
+                          <button class="dash-daterange-cal-nav" data-dr-next="report-detail">&rsaquo;</button>
+                        </div>
+                        <div class="dash-daterange-cal-grid" data-dr-grid="report-detail"></div>
+                      </div>
+                    </div>
+                    <div class="dash-daterange-footer">
+                      <button class="dr-btn dr-btn-cancel" data-dr-cancel="report-detail">Cancel</button>
+                      <button class="dr-btn dr-btn-apply" data-dr-apply="report-detail">Apply</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="report-preview-toolbar-right">
                 <div class="report-dropdown-wrap">
                   <button id="report-download-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10V2M3.5 6.5L7 10l3.5-3.5M2 12h10"/></svg> Download</button>
                   <div class="report-dropdown" id="report-download-dropdown">
@@ -7270,8 +7329,8 @@
                     <div class="report-dash-picker-actions"><button class="report-dash-picker-done" id="report-dash-picker-done">Done</button></div>
                   </div>
                 </div>
+                <button class="report-refresh-btn" id="report-refresh-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1v4h4"/><path d="M2.5 9.5a5 5 0 1 0 1-5.2L1 5"/></svg>Refresh</button>
               </div>
-              <button class="report-refresh-btn" id="report-refresh-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1v4h4"/><path d="M2.5 9.5a5 5 0 1 0 1-5.2L1 5"/></svg>Refresh</button>
             </div>
             <div class="report-preview-content">
               <div class="report-table-loading" id="report-table-loading">
@@ -7307,6 +7366,19 @@
                     <tr><td>Mid-Atlantic</td><td>$356,900</td><td>10</td><td>$35,690</td><td>46%</td></tr>
                   </tbody>
                 </table>
+              </div>
+              <div class="report-chart-view" id="report-chart-view">
+                <div class="report-chart-bar-row"><div class="report-chart-bar-label">West Coast</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:100%;background:#2563eb;"><span class="report-chart-bar-value">$523,100</span></div></div></div>
+                <div class="report-chart-bar-row"><div class="report-chart-bar-label">Northeast</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:92%;background:#3b82f6;"><span class="report-chart-bar-value">$482,300</span></div></div></div>
+                <div class="report-chart-bar-row"><div class="report-chart-bar-label">Southeast</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:71%;background:#3b82f6;"><span class="report-chart-bar-value">$371,050</span></div></div></div>
+                <div class="report-chart-bar-row"><div class="report-chart-bar-label">Mid-Atlantic</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:68%;background:#60a5fa;"><span class="report-chart-bar-value">$356,900</span></div></div></div>
+                <div class="report-chart-bar-row"><div class="report-chart-bar-label">Midwest</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:57%;background:#60a5fa;"><span class="report-chart-bar-value">$298,700</span></div></div></div>
+                <div class="report-chart-bar-row"><div class="report-chart-bar-label">Southwest</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:41%;background:#93bbfd;"><span class="report-chart-bar-value">$215,400</span></div></div></div>
+                <div class="report-chart-bar-row"><div class="report-chart-bar-label">Pacific NW</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:36%;background:#93bbfd;"><span class="report-chart-bar-value">$189,200</span></div></div></div>
+                <div class="report-chart-bar-row"><div class="report-chart-bar-label">Mountain</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:27%;background:#bfdbfe;"><span class="report-chart-bar-value" style="color:var(--color-text-primary);">$142,800</span></div></div></div>
+                <div class="report-chart-legend">
+                  <div class="report-chart-legend-item"><div class="report-chart-legend-dot" style="background:#3b82f6"></div>Total Revenue by Region</div>
+                </div>
               </div>
               <!-- SQL view moved to chat panel -->
             </div>
@@ -12832,6 +12904,81 @@ ORDER BY "Total Revenue" DESC;</pre>
           var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
           lastGen.textContent = 'Last generated: ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear() + ' ' + now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0');
         }, 2000);
+      });
+
+      // Table / Chart toggle
+      var viewToggle = document.getElementById('report-view-toggle');
+      var chartView = document.getElementById('report-chart-view');
+      if (viewToggle && tableView && chartView) {
+        viewToggle.addEventListener('click', function (e) {
+          var btn = e.target.closest('button');
+          if (!btn) return;
+          var view = btn.getAttribute('data-view');
+          viewToggle.querySelectorAll('button').forEach(function (b) { b.classList.remove('is-active'); });
+          btn.classList.add('is-active');
+          if (view === 'chart') {
+            tableView.style.display = 'none';
+            chartView.classList.add('is-visible');
+          } else {
+            tableView.style.display = '';
+            chartView.classList.remove('is-visible');
+          }
+        });
+      }
+
+      /* ---------- Generic data-dr date-range pickers ---------- */
+      document.querySelectorAll('[data-dr-btn]').forEach(function (btn) {
+        var key = btn.getAttribute('data-dr-btn');
+        var dropdown = document.querySelector('[data-dr-dropdown="' + key + '"]');
+        if (!dropdown) return;
+        var labelEl = btn.querySelector('[data-dr-label]');
+        var gridEl = dropdown.querySelector('[data-dr-grid]');
+        var monthEl = dropdown.querySelector('[data-dr-month]');
+        var quickItems = dropdown.querySelectorAll('.dash-daterange-quick-item');
+        var curYear = 2026, curMonth = 4; // May 2026 (0-indexed)
+
+        function renderCal() {
+          if (!gridEl) return;
+          var daysInMonth = new Date(curYear, curMonth + 1, 0).getDate();
+          var startDay = new Date(curYear, curMonth, 1).getDay();
+          var html = '<div class="dash-daterange-cal-day-header">Su</div><div class="dash-daterange-cal-day-header">Mo</div><div class="dash-daterange-cal-day-header">Tu</div><div class="dash-daterange-cal-day-header">We</div><div class="dash-daterange-cal-day-header">Th</div><div class="dash-daterange-cal-day-header">Fr</div><div class="dash-daterange-cal-day-header">Sa</div>';
+          for (var i = 0; i < startDay; i++) html += '<div></div>';
+          for (var d = 1; d <= daysInMonth; d++) html += '<div class="dash-daterange-cal-day">' + d + '</div>';
+          gridEl.innerHTML = html;
+          if (monthEl) {
+            var names = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+            monthEl.textContent = names[curMonth] + ' ' + curYear;
+          }
+        }
+        renderCal();
+
+        var prevBtn = dropdown.querySelector('[data-dr-prev]');
+        var nextBtn = dropdown.querySelector('[data-dr-next]');
+        if (prevBtn) prevBtn.addEventListener('click', function (e) { e.stopPropagation(); curMonth--; if (curMonth < 0) { curMonth = 11; curYear--; } renderCal(); });
+        if (nextBtn) nextBtn.addEventListener('click', function (e) { e.stopPropagation(); curMonth++; if (curMonth > 11) { curMonth = 0; curYear++; } renderCal(); });
+
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var open = dropdown.classList.contains('is-open');
+          document.querySelectorAll('.dash-daterange-dropdown.is-open').forEach(function (d) { d.classList.remove('is-open'); });
+          if (!open) dropdown.classList.add('is-open');
+        });
+
+        quickItems.forEach(function (qi) {
+          qi.addEventListener('click', function () {
+            quickItems.forEach(function (q) { q.classList.remove('is-active'); });
+            qi.classList.add('is-active');
+          });
+        });
+
+        var cancelBtn = dropdown.querySelector('[data-dr-cancel]');
+        var applyBtn = dropdown.querySelector('[data-dr-apply]');
+        if (cancelBtn) cancelBtn.addEventListener('click', function () { dropdown.classList.remove('is-open'); });
+        if (applyBtn) applyBtn.addEventListener('click', function () {
+          var active = dropdown.querySelector('.dash-daterange-quick-item.is-active');
+          if (active && labelEl) labelEl.textContent = active.textContent;
+          dropdown.classList.remove('is-open');
+        });
       });
 
       // SQL Run / Copy / Cancel
