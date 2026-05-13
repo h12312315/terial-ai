@@ -942,6 +942,28 @@
       font-size: var(--font-body-sm-size);
       color: var(--color-text-tertiary);
       line-height: 1.5;
+      cursor: pointer;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 1px;
+    }
+    .report-detail-summary:hover {
+      border-bottom-color: var(--color-border-default);
+    }
+    .report-detail-header .report-summary-input {
+      margin: 2px 0 0;
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      line-height: 1.5;
+      font-family: var(--font-family-base);
+      border: none;
+      border-bottom: 1px solid var(--color-primary-6);
+      padding: 0 0 1px;
+      background: transparent;
+      outline: none;
+      width: 100%;
+      min-width: 200px;
+      resize: none;
+      overflow: hidden;
     }
     .report-detail-header .report-title-input {
       margin: 0;
@@ -14895,6 +14917,34 @@ LIMIT 10;</pre>
       // Editable title: click to edit via input field
       var headerEl = document.querySelector('.report-detail-header');
       headerEl.addEventListener('click', function (e) {
+        // Editable summary: click to edit via textarea
+        var summaryDiv = e.target.closest('.report-detail-summary');
+        if (summaryDiv) {
+          var currentSummary = summaryDiv.textContent;
+          var ta = document.createElement('textarea');
+          ta.className = 'report-summary-input';
+          ta.id = 'report-detail-summary';
+          ta.value = currentSummary;
+          ta.rows = 1;
+          summaryDiv.replaceWith(ta);
+          ta.style.height = ta.scrollHeight + 'px';
+          ta.focus();
+          function saveSummary() {
+            var val = ta.value.trim() || currentSummary;
+            var div = document.createElement('div');
+            div.className = 'report-detail-summary';
+            div.id = 'report-detail-summary';
+            div.textContent = val;
+            ta.replaceWith(div);
+          }
+          ta.addEventListener('blur', saveSummary);
+          ta.addEventListener('input', function () { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; });
+          ta.addEventListener('keydown', function (ev) {
+            if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); ta.blur(); }
+            if (ev.key === 'Escape') { ta.value = currentSummary; ta.blur(); }
+          });
+          return;
+        }
         var titleSpan = e.target.closest('.report-title-text');
         if (!titleSpan) return;
         var current = titleSpan.textContent;
