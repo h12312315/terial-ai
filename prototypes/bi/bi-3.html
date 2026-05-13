@@ -829,6 +829,86 @@
     .reports-page { display: none; padding: var(--space-2xl); }
     .reports-page.is-visible { display: block; }
 
+    .reports-page-tabs {
+      display: flex;
+      gap: 0;
+      margin-bottom: var(--space-xl);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .reports-page-tab {
+      padding: 10px 20px;
+      background: none;
+      border: none;
+      border-bottom: 2px solid transparent;
+      font-family: inherit;
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-tertiary);
+      cursor: pointer;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .reports-page-tab:hover { color: var(--color-text-primary); }
+    .reports-page-tab.is-active {
+      color: var(--color-text-primary);
+      border-bottom-color: var(--color-gray-9);
+    }
+    .reports-tab-panel { display: none; }
+    .reports-tab-panel.is-active { display: block; }
+
+    /* Dashboard sub-tabs (toggle style) */
+    .dash-sub-tabs { display: inline-flex; gap: 4px; background: var(--color-gray-2); border-radius: 8px; padding: 4px; }
+    .dash-sub-tab { padding: 6px 14px; background: none; border: none; border-radius: 6px; font-family: inherit; font-size: var(--font-body-sm-size); font-weight: var(--font-weight-medium); color: var(--color-text-tertiary); cursor: pointer; white-space: nowrap; transition: all 0.15s ease; }
+    .dash-sub-tab:hover { color: var(--color-text-primary); }
+    .dash-sub-tab.is-active { color: var(--color-text-primary); background: var(--color-white); box-shadow: 0 1px 3px rgba(0,0,0,0.08); }
+    .dash-sub-tabs-row { display: flex; align-items: center; gap: var(--space-lg); margin-bottom: var(--space-xl); }
+    .dash-new-link { background: none; border: none; font-family: inherit; font-size: var(--font-body-sm-size); color: var(--color-text-tertiary); cursor: pointer; padding: 0; white-space: nowrap; }
+    .dash-new-link:hover { color: var(--color-text-primary); }
+    .dash-inline-grid .dash-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-lg); }
+    .dash-filters-row { display: flex; align-items: center; gap: var(--space-sm); margin-bottom: var(--space-lg); position: relative; }
+    .dash-filter-btn { display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border: 1px solid var(--color-border-default); border-radius: var(--radius-sm); background: var(--color-white); font-family: inherit; font-size: var(--font-body-sm-size); color: var(--color-text-primary); cursor: pointer; }
+    .dash-filter-btn:hover { border-color: var(--color-gray-4); }
+    .dash-filter-btn svg { width: 14px; height: 14px; color: var(--color-text-tertiary); }
+
+    /* Date range dropdown */
+    .dash-daterange-dropdown { display: none; position: absolute; top: 100%; left: 0; margin-top: 4px; background: var(--color-white); border: 1px solid var(--color-border-default); border-radius: var(--radius-md); box-shadow: var(--shadow-lg); z-index: 100; min-width: 480px; }
+    .dash-daterange-dropdown.is-open { display: flex; flex-direction: column; }
+    .dash-daterange-body { display: flex; }
+    .dash-daterange-quick { width: 160px; border-right: 1px solid var(--color-border-default); padding: var(--space-md) 0; }
+    .dash-daterange-quick-title { font-size: 10px; font-weight: var(--font-weight-semibold); text-transform: uppercase; letter-spacing: 0.06em; color: var(--color-text-tertiary); padding: 4px var(--space-md) 8px; }
+    .dash-daterange-quick-item { padding: 6px var(--space-md); font-size: var(--font-body-sm-size); color: var(--color-text-primary); cursor: pointer; }
+    .dash-daterange-quick-item:hover { background: var(--color-gray-1); }
+    .dash-daterange-quick-item.is-active { font-weight: var(--font-weight-semibold); background: var(--color-gray-2); }
+    .dash-daterange-quick-sep { height: 1px; background: var(--color-border-default); margin: 6px var(--space-md); }
+    .dash-daterange-cal { flex: 1; padding: var(--space-md) var(--space-lg); }
+    .dash-daterange-cal-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-md); }
+    .dash-daterange-cal-header span { font-size: var(--font-body-md-size); font-weight: var(--font-weight-semibold); }
+    .dash-daterange-cal-nav { background: none; border: none; cursor: pointer; font-size: 16px; color: var(--color-text-tertiary); padding: 4px 8px; }
+    .dash-daterange-cal-nav:hover { color: var(--color-text-primary); }
+    .dash-daterange-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; gap: 2px; }
+    .dash-daterange-cal-grid .day-header { font-size: 11px; font-weight: var(--font-weight-medium); color: var(--color-text-tertiary); padding: 4px 0; }
+    .dash-daterange-cal-grid .day { font-size: var(--font-body-sm-size); padding: 6px 0; border-radius: 4px; cursor: pointer; color: var(--color-text-primary); }
+    .dash-daterange-cal-grid .day:hover { background: var(--color-gray-1); }
+    .dash-daterange-cal-grid .day.is-other { color: var(--color-text-tertiary); }
+    .dash-daterange-cal-grid .day.is-weekend { color: #ef4444; }
+    .dash-daterange-cal-grid .day.is-today { font-weight: var(--font-weight-semibold); background: var(--color-gray-1); }
+    .dash-daterange-footer { display: flex; justify-content: flex-end; gap: var(--space-sm); padding: var(--space-md) var(--space-lg); border-top: 1px solid var(--color-border-default); }
+    .dash-daterange-footer .dr-btn { padding: 6px 18px; border-radius: var(--radius-sm); font-family: inherit; font-size: var(--font-body-sm-size); font-weight: var(--font-weight-medium); cursor: pointer; border: none; }
+    .dash-daterange-footer .dr-btn-cancel { background: var(--color-gray-3); color: var(--color-text-primary); }
+    .dash-daterange-footer .dr-btn-apply { background: var(--color-primary-5); color: var(--color-text-primary); }
+
+    /* New dashboard modal */
+    .dash-new-modal-field { margin-bottom: var(--space-lg); }
+    .dash-new-modal-field label { display: block; font-size: var(--font-body-sm-size); font-weight: var(--font-weight-medium); color: var(--color-text-secondary); margin-bottom: 6px; }
+    .dash-new-modal-field input,
+    .dash-new-modal-field textarea { width: 100%; padding: 8px 12px; border: 1px solid var(--color-border-default); border-radius: var(--radius-sm); font-family: inherit; font-size: var(--font-body-md-size); color: var(--color-text-primary); background: var(--color-white); box-sizing: border-box; }
+    .dash-new-modal-field textarea { resize: vertical; min-height: 60px; }
+    .dash-new-modal-field input:focus,
+    .dash-new-modal-field textarea:focus { outline: none; border-color: var(--color-primary-6); box-shadow: 0 0 0 2px rgba(234,179,8,0.15); }
+
+    .dash-detail-page.is-inline { display: flex; position: static; z-index: auto; background: none; }
+    .dash-detail-page.is-inline .dash-main-panel { padding: 0; }
+    .dash-detail-page.is-inline .dash-header { display: none; }
+
     /* Report detail page */
     .report-detail-page { display: none; }
     .report-detail-page.is-visible {
@@ -6367,15 +6447,7 @@
         <div class="nav-child is-active">Custom reports</div>
       </div>
 
-      <div class="nav-row" id="nav-dashboards-toggle">
-        <span class="icon"><svg viewBox="0 0 16 16"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg></span>
-        Dashboards
-        <span class="caret" id="dashboards-caret">▾</span>
-      </div>
-      <div class="nav-children" id="nav-dashboards-children" style="display:none;">
-        <div class="nav-child" data-page="dash-sales">Sales</div>
-        <div class="nav-child nav-child-new" id="nav-new-dashboard" style="color:var(--color-text-tertiary);cursor:pointer;">+ New dashboard</div>
-      </div>
+      <!-- Dashboards sidebar nav removed for "All in reports" prototype -->
 
       <div class="nav-row" id="nav-admin-toggle">
         <span class="icon"><svg viewBox="0 0 16 16"><path d="M8 1a2.5 2.5 0 0 0 0 5 2.5 2.5 0 0 0 0-5zM3 14v-1a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v1"/><circle cx="13" cy="4" r="2"/></svg></span>
@@ -6927,6 +6999,13 @@
           </div>
         </div>
 
+        <div class="reports-page-tabs" id="reports-page-tabs">
+          <button class="reports-page-tab is-active" data-rptab="reports">Reports</button>
+          <button class="reports-page-tab" data-rptab="dashboards">Dashboards</button>
+        </div>
+
+        <div class="reports-tab-panel is-active" id="rptab-reports">
+
         <div class="reports-toolbar">
           <div class="reports-search">
             <svg class="search-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4"/><path d="M9 9l3.5 3.5"/></svg>
@@ -7016,6 +7095,133 @@
             </tr>
           </tbody>
         </table>
+
+        </div><!-- end rptab-reports -->
+
+        <div class="reports-tab-panel" id="rptab-dashboards">
+          <div class="dash-sub-tabs-row">
+            <div class="dash-sub-tabs" id="dash-sub-tabs">
+              <button class="dash-sub-tab is-active" data-dash-tab="sales">Sales</button>
+              <button class="dash-sub-tab" data-dash-tab="aaron">Aaron</button>
+              <button class="dash-sub-tab" data-dash-tab="matt">Matt</button>
+            </div>
+            <button class="dash-new-link" id="dash-new-link">+ New dashboard</button>
+            <div style="position:relative;">
+              <button class="dash-filter-btn" id="dash-daterange-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="12" height="11" rx="1"/><path d="M1 5.5h12M4 1v2M10 1v2"/></svg> <span id="dash-daterange-label">This Week</span></button>
+              <div class="dash-daterange-dropdown" id="dash-daterange-dropdown">
+              <div class="dash-daterange-body">
+                <div class="dash-daterange-quick">
+                  <div class="dash-daterange-quick-title">Quick Select</div>
+                  <div class="dash-daterange-quick-item is-active">This Week</div>
+                  <div class="dash-daterange-quick-item">This Month</div>
+                  <div class="dash-daterange-quick-item">This Quarter</div>
+                  <div class="dash-daterange-quick-sep"></div>
+                  <div class="dash-daterange-quick-item">Last Week</div>
+                  <div class="dash-daterange-quick-item">Last Month</div>
+                  <div class="dash-daterange-quick-item">Last Quarter</div>
+                  <div class="dash-daterange-quick-sep"></div>
+                  <div class="dash-daterange-quick-item">Year to Date</div>
+                  <div class="dash-daterange-quick-item">Next 30 Days</div>
+                  <div class="dash-daterange-quick-item">Next 90 Days</div>
+                </div>
+                <div class="dash-daterange-cal">
+                  <div class="dash-daterange-cal-header">
+                    <button class="dash-daterange-cal-nav" id="dash-cal-prev">&lsaquo;</button>
+                    <span id="dash-cal-month-label">May 2026</span>
+                    <button class="dash-daterange-cal-nav" id="dash-cal-next">&rsaquo;</button>
+                  </div>
+                  <div class="dash-daterange-cal-grid" id="dash-cal-grid"></div>
+                </div>
+              </div>
+              <div class="dash-daterange-footer">
+                <button class="dr-btn dr-btn-cancel" id="dash-daterange-cancel">Cancel</button>
+                <button class="dr-btn dr-btn-apply" id="dash-daterange-apply">Apply</button>
+              </div>
+            </div>
+            </div>
+          </div>
+          <div id="dash-inline-container"></div>
+          <div class="dash-inline-grid" id="dash-aaron-grid" style="display:none;">
+            <div class="dash-grid">
+              <div class="dash-card span-2" draggable="true">
+                <div class="dash-card-title">Tasks by Status</div>
+                <table class="dash-card-table"><thead><tr><th>Status</th><th>Count</th></tr></thead><tbody>
+                  <tr><td>Open</td><td><span class="dash-tbl-bar" style="width:70%"></span>42</td></tr>
+                  <tr><td>In Progress</td><td><span class="dash-tbl-bar" style="width:55%;background:var(--color-primary-6)"></span>33</td></tr>
+                  <tr><td>Blocked</td><td><span class="dash-tbl-bar" style="width:20%;background:#ef4444"></span>12</td></tr>
+                  <tr><td>Completed</td><td><span class="dash-tbl-bar" style="width:90%;background:#22c55e"></span>54</td></tr>
+                </tbody></table>
+              </div>
+              <div class="dash-card" draggable="true">
+                <div class="dash-card-title">Team Workload</div>
+                <table class="dash-card-table"><thead><tr><th>Member</th><th>Tasks</th></tr></thead><tbody>
+                  <tr><td>Aaron Wilson</td><td><span class="dash-tbl-bar" style="width:80%;background:var(--color-primary-6)"></span>18</td></tr>
+                  <tr><td>Sheri Li</td><td><span class="dash-tbl-bar" style="width:65%;background:var(--color-primary-6)"></span>14</td></tr>
+                  <tr><td>Karl Mills</td><td><span class="dash-tbl-bar" style="width:50%;background:var(--color-primary-6)"></span>11</td></tr>
+                </tbody></table>
+              </div>
+              <div class="dash-card" draggable="true">
+                <div class="dash-card-title">Overdue Tasks</div>
+                <div class="dash-stat-value" style="font-size:36px;font-weight:700;color:#ef4444;padding:16px 0;">7</div>
+                <div style="color:var(--color-text-tertiary);font-size:13px;">tasks past due date</div>
+              </div>
+              <div class="dash-card span-2" draggable="true">
+                <div class="dash-card-title">Upcoming Deadlines</div>
+                <table class="dash-card-table"><thead><tr><th>Task</th><th>Assignee</th><th>Due</th></tr></thead><tbody>
+                  <tr><td>Roof inspection - Elm St</td><td>Aaron Wilson</td><td>May 14</td></tr>
+                  <tr><td>Proposal review - Oak Ave</td><td>Sheri Li</td><td>May 15</td></tr>
+                  <tr><td>Material order - Pine Rd</td><td>Karl Mills</td><td>May 16</td></tr>
+                  <tr><td>Client follow-up - Maple Dr</td><td>Aaron Wilson</td><td>May 17</td></tr>
+                </tbody></table>
+              </div>
+              <div class="dash-card" draggable="true">
+                <div class="dash-card-title">Task Completion Rate</div>
+                <div class="dash-stat-value" style="font-size:36px;font-weight:700;color:#22c55e;padding:16px 0;">78%</div>
+                <div style="color:var(--color-text-tertiary);font-size:13px;">last 30 days</div>
+              </div>
+            </div>
+          </div>
+          <div class="dash-inline-grid" id="dash-matt-grid" style="display:none;">
+            <div class="dash-grid">
+              <div class="dash-card span-2" draggable="true">
+                <div class="dash-card-title">Active Jobs</div>
+                <table class="dash-card-table"><thead><tr><th>Job</th><th>Crew</th><th>Status</th><th>Progress</th></tr></thead><tbody>
+                  <tr><td>Lakewood Re-Roof</td><td>Crew A</td><td>In Progress</td><td><span class="dash-tbl-bar" style="width:65%;background:var(--color-primary-6)"></span>65%</td></tr>
+                  <tr><td>Meridian Office</td><td>Crew B</td><td>In Progress</td><td><span class="dash-tbl-bar" style="width:40%;background:var(--color-primary-6)"></span>40%</td></tr>
+                  <tr><td>Harbor View Condos</td><td>Crew A</td><td>Starting</td><td><span class="dash-tbl-bar" style="width:10%;background:var(--color-primary-6)"></span>10%</td></tr>
+                  <tr><td>Summit Ridge HOA</td><td>Crew C</td><td>In Progress</td><td><span class="dash-tbl-bar" style="width:80%;background:var(--color-primary-6)"></span>80%</td></tr>
+                </tbody></table>
+              </div>
+              <div class="dash-card" draggable="true">
+                <div class="dash-card-title">Crew Utilization</div>
+                <table class="dash-card-table"><thead><tr><th>Crew</th><th>Utilization</th></tr></thead><tbody>
+                  <tr><td>Crew A</td><td><span class="dash-tbl-bar" style="width:90%;background:#22c55e"></span>90%</td></tr>
+                  <tr><td>Crew B</td><td><span class="dash-tbl-bar" style="width:75%;background:var(--color-primary-6)"></span>75%</td></tr>
+                  <tr><td>Crew C</td><td><span class="dash-tbl-bar" style="width:60%;background:var(--color-primary-6)"></span>60%</td></tr>
+                </tbody></table>
+              </div>
+              <div class="dash-card" draggable="true">
+                <div class="dash-card-title">Jobs Completed (Month)</div>
+                <div class="dash-stat-value" style="font-size:36px;font-weight:700;color:var(--color-text-primary);padding:16px 0;">12</div>
+                <div style="color:#22c55e;font-size:13px;">↑ 20% vs last month</div>
+              </div>
+              <div class="dash-card span-2" draggable="true">
+                <div class="dash-card-title">Material Cost vs Budget</div>
+                <table class="dash-card-table"><thead><tr><th>Job</th><th>Budget</th><th>Actual</th><th>Variance</th></tr></thead><tbody>
+                  <tr><td>Lakewood Re-Roof</td><td>$18,500</td><td>$17,200</td><td style="color:#22c55e">-$1,300</td></tr>
+                  <tr><td>Meridian Office</td><td>$24,000</td><td>$26,100</td><td style="color:#ef4444">+$2,100</td></tr>
+                  <tr><td>Harbor View</td><td>$15,000</td><td>$14,800</td><td style="color:#22c55e">-$200</td></tr>
+                  <tr><td>Summit Ridge</td><td>$12,000</td><td>$11,500</td><td style="color:#22c55e">-$500</td></tr>
+                </tbody></table>
+              </div>
+              <div class="dash-card" draggable="true">
+                <div class="dash-card-title">Safety Incidents</div>
+                <div class="dash-stat-value" style="font-size:36px;font-weight:700;color:#22c55e;padding:16px 0;">0</div>
+                <div style="color:var(--color-text-tertiary);font-size:13px;">this month — keep it up!</div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Report detail page -->
@@ -7967,6 +8173,30 @@ ORDER BY "Total Revenue" DESC;</pre>
           <button class="btn-cancel" id="drawer-cancel">Cancel</button>
           <button class="btn-save" id="drawer-save-btn">Save</button>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Dashboard Modal -->
+  <div class="ai-modal-overlay" id="dash-new-modal-overlay">
+    <div class="ai-modal" style="max-width:480px;">
+      <div class="ai-modal-header">
+        <div class="ai-modal-title">New Dashboard</div>
+        <button class="ai-modal-close" id="dash-new-modal-close">&times;</button>
+      </div>
+      <div class="ai-modal-body">
+        <div class="dash-new-modal-field">
+          <label for="dash-new-name">Dashboard name</label>
+          <input type="text" id="dash-new-name" placeholder="e.g. Marketing Overview" />
+        </div>
+        <div class="dash-new-modal-field">
+          <label for="dash-new-desc">Description (optional)</label>
+          <textarea id="dash-new-desc" placeholder="What is this dashboard for?"></textarea>
+        </div>
+      </div>
+      <div class="ai-modal-footer">
+        <button class="ai-btn" id="dash-new-modal-cancel" style="background:var(--color-white);border:1px solid var(--color-border-default);color:var(--color-text-primary);">Cancel</button>
+        <button class="ai-btn ai-btn-primary" id="dash-new-modal-confirm">Create dashboard</button>
       </div>
     </div>
   </div>
@@ -8941,6 +9171,177 @@ ORDER BY "Total Revenue" DESC;</pre>
     var reportsPage = document.getElementById('reports-page');
     var reportDetailPage = document.getElementById('report-detail-page');
 
+    // Reports/Dashboards tab switching
+    (function () {
+      var tabsContainer = document.getElementById('reports-page-tabs');
+      if (!tabsContainer) return;
+      var dashPanel = document.getElementById('rptab-dashboards');
+      var reportsPanel = document.getElementById('rptab-reports');
+      var dashDetailPage = document.getElementById('dash-detail-page');
+      var inlineContainer = document.getElementById('dash-inline-container');
+      var subTabs = document.getElementById('dash-sub-tabs');
+      var aaronGrid = document.getElementById('dash-aaron-grid');
+      var mattGrid = document.getElementById('dash-matt-grid');
+      var inlined = false;
+
+      function showSubDash(tab) {
+        // Hide all
+        if (dashDetailPage) { dashDetailPage.style.display = 'none'; dashDetailPage.classList.remove('is-inline'); }
+        if (aaronGrid) aaronGrid.style.display = 'none';
+        if (mattGrid) mattGrid.style.display = 'none';
+        // Hide any dynamically created dashboards
+        document.querySelectorAll('.dash-dynamic-grid').forEach(function (g) { g.style.display = 'none'; });
+
+        if (tab === 'sales' && dashDetailPage) {
+          if (!inlined) { inlineContainer.appendChild(dashDetailPage); inlined = true; }
+          dashDetailPage.classList.remove('is-visible');
+          dashDetailPage.classList.add('is-inline');
+          dashDetailPage.style.display = 'flex';
+        } else if (tab === 'aaron' && aaronGrid) {
+          aaronGrid.style.display = 'block';
+        } else if (tab === 'matt' && mattGrid) {
+          mattGrid.style.display = 'block';
+        } else {
+          // Dynamic dashboard tab
+          var dyn = document.getElementById('dash-dyn-' + tab);
+          if (dyn) dyn.style.display = 'block';
+        }
+      }
+
+      tabsContainer.addEventListener('click', function (e) {
+        var btn = e.target.closest('.reports-page-tab');
+        if (!btn) return;
+        tabsContainer.querySelectorAll('.reports-page-tab').forEach(function (b) { b.classList.remove('is-active'); });
+        btn.classList.add('is-active');
+        var tab = btn.getAttribute('data-rptab');
+
+        if (tab === 'reports') {
+          reportsPanel.classList.add('is-active');
+          dashPanel.classList.remove('is-active');
+          if (dashDetailPage) { dashDetailPage.classList.remove('is-inline'); dashDetailPage.style.display = ''; }
+        } else if (tab === 'dashboards') {
+          reportsPanel.classList.remove('is-active');
+          dashPanel.classList.add('is-active');
+          var activeSubTab = subTabs.querySelector('.dash-sub-tab.is-active');
+          if (activeSubTab) showSubDash(activeSubTab.getAttribute('data-dash-tab'));
+        }
+      });
+
+      // Dashboard sub-tab clicks
+      if (subTabs) {
+        subTabs.addEventListener('click', function (e) {
+          var btn = e.target.closest('.dash-sub-tab');
+          if (!btn) return;
+          subTabs.querySelectorAll('.dash-sub-tab').forEach(function (b) { b.classList.remove('is-active'); });
+          btn.classList.add('is-active');
+          showSubDash(btn.getAttribute('data-dash-tab'));
+        });
+      }
+
+      // New dashboard modal
+      var modalOverlay = document.getElementById('dash-new-modal-overlay');
+      var modalNameInput = document.getElementById('dash-new-name');
+      var modalDescInput = document.getElementById('dash-new-desc');
+      var newLink = document.getElementById('dash-new-link');
+      var dynCounter = 0;
+
+      function openNewDashModal() { modalOverlay.classList.add('is-open'); modalNameInput.value = ''; modalDescInput.value = ''; setTimeout(function(){ modalNameInput.focus(); }, 100); }
+      function closeNewDashModal() { modalOverlay.classList.remove('is-open'); }
+
+      if (newLink) newLink.addEventListener('click', openNewDashModal);
+      document.getElementById('dash-new-modal-close').addEventListener('click', closeNewDashModal);
+      document.getElementById('dash-new-modal-cancel').addEventListener('click', closeNewDashModal);
+      modalOverlay.addEventListener('click', function (e) { if (e.target === modalOverlay) closeNewDashModal(); });
+
+      document.getElementById('dash-new-modal-confirm').addEventListener('click', function () {
+        var name = modalNameInput.value.trim() || 'Untitled Dashboard';
+        dynCounter++;
+        var tabId = 'dyn-' + dynCounter;
+
+        // Create new sub-tab button
+        var newBtn = document.createElement('button');
+        newBtn.className = 'dash-sub-tab';
+        newBtn.setAttribute('data-dash-tab', tabId);
+        newBtn.textContent = name;
+        subTabs.appendChild(newBtn);
+
+        // Create empty dashboard grid
+        var dynGrid = document.createElement('div');
+        dynGrid.className = 'dash-inline-grid dash-dynamic-grid';
+        dynGrid.id = 'dash-dyn-' + tabId;
+        dynGrid.style.display = 'none';
+        dynGrid.innerHTML = '<div class="dash-grid"><div class="dash-card span-2" style="display:flex;align-items:center;justify-content:center;min-height:200px;border:2px dashed var(--color-border-default);background:none;"><div style="text-align:center;color:var(--color-text-tertiary);"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" style="width:32px;height:32px;margin-bottom:8px;"><line x1="16" y1="8" x2="16" y2="24"/><line x1="8" y1="16" x2="24" y2="16"/></svg><div>Add your first report</div></div></div></div>';
+        dashPanel.appendChild(dynGrid);
+
+        // Switch to it
+        subTabs.querySelectorAll('.dash-sub-tab').forEach(function (b) { b.classList.remove('is-active'); });
+        newBtn.classList.add('is-active');
+        showSubDash(tabId);
+        closeNewDashModal();
+      });
+
+      // Date range dropdown
+      var drBtn = document.getElementById('dash-daterange-btn');
+      var drDropdown = document.getElementById('dash-daterange-dropdown');
+      var drGrid = document.getElementById('dash-cal-grid');
+      var drLabel = document.getElementById('dash-cal-month-label');
+      var drMonth = 4; // May (0-indexed)
+      var drYear = 2026;
+      var monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+
+      function renderCal() {
+        drLabel.textContent = monthNames[drMonth] + ' ' + drYear;
+        var first = new Date(drYear, drMonth, 1);
+        var startDay = first.getDay(); // 0=Sun
+        var daysInMonth = new Date(drYear, drMonth + 1, 0).getDate();
+        var prevDays = new Date(drYear, drMonth, 0).getDate();
+        var html = '<div class="day-header">Su</div><div class="day-header">Mo</div><div class="day-header">Tu</div><div class="day-header">We</div><div class="day-header">Th</div><div class="day-header">Fr</div><div class="day-header">Sa</div>';
+        for (var i = 0; i < startDay; i++) {
+          var d = prevDays - startDay + 1 + i;
+          var cls = 'day is-other' + ((i === 0 || i === 6) ? ' is-weekend' : '');
+          html += '<div class="' + cls + '">' + d + '</div>';
+        }
+        for (var d = 1; d <= daysInMonth; d++) {
+          var dow = (startDay + d - 1) % 7;
+          var cls = 'day' + ((dow === 0 || dow === 6) ? ' is-weekend' : '');
+          html += '<div class="' + cls + '">' + d + '</div>';
+        }
+        var total = startDay + daysInMonth;
+        var rem = total % 7 === 0 ? 0 : 7 - (total % 7);
+        for (var i = 1; i <= rem; i++) {
+          var dow = (total + i - 1) % 7;
+          var cls = 'day is-other' + ((dow === 0 || dow === 6) ? ' is-weekend' : '');
+          html += '<div class="' + cls + '">' + i + '</div>';
+        }
+        drGrid.innerHTML = html;
+      }
+
+      if (drBtn && drDropdown) {
+        drBtn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          drDropdown.classList.toggle('is-open');
+          if (drDropdown.classList.contains('is-open')) renderCal();
+        });
+        document.getElementById('dash-cal-prev').addEventListener('click', function () { drMonth--; if (drMonth < 0) { drMonth = 11; drYear--; } renderCal(); });
+        document.getElementById('dash-cal-next').addEventListener('click', function () { drMonth++; if (drMonth > 11) { drMonth = 0; drYear++; } renderCal(); });
+        document.getElementById('dash-daterange-cancel').addEventListener('click', function () { drDropdown.classList.remove('is-open'); });
+        document.getElementById('dash-daterange-apply').addEventListener('click', function () { drDropdown.classList.remove('is-open'); });
+        // Quick select items
+        var drBtnLabel = document.getElementById('dash-daterange-label');
+        drDropdown.addEventListener('click', function (e) {
+          var item = e.target.closest('.dash-daterange-quick-item');
+          if (!item) return;
+          drDropdown.querySelectorAll('.dash-daterange-quick-item').forEach(function (i) { i.classList.remove('is-active'); });
+          item.classList.add('is-active');
+          if (drBtnLabel) drBtnLabel.textContent = item.textContent;
+        });
+        // Close on outside click
+        document.addEventListener('click', function (e) {
+          if (!drDropdown.contains(e.target) && e.target !== drBtn) drDropdown.classList.remove('is-open');
+        });
+      }
+    })();
+
     // Opps page — Filter button toggles collapsible filters panel
     (function () {
       if (!document.getElementById('opps-page')) return;
@@ -9476,7 +9877,7 @@ ORDER BY "Total Revenue" DESC;</pre>
       });
     });
 
-    // Dashboards nav toggle
+    // Dashboards nav toggle (sidebar nav removed in "All in reports" prototype)
     var dashToggle = document.getElementById('nav-dashboards-toggle');
     var dashChildren = document.getElementById('nav-dashboards-children');
     var dashCaret = document.getElementById('dashboards-caret');
@@ -9487,52 +9888,59 @@ ORDER BY "Total Revenue" DESC;</pre>
     var salesTitleText = 'Sales Dashboard';
     var salesDescText = 'Weekly overview of sales performance, pipeline health, and rep activity.';
 
-    dashToggle.addEventListener('click', function () {
-      var isOpen = dashChildren.style.display !== 'none';
-      dashChildren.style.display = isOpen ? 'none' : '';
-      dashCaret.textContent = isOpen ? '▾' : '▴';
-      dashToggle.classList.toggle('is-section-active', !isOpen);
-    });
+    if (dashToggle) {
+      dashToggle.addEventListener('click', function () {
+        var isOpen = dashChildren.style.display !== 'none';
+        dashChildren.style.display = isOpen ? 'none' : '';
+        dashCaret.textContent = isOpen ? '▾' : '▴';
+        dashToggle.classList.toggle('is-section-active', !isOpen);
+      });
+    }
 
     function openDashboard() {
-      dashChatPanel.classList.add('is-collapsed');
-      dashChatMessages.innerHTML = '';
-      dashGrid.querySelectorAll('.dash-card').forEach(function (c) { c.classList.remove('is-selected'); });
+      if (dashChatPanel) dashChatPanel.classList.add('is-collapsed');
+      if (dashChatMessages) dashChatMessages.innerHTML = '';
+      if (dashGrid) dashGrid.querySelectorAll('.dash-card').forEach(function (c) { c.classList.remove('is-selected'); });
     }
 
     // Dashboards nav child clicks
-    dashChildren.querySelectorAll('.nav-child[data-page]').forEach(function (child) {
-      child.addEventListener('click', function () {
-        document.querySelectorAll('.nav-child').forEach(function (c) { c.classList.remove('is-active'); });
-        child.classList.add('is-active');
-        document.querySelectorAll('.nav-row.is-section-active').forEach(function (r) { r.classList.remove('is-section-active'); });
-        dashToggle.classList.add('is-section-active');
-        dashChildren.style.display = '';
-        dashCaret.textContent = '▴';
-        var page = child.getAttribute('data-page');
-        if (page === 'dash-sales') {
-          document.getElementById('dash-detail-title').textContent = salesTitleText;
-          document.getElementById('dash-detail-desc').textContent = salesDescText;
-          dashGrid.innerHTML = salesGridHTML;
-          openDashboard();
-          showPage('dash-detail');
-        }
+    if (dashChildren) {
+      dashChildren.querySelectorAll('.nav-child[data-page]').forEach(function (child) {
+        child.addEventListener('click', function () {
+          document.querySelectorAll('.nav-child').forEach(function (c) { c.classList.remove('is-active'); });
+          child.classList.add('is-active');
+          document.querySelectorAll('.nav-row.is-section-active').forEach(function (r) { r.classList.remove('is-section-active'); });
+          dashToggle.classList.add('is-section-active');
+          dashChildren.style.display = '';
+          dashCaret.textContent = '▴';
+          var page = child.getAttribute('data-page');
+          if (page === 'dash-sales') {
+            document.getElementById('dash-detail-title').textContent = salesTitleText;
+            document.getElementById('dash-detail-desc').textContent = salesDescText;
+            dashGrid.innerHTML = salesGridHTML;
+            openDashboard();
+            showPage('dash-detail');
+          }
+        });
       });
-    });
+    }
 
     // New dashboard nav click
-    document.getElementById('nav-new-dashboard').addEventListener('click', function () {
-      document.querySelectorAll('.nav-child').forEach(function (c) { c.classList.remove('is-active'); });
-      document.querySelectorAll('.nav-row.is-section-active').forEach(function (r) { r.classList.remove('is-section-active'); });
-      dashToggle.classList.add('is-section-active');
-      dashChildren.style.display = '';
-      dashCaret.textContent = '▴';
-      document.getElementById('dash-detail-title').textContent = 'New Dashboard';
-      document.getElementById('dash-detail-desc').textContent = 'Click to add a description';
-      dashGrid.innerHTML = '<div class="dash-add-zone" id="dash-add-zone"><div class="dash-add-inner"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="16" y1="8" x2="16" y2="24"/><line x1="8" y1="16" x2="24" y2="16"/></svg><span class="dash-add-label">Add board</span></div></div>';
-      openDashboard();
-      showPage('dash-detail');
-    });
+    var navNewDash = document.getElementById('nav-new-dashboard');
+    if (navNewDash) {
+      navNewDash.addEventListener('click', function () {
+        document.querySelectorAll('.nav-child').forEach(function (c) { c.classList.remove('is-active'); });
+        document.querySelectorAll('.nav-row.is-section-active').forEach(function (r) { r.classList.remove('is-section-active'); });
+        if (dashToggle) dashToggle.classList.add('is-section-active');
+        if (dashChildren) dashChildren.style.display = '';
+        if (dashCaret) dashCaret.textContent = '▴';
+        document.getElementById('dash-detail-title').textContent = 'New Dashboard';
+        document.getElementById('dash-detail-desc').textContent = 'Click to add a description';
+        dashGrid.innerHTML = '<div class="dash-add-zone" id="dash-add-zone"><div class="dash-add-inner"><svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="16" y1="8" x2="16" y2="24"/><line x1="8" y1="16" x2="24" y2="16"/></svg><span class="dash-add-label">Add board</span></div></div>';
+        openDashboard();
+        showPage('dash-detail');
+      });
+    }
 
     // Editable dashboard title
     document.getElementById('dash-header').addEventListener('click', function (e) {
@@ -9645,10 +10053,11 @@ ORDER BY "Total Revenue" DESC;</pre>
       }
     });
 
-    // Drag and drop for dashboard cards
-    (function () {
+    // Drag and drop for dashboard cards (reusable)
+    function initGridDragDrop(grid) {
+      if (!grid) return;
       var dragSrc = null;
-      dashGrid.addEventListener('dragstart', function (e) {
+      grid.addEventListener('dragstart', function (e) {
         var card = e.target.closest('.dash-card');
         if (!card) return;
         dragSrc = card;
@@ -9656,34 +10065,38 @@ ORDER BY "Total Revenue" DESC;</pre>
         e.dataTransfer.effectAllowed = 'move';
         e.dataTransfer.setData('text/plain', '');
       });
-      dashGrid.addEventListener('dragover', function (e) {
+      grid.addEventListener('dragover', function (e) {
         var card = e.target.closest('.dash-card');
         if (!card || card === dragSrc) return;
         e.preventDefault();
         e.dataTransfer.dropEffect = 'move';
         card.classList.add('drag-over');
       });
-      dashGrid.addEventListener('dragleave', function (e) {
+      grid.addEventListener('dragleave', function (e) {
         var card = e.target.closest('.dash-card');
         if (card) card.classList.remove('drag-over');
       });
-      dashGrid.addEventListener('drop', function (e) {
+      grid.addEventListener('drop', function (e) {
         var card = e.target.closest('.dash-card');
         if (!card || !dragSrc || card === dragSrc) return;
         e.preventDefault();
         card.classList.remove('drag-over');
-        var cards = Array.from(dashGrid.querySelectorAll('.dash-card'));
+        var parent = card.closest('.dash-grid');
+        var cards = Array.from(parent.querySelectorAll('.dash-card'));
         var fromIdx = cards.indexOf(dragSrc);
         var toIdx = cards.indexOf(card);
         if (fromIdx < toIdx) card.parentNode.insertBefore(dragSrc, card.nextSibling);
         else card.parentNode.insertBefore(dragSrc, card);
       });
-      dashGrid.addEventListener('dragend', function () {
+      grid.addEventListener('dragend', function () {
         if (dragSrc) dragSrc.classList.remove('is-dragging');
         dragSrc = null;
-        dashGrid.querySelectorAll('.dash-card').forEach(function (c) { c.classList.remove('drag-over'); });
+        grid.querySelectorAll('.dash-card').forEach(function (c) { c.classList.remove('drag-over'); });
       });
-    })();
+    }
+    initGridDragDrop(dashGrid);
+    initGridDragDrop(document.querySelector('#dash-aaron-grid .dash-grid'));
+    initGridDragDrop(document.querySelector('#dash-matt-grid .dash-grid'));
 
     // Duplicate / Remove card actions
     dashGrid.addEventListener('click', function (e) {
