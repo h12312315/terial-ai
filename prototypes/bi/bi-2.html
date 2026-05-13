@@ -1000,6 +1000,10 @@
       display: flex;
       min-height: 0;
       overflow: hidden;
+      margin-right: 340px;
+    }
+    .report-detail-body:has(.report-chat-panel.is-collapsed) {
+      margin-right: 0;
     }
 
     /* --- Reports tabs (Data Queries / Widgets / Dashboards) --- */
@@ -1144,12 +1148,19 @@
       background: var(--color-white);
       transition: width 0.25s ease, opacity 0.25s ease;
       overflow: hidden;
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100vh;
+      z-index: 10;
     }
     .report-chat-panel.is-collapsed {
       width: 0;
       border-left: none;
       opacity: 0;
       pointer-events: none;
+      position: static;
+      height: auto;
     }
     .report-chat-toggle {
       display: inline-flex;
@@ -2479,6 +2490,9 @@
       display: flex;
       height: 100%;
     }
+    .home-sales-body:has(.dash-chat-panel:not(.is-collapsed)) {
+      margin-right: 320px;
+    }
     .home-sales-main {
       flex: 1;
       padding: 0 var(--space-2xl) var(--space-2xl);
@@ -2511,6 +2525,9 @@
       inset: 0;
       z-index: 10;
       background: var(--color-bg-page);
+    }
+    .dash-detail-page.is-visible:has(.dash-chat-panel:not(.is-collapsed)) {
+      right: 320px;
     }
     .dash-main-panel {
       flex: 1;
@@ -2723,12 +2740,19 @@
       background: var(--color-white);
       transition: width 0.25s ease, opacity 0.25s ease;
       overflow: hidden;
+      position: fixed;
+      top: 0;
+      right: 0;
+      height: 100vh;
+      z-index: 10;
     }
     .dash-chat-panel.is-collapsed {
       width: 0;
       border-left: none;
       opacity: 0;
       pointer-events: none;
+      position: static;
+      height: auto;
     }
     .dash-chat-header {
       padding: var(--space-lg) var(--space-xl);
