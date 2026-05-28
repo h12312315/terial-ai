@@ -440,6 +440,119 @@
     .props-empty { font-size: var(--font-body-sm-size); color: var(--color-text-tertiary); padding: 40px 0; text-align: center; }
 
     /* ============================================================
+       Page 4: Form Detail (read-only form filling)
+       ============================================================ */
+    #page-form-detail.is-visible { display: flex; flex-direction: column; height: 100%; }
+    .form-detail-header {
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-border-default);
+      padding: 20px 32px 16px; flex-shrink: 0;
+    }
+    .form-detail-header .fd-breadcrumb {
+      font-size: var(--font-body-sm-size); color: var(--color-text-tertiary); margin-bottom: 12px;
+    }
+    .form-detail-header .fd-breadcrumb a { color: var(--color-blue-7); text-decoration: underline; cursor: pointer; }
+    .form-detail-header .fd-title-row { display: flex; align-items: flex-start; justify-content: space-between; }
+    .form-detail-header .fd-title { font-size: 22px; font-weight: var(--font-weight-semibold); color: var(--color-text-primary); margin: 0 0 6px; }
+    .form-detail-header .fd-meta { font-size: var(--font-body-sm-size); color: var(--color-text-tertiary); }
+    .form-detail-header .fd-actions { display: flex; gap: var(--space-sm); align-items: center; }
+    .fd-submit-btn {
+      padding: 8px 20px; background: var(--color-primary-6); color: var(--color-gray-9);
+      border: none; border-radius: var(--radius-sm); font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size); font-weight: var(--font-weight-semibold); cursor: pointer;
+    }
+    .fd-save-draft-btn {
+      padding: 8px 16px; background: var(--color-white); border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm); font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size); color: var(--color-text-tertiary); cursor: pointer;
+    }
+    .form-detail-body {
+      flex: 1; overflow-y: auto; background: var(--color-bg-page);
+      padding: 24px 32px; display: flex; flex-direction: column; align-items: center;
+    }
+    .fd-paper {
+      width: 100%; max-width: 700px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .fd-section {
+      background: var(--color-white); border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md); box-shadow: var(--shadow-sm);
+    }
+    .fd-section-title {
+      padding: 20px 24px 10px;
+      font-size: 15px; font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary); text-transform: uppercase; letter-spacing: 0.02em;
+    }
+    .fd-question {
+      padding: 10px 24px; display: flex; align-items: center;
+    }
+    .fd-question-label {
+      flex: 1; font-size: var(--font-body-sm-size); font-weight: var(--font-weight-medium);
+      color: var(--color-text-primary); min-width: 0;
+    }
+    .fd-question-value { flex-shrink: 0; margin-left: 16px; display: flex; align-items: center; }
+    .fd-binary { display: flex; align-items: center; gap: 0; }
+    .fd-binary span {
+      padding: 4px 14px; font-size: 12px; color: var(--color-text-tertiary);
+      border: 1px solid var(--color-border-default); cursor: pointer;
+      user-select: none; background: var(--color-white); line-height: 1.4;
+    }
+    .fd-binary span:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
+    .fd-binary span:last-child { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; border-left: none; }
+    .fd-binary span:not(:first-child):not(:last-child) { border-left: none; }
+    .fd-binary span.is-active { background: var(--color-primary-6); color: var(--color-gray-9); border-color: var(--color-primary-6); font-weight: var(--font-weight-semibold); }
+    .fd-options { display: flex; align-items: center; gap: 12px; }
+    .fd-opt { display: flex; align-items: center; gap: 5px; font-size: 12px; color: var(--color-text-secondary); cursor: pointer; }
+    .fd-opt .radio { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--color-gray-4); flex-shrink: 0; }
+    .fd-opt .radio.is-active { border-color: var(--color-blue-7); background: var(--color-blue-7); box-shadow: inset 0 0 0 2px var(--color-white); }
+    .fd-opt .checkbox { width: 14px; height: 14px; border-radius: 3px; border: 2px solid var(--color-gray-4); flex-shrink: 0; }
+    .fd-opt .checkbox.is-active { border-color: var(--color-blue-7); background: var(--color-blue-7); }
+    .fd-image-zone {
+      padding: 20px; border: 2px dashed var(--color-border-default); border-radius: var(--radius-sm);
+      text-align: center; color: var(--color-text-tertiary); font-size: var(--font-body-sm-size);
+      cursor: pointer; margin: 4px 24px 16px;
+    }
+    .fd-image-zone:hover { border-color: var(--color-blue-7); color: var(--color-blue-7); }
+    .fd-image-zone svg { width: 24px; height: 24px; margin-bottom: 4px; display: block; margin-left: auto; margin-right: auto; }
+    .fd-text-input {
+      width: 200px; padding: 6px 10px; border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm); font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size); color: var(--color-text-primary); outline: none;
+    }
+    .fd-text-input:focus { border-color: var(--color-blue-7); }
+    .fd-text-input::placeholder { color: var(--color-gray-4); }
+
+    /* ============================================================
+       Create Checklist Modal
+       ============================================================ */
+    .modal-form-row {
+      display: flex; align-items: center; padding: 14px 20px;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .modal-form-row:last-of-type { border-bottom: none; }
+    .modal-form-label {
+      width: 150px; flex-shrink: 0; font-size: var(--font-body-sm-size);
+      color: var(--color-blue-7); font-weight: var(--font-weight-medium);
+    }
+    .modal-form-label .req { color: var(--color-danger-fg, #dc2626); }
+    .modal-form-input, .modal-form-select {
+      flex: 1; padding: 8px 12px; border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm); font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size); color: var(--color-text-primary);
+      background: var(--color-gray-1); outline: none;
+    }
+    .modal-form-input:focus, .modal-form-select:focus { border-color: var(--color-blue-7); background: var(--color-white); }
+    .modal-footer {
+      display: flex; justify-content: flex-end; padding: 14px 20px;
+      border-top: 1px solid var(--color-border-default);
+    }
+    .modal-save-btn {
+      padding: 8px 24px; background: var(--color-primary-6); color: var(--color-gray-9);
+      border: none; border-radius: var(--radius-sm); font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size); font-weight: var(--font-weight-semibold); cursor: pointer;
+    }
+
+    /* ============================================================
        Add Question Modal
        ============================================================ */
     .modal-overlay {
@@ -519,7 +632,7 @@
           <div class="checklist-card">
             <div class="checklist-toolbar">
               <input type="text" class="checklist-search" placeholder="Search Safety Checklist" />
-              <button class="primary-btn">+ New Safety Checklist</button>
+              <button class="primary-btn" id="new-checklist-btn">+ New Safety Checklist</button>
             </div>
             <table class="data-table">
               <thead><tr><th>Date <span style="opacity:0.5;">&#9662;</span></th><th>Inspection Performed By</th><th>Corrective Action(s) Taken</th><th>Created By</th><th>Created At</th></tr></thead>
@@ -623,8 +736,52 @@
 
       </div>
 
+      <!-- ======== Page 4: Form Detail (fill-in) ======== -->
+      <div class="page" id="page-form-detail">
+        <div class="form-detail-header">
+          <div class="fd-breadcrumb"><a id="fd-back-link">Safety Checklists</a> / <span id="fd-name-crumb"></span></div>
+          <div class="fd-title-row">
+            <div>
+              <h1 class="fd-title" id="fd-title"></h1>
+              <div class="fd-meta" id="fd-meta"></div>
+            </div>
+            <div class="fd-actions">
+              <button class="fd-save-draft-btn">Save Draft</button>
+              <button class="fd-submit-btn">Submit</button>
+            </div>
+          </div>
+        </div>
+        <div class="form-detail-body">
+          <div class="fd-paper" id="fd-paper">
+            <!-- Rendered by JS -->
+          </div>
+        </div>
+      </div>
+
     </div>
   </main>
+
+  <!-- Create Safety Checklist Modal -->
+  <div class="modal-overlay" id="create-checklist-modal">
+    <div class="modal-box" style="width:520px;">
+      <div class="modal-header"><h3>Create Safety Checklist</h3><button class="modal-close" id="create-checklist-close"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div>
+      <div class="modal-body" style="padding:0;">
+        <div class="modal-form-row">
+          <div class="modal-form-label">Name <span class="req">*</span></div>
+          <input type="text" class="modal-form-input" id="checklist-name-input" placeholder="" />
+        </div>
+        <div class="modal-form-row">
+          <div class="modal-form-label">Form Template <span class="req">*</span></div>
+          <select class="modal-form-select" id="checklist-template-select">
+            <option value="">Select a template...</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="modal-save-btn" id="checklist-save-btn">Save</button>
+      </div>
+    </div>
+  </div>
 
   <!-- Add Question Modal -->
   <div class="modal-overlay" id="add-q-modal">
@@ -1172,6 +1329,224 @@
         renderProps();
       });
     });
+
+    /* ============================================================
+       Create Safety Checklist Modal
+       ============================================================ */
+    var createModal = document.getElementById('create-checklist-modal');
+    var createClose = document.getElementById('create-checklist-close');
+    var checklistNameInput = document.getElementById('checklist-name-input');
+    var checklistTemplateSelect = document.getElementById('checklist-template-select');
+    var checklistSaveBtn = document.getElementById('checklist-save-btn');
+
+    // Populate template dropdown from the templates table
+    var templateNames = ['Romao - Full Features','Romao - Dynamic Variables','Recover - TPO (60 Mil)','Template 1','Hotfix test template','Romao Demo','Test'];
+    templateNames.forEach(function (name) {
+      var opt = document.createElement('option');
+      opt.value = name; opt.textContent = name;
+      checklistTemplateSelect.appendChild(opt);
+    });
+
+    // Open modal from "+ New Safety Checklist" button
+    document.getElementById('new-checklist-btn').addEventListener('click', function () {
+      checklistNameInput.value = '';
+      checklistTemplateSelect.value = '';
+      createModal.classList.add('is-open');
+    });
+    createClose.addEventListener('click', function () { createModal.classList.remove('is-open'); });
+    createModal.addEventListener('click', function (e) { if (e.target === createModal) createModal.classList.remove('is-open'); });
+
+    // Checklist data store
+    var checklists = [];
+    var checklistCounter = 1;
+
+    checklistSaveBtn.addEventListener('click', function () {
+      var name = checklistNameInput.value.trim();
+      var template = checklistTemplateSelect.value;
+      if (!name || !template) {
+        // Highlight empty fields
+        if (!name) checklistNameInput.style.borderColor = '#dc2626';
+        if (!template) checklistTemplateSelect.style.borderColor = '#dc2626';
+        return;
+      }
+      checklistNameInput.style.borderColor = '';
+      checklistTemplateSelect.style.borderColor = '';
+
+      var now = new Date();
+      var dateStr = (now.getMonth()+1) + '/' + now.getDate() + '/' + now.getFullYear();
+      var checklist = {
+        id: 'cl-' + (checklistCounter++),
+        name: name,
+        template: template,
+        createdBy: 'George Chang',
+        createdAt: dateStr,
+        date: dateStr
+      };
+      checklists.push(checklist);
+      createModal.classList.remove('is-open');
+      renderChecklistTable();
+    });
+
+    function renderChecklistTable() {
+      var tbody = document.querySelector('#page-projects .data-table tbody');
+      var emptyState = document.querySelector('#page-projects .empty-state');
+      tbody.innerHTML = '';
+      if (checklists.length === 0) {
+        emptyState.textContent = '0-0 of 0';
+        emptyState.style.display = '';
+        return;
+      }
+      emptyState.style.display = 'none';
+      checklists.forEach(function (cl) {
+        var tr = document.createElement('tr');
+        tr.style.cursor = 'pointer';
+        tr.innerHTML = '<td>' + cl.date + '</td><td>' + cl.createdBy + '</td><td>—</td><td>' + cl.createdBy + '</td><td>' + cl.createdAt + '</td>';
+        tr.addEventListener('click', function () {
+          openFormDetail(cl);
+        });
+        tbody.appendChild(tr);
+      });
+    }
+
+    /* ============================================================
+       Form Detail Page (fill-in mode)
+       ============================================================ */
+    var currentChecklist = null;
+    var formAnswers = {}; // keyed by question id
+
+    function openFormDetail(cl) {
+      currentChecklist = cl;
+      formAnswers = {};
+      document.getElementById('fd-title').textContent = cl.name;
+      document.getElementById('fd-name-crumb').textContent = cl.name;
+      document.getElementById('fd-meta').textContent = 'Template: ' + cl.template + '  ·  Created by ' + cl.createdBy + ' at ' + cl.createdAt;
+      showPage('form-detail');
+      productionChildren.classList.add('is-open');
+      productionCaret.textContent = '▴';
+      navRows.forEach(function (r) { r.classList.remove('is-section-active'); });
+      productionRow.classList.add('is-section-active');
+      renderFormDetail();
+    }
+
+    // Back link
+    document.getElementById('fd-back-link').addEventListener('click', function () {
+      showPage('projects');
+      productionChildren.classList.add('is-open');
+      productionCaret.textContent = '▴';
+      navRows.forEach(function (r) { r.classList.remove('is-section-active'); });
+      productionRow.classList.add('is-section-active');
+    });
+
+    function renderFormDetail() {
+      var paper = document.getElementById('fd-paper');
+      paper.innerHTML = '';
+
+      sections.forEach(function (sec) {
+        var card = document.createElement('div');
+        card.className = 'fd-section';
+
+        var title = document.createElement('div');
+        title.className = 'fd-section-title';
+        title.textContent = sec.name;
+        card.appendChild(title);
+
+        var qs = questions[sec.id] || [];
+        qs.forEach(function (q) {
+          if (q.type === 'image') {
+            // Image gets its own block
+            var label = document.createElement('div');
+            label.className = 'fd-question';
+            label.innerHTML = '<span class="fd-question-label">' + q.label + '</span>';
+            card.appendChild(label);
+            var zone = document.createElement('div');
+            zone.className = 'fd-image-zone';
+            zone.innerHTML = '<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4"/><polyline points="7 7 12 2 17 7"/><line x1="12" y1="2" x2="12" y2="15"/></svg><div>Click to upload images</div>';
+            card.appendChild(zone);
+            return;
+          }
+
+          var row = document.createElement('div');
+          row.className = 'fd-question';
+
+          var labelEl = document.createElement('span');
+          labelEl.className = 'fd-question-label';
+          labelEl.textContent = q.label;
+          row.appendChild(labelEl);
+
+          var valueEl = document.createElement('div');
+          valueEl.className = 'fd-question-value';
+
+          if (q.type === 'binary') {
+            var bin = document.createElement('div');
+            bin.className = 'fd-binary';
+            (q.options.length ? q.options : ['Yes','No','N/A']).forEach(function (opt) {
+              var sp = document.createElement('span');
+              sp.textContent = opt;
+              if (formAnswers[q.id] === opt) sp.classList.add('is-active');
+              sp.addEventListener('click', function () {
+                formAnswers[q.id] = opt;
+                bin.querySelectorAll('span').forEach(function (s) { s.classList.remove('is-active'); });
+                sp.classList.add('is-active');
+              });
+              bin.appendChild(sp);
+            });
+            valueEl.appendChild(bin);
+          } else if (q.type === 'single') {
+            var opts = document.createElement('div');
+            opts.className = 'fd-options';
+            (q.options.length ? q.options : ['Option 1','Option 2']).forEach(function (o) {
+              var optEl = document.createElement('span');
+              optEl.className = 'fd-opt';
+              var radio = document.createElement('span');
+              radio.className = 'radio' + (formAnswers[q.id] === o ? ' is-active' : '');
+              optEl.appendChild(radio);
+              optEl.appendChild(document.createTextNode(o));
+              optEl.addEventListener('click', function () {
+                formAnswers[q.id] = o;
+                opts.querySelectorAll('.radio').forEach(function (r) { r.classList.remove('is-active'); });
+                radio.classList.add('is-active');
+              });
+              opts.appendChild(optEl);
+            });
+            valueEl.appendChild(opts);
+          } else if (q.type === 'multi') {
+            var opts2 = document.createElement('div');
+            opts2.className = 'fd-options';
+            if (!formAnswers[q.id]) formAnswers[q.id] = [];
+            (q.options.length ? q.options : ['Option 1','Option 2']).forEach(function (o) {
+              var optEl = document.createElement('span');
+              optEl.className = 'fd-opt';
+              var cb = document.createElement('span');
+              cb.className = 'checkbox' + (formAnswers[q.id].indexOf(o) >= 0 ? ' is-active' : '');
+              optEl.appendChild(cb);
+              optEl.appendChild(document.createTextNode(o));
+              optEl.addEventListener('click', function () {
+                var arr = formAnswers[q.id] || [];
+                var idx = arr.indexOf(o);
+                if (idx >= 0) { arr.splice(idx, 1); cb.classList.remove('is-active'); }
+                else { arr.push(o); cb.classList.add('is-active'); }
+                formAnswers[q.id] = arr;
+              });
+              opts2.appendChild(optEl);
+            });
+            valueEl.appendChild(opts2);
+          } else {
+            var inp = document.createElement('input');
+            inp.type = 'text';
+            inp.className = 'fd-text-input';
+            inp.placeholder = 'Enter text...';
+            inp.value = formAnswers[q.id] || '';
+            inp.addEventListener('change', function () { formAnswers[q.id] = inp.value; });
+            valueEl.appendChild(inp);
+          }
+
+          row.appendChild(valueEl);
+          card.appendChild(row);
+        });
+
+        paper.appendChild(card);
+      });
+    }
 
     /* ============================================================
        Init
