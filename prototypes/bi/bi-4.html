@@ -982,24 +982,40 @@
     .report-detail-breadcrumb {
       display: flex;
       align-items: center;
-      font-size: var(--font-body-sm-size);
+      gap: 8px;
+      font-size: var(--font-body-md-size);
       color: var(--color-text-tertiary);
-      padding: var(--space-3xl, 32px) var(--space-2xl) 0;
+      padding: var(--space-xl, 20px) var(--space-2xl) 0;
       background: var(--color-bg-page);
       flex-shrink: 0;
     }
     .report-detail-breadcrumb a {
       color: var(--color-text-secondary);
-      text-decoration: none;
+      text-decoration: underline;
+      text-underline-offset: 3px;
       cursor: pointer;
     }
     .report-detail-breadcrumb a:hover { color: var(--color-text-primary); }
+    .report-detail-breadcrumb .breadcrumb-sep {
+      color: var(--color-text-tertiary);
+      font-weight: 300;
+    }
+    .report-detail-breadcrumb .breadcrumb-current {
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-medium);
+    }
 
     .report-detail-body {
       flex: 1;
       display: flex;
-      flex-direction: column;
       min-height: 0;
+      overflow: hidden;
+    }
+    .report-detail-left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
       overflow: hidden;
     }
 
@@ -1136,12 +1152,6 @@
     .report-tag.tag-draft { background: var(--color-gray-2); color: var(--color-text-secondary); }
 
     /* ======= Report/Chart detail: embedded edit panels ======= */
-    .report-detail-top {
-      flex: 1;
-      display: flex;
-      min-height: 0;
-      overflow: hidden;
-    }
     .report-chat-panel {
       width: 380px;
       flex-shrink: 0;
@@ -1158,6 +1168,7 @@
       flex-shrink: 0;
       border-top: 1px solid var(--color-border-default);
       background: var(--color-white);
+      padding: var(--space-lg) var(--space-2xl);
       display: none;
     }
     .report-edit-sql.is-visible {
@@ -2537,14 +2548,14 @@
     .charts-detail-body {
       flex: 1;
       display: flex;
-      flex-direction: column;
       min-height: 0;
       overflow: hidden;
     }
-    .charts-detail-top {
+    .charts-detail-left {
       flex: 1;
       display: flex;
-      min-height: 0;
+      flex-direction: column;
+      min-width: 0;
       overflow: hidden;
     }
     .chart-preview-panel {
@@ -2559,16 +2570,16 @@
     .custom-dash-detail-page { display: none; }
     .custom-dash-detail-page.is-visible {
       display: flex;
-      flex-direction: column;
       position: absolute;
       inset: 0;
       z-index: 10;
       background: var(--color-bg-page);
     }
-    .cdash-detail-top {
+    .cdash-detail-left {
       flex: 1;
       display: flex;
-      min-height: 0;
+      flex-direction: column;
+      min-width: 0;
       overflow: hidden;
     }
 
@@ -2577,18 +2588,6 @@
       overflow-y: auto;
       padding: var(--space-2xl);
       min-width: 0;
-    }
-    #cdash-chat-panel.cdash-edit-chat {
-      width: 380px;
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      border-left: 1px solid var(--color-border-default);
-      background: var(--color-white);
-      overflow: hidden;
-    }
-    #cdash-chat-panel.cdash-edit-chat.is-collapsed {
-      display: none;
     }
 
     .dash-header {
@@ -8761,10 +8760,10 @@ ORDER BY j.eta ASC;</pre>
       <!-- Report detail page -->
       <div class="report-detail-page" id="report-detail-page">
         <div class="report-detail-body">
-          <div class="report-detail-top">
+          <div class="report-detail-left">
             <!-- Left: Report preview -->
             <div class="report-preview-panel">
-              <div class="report-detail-breadcrumb"><a id="report-back-link">← Back</a><button class="report-chat-toggle" id="report-chat-toggle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Edit</button></div>
+              <div class="report-detail-breadcrumb"><a id="report-back-link">Custom reports</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current" id="report-breadcrumb-name">Revenue by Region</span><button class="report-chat-toggle" id="report-chat-toggle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Edit</button></div>
               <div class="report-detail-header">
                 <div class="report-detail-header-left">
                   <span class="report-title-text" id="report-detail-title">Revenue by Region</span>
@@ -8864,34 +8863,8 @@ ORDER BY j.eta ASC;</pre>
                 </div>
               </div>
             </div>
-            <!-- Right: AI chat (embedded) -->
-            <div class="report-chat-panel is-collapsed" id="report-chat-panel">
-              <div class="report-chat-header">
-                <div class="report-chat-header-title">
-                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1L3 8h3l-1 6 5-8H7l1-6z" fill="currentColor" stroke="none"/></svg>
-                  Terial AI
-                </div>
-                <button class="report-chat-reset" id="report-chat-reset">
-                  <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1v4h4"/><path d="M2.5 9.5a5 5 0 1 0 1-5.2L1 5"/></svg>
-                  Reset
-                </button>
-              </div>
-              <div class="report-chat-messages" id="report-chat-messages">
-                <div class="chat-msg is-ai">
-                  <div class="chat-msg-label">Terial AI</div>
-                  I can help you build this report. Describe what data you'd like to see, and I'll generate the query and preview for you.
-                </div>
-              </div>
-              <div class="report-chat-input-wrap">
-                <textarea class="report-chat-input" id="report-chat-input" placeholder="Ask Terial AI to build your report..." rows="1"></textarea>
-                <button class="report-chat-send" id="report-chat-send">
-                  <svg viewBox="0 0 16 16" fill="currentColor"><path d="M1.7 1.4l13 6.3c.4.2.4.7 0 .9l-13 6.3c-.5.2-1-.2-.8-.7L3 8 .9 2.1c-.2-.5.3-1 .8-.7zM4 8.5l9.3-.5L4 7.5v1z"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-          <!-- Bottom: SQL panel (embedded) -->
-          <div class="report-edit-sql" id="report-edit-sql">
+            <!-- SQL panel (in left column) -->
+            <div class="report-edit-sql" id="report-edit-sql">
             <div class="report-sql-view" id="report-sql-view" style="display:block;">
               <div class="report-sql-wrap">
                 <button class="report-sql-copy-inner" id="report-sql-copy"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="8" height="8" rx="1"/><path d="M10 4V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h1"/></svg> Copy</button>
@@ -8923,7 +8896,33 @@ ORDER BY "Total Revenue" DESC;</pre>
               </div>
             </div>
           </div>
-        </div>
+          </div><!-- /report-detail-left -->
+          <!-- Right: AI chat (embedded) -->
+          <div class="report-chat-panel is-collapsed" id="report-chat-panel">
+            <div class="report-chat-header">
+              <div class="report-chat-header-title">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1L3 8h3l-1 6 5-8H7l1-6z" fill="currentColor" stroke="none"/></svg>
+                Terial AI
+              </div>
+              <button class="report-chat-reset" id="report-chat-reset">
+                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1v4h4"/><path d="M2.5 9.5a5 5 0 1 0 1-5.2L1 5"/></svg>
+                Reset
+              </button>
+            </div>
+            <div class="report-chat-messages" id="report-chat-messages">
+              <div class="chat-msg is-ai">
+                <div class="chat-msg-label">Terial AI</div>
+                I can help you build this report. Describe what data you'd like to see, and I'll generate the query and preview for you.
+              </div>
+            </div>
+            <div class="report-chat-input-wrap">
+              <textarea class="report-chat-input" id="report-chat-input" placeholder="Ask Terial AI to build your report..." rows="1"></textarea>
+              <button class="report-chat-send" id="report-chat-send">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M1.7 1.4l13 6.3c.4.2.4.7 0 .9l-13 6.3c-.5.2-1-.2-.8-.7L3 8 .9 2.1c-.2-.5.3-1 .8-.7zM4 8.5l9.3-.5L4 7.5v1z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div><!-- /report-detail-body -->
       </div>
 
       <!-- Charts list page -->
@@ -9026,10 +9025,9 @@ ORDER BY "Total Revenue" DESC;</pre>
       <!-- Chart detail page -->
       <div class="charts-detail-page" id="charts-detail-page">
         <div class="charts-detail-body">
-          <div class="charts-detail-top">
-            <!-- Left: Chart preview -->
+          <div class="charts-detail-left">
             <div class="chart-preview-panel">
-              <div class="report-detail-breadcrumb"><a id="chart-back-link">&larr; Back</a><button class="report-chat-toggle" id="chart-chat-toggle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Edit</button></div>
+              <div class="report-detail-breadcrumb"><a id="chart-back-link">Custom charts</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current" id="chart-breadcrumb-name">Revenue by Region</span><button class="report-chat-toggle" id="chart-chat-toggle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Edit</button></div>
               <div class="report-detail-header" id="chart-detail-header">
                 <div class="report-detail-header-left">
                   <span class="report-title-text" id="chart-detail-title">Revenue by Region</span>
@@ -9042,8 +9040,7 @@ ORDER BY "Total Revenue" DESC;</pre>
                 </div>
               </div>
               <div class="report-preview-toolbar" id="chart-preview-toolbar">
-                <div class="report-preview-toolbar-left">
-                </div>
+                <div class="report-preview-toolbar-left"></div>
                 <div class="report-preview-toolbar-right">
                   <button id="chart-download-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10V2M3.5 6.5L7 10l3.5-3.5M2 12h10"/></svg> Download</button>
                   <button class="report-refresh-btn" id="chart-refresh-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1v4h4"/><path d="M2.5 9.5a5 5 0 1 0 1-5.2L1 5"/></svg>Refresh</button>
@@ -9065,37 +9062,10 @@ ORDER BY "Total Revenue" DESC;</pre>
                 </div>
               </div>
             </div>
-            <!-- Right: AI chat (embedded) -->
-            <div class="report-chat-panel is-collapsed" id="chart-chat-panel">
-              <div class="report-chat-header">
-                <div class="report-chat-header-title">
-                  <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1L3 8h3l-1 6 5-8H7l1-6z" fill="currentColor" stroke="none"/></svg>
-                  Terial AI
-                </div>
-                <button class="report-chat-reset" id="chart-chat-reset">
-                  <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1v4h4"/><path d="M2.5 9.5a5 5 0 1 0 1-5.2L1 5"/></svg>
-                  Reset
-                </button>
-              </div>
-              <div class="report-chat-messages" id="chart-chat-messages">
-                <div class="chat-msg is-ai">
-                  <div class="chat-msg-label">Terial AI</div>
-                  I can help you build this chart. Describe what data you'd like to visualize, and I'll generate the query and chart for you.
-                </div>
-              </div>
-              <div class="report-chat-input-wrap">
-                <textarea class="report-chat-input" id="chart-chat-input" placeholder="Ask Terial AI to build your chart..." rows="1"></textarea>
-                <button class="report-chat-send" id="chart-chat-send">
-                  <svg viewBox="0 0 16 16" fill="currentColor"><path d="M1.7 1.4l13 6.3c.4.2.4.7 0 .9l-13 6.3c-.5.2-1-.2-.8-.7L3 8 .9 2.1c-.2-.5.3-1 .8-.7zM4 8.5l9.3-.5L4 7.5v1z"/></svg>
-                </button>
-              </div>
-            </div>
-          </div>
-          <!-- Bottom: SQL panel (embedded) -->
-          <div class="report-edit-sql" id="chart-edit-sql">
-            <div class="report-sql-view" style="display:block;">
-              <div class="report-sql-wrap">
-                <pre class="report-sql-pre" contenteditable="true" spellcheck="false">SELECT
+            <div class="report-edit-sql" id="chart-edit-sql">
+              <div class="report-sql-view" style="display:block;">
+                <div class="report-sql-wrap">
+                  <pre class="report-sql-pre" contenteditable="true" spellcheck="false">SELECT
   r.region_name        AS "Region",
   SUM(o.value)         AS "Total Revenue"
 FROM opportunities o
@@ -9103,11 +9073,36 @@ JOIN regions r ON r.id = o.region_id
 WHERE o.closed_at >= DATE_TRUNC('quarter', CURRENT_DATE)
 GROUP BY r.region_name
 ORDER BY "Total Revenue" DESC;</pre>
+                </div>
+                <div class="report-sql-actions">
+                  <button class="report-sql-run"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M3 1.5v11l9-5.5z"/></svg> Save and run</button>
+                  <button>Cancel</button>
+                </div>
               </div>
-              <div class="report-sql-actions">
-                <button class="report-sql-run"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M3 1.5v11l9-5.5z"/></svg> Save and run</button>
-                <button>Cancel</button>
+            </div>
+          </div>
+          <div class="report-chat-panel is-collapsed" id="chart-chat-panel">
+            <div class="report-chat-header">
+              <div class="report-chat-header-title">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1L3 8h3l-1 6 5-8H7l1-6z" fill="currentColor" stroke="none"/></svg>
+                Terial AI
               </div>
+              <button class="report-chat-reset" id="chart-chat-reset">
+                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1v4h4"/><path d="M2.5 9.5a5 5 0 1 0 1-5.2L1 5"/></svg>
+                Reset
+              </button>
+            </div>
+            <div class="report-chat-messages" id="chart-chat-messages">
+              <div class="chat-msg is-ai">
+                <div class="chat-msg-label">Terial AI</div>
+                I can help you build this chart. Describe what data you'd like to visualize, and I'll generate the query and chart for you.
+              </div>
+            </div>
+            <div class="report-chat-input-wrap">
+              <textarea class="report-chat-input" id="chart-chat-input" placeholder="Ask Terial AI to build your chart..." rows="1"></textarea>
+              <button class="report-chat-send" id="chart-chat-send">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M1.7 1.4l13 6.3c.4.2.4.7 0 .9l-13 6.3c-.5.2-1-.2-.8-.7L3 8 .9 2.1c-.2-.5.3-1 .8-.7zM4 8.5l9.3-.5L4 7.5v1z"/></svg>
+              </button>
             </div>
           </div>
         </div>
@@ -9198,9 +9193,9 @@ ORDER BY "Total Revenue" DESC;</pre>
 
       <!-- Custom dashboard detail page -->
       <div class="custom-dash-detail-page" id="custom-dash-detail-page">
-        <div class="cdash-detail-top">
+        <div class="cdash-detail-left">
           <div class="dash-main-panel">
-            <div class="report-detail-breadcrumb" style="padding-left:0;"><a id="custom-dash-back-link">&larr; Back</a><button class="report-chat-toggle" id="cdash-chat-toggle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Edit</button></div>
+            <div class="report-detail-breadcrumb" style="padding-left:0;"><a id="custom-dash-back-link">Custom dashboards</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current" id="cdash-breadcrumb-name">Sales Dashboard</span><button class="report-chat-toggle" id="cdash-chat-toggle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Edit</button></div>
             <div class="dash-header">
               <div class="dash-header-left">
                 <span class="dash-title-text" id="custom-dash-title">Sales Dashboard</span>
@@ -9281,29 +9276,10 @@ ORDER BY "Total Revenue" DESC;</pre>
 
             </div>
           </div>
-          <!-- Right: AI chat (embedded) -->
-          <div class="cdash-edit-chat is-collapsed" id="cdash-chat-panel">
-            <div class="report-chat-header">
-              <div class="report-chat-header-title">
-                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1L3 8h3l-1 6 5-8H7l1-6z" fill="currentColor" stroke="none"/></svg>
-                Terial AI
-              </div>
-              <button class="report-chat-reset">Reset</button>
-            </div>
-            <div class="report-chat-messages" id="cdash-chat-messages"></div>
-            <div class="report-chat-input-wrap">
-              <textarea class="report-chat-input" id="cdash-chat-input" placeholder="Ask Terial AI..." rows="1"></textarea>
-              <button class="report-chat-send" id="cdash-chat-send">
-                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M1.7 1.4l13 6.3c.4.2.4.7 0 .9l-13 6.3c-.5.2-1-.2-.8-.7L3 8 .9 2.1c-.2-.5.3-1 .8-.7zM4 8.5l9.3-.5L4 7.5v1z"/></svg>
-              </button>
-            </div>
-          </div>
-        </div>
-        <!-- Bottom: SQL panel (embedded) -->
-        <div class="report-edit-sql" id="cdash-edit-sql">
-          <div class="report-sql-view" style="display:block;">
-            <div class="report-sql-wrap">
-              <pre class="report-sql-pre" contenteditable="true" spellcheck="false">SELECT
+          <div class="report-edit-sql" id="cdash-edit-sql">
+            <div class="report-sql-view" style="display:block;">
+              <div class="report-sql-wrap">
+                <pre class="report-sql-pre" contenteditable="true" spellcheck="false">SELECT
   d.deal_name       AS "Deal",
   u.full_name       AS "Rep",
   d.value           AS "Value",
@@ -9313,11 +9289,28 @@ JOIN users u ON u.id = d.rep_id
 WHERE d.quarter = CURRENT_QUARTER
 ORDER BY d.value DESC
 LIMIT 10;</pre>
+              </div>
+              <div class="report-sql-actions">
+                <button class="report-sql-run"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M3 1.5v11l9-5.5z"/></svg> Save and run</button>
+                <button>Cancel</button>
+              </div>
             </div>
-            <div class="report-sql-actions">
-              <button class="report-sql-run"><svg viewBox="0 0 14 14" fill="currentColor"><path d="M3 1.5v11l9-5.5z"/></svg> Save and run</button>
-              <button>Cancel</button>
+          </div>
+        </div>
+        <div class="report-chat-panel is-collapsed" id="cdash-chat-panel">
+          <div class="report-chat-header">
+            <div class="report-chat-header-title">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1L3 8h3l-1 6 5-8H7l1-6z" fill="currentColor" stroke="none"/></svg>
+              Terial AI
             </div>
+            <button class="report-chat-reset">Reset</button>
+          </div>
+          <div class="report-chat-messages" id="cdash-chat-messages"></div>
+          <div class="report-chat-input-wrap">
+            <textarea class="report-chat-input" id="cdash-chat-input" placeholder="Ask Terial AI..." rows="1"></textarea>
+            <button class="report-chat-send" id="cdash-chat-send">
+              <svg viewBox="0 0 16 16" fill="currentColor"><path d="M1.7 1.4l13 6.3c.4.2.4.7 0 .9l-13 6.3c-.5.2-1-.2-.8-.7L3 8 .9 2.1c-.2-.5.3-1 .8-.7zM4 8.5l9.3-.5L4 7.5v1z"/></svg>
+            </button>
           </div>
         </div>
       </div>
@@ -15290,6 +15283,7 @@ LIMIT 10;</pre>
       function openDetail(name, isNew, thread, summary) {
         isNewReport = !!isNew;
         document.getElementById('report-detail-title').textContent = name;
+        document.getElementById('report-breadcrumb-name').textContent = name;
         document.getElementById('report-detail-summary').textContent = summary || '';
         chatPanel.classList.add('is-collapsed');
         if (reportSqlPanel) reportSqlPanel.classList.remove('is-visible');
@@ -15358,7 +15352,8 @@ LIMIT 10;</pre>
       // Chat + SQL toggle (embedded panels)
       var toggleBtn = document.getElementById('report-chat-toggle');
       var reportSqlPanel = document.getElementById('report-edit-sql');
-      function toggleReportChat() {
+      function toggleReportChat(e) {
+        if (e) e.stopPropagation();
         chatPanel.classList.toggle('is-collapsed');
         if (reportSqlPanel) reportSqlPanel.classList.toggle('is-visible');
       }
@@ -15695,6 +15690,7 @@ LIMIT 10;</pre>
           var nameEl = row.querySelector('.report-name-link');
           var name = nameEl ? nameEl.textContent : 'Chart';
           document.getElementById('chart-detail-title').textContent = name;
+          document.getElementById('chart-breadcrumb-name').textContent = name;
           document.getElementById('chart-detail-summary').textContent = 'Visualization showing ' + name.toLowerCase() + ' data across all regions.';
           var ccp = document.getElementById('chart-chat-panel');
           var csp = document.getElementById('chart-edit-sql');
@@ -15790,6 +15786,7 @@ LIMIT 10;</pre>
           var nameEl = row.querySelector('.report-name-link');
           var name = nameEl ? nameEl.textContent : 'Dashboard';
           document.getElementById('custom-dash-title').textContent = name;
+          document.getElementById('cdash-breadcrumb-name').textContent = name;
           var dcp = document.getElementById('cdash-chat-panel');
           var dsp = document.getElementById('cdash-edit-sql');
           if (dcp) dcp.classList.add('is-collapsed');
