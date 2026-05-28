@@ -924,6 +924,7 @@
       margin-top: var(--space-md);
       background: var(--color-bg-page);
       flex-shrink: 0;
+      gap: var(--space-md);
     }
     .report-detail-header-left { flex: 1; min-width: 0; }
     .report-detail-header .report-title-text {
@@ -979,6 +980,8 @@
       outline: none;
       width: 100%;
       min-width: 200px;
+      max-width: 100%;
+      box-sizing: border-box;
       box-shadow: var(--shadow-sm);
     }
     .report-detail-header .report-title-input:focus {
@@ -1203,18 +1206,18 @@
       align-items: center;
       gap: 6px;
       padding: 8px 20px;
-      background: var(--color-primary-6);
+      background: var(--color-gray-9);
       border: none;
       border-radius: var(--radius-sm);
       font-family: var(--font-family-base);
       font-size: var(--font-body-md-size);
       font-weight: var(--font-weight-medium);
-      color: var(--color-gray-9);
+      color: var(--color-white);
       cursor: pointer;
       margin-left: auto;
       height: 36px;
     }
-    .report-chat-toggle:hover { background: var(--color-primary-5, #e6b800); }
+    .report-chat-toggle:hover { background: var(--color-gray-8); }
     .report-chat-toggle svg { width: 14px; height: 14px; }
     .report-edit-actions {
       display: inline-flex;
@@ -1242,17 +1245,17 @@
       align-items: center;
       gap: 6px;
       padding: 8px 20px;
-      background: var(--color-white);
-      border: 1px solid var(--color-border-default);
+      background: #dc2626;
+      color: var(--color-white);
+      border: none;
       border-radius: var(--radius-sm);
       font-family: var(--font-family-base);
       font-size: var(--font-body-md-size);
       font-weight: var(--font-weight-medium);
-      color: var(--color-text-secondary);
       cursor: pointer;
       height: 36px;
     }
-    .report-cancel-btn:hover { background: var(--color-gray-1); }
+    .report-cancel-btn:hover { background: #b91c1c; }
     .chart-content-card {
       background: var(--color-white);
       border: 1px solid var(--color-border-default);
@@ -1262,8 +1265,8 @@
     }
     .custom-dash-detail-page.is-edit-mode .dash-card {
       cursor: grab;
-      border-color: var(--color-primary-6);
-      box-shadow: 0 0 0 1px var(--color-primary-6);
+      border-color: var(--color-gray-9);
+      box-shadow: 0 0 0 1px var(--color-gray-9);
     }
     .custom-dash-detail-page.is-edit-mode .dash-card:active { cursor: grabbing; opacity: 0.8; }
     .custom-dash-detail-page.is-edit-mode .dash-card .dash-card-drag { display: flex; }
@@ -1301,6 +1304,150 @@
       flex-shrink: 0;
     }
     .dash-card-time-badge svg { width: 10px; height: 10px; }
+    .report-data-timeframe {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .report-data-timeframe svg { width: 12px; height: 12px; }
+    .chart-type-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: 200;
+      display: none;
+      place-items: center;
+    }
+    .chart-type-modal-overlay.is-open { display: grid; }
+    .chart-type-modal {
+      background: var(--color-white);
+      border-radius: var(--radius-lg, 12px);
+      box-shadow: var(--shadow-lg);
+      width: 680px;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+    }
+    .chart-type-modal-header {
+      padding: var(--space-xl) var(--space-2xl);
+      border-bottom: 1px solid var(--color-border-default);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .chart-type-modal-title {
+      font-size: var(--font-h4-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+    }
+    .chart-type-modal-close {
+      width: 28px; height: 28px;
+      display: grid; place-items: center;
+      background: none; border: none; cursor: pointer;
+      color: var(--color-text-tertiary);
+      border-radius: var(--radius-sm);
+    }
+    .chart-type-modal-close:hover { background: var(--color-gray-1); color: var(--color-text-primary); }
+    .chart-type-modal-tabs {
+      display: flex;
+      gap: 0;
+      border-bottom: 1px solid var(--color-border-default);
+      padding: 0 var(--space-2xl);
+    }
+    .chart-type-modal-tab {
+      padding: var(--space-md) var(--space-xl);
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-tertiary);
+      background: none; border: none;
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      font-family: var(--font-family-base);
+    }
+    .chart-type-modal-tab:hover { color: var(--color-text-primary); }
+    .chart-type-modal-tab.is-active {
+      color: var(--color-text-primary);
+      border-bottom-color: var(--color-gray-9);
+    }
+    .chart-type-modal-body {
+      padding: var(--space-xl) var(--space-2xl);
+      overflow-y: auto;
+      flex: 1;
+    }
+    .chart-type-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-lg);
+    }
+    .chart-type-card {
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      padding: var(--space-lg);
+      cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .chart-type-card:hover {
+      border-color: var(--color-gray-9);
+      box-shadow: 0 0 0 1px var(--color-gray-9);
+    }
+    .chart-type-card-preview {
+      width: 100%;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-tertiary);
+    }
+    .chart-type-card-preview svg { width: 48px; height: 48px; }
+    .chart-type-card-label {
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-primary);
+      text-align: center;
+    }
+    .chart-type-ai-option {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xl);
+      padding: var(--space-2xl);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .chart-type-ai-option:hover {
+      border-color: var(--color-gray-9);
+      box-shadow: 0 0 0 1px var(--color-gray-9);
+    }
+    .chart-type-ai-icon {
+      width: 48px; height: 48px;
+      border-radius: var(--radius-md);
+      background: var(--color-primary-6);
+      display: grid; place-items: center;
+      flex-shrink: 0;
+    }
+    .chart-type-ai-icon svg { width: 24px; height: 24px; }
+    .chart-type-ai-text h4 {
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      margin: 0 0 4px;
+    }
+    .chart-type-ai-text p {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      margin: 0;
+      line-height: 1.4;
+    }
+    .chart-type-panel { display: none; }
+    .chart-type-panel.is-active { display: block; }
     @keyframes chat-msg-fade-in {
       from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
@@ -2789,10 +2936,10 @@
       position: relative;
       transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
-    .dash-card:hover { border-color: var(--color-primary-6); box-shadow: 0 0 0 1px var(--color-primary-6); }
+    .dash-card:hover { border-color: var(--color-gray-9); box-shadow: 0 0 0 1px var(--color-gray-9); }
     .dash-card.is-selected {
-      border-color: var(--color-primary-6);
-      box-shadow: 0 0 0 1px var(--color-primary-6);
+      border-color: var(--color-gray-9);
+      box-shadow: 0 0 0 1px var(--color-gray-9);
     }
     .dash-card-actions {
       display: none;
@@ -8892,7 +9039,7 @@ ORDER BY j.eta ASC;</pre>
                 </div>
               </div>
               <div class="report-preview-toolbar" id="report-preview-toolbar">
-                <div class="report-preview-toolbar-left"></div>
+                <div class="report-preview-toolbar-left"><span class="report-data-timeframe"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="5"/><path d="M6 3v3l2 1.5"/></svg>Data from 2026</span></div>
                 <div class="report-preview-toolbar-right">
                   <div class="report-dropdown-wrap">
                     <button id="report-download-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10V2M3.5 6.5L7 10l3.5-3.5M2 12h10"/></svg> Download</button>
@@ -8901,7 +9048,7 @@ ORDER BY j.eta ASC;</pre>
                       <button class="report-dropdown-item">As a CSV</button>
                     </div>
                   </div>
-                  <button id="report-create-chart-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="8" width="2.5" height="5" rx="0.5"/><rect x="5.75" y="4" width="2.5" height="9" rx="0.5"/><rect x="10.5" y="1" width="2.5" height="12" rx="0.5"/></svg> Create a chart</button>
+                  <button id="report-create-chart-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="8" width="2.5" height="5" rx="0.5"/><rect x="5.75" y="4" width="2.5" height="9" rx="0.5"/><rect x="10.5" y="1" width="2.5" height="12" rx="0.5"/></svg> Create custom chart</button>
                   <div class="report-dropdown-wrap">
                     <button id="report-add-dash-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="1.5" width="11" height="11" rx="1.5"/><path d="M1.5 5.5h11M5.5 5.5v7"/></svg> Add to dashboard</button>
                     <div class="report-dropdown report-dash-picker" id="report-dash-picker">
@@ -9146,10 +9293,10 @@ ORDER BY "Total Revenue" DESC;</pre>
                 </div>
               </div>
               <div class="report-preview-toolbar" id="chart-preview-toolbar">
-                <div class="report-preview-toolbar-left"></div>
+                <div class="report-preview-toolbar-left"><span class="report-data-timeframe"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="5"/><path d="M6 3v3l2 1.5"/></svg>Data from 2026</span></div>
                 <div class="report-preview-toolbar-right">
                   <button id="chart-download-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10V2M3.5 6.5L7 10l3.5-3.5M2 12h10"/></svg> Download</button>
-                  <button id="chart-create-chart-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="8" width="2.5" height="5" rx="0.5"/><rect x="5.75" y="4" width="2.5" height="9" rx="0.5"/><rect x="10.5" y="1" width="2.5" height="12" rx="0.5"/></svg> Create a chart</button>
+                  <button id="chart-create-chart-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="8" width="2.5" height="5" rx="0.5"/><rect x="5.75" y="4" width="2.5" height="9" rx="0.5"/><rect x="10.5" y="1" width="2.5" height="12" rx="0.5"/></svg> Create custom chart</button>
                   <div class="report-dropdown-wrap">
                     <button id="chart-add-dash-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="1.5" width="11" height="11" rx="1.5"/><path d="M1.5 5.5h11M5.5 5.5v7"/></svg> Add to dashboard</button>
                     <div class="report-dropdown report-dash-picker" id="chart-dash-picker">
@@ -10294,6 +10441,71 @@ LIMIT 10;</pre>
       <div class="ai-modal-footer">
         <button class="ai-btn" id="dash-new-modal-cancel" style="background:var(--color-white);border:1px solid var(--color-border-default);color:var(--color-text-primary);">Cancel</button>
         <button class="ai-btn ai-btn-primary" id="dash-new-modal-confirm">Create dashboard</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Chart type selection modal -->
+  <div class="chart-type-modal-overlay" id="chart-type-modal">
+    <div class="chart-type-modal">
+      <div class="chart-type-modal-header">
+        <div class="chart-type-modal-title">Create custom chart</div>
+        <button class="chart-type-modal-close" id="chart-type-modal-close"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l10 10M12 2L2 12"/></svg></button>
+      </div>
+      <div class="chart-type-modal-tabs">
+        <button class="chart-type-modal-tab is-active" data-tab="templates">Templates</button>
+        <button class="chart-type-modal-tab" data-tab="ai-agent">With AI agent</button>
+      </div>
+      <div class="chart-type-modal-body">
+        <div class="chart-type-panel is-active" id="chart-type-templates-panel">
+          <div class="chart-type-grid">
+            <div class="chart-type-card" data-chart="bar-vertical">
+              <div class="chart-type-card-preview"><svg viewBox="0 0 64 48" fill="none"><rect x="4" y="24" width="8" height="20" rx="1" fill="#3b82f6"/><rect x="16" y="12" width="8" height="32" rx="1" fill="#3b82f6"/><rect x="28" y="18" width="8" height="26" rx="1" fill="#3b82f6"/><rect x="40" y="6" width="8" height="38" rx="1" fill="#3b82f6"/><rect x="52" y="30" width="8" height="14" rx="1" fill="#3b82f6"/><line x1="0" y1="44" x2="64" y2="44" stroke="#e5e7eb" stroke-width="1"/></svg></div>
+              <div class="chart-type-card-label">Vertical bar</div>
+            </div>
+            <div class="chart-type-card" data-chart="bar-horizontal">
+              <div class="chart-type-card-preview"><svg viewBox="0 0 64 48" fill="none"><rect x="0" y="4" width="40" height="6" rx="1" fill="#3b82f6"/><rect x="0" y="14" width="56" height="6" rx="1" fill="#3b82f6"/><rect x="0" y="24" width="32" height="6" rx="1" fill="#3b82f6"/><rect x="0" y="34" width="48" height="6" rx="1" fill="#3b82f6"/></svg></div>
+              <div class="chart-type-card-label">Horizontal bar</div>
+            </div>
+            <div class="chart-type-card" data-chart="line">
+              <div class="chart-type-card-preview"><svg viewBox="0 0 64 48" fill="none"><polyline points="4,36 16,24 28,30 40,12 52,18 60,8" stroke="#3b82f6" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><circle cx="4" cy="36" r="2" fill="#3b82f6"/><circle cx="16" cy="24" r="2" fill="#3b82f6"/><circle cx="28" cy="30" r="2" fill="#3b82f6"/><circle cx="40" cy="12" r="2" fill="#3b82f6"/><circle cx="52" cy="18" r="2" fill="#3b82f6"/><circle cx="60" cy="8" r="2" fill="#3b82f6"/><line x1="0" y1="44" x2="64" y2="44" stroke="#e5e7eb" stroke-width="1"/></svg></div>
+              <div class="chart-type-card-label">Line chart</div>
+            </div>
+            <div class="chart-type-card" data-chart="pie">
+              <div class="chart-type-card-preview"><svg viewBox="0 0 48 48" fill="none"><path d="M24 4 A20 20 0 0 1 42 28 L24 24 Z" fill="#3b82f6"/><path d="M42 28 A20 20 0 0 1 12 40 L24 24 Z" fill="#60a5fa"/><path d="M12 40 A20 20 0 0 1 8 16 L24 24 Z" fill="#93c5fd"/><path d="M8 16 A20 20 0 0 1 24 4 L24 24 Z" fill="#bfdbfe"/></svg></div>
+              <div class="chart-type-card-label">Pie chart</div>
+            </div>
+            <div class="chart-type-card" data-chart="donut">
+              <div class="chart-type-card-preview"><svg viewBox="0 0 48 48" fill="none"><path d="M24 4 A20 20 0 0 1 42 28 L34 26 A12 12 0 0 0 24 12 Z" fill="#3b82f6"/><path d="M42 28 A20 20 0 0 1 12 40 L16 33 A12 12 0 0 0 34 26 Z" fill="#60a5fa"/><path d="M12 40 A20 20 0 0 1 8 16 L15 19 A12 12 0 0 0 16 33 Z" fill="#93c5fd"/><path d="M8 16 A20 20 0 0 1 24 4 L24 12 A12 12 0 0 0 15 19 Z" fill="#bfdbfe"/></svg></div>
+              <div class="chart-type-card-label">Donut chart</div>
+            </div>
+            <div class="chart-type-card" data-chart="area">
+              <div class="chart-type-card-preview"><svg viewBox="0 0 64 48" fill="none"><polygon points="4,36 16,24 28,30 40,12 52,18 60,8 60,44 4,44" fill="#dbeafe" stroke="none"/><polyline points="4,36 16,24 28,30 40,12 52,18 60,8" stroke="#3b82f6" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/><line x1="0" y1="44" x2="64" y2="44" stroke="#e5e7eb" stroke-width="1"/></svg></div>
+              <div class="chart-type-card-label">Area chart</div>
+            </div>
+            <div class="chart-type-card" data-chart="stacked-bar">
+              <div class="chart-type-card-preview"><svg viewBox="0 0 64 48" fill="none"><rect x="4" y="14" width="8" height="30" rx="1" fill="#bfdbfe"/><rect x="4" y="24" width="8" height="20" rx="1" fill="#3b82f6"/><rect x="16" y="6" width="8" height="38" rx="1" fill="#bfdbfe"/><rect x="16" y="20" width="8" height="24" rx="1" fill="#3b82f6"/><rect x="28" y="10" width="8" height="34" rx="1" fill="#bfdbfe"/><rect x="28" y="26" width="8" height="18" rx="1" fill="#3b82f6"/><rect x="40" y="4" width="8" height="40" rx="1" fill="#bfdbfe"/><rect x="40" y="18" width="8" height="26" rx="1" fill="#3b82f6"/><line x1="0" y1="44" x2="64" y2="44" stroke="#e5e7eb" stroke-width="1"/></svg></div>
+              <div class="chart-type-card-label">Stacked bar</div>
+            </div>
+            <div class="chart-type-card" data-chart="scatter">
+              <div class="chart-type-card-preview"><svg viewBox="0 0 64 48" fill="none"><circle cx="10" cy="32" r="3" fill="#3b82f6"/><circle cx="22" cy="18" r="3" fill="#3b82f6"/><circle cx="30" cy="28" r="3" fill="#3b82f6"/><circle cx="42" cy="10" r="3" fill="#3b82f6"/><circle cx="50" cy="22" r="3" fill="#3b82f6"/><circle cx="18" cy="38" r="3" fill="#60a5fa"/><circle cx="36" cy="36" r="3" fill="#60a5fa"/><circle cx="56" cy="14" r="3" fill="#60a5fa"/><line x1="0" y1="44" x2="64" y2="44" stroke="#e5e7eb" stroke-width="1"/></svg></div>
+              <div class="chart-type-card-label">Scatter plot</div>
+            </div>
+            <div class="chart-type-card" data-chart="table">
+              <div class="chart-type-card-preview"><svg viewBox="0 0 64 48" fill="none" stroke="#94a3b8" stroke-width="1"><rect x="2" y="4" width="60" height="40" rx="2"/><line x1="2" y1="14" x2="62" y2="14"/><line x1="2" y1="24" x2="62" y2="24"/><line x1="2" y1="34" x2="62" y2="34"/><line x1="22" y1="4" x2="22" y2="44"/><line x1="42" y1="4" x2="42" y2="44"/></svg></div>
+              <div class="chart-type-card-label">Data table</div>
+            </div>
+          </div>
+        </div>
+        <div class="chart-type-panel" id="chart-type-ai-panel">
+          <div class="chart-type-ai-option" id="chart-type-ai-btn">
+            <div class="chart-type-ai-icon"><svg viewBox="0 0 24 24" fill="none" stroke="var(--color-gray-9)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+            <div class="chart-type-ai-text">
+              <h4>Create with Terial AI</h4>
+              <p>Describe what you want and our AI agent will create the best chart for your data automatically.</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -15655,14 +15867,91 @@ LIMIT 10;</pre>
 
       sqlPre.addEventListener('input', updateSqlRunState);
 
-      // Create a chart button
+      // Create custom chart button opens modal
       var createChartBtn = document.getElementById('report-create-chart-btn');
+      var chartCreateChartBtn = document.getElementById('chart-create-chart-btn');
+      var chartTypeModal = document.getElementById('chart-type-modal');
+      var chartTypeModalClose = document.getElementById('chart-type-modal-close');
+      var chartTypeModalSource = 'report'; // track which page opened the modal
+
+      function openChartTypeModal(source) {
+        chartTypeModalSource = source;
+        if (chartTypeModal) chartTypeModal.classList.add('is-open');
+      }
       if (createChartBtn) {
-        createChartBtn.addEventListener('click', function() {
-          var name = (document.getElementById('report-detail-title').textContent || document.getElementById('report-detail-title').value || 'Chart').trim();
+        createChartBtn.addEventListener('click', function() { openChartTypeModal('report'); });
+      }
+      if (chartCreateChartBtn) {
+        chartCreateChartBtn.addEventListener('click', function() { openChartTypeModal('chart'); });
+      }
+      if (chartTypeModalClose) {
+        chartTypeModalClose.addEventListener('click', function() { chartTypeModal.classList.remove('is-open'); });
+      }
+      // Close modal on overlay click
+      if (chartTypeModal) {
+        chartTypeModal.addEventListener('click', function(e) {
+          if (e.target === chartTypeModal) chartTypeModal.classList.remove('is-open');
+        });
+      }
+
+      // Tab switching
+      document.querySelectorAll('.chart-type-modal-tab').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          document.querySelectorAll('.chart-type-modal-tab').forEach(function(t) { t.classList.remove('is-active'); });
+          document.querySelectorAll('.chart-type-panel').forEach(function(p) { p.classList.remove('is-active'); });
+          tab.classList.add('is-active');
+          var target = tab.getAttribute('data-tab');
+          if (target === 'templates') document.getElementById('chart-type-templates-panel').classList.add('is-active');
+          else document.getElementById('chart-type-ai-panel').classList.add('is-active');
+        });
+      });
+
+      // Template card click — navigate to chart detail with loading
+      document.querySelectorAll('.chart-type-card').forEach(function(card) {
+        card.addEventListener('click', function() {
+          chartTypeModal.classList.remove('is-open');
+          var titleEl = document.getElementById(chartTypeModalSource === 'report' ? 'report-detail-title' : 'chart-detail-title');
+          var name = (titleEl.textContent || titleEl.value || 'Chart').trim();
           document.getElementById('chart-detail-title').textContent = name;
           document.getElementById('chart-breadcrumb-name').textContent = name;
           showPage('charts-detail');
+        });
+      });
+
+      // AI agent option — enter edit mode and send prompt
+      var chartTypeAiBtn = document.getElementById('chart-type-ai-btn');
+      if (chartTypeAiBtn) {
+        chartTypeAiBtn.addEventListener('click', function() {
+          chartTypeModal.classList.remove('is-open');
+          var titleEl = document.getElementById(chartTypeModalSource === 'report' ? 'report-detail-title' : 'chart-detail-title');
+          var name = (titleEl.textContent || titleEl.value || 'Chart').trim();
+          document.getElementById('chart-detail-title').textContent = name;
+          document.getElementById('chart-breadcrumb-name').textContent = name;
+          showPage('charts-detail');
+          // Enter edit mode and send prompt
+          setTimeout(function() {
+            var chartEditBtn = document.getElementById('chart-chat-toggle');
+            if (chartEditBtn) chartEditBtn.click();
+            // Add AI prompt message to chat
+            setTimeout(function() {
+              var chatMessages = document.querySelector('#chart-chat-panel .report-chat-messages');
+              if (chatMessages) {
+                var msgDiv = document.createElement('div');
+                msgDiv.className = 'report-chat-msg is-user';
+                msgDiv.innerHTML = '<div class="report-chat-msg-bubble">I\'d like to make this into a chart</div>';
+                chatMessages.appendChild(msgDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                // Simulate AI response after short delay
+                setTimeout(function() {
+                  var aiMsg = document.createElement('div');
+                  aiMsg.className = 'report-chat-msg is-ai';
+                  aiMsg.innerHTML = '<div class="report-chat-msg-sender">Terial AI</div><div class="report-chat-msg-bubble">I\'ll help you create a chart from this data. What type of visualization would work best — a bar chart, line chart, or something else?</div>';
+                  chatMessages.appendChild(aiMsg);
+                  chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 800);
+              }
+            }, 300);
+          }, 200);
         });
       }
 
@@ -16037,6 +16326,71 @@ LIMIT 10;</pre>
       }
 
       if (cdashChatToggle) cdashChatToggle.addEventListener('click', enterDashEditMode);
+
+      // Drag-and-drop reordering
+      var dragSrcEl = null;
+      var cdashGridEl = document.getElementById('custom-dash-grid');
+
+      function handleDragStart(e) {
+        dragSrcEl = this;
+        this.style.opacity = '0.5';
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/html', this.outerHTML);
+      }
+      function handleDragOver(e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        var target = e.target.closest('.dash-card');
+        if (target && target !== dragSrcEl) {
+          target.style.borderColor = 'var(--color-gray-9)';
+          target.style.boxShadow = '0 0 0 2px var(--color-gray-9)';
+        }
+      }
+      function handleDragLeave(e) {
+        var target = e.target.closest('.dash-card');
+        if (target) { target.style.borderColor = ''; target.style.boxShadow = ''; }
+      }
+      function handleDrop(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var target = e.target.closest('.dash-card');
+        if (target && target !== dragSrcEl && cdashGridEl) {
+          // Swap positions
+          var allCards = Array.from(cdashGridEl.querySelectorAll('.dash-card'));
+          var srcIdx = allCards.indexOf(dragSrcEl);
+          var tgtIdx = allCards.indexOf(target);
+          if (srcIdx < tgtIdx) {
+            target.parentNode.insertBefore(dragSrcEl, target.nextSibling);
+          } else {
+            target.parentNode.insertBefore(dragSrcEl, target);
+          }
+        }
+        // Clean up styles
+        cdashGridEl.querySelectorAll('.dash-card').forEach(function(c) {
+          c.style.borderColor = '';
+          c.style.boxShadow = '';
+          c.style.opacity = '';
+        });
+      }
+      function handleDragEnd() {
+        this.style.opacity = '';
+        if (cdashGridEl) {
+          cdashGridEl.querySelectorAll('.dash-card').forEach(function(c) {
+            c.style.borderColor = '';
+            c.style.boxShadow = '';
+          });
+        }
+      }
+
+      if (cdashGridEl) {
+        cdashGridEl.querySelectorAll('.dash-card').forEach(function(card) {
+          card.addEventListener('dragstart', handleDragStart);
+          card.addEventListener('dragover', handleDragOver);
+          card.addEventListener('dragleave', handleDragLeave);
+          card.addEventListener('drop', handleDrop);
+          card.addEventListener('dragend', handleDragEnd);
+        });
+      }
 
       // Dashboard more button
       var cdashMoreBtn = document.getElementById('cdash-more-btn');
