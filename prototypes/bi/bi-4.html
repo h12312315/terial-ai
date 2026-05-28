@@ -920,7 +920,8 @@
       display: flex;
       align-items: flex-start;
       justify-content: space-between;
-      padding: var(--space-xl) var(--space-2xl) var(--space-2xl);
+      padding: var(--space-lg) var(--space-2xl) var(--space-lg);
+      margin-top: var(--space-md);
       background: var(--color-bg-page);
       flex-shrink: 0;
     }
@@ -938,7 +939,7 @@
       border-bottom-color: var(--color-border-default);
     }
     .report-detail-summary {
-      margin: 2px 0 0;
+      margin: var(--space-sm) 0 0;
       font-size: var(--font-body-sm-size);
       color: var(--color-text-tertiary);
       line-height: 1.5;
@@ -971,13 +972,18 @@
       font-weight: var(--font-weight-semibold);
       color: var(--color-text-primary);
       font-family: var(--font-family-base);
-      border: none;
-      border-bottom: 1px solid var(--color-primary-6);
-      padding: 0 0 1px;
-      background: transparent;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      padding: 6px 10px;
+      background: var(--color-white);
       outline: none;
       width: 100%;
       min-width: 200px;
+      box-shadow: var(--shadow-sm);
+    }
+    .report-detail-header .report-title-input:focus {
+      border-color: var(--color-primary-6);
+      box-shadow: 0 0 0 2px rgba(234,179,8,0.15);
     }
     .report-detail-breadcrumb {
       display: flex;
@@ -985,7 +991,7 @@
       gap: 8px;
       font-size: var(--font-body-md-size);
       color: var(--color-text-tertiary);
-      padding: var(--space-xl, 20px) var(--space-2xl) 0;
+      padding: var(--space-2xl, 24px) var(--space-2xl) 0;
       background: var(--color-bg-page);
       flex-shrink: 0;
     }
@@ -1196,16 +1202,17 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 16px;
+      padding: 8px 20px;
       background: var(--color-primary-6);
       border: none;
       border-radius: var(--radius-sm);
       font-family: var(--font-family-base);
-      font-size: var(--font-body-sm-size);
+      font-size: var(--font-body-md-size);
       font-weight: var(--font-weight-medium);
       color: var(--color-gray-9);
       cursor: pointer;
       margin-left: auto;
+      height: 36px;
     }
     .report-chat-toggle:hover { background: var(--color-primary-5, #e6b800); }
     .report-chat-toggle svg { width: 14px; height: 14px; }
@@ -1218,30 +1225,32 @@
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 16px;
+      padding: 8px 20px;
       background: var(--color-gray-9);
       border: none;
       border-radius: var(--radius-sm);
       font-family: var(--font-family-base);
-      font-size: var(--font-body-sm-size);
+      font-size: var(--font-body-md-size);
       font-weight: var(--font-weight-medium);
       color: var(--color-white);
       cursor: pointer;
+      height: 36px;
     }
     .report-save-btn:hover { background: var(--color-gray-8); }
     .report-cancel-btn {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 6px 16px;
+      padding: 8px 20px;
       background: var(--color-white);
       border: 1px solid var(--color-border-default);
       border-radius: var(--radius-sm);
       font-family: var(--font-family-base);
-      font-size: var(--font-body-sm-size);
+      font-size: var(--font-body-md-size);
       font-weight: var(--font-weight-medium);
       color: var(--color-text-secondary);
       cursor: pointer;
+      height: 36px;
     }
     .report-cancel-btn:hover { background: var(--color-gray-1); }
     .chart-content-card {
@@ -1251,10 +1260,47 @@
       padding: var(--space-xl);
       margin: var(--space-lg) var(--space-2xl);
     }
-    .custom-dash-detail-page.is-edit-mode .dash-card { cursor: grab; }
-    .custom-dash-detail-page.is-edit-mode .dash-card:active { cursor: grabbing; }
+    .custom-dash-detail-page.is-edit-mode .dash-card {
+      cursor: grab;
+      border-color: var(--color-primary-6);
+      box-shadow: 0 0 0 1px var(--color-primary-6);
+    }
+    .custom-dash-detail-page.is-edit-mode .dash-card:active { cursor: grabbing; opacity: 0.8; }
+    .custom-dash-detail-page.is-edit-mode .dash-card .dash-card-drag { display: flex; }
+    .dash-card-drag {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      padding: 0 0 var(--space-sm);
+      cursor: grab;
+      color: var(--color-text-tertiary);
+    }
+    .dash-card-drag:hover { color: var(--color-text-secondary); }
+    .dash-card-drag svg { width: 16px; height: 16px; }
     .dash-card-action-btn[data-action="edit"] { color: var(--color-text-secondary); }
     .dash-card-action-btn[data-action="edit"]:hover { color: var(--color-text-primary); }
+    .dash-card-title-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: var(--space-sm);
+    }
+    .dash-card-time-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      padding: 2px 8px;
+      font-size: 11px;
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-tertiary);
+      background: var(--color-gray-1);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-full, 100px);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .dash-card-time-badge svg { width: 10px; height: 10px; }
     @keyframes chat-msg-fade-in {
       from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
@@ -1507,9 +1553,10 @@
     .report-refresh-btn svg { width: 14px; height: 14px; }
     .report-preview-actions {
       display: flex;
+      align-items: center;
       gap: var(--space-sm);
     }
-    .report-preview-actions button {
+    .report-preview-actions button:not(.report-save-btn):not(.report-cancel-btn):not(.report-chat-toggle):not(.report-more-btn) {
       display: inline-flex;
       align-items: center;
       gap: 4px;
@@ -1607,7 +1654,7 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 28px; height: 28px;
+      width: 36px; height: 36px;
       background: var(--color-white);
       border: 1px solid var(--color-border-default);
       border-radius: var(--radius-sm);
@@ -2655,10 +2702,11 @@
     }
 
     .dash-header {
+      margin-top: var(--space-lg);
       margin-bottom: var(--space-2xl);
       display: flex;
       flex-wrap: wrap;
-      align-items: flex-start;
+      align-items: center;
     }
     .dash-header-left { flex: 1; min-width: 0; }
     .dash-chat-toggle {
@@ -3015,7 +3063,6 @@
       color: var(--color-text-secondary);
       text-transform: uppercase;
       letter-spacing: 0.04em;
-      margin-bottom: var(--space-sm);
     }
     .dash-card-value {
       font-size: 28px;
@@ -9289,8 +9336,9 @@ ORDER BY "Total Revenue" DESC;</pre>
             <div class="dash-grid" id="custom-dash-grid">
 
               <div class="dash-card span-2" draggable="true" data-board-type="report">
+                <div class="dash-card-drag"><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="5" cy="3" r="1.2"/><circle cx="11" cy="3" r="1.2"/><circle cx="5" cy="8" r="1.2"/><circle cx="11" cy="8" r="1.2"/><circle cx="5" cy="13" r="1.2"/><circle cx="11" cy="13" r="1.2"/></svg></div>
                 <div class="dash-card-actions"><button class="dash-card-action-btn" data-action="edit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg>Edit</button><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
-                <div class="dash-card-title">Top Deals This Quarter</div>
+                <div class="dash-card-title-row"><div class="dash-card-title">Top Deals This Quarter</div><span class="dash-card-time-badge"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="5"/><path d="M6 3v3l2 1.5"/></svg>Last 3 months</span></div>
                 <table class="dash-card-table">
                   <thead><tr><th>Deal</th><th>Rep</th><th>Value</th><th>Stage</th></tr></thead>
                   <tbody>
@@ -9303,8 +9351,9 @@ ORDER BY "Total Revenue" DESC;</pre>
               </div>
 
               <div class="dash-card span-2" draggable="true" data-board-type="chart">
+                <div class="dash-card-drag"><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="5" cy="3" r="1.2"/><circle cx="11" cy="3" r="1.2"/><circle cx="5" cy="8" r="1.2"/><circle cx="11" cy="8" r="1.2"/><circle cx="5" cy="13" r="1.2"/><circle cx="11" cy="13" r="1.2"/></svg></div>
                 <div class="dash-card-actions"><button class="dash-card-action-btn" data-action="edit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg>Edit</button><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
-                <div class="dash-card-title">Revenue by Rep</div>
+                <div class="dash-card-title-row"><div class="dash-card-title">Revenue by Rep</div><span class="dash-card-time-badge"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="5"/><path d="M6 3v3l2 1.5"/></svg>Year to date</span></div>
                 <table class="dash-card-table">
                   <thead><tr><th>Rep</th><th>Revenue</th></tr></thead>
                   <tbody>
@@ -9317,15 +9366,17 @@ ORDER BY "Total Revenue" DESC;</pre>
               </div>
 
               <div class="dash-card" draggable="true" data-board-type="chart">
+                <div class="dash-card-drag"><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="5" cy="3" r="1.2"/><circle cx="11" cy="3" r="1.2"/><circle cx="5" cy="8" r="1.2"/><circle cx="11" cy="8" r="1.2"/><circle cx="5" cy="13" r="1.2"/><circle cx="11" cy="13" r="1.2"/></svg></div>
                 <div class="dash-card-actions"><button class="dash-card-action-btn" data-action="edit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg>Edit</button><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
-                <div class="dash-card-title">Win Rate</div>
+                <div class="dash-card-title-row"><div class="dash-card-title">Win Rate</div><span class="dash-card-time-badge"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="5"/><path d="M6 3v3l2 1.5"/></svg>Last 3 months</span></div>
                 <div class="dash-stat-value" style="font-size:36px;font-weight:700;color:var(--color-text-primary);padding:16px 0;">47%</div>
                 <div style="color:#22c55e;font-size:13px;">+3% vs last quarter</div>
               </div>
 
               <div class="dash-card" draggable="true" data-board-type="chart">
+                <div class="dash-card-drag"><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="5" cy="3" r="1.2"/><circle cx="11" cy="3" r="1.2"/><circle cx="5" cy="8" r="1.2"/><circle cx="11" cy="8" r="1.2"/><circle cx="5" cy="13" r="1.2"/><circle cx="11" cy="13" r="1.2"/></svg></div>
                 <div class="dash-card-actions"><button class="dash-card-action-btn" data-action="edit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg>Edit</button><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
-                <div class="dash-card-title">Revenue Trend</div>
+                <div class="dash-card-title-row"><div class="dash-card-title">Revenue Trend</div><span class="dash-card-time-badge"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="5"/><path d="M6 3v3l2 1.5"/></svg>Last 7 days</span></div>
                 <table class="dash-card-table">
                   <thead><tr><th>Month</th><th>Revenue</th></tr></thead>
                   <tbody>
@@ -9339,8 +9390,9 @@ ORDER BY "Total Revenue" DESC;</pre>
               </div>
 
               <div class="dash-card" draggable="true" data-board-type="report">
+                <div class="dash-card-drag"><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="5" cy="3" r="1.2"/><circle cx="11" cy="3" r="1.2"/><circle cx="5" cy="8" r="1.2"/><circle cx="11" cy="8" r="1.2"/><circle cx="5" cy="13" r="1.2"/><circle cx="11" cy="13" r="1.2"/></svg></div>
                 <div class="dash-card-actions"><button class="dash-card-action-btn" data-action="edit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg>Edit</button><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
-                <div class="dash-card-title">Pipeline by Stage</div>
+                <div class="dash-card-title-row"><div class="dash-card-title">Pipeline by Stage</div><span class="dash-card-time-badge"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="5"/><path d="M6 3v3l2 1.5"/></svg>Last month</span></div>
                 <table class="dash-card-table">
                   <thead><tr><th>Stage</th><th>Deals</th><th>Value</th></tr></thead>
                   <tbody>
@@ -9353,8 +9405,9 @@ ORDER BY "Total Revenue" DESC;</pre>
               </div>
 
               <div class="dash-card" draggable="true" data-board-type="chart">
+                <div class="dash-card-drag"><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="5" cy="3" r="1.2"/><circle cx="11" cy="3" r="1.2"/><circle cx="5" cy="8" r="1.2"/><circle cx="11" cy="8" r="1.2"/><circle cx="5" cy="13" r="1.2"/><circle cx="11" cy="13" r="1.2"/></svg></div>
                 <div class="dash-card-actions"><button class="dash-card-action-btn" data-action="edit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg>Edit</button><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
-                <div class="dash-card-title">Monthly Bookings</div>
+                <div class="dash-card-title-row"><div class="dash-card-title">Monthly Bookings</div><span class="dash-card-time-badge"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="5"/><path d="M6 3v3l2 1.5"/></svg>Year to date</span></div>
                 <div class="dash-stat-value" style="font-size:36px;font-weight:700;color:var(--color-text-primary);padding:16px 0;">$1.39M</div>
                 <div style="color:#22c55e;font-size:13px;">+12% vs last month</div>
               </div>
@@ -15447,8 +15500,10 @@ LIMIT 10;</pre>
       var reportIsEditing = false;
       var reportOriginalTitle = '';
 
-      // SQL toggle bar
+      // SQL toggle bar — default open
       if (reportSqlToggleBar) {
+        reportSqlToggleBar.classList.add('is-open');
+        if (reportSqlContent) reportSqlContent.classList.add('is-open');
         reportSqlToggleBar.addEventListener('click', function() {
           reportSqlToggleBar.classList.toggle('is-open');
           if (reportSqlContent) reportSqlContent.classList.toggle('is-open');
@@ -15463,7 +15518,7 @@ LIMIT 10;</pre>
         // Show chat + SQL panels
         chatPanel.classList.remove('is-collapsed');
         if (reportSqlPanel) reportSqlPanel.classList.add('is-visible');
-        // Open SQL content by default
+        // Ensure SQL content is open
         if (reportSqlToggleBar) reportSqlToggleBar.classList.add('is-open');
         if (reportSqlContent) reportSqlContent.classList.add('is-open');
 
@@ -15811,8 +15866,10 @@ LIMIT 10;</pre>
       var chartIsEditing = false;
       var chartOriginalTitle = '';
 
-      // SQL toggle bar
+      // SQL toggle bar — default open
       if (chartSqlToggleBar) {
+        chartSqlToggleBar.classList.add('is-open');
+        if (chartSqlContent) chartSqlContent.classList.add('is-open');
         chartSqlToggleBar.addEventListener('click', function() {
           chartSqlToggleBar.classList.toggle('is-open');
           if (chartSqlContent) chartSqlContent.classList.toggle('is-open');
@@ -15949,7 +16006,7 @@ LIMIT 10;</pre>
           input.className = 'dash-title-input';
           input.id = 'custom-dash-title';
           input.value = cdashOriginalTitle;
-          input.style.cssText = 'font-size:var(--font-h4-size,20px);font-weight:var(--font-weight-semibold);color:var(--color-text-primary);font-family:var(--font-family-base);border:none;border-bottom:1px solid var(--color-primary-6);padding:0 0 1px;background:transparent;outline:none;width:100%;min-width:200px;';
+          input.style.cssText = 'font-size:var(--font-h4-size,20px);font-weight:var(--font-weight-semibold);color:var(--color-text-primary);font-family:var(--font-family-base);border:1px solid var(--color-border-default);border-radius:var(--radius-sm);padding:6px 10px;background:var(--color-white);outline:none;width:100%;min-width:200px;box-shadow:var(--shadow-sm);';
           titleEl.replaceWith(input);
           input.focus();
           input.select();
