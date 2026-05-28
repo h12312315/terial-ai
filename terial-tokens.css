@@ -9,7 +9,16 @@
 
 :root {
   /* ---------- Brand / Primary (Yellow) ---------- */
+  --color-primary-0: #fff9db;
+  --color-primary-1: #fff3bf;
+  --color-primary-2: #ffec99;
+  --color-primary-3: #ffe066;
+  --color-primary-4: #ffd43b;
+  --color-primary-5: #fcc419;
   --color-primary-6: #ffca00;
+  --color-primary-7: #e3b400;
+  --color-primary-8: #c69e00;
+  --color-primary-9: #a98800;
   --color-primary: var(--color-primary-6);
 
   /* ---------- Gray scale (cool, slightly blue) ---------- */
@@ -25,24 +34,34 @@
 
   /* ---------- Green ---------- */
   --color-green-0: #e5feee;
+  --color-green-1: #d3f9e0;
   --color-green-5: #16b364;
   --color-green-6: #099250;
-  --color-green-7: #1ac455;
+  --color-green-7: #12b886;
   --color-green-8: #087443;
   --color-green-9: #00963c;
 
   /* ---------- Blue ---------- */
   --color-blue-0: #e7f5ff;
+  --color-blue-1: #d0ebff;
   --color-blue-5: #339af0;
   --color-blue-7: #1c7ed6;
+  --color-blue-9: #1864ab;
   --color-blue-dark-6: #155eef;
 
   /* ---------- Red (Deep Red) ---------- */
   --color-red-0: #ffeaec;
+  --color-red-1: #ffd4d8;
+  --color-red-7: #c91a25;
   --color-red-8: #b31220;
+  --color-red-9: #b31220;
 
   /* ---------- Tomato / Orange ---------- */
   --color-tomato-0: #fff0e4;
+  --color-orange-0: #fff0e4;
+  --color-orange-1: #ffe0cc;
+  --color-orange-7: #e8590c;
+  --color-orange-9: #e62e05;
   --color-orange-dark-6: #e62e05;
 
   /* ---------- Base ---------- */

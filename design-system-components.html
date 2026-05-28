@@ -122,6 +122,528 @@
       border-color: var(--color-primary-6);
       color: var(--color-gray-9);
     }
+
+    /* ============================================================
+       NEW COMPONENT STYLES (inline, not in terial-tokens.css)
+       ============================================================ */
+
+    /* ---------- Button variants (extended) ---------- */
+    .btn-subtle {
+      background: transparent;
+      color: var(--color-text-secondary);
+      border-color: transparent;
+    }
+    .btn-subtle:hover { background: var(--color-gray-2); }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--color-text-primary);
+      border-color: var(--color-border-secondary-button);
+    }
+    .btn-outline:hover { background: var(--color-gray-1); }
+
+    .btn-destructive {
+      background: var(--color-red-8);
+      color: var(--color-white);
+      border-color: var(--color-red-8);
+    }
+    .btn-destructive:hover { filter: brightness(1.1); }
+
+    .btn-destructive-outline {
+      background: transparent;
+      color: var(--color-red-8);
+      border-color: var(--color-red-8);
+    }
+    .btn-destructive-outline:hover { background: var(--color-red-0); }
+
+    .btn:disabled, .btn.is-disabled {
+      background: var(--color-gray-2);
+      color: var(--color-text-disabled);
+      border-color: var(--color-gray-3);
+      cursor: not-allowed;
+      filter: none;
+    }
+
+    .btn-group {
+      display: inline-flex;
+    }
+    .btn-group .btn {
+      border-radius: 0;
+    }
+    .btn-group .btn:first-child {
+      border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+    }
+    .btn-group .btn:last-child {
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+    }
+    .btn-group .btn + .btn {
+      margin-left: -1px;
+    }
+
+    /* ---------- Radio buttons ---------- */
+    .radio {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border: 2px solid var(--color-gray-4);
+      border-radius: 50%;
+      background: var(--color-white);
+      cursor: pointer;
+      position: relative;
+      vertical-align: middle;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+    .radio:hover { border-color: var(--color-gray-5); }
+    .radio:checked {
+      border-color: var(--color-primary-6);
+      background: var(--color-primary-6);
+    }
+    .radio:checked::after {
+      content: "";
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--color-white);
+    }
+    .radio:disabled {
+      border-color: var(--color-gray-3);
+      background: var(--color-gray-2);
+      cursor: not-allowed;
+    }
+    .radio:disabled:checked {
+      background: var(--color-gray-4);
+      border-color: var(--color-gray-4);
+    }
+
+    .radio-group {
+      display: flex;
+      gap: var(--space-xl);
+    }
+    .radio-group.vertical {
+      flex-direction: column;
+      gap: var(--space-lg);
+    }
+    .radio-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+
+    /* ---------- Select / Dropdown ---------- */
+    .select-wrapper {
+      position: relative;
+      display: block;
+    }
+    .select {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      padding: var(--button-padding-y-lg) var(--input-padding-x);
+      padding-right: 36px;
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      line-height: var(--font-body-md-line);
+      color: var(--color-text-primary);
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--input-radius);
+      outline: none;
+      appearance: none;
+      -webkit-appearance: none;
+      cursor: pointer;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .select:focus {
+      border-color: var(--color-blue-7);
+      box-shadow: 0 0 0 3px rgba(28, 126, 214, 0.15);
+    }
+    .select.select-filled {
+      background: var(--color-gray-2);
+      border-color: var(--color-gray-2);
+    }
+    .select.select-error {
+      border-color: var(--color-red-8);
+      box-shadow: 0 0 0 3px rgba(179, 18, 32, 0.1);
+    }
+    .select:disabled {
+      background: var(--color-gray-2);
+      color: var(--color-text-disabled);
+      cursor: not-allowed;
+    }
+    .select-chevron {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: var(--color-gray-5);
+    }
+    .field-error {
+      display: block;
+      margin-top: var(--space-xs);
+      font-size: var(--font-body-sm-size);
+      color: var(--color-red-8);
+    }
+
+    .dropdown-menu {
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-md);
+      padding: var(--space-xs) 0;
+      min-width: 200px;
+    }
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: var(--space-sm) var(--space-lg);
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-primary);
+      cursor: pointer;
+      transition: background 0.1s ease;
+    }
+    .dropdown-item:hover, .dropdown-item.is-hover {
+      background: var(--color-gray-1);
+    }
+    .dropdown-item.is-selected {
+      background: var(--color-primary-0);
+      font-weight: var(--font-weight-medium);
+    }
+
+    /* ---------- Textarea ---------- */
+    .textarea {
+      display: block;
+      width: 100%;
+      box-sizing: border-box;
+      padding: var(--button-padding-y-lg) var(--input-padding-x);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      line-height: var(--font-body-md-line);
+      color: var(--color-text-primary);
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--input-radius);
+      outline: none;
+      resize: vertical;
+      min-height: 80px;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .textarea::placeholder { color: var(--color-gray-5); }
+    .textarea:focus {
+      border-color: var(--color-blue-7);
+      box-shadow: 0 0 0 3px rgba(28, 126, 214, 0.15);
+    }
+    .textarea.textarea-filled {
+      background: var(--color-gray-2);
+      border-color: var(--color-gray-2);
+    }
+    .textarea.textarea-error {
+      border-color: var(--color-red-8);
+      box-shadow: 0 0 0 3px rgba(179, 18, 32, 0.1);
+    }
+    .textarea:disabled {
+      background: var(--color-gray-2);
+      color: var(--color-text-disabled);
+      cursor: not-allowed;
+    }
+
+    /* ---------- Modal ---------- */
+    .modal-overlay {
+      position: relative;
+      background: rgba(33, 37, 41, 0.5);
+      border-radius: var(--radius-md);
+      padding: var(--space-6xl) var(--space-3xl);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal {
+      background: var(--color-white);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-lg);
+      padding: var(--space-2xl);
+      width: 100%;
+      max-width: 400px;
+    }
+    .modal-icon {
+      width: 48px; height: 48px;
+      border-radius: 50%;
+      display: grid; place-items: center;
+      margin-bottom: var(--space-xl);
+    }
+    .modal-icon.danger {
+      background: var(--color-red-0);
+      color: var(--color-red-8);
+    }
+    .modal-title {
+      font-size: var(--font-h5-size);
+      font-weight: var(--font-h5-weight);
+      line-height: var(--font-h5-line);
+      margin: 0 0 var(--space-sm) 0;
+    }
+    .modal-desc {
+      font-size: var(--font-body-md-size);
+      line-height: var(--font-body-md-line);
+      color: var(--color-text-tertiary);
+      margin: 0 0 var(--space-2xl) 0;
+    }
+    .modal-actions {
+      display: flex;
+      gap: var(--space-lg);
+      justify-content: flex-end;
+    }
+
+    /* ---------- Alert / Notification ---------- */
+    .alert {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-lg);
+      padding: var(--space-xl);
+      border-radius: var(--radius-md);
+      border: 1px solid transparent;
+    }
+    .alert-content { flex: 1; }
+    .alert-title {
+      font-size: var(--font-body-md-semi-size);
+      font-weight: var(--font-weight-semibold);
+      line-height: var(--font-body-md-semi-line);
+      margin: 0 0 var(--space-xs) 0;
+    }
+    .alert-desc {
+      font-size: var(--font-body-sm-size);
+      line-height: var(--font-body-sm-line);
+      margin: 0;
+    }
+    .alert-close {
+      background: none; border: none; cursor: pointer;
+      color: inherit; padding: 2px;
+      font-size: 18px; line-height: 1;
+      opacity: 0.6;
+    }
+    .alert-close:hover { opacity: 1; }
+    .alert-action {
+      display: inline-block;
+      margin-top: var(--space-sm);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-semibold);
+      color: inherit;
+      text-decoration: underline;
+      cursor: pointer;
+      background: none; border: none; padding: 0;
+    }
+    .alert-primary {
+      background: var(--color-primary-0);
+      border-color: var(--color-primary-4);
+      color: var(--color-gray-9);
+    }
+    .alert-destructive {
+      background: var(--color-red-0);
+      border-color: var(--color-red-8);
+      color: var(--color-red-8);
+    }
+
+    /* ---------- Pagination ---------- */
+    .pagination {
+      display: flex;
+      align-items: center;
+      gap: var(--space-xs);
+    }
+    .page-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 32px; height: 32px;
+      padding: 0 var(--space-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background 0.1s ease;
+    }
+    .page-btn:hover { background: var(--color-gray-1); }
+    .page-btn.is-active {
+      background: var(--color-primary-6);
+      border-color: var(--color-primary-6);
+      color: var(--color-gray-9);
+      font-weight: var(--font-weight-semibold);
+    }
+    .page-btn:disabled {
+      color: var(--color-text-disabled);
+      cursor: not-allowed;
+      background: var(--color-gray-1);
+    }
+    .page-ellipsis {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 32px; height: 32px;
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-tertiary);
+    }
+    .pagination-info {
+      font-size: var(--font-body-sm-size);
+      color: var(--color-text-tertiary);
+      margin-left: var(--space-lg);
+    }
+
+    /* ---------- Loader ---------- */
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    @keyframes dots-bounce {
+      0%, 80%, 100% { transform: scale(0); }
+      40% { transform: scale(1); }
+    }
+    @keyframes bars-pulse {
+      0%, 40%, 100% { transform: scaleY(0.4); }
+      20% { transform: scaleY(1); }
+    }
+
+    .loader-spinner {
+      width: 28px; height: 28px;
+      border: 3px solid var(--color-gray-3);
+      border-top-color: var(--color-primary-6);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+
+    .loader-dots {
+      display: inline-flex;
+      gap: 4px;
+      align-items: center;
+    }
+    .loader-dots span {
+      width: 8px; height: 8px;
+      background: var(--color-primary-6);
+      border-radius: 50%;
+      animation: dots-bounce 1.4s infinite ease-in-out both;
+    }
+    .loader-dots span:nth-child(1) { animation-delay: -0.32s; }
+    .loader-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+    .loader-bars {
+      display: inline-flex;
+      gap: 3px;
+      align-items: center;
+      height: 24px;
+    }
+    .loader-bars span {
+      width: 4px; height: 100%;
+      background: var(--color-primary-6);
+      border-radius: 2px;
+      animation: bars-pulse 1.2s infinite ease-in-out;
+    }
+    .loader-bars span:nth-child(1) { animation-delay: -0.24s; }
+    .loader-bars span:nth-child(2) { animation-delay: -0.12s; }
+    .loader-bars span:nth-child(3) { animation-delay: 0s; }
+    .loader-bars span:nth-child(4) { animation-delay: 0.12s; }
+
+    /* ---------- Divider ---------- */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--color-border-default);
+      margin: var(--space-xl) 0;
+    }
+    .divider-dashed { border-top-style: dashed; }
+    .divider-dotted { border-top-style: dotted; }
+    .divider-xs { margin: var(--space-xs) 0; }
+    .divider-sm { margin: var(--space-sm) 0; }
+    .divider-md { margin: var(--space-xl) 0; }
+
+    .divider-vertical {
+      display: inline-block;
+      width: 1px;
+      height: 40px;
+      background: var(--color-border-default);
+      vertical-align: middle;
+      border: none;
+      margin: 0 var(--space-xl);
+    }
+
+    .divider-label {
+      display: flex;
+      align-items: center;
+      gap: var(--space-lg);
+      color: var(--color-text-tertiary);
+      font-size: var(--font-body-sm-size);
+    }
+    .divider-label::before,
+    .divider-label::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--color-border-default);
+    }
+
+    /* ---------- Action Icon ---------- */
+    .action-icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      padding: 0;
+      border: 1px solid transparent;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease;
+      color: var(--color-text-secondary);
+      background: transparent;
+    }
+    .action-icon svg { width: 18px; height: 18px; }
+
+    .action-icon.ai-transparent { background: transparent; }
+    .action-icon.ai-transparent:hover { background: var(--color-gray-2); }
+
+    .action-icon.ai-subtle { background: var(--color-gray-1); }
+    .action-icon.ai-subtle:hover { background: var(--color-gray-2); }
+
+    .action-icon.ai-filled {
+      background: var(--color-gray-9);
+      color: var(--color-white);
+    }
+    .action-icon.ai-filled:hover { filter: brightness(1.2); }
+
+    .action-icon.ai-light {
+      background: var(--color-gray-2);
+      color: var(--color-text-primary);
+    }
+    .action-icon.ai-light:hover { background: var(--color-gray-3); }
+
+    .action-icon.ai-outline {
+      background: transparent;
+      border-color: var(--color-border-secondary-button);
+      color: var(--color-text-primary);
+    }
+    .action-icon.ai-outline:hover { background: var(--color-gray-1); }
+
+    .action-icon.ai-default {
+      background: var(--color-white);
+      border-color: var(--color-border-default);
+      color: var(--color-text-primary);
+    }
+    .action-icon.ai-default:hover { background: var(--color-gray-1); }
+
+    .action-icon.ai-primary {
+      background: var(--color-primary-6);
+      color: var(--color-gray-9);
+      border-color: var(--color-primary-6);
+    }
+    .action-icon.ai-primary:hover { filter: brightness(0.96); }
+
+    .action-icon.ai-destructive {
+      background: var(--color-red-8);
+      color: var(--color-white);
+      border-color: var(--color-red-8);
+    }
+    .action-icon.ai-destructive:hover { filter: brightness(1.1); }
   </style>
 </head>
 <body>
@@ -140,9 +662,18 @@
       <a href="#badges">Badges</a>
       <a href="#breadcrumb">Breadcrumb</a>
       <a href="#forms">Forms</a>
+      <a href="#radio">Radio Buttons</a>
+      <a href="#select">Select / Dropdown</a>
+      <a href="#textarea">Text Area</a>
       <a href="#table">Table</a>
       <a href="#tabs">Tabs</a>
       <a href="#tab-box">Tab Box</a>
+      <a href="#modal">Modal</a>
+      <a href="#alert">Alert / Notification</a>
+      <a href="#pagination">Pagination</a>
+      <a href="#loader">Loader</a>
+      <a href="#divider">Divider</a>
+      <a href="#action-icon">Action Icon</a>
       <a href="#shadows">Shadows</a>
       <a href="#usage">Usage</a>
     </nav>
@@ -153,18 +684,44 @@
         <h2 class="t-h4">Buttons</h2>
         <span class="anchor">01 · Components</span>
       </div>
-      <div class="demo">
-        <span class="demo-label">Variants</span>
-        <div class="demo-row">
-          <button class="btn btn-primary">Primary action</button>
-          <button class="btn btn-dark">Dark action</button>
-          <button class="btn btn-secondary">Secondary</button>
-          <button class="btn btn-ghost">Ghost</button>
+      <div class="grid grid-2">
+        <div class="demo">
+          <span class="demo-label">Variants</span>
+          <div class="demo-row" style="margin-bottom: var(--space-xl);">
+            <button class="btn btn-primary">Filled</button>
+            <button class="btn btn-dark">Dark</button>
+            <button class="btn btn-secondary">Secondary</button>
+            <button class="btn btn-ghost">Ghost</button>
+          </div>
+          <div class="demo-row" style="margin-bottom: var(--space-xl);">
+            <button class="btn btn-subtle">Subtle</button>
+            <button class="btn btn-outline">Outline</button>
+            <button class="btn btn-destructive">Destructive</button>
+            <button class="btn btn-destructive-outline">Destructive Outline</button>
+          </div>
+          <span class="demo-label" style="margin-top: var(--space-lg);">Disabled</span>
+          <div class="demo-row">
+            <button class="btn is-disabled" disabled>Disabled</button>
+            <button class="btn btn-primary is-disabled" disabled>Disabled Primary</button>
+          </div>
         </div>
-        <span class="demo-label" style="margin-top: var(--space-2xl);">Sizes</span>
-        <div class="demo-row">
-          <button class="btn btn-primary">Default</button>
-          <button class="btn btn-primary btn-sm">Small</button>
+        <div class="demo">
+          <span class="demo-label">Sizes</span>
+          <div class="demo-row" style="margin-bottom: var(--space-2xl);">
+            <button class="btn btn-primary">Default</button>
+            <button class="btn btn-primary btn-sm">Small</button>
+          </div>
+          <span class="demo-label">Button Group</span>
+          <div class="demo-row">
+            <div class="btn-group">
+              <button class="btn btn-secondary">Left</button>
+              <button class="btn btn-secondary">Right</button>
+            </div>
+            <div class="btn-group">
+              <button class="btn btn-primary">Save</button>
+              <button class="btn btn-dark">Cancel</button>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -265,10 +822,178 @@
     </section>
 
     <!-- ============================================================ -->
+    <section class="section" id="radio">
+      <div class="section-head">
+        <h2 class="t-h4">Radio Buttons</h2>
+        <span class="anchor">05 · Components</span>
+      </div>
+      <div class="grid grid-2">
+        <div class="demo">
+          <span class="demo-label">States</span>
+          <div class="demo-row" style="margin-bottom: var(--space-xl);">
+            <div class="radio-item">
+              <input class="radio" type="radio" name="radio-demo-states" id="r-default" />
+              <label for="r-default" class="t-body-md">Default</label>
+            </div>
+            <div class="radio-item">
+              <input class="radio" type="radio" name="radio-demo-states" id="r-selected" checked />
+              <label for="r-selected" class="t-body-md">Selected</label>
+            </div>
+            <div class="radio-item">
+              <input class="radio" type="radio" name="radio-demo-disabled" id="r-disabled" disabled />
+              <label for="r-disabled" class="t-body-md" style="color: var(--color-text-disabled);">Disabled</label>
+            </div>
+            <div class="radio-item">
+              <input class="radio" type="radio" name="radio-demo-disabled-checked" id="r-disabled-checked" disabled checked />
+              <label for="r-disabled-checked" class="t-body-md" style="color: var(--color-text-disabled);">Disabled checked</label>
+            </div>
+          </div>
+        </div>
+        <div class="demo">
+          <span class="demo-label">Horizontal Group</span>
+          <div class="radio-group" style="margin-bottom: var(--space-2xl);">
+            <div class="radio-item">
+              <input class="radio" type="radio" name="radio-h" id="rh1" checked />
+              <label for="rh1" class="t-body-md">Monthly</label>
+            </div>
+            <div class="radio-item">
+              <input class="radio" type="radio" name="radio-h" id="rh2" />
+              <label for="rh2" class="t-body-md">Quarterly</label>
+            </div>
+            <div class="radio-item">
+              <input class="radio" type="radio" name="radio-h" id="rh3" />
+              <label for="rh3" class="t-body-md">Annually</label>
+            </div>
+          </div>
+          <span class="demo-label">Vertical Group</span>
+          <div class="radio-group vertical">
+            <div class="radio-item">
+              <input class="radio" type="radio" name="radio-v" id="rv1" checked />
+              <label for="rv1" class="t-body-md">Email</label>
+            </div>
+            <div class="radio-item">
+              <input class="radio" type="radio" name="radio-v" id="rv2" />
+              <label for="rv2" class="t-body-md">SMS</label>
+            </div>
+            <div class="radio-item">
+              <input class="radio" type="radio" name="radio-v" id="rv3" />
+              <label for="rv3" class="t-body-md">Push notification</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="section" id="select">
+      <div class="section-head">
+        <h2 class="t-h4">Select / Dropdown</h2>
+        <span class="anchor">06 · Components</span>
+      </div>
+      <div class="grid grid-2">
+        <div class="demo">
+          <span class="demo-label">Default</span>
+          <div style="margin-bottom: var(--space-xl);">
+            <label class="label">Property type</label>
+            <div class="select-wrapper">
+              <select class="select">
+                <option value="" disabled selected>Select a type...</option>
+                <option>Residential</option>
+                <option>Commercial</option>
+                <option>Industrial</option>
+              </select>
+              <svg class="select-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 6 8 10 12 6"/></svg>
+            </div>
+          </div>
+          <span class="demo-label">Filled</span>
+          <div style="margin-bottom: var(--space-xl);">
+            <label class="label">Status</label>
+            <div class="select-wrapper">
+              <select class="select select-filled">
+                <option>Active</option>
+                <option>Pending</option>
+                <option>Archived</option>
+              </select>
+              <svg class="select-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 6 8 10 12 6"/></svg>
+            </div>
+          </div>
+          <span class="demo-label">Error</span>
+          <div style="margin-bottom: var(--space-xl);">
+            <label class="label">Category</label>
+            <div class="select-wrapper">
+              <select class="select select-error">
+                <option value="" disabled selected>Select a category...</option>
+              </select>
+              <svg class="select-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 6 8 10 12 6"/></svg>
+            </div>
+            <span class="field-error">Category is required</span>
+          </div>
+          <span class="demo-label">Disabled</span>
+          <div>
+            <label class="label" style="color: var(--color-text-disabled);">Region</label>
+            <div class="select-wrapper">
+              <select class="select" disabled>
+                <option>Not available</option>
+              </select>
+              <svg class="select-chevron" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 6 8 10 12 6"/></svg>
+            </div>
+          </div>
+        </div>
+        <div class="demo">
+          <span class="demo-label">Dropdown Menu</span>
+          <div class="dropdown-menu">
+            <div class="dropdown-item">Residential</div>
+            <div class="dropdown-item is-hover">Commercial</div>
+            <div class="dropdown-item is-selected">Industrial
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-left:auto;"><polyline points="3 8 7 12 13 4"/></svg>
+            </div>
+            <div class="dropdown-item">Mixed Use</div>
+            <div class="dropdown-item">Vacant Land</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="section" id="textarea">
+      <div class="section-head">
+        <h2 class="t-h4">Text Area</h2>
+        <span class="anchor">07 · Components</span>
+      </div>
+      <div class="grid grid-2">
+        <div class="demo">
+          <span class="demo-label">Default</span>
+          <div style="margin-bottom: var(--space-xl);">
+            <label class="label">Description</label>
+            <textarea class="textarea" placeholder="Enter a description..."></textarea>
+          </div>
+          <span class="demo-label">Filled</span>
+          <div>
+            <label class="label">Notes</label>
+            <textarea class="textarea textarea-filled" placeholder="Add notes..."></textarea>
+          </div>
+        </div>
+        <div class="demo">
+          <span class="demo-label">Error</span>
+          <div style="margin-bottom: var(--space-xl);">
+            <label class="label">Comments</label>
+            <textarea class="textarea textarea-error" placeholder="Required field..."></textarea>
+            <span class="field-error">This field is required</span>
+          </div>
+          <span class="demo-label">Disabled</span>
+          <div>
+            <label class="label" style="color: var(--color-text-disabled);">Locked field</label>
+            <textarea class="textarea" disabled placeholder="Not editable"></textarea>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
     <section class="section" id="table">
       <div class="section-head">
         <h2 class="t-h4">Table</h2>
-        <span class="anchor">05 · Components</span>
+        <span class="anchor">08 · Components</span>
       </div>
       <div class="card" style="overflow:hidden;">
         <table class="table">
@@ -319,7 +1044,7 @@
     <section class="section" id="tabs">
       <div class="section-head">
         <h2 class="t-h4">Tabs</h2>
-        <span class="anchor">06 · Components</span>
+        <span class="anchor">09 · Components</span>
       </div>
       <div class="demo">
         <div class="tabs">
@@ -336,7 +1061,7 @@
     <section class="section" id="tab-box">
       <div class="section-head">
         <h2 class="t-h4">Tab Box</h2>
-        <span class="anchor">07 · Components</span>
+        <span class="anchor">10 · Components</span>
       </div>
       <div class="demo">
         <span class="demo-label">Default</span>
@@ -359,10 +1084,267 @@
     </section>
 
     <!-- ============================================================ -->
+    <section class="section" id="modal">
+      <div class="section-head">
+        <h2 class="t-h4">Modal</h2>
+        <span class="anchor">11 · Components</span>
+      </div>
+      <div class="grid grid-2">
+        <div class="demo" style="padding: 0; overflow: hidden;">
+          <span class="demo-label" style="padding: var(--space-2xl) var(--space-2xl) 0;">Confirmation Dialog</span>
+          <div class="modal-overlay" style="margin-top: var(--space-lg);">
+            <div class="modal">
+              <div class="modal-icon danger">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+              </div>
+              <h3 class="modal-title">Delete property?</h3>
+              <p class="modal-desc">This action cannot be undone. All data associated with this property will be permanently removed.</p>
+              <div class="modal-actions">
+                <button class="btn btn-secondary">Cancel</button>
+                <button class="btn btn-destructive">Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="demo" style="padding: 0; overflow: hidden;">
+          <span class="demo-label" style="padding: var(--space-2xl) var(--space-2xl) 0;">Form Modal</span>
+          <div class="modal-overlay" style="margin-top: var(--space-lg);">
+            <div class="modal">
+              <h3 class="modal-title">Add new user</h3>
+              <p class="modal-desc">Fill in the details to invite a new team member.</p>
+              <div style="margin-bottom: var(--space-lg);">
+                <label class="label">Full name</label>
+                <input class="input" type="text" placeholder="Jane Doe" />
+              </div>
+              <div style="margin-bottom: var(--space-2xl);">
+                <label class="label">Email</label>
+                <input class="input" type="email" placeholder="jane@company.com" />
+              </div>
+              <div class="modal-actions">
+                <button class="btn btn-secondary">Cancel</button>
+                <button class="btn btn-primary">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <p class="t-body-sm" style="color: var(--color-text-tertiary); margin-top: var(--space-lg);">
+        Overlay uses <code style="background:var(--color-gray-2);padding:2px 6px;border-radius:4px;font-family:ui-monospace,Menlo,monospace;">rgba(33, 37, 41, 0.5)</code> backdrop. In production, use a fixed-position overlay with <code style="background:var(--color-gray-2);padding:2px 6px;border-radius:4px;font-family:ui-monospace,Menlo,monospace;">z-index</code> layering.
+      </p>
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="section" id="alert">
+      <div class="section-head">
+        <h2 class="t-h4">Alert / Notification</h2>
+        <span class="anchor">12 · Components</span>
+      </div>
+      <div class="grid grid-2">
+        <div class="demo">
+          <span class="demo-label">Primary</span>
+          <div class="alert alert-primary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px;"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            <div class="alert-content">
+              <p class="alert-title">New update available</p>
+              <p class="alert-desc">A new version of the system is ready. Review the changelog before updating.</p>
+              <button class="alert-action">View changelog</button>
+            </div>
+            <button class="alert-close" aria-label="Close">&times;</button>
+          </div>
+        </div>
+        <div class="demo">
+          <span class="demo-label">Destructive</span>
+          <div class="alert alert-destructive">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:1px;"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>
+            <div class="alert-content">
+              <p class="alert-title">Payment failed</p>
+              <p class="alert-desc">Your last payment could not be processed. Please update your billing information.</p>
+            </div>
+            <button class="alert-close" aria-label="Close">&times;</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="section" id="pagination">
+      <div class="section-head">
+        <h2 class="t-h4">Pagination</h2>
+        <span class="anchor">13 · Components</span>
+      </div>
+      <div class="demo">
+        <span class="demo-label">Full pagination</span>
+        <div class="demo-row" style="margin-bottom: var(--space-2xl);">
+          <nav class="pagination">
+            <button class="page-btn" aria-label="Previous">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="10 4 6 8 10 12"/></svg>
+            </button>
+            <button class="page-btn is-active">1</button>
+            <button class="page-btn">2</button>
+            <span class="page-ellipsis">...</span>
+            <button class="page-btn">9</button>
+            <button class="page-btn">10</button>
+            <button class="page-btn">11</button>
+            <span class="page-ellipsis">...</span>
+            <button class="page-btn">19</button>
+            <button class="page-btn">20</button>
+            <button class="page-btn" aria-label="Next">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 4 10 8 6 12"/></svg>
+            </button>
+          </nav>
+        </div>
+        <span class="demo-label">Compact variant</span>
+        <div class="demo-row">
+          <nav class="pagination">
+            <button class="page-btn" disabled aria-label="Previous">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="10 4 6 8 10 12"/></svg>
+            </button>
+            <button class="page-btn is-active">1</button>
+            <button class="page-btn">2</button>
+            <button class="page-btn" aria-label="Next">
+              <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 4 10 8 6 12"/></svg>
+            </button>
+            <span class="pagination-info">1-2 of 2</span>
+          </nav>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="section" id="loader">
+      <div class="section-head">
+        <h2 class="t-h4">Loader</h2>
+        <span class="anchor">14 · Components</span>
+      </div>
+      <div class="demo">
+        <div class="demo-row">
+          <div style="text-align:center;">
+            <div class="loader-spinner"></div>
+            <div class="t-body-sm" style="color:var(--color-text-tertiary);margin-top:var(--space-sm);">Spinner</div>
+          </div>
+          <div style="text-align:center;margin-left:var(--space-3xl);">
+            <div class="loader-dots">
+              <span></span><span></span><span></span>
+            </div>
+            <div class="t-body-sm" style="color:var(--color-text-tertiary);margin-top:var(--space-sm);">Dots</div>
+          </div>
+          <div style="text-align:center;margin-left:var(--space-3xl);">
+            <div class="loader-bars">
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <div class="t-body-sm" style="color:var(--color-text-tertiary);margin-top:var(--space-sm);">Bars</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="section" id="divider">
+      <div class="section-head">
+        <h2 class="t-h4">Divider</h2>
+        <span class="anchor">15 · Components</span>
+      </div>
+      <div class="grid grid-2">
+        <div class="demo">
+          <span class="demo-label">Styles</span>
+          <p class="t-body-sm" style="color:var(--color-text-tertiary);margin:0;">Solid (default)</p>
+          <hr class="divider" />
+          <p class="t-body-sm" style="color:var(--color-text-tertiary);margin:0;">Dashed</p>
+          <hr class="divider divider-dashed" />
+          <p class="t-body-sm" style="color:var(--color-text-tertiary);margin:0;">Dotted</p>
+          <hr class="divider divider-dotted" />
+
+          <span class="demo-label" style="margin-top:var(--space-2xl);">With Label</span>
+          <div class="divider-label">or continue with</div>
+        </div>
+        <div class="demo">
+          <span class="demo-label">Sizes</span>
+          <p class="t-body-sm" style="color:var(--color-text-tertiary);margin:0;">Extra small (xs)</p>
+          <hr class="divider divider-xs" />
+          <p class="t-body-sm" style="color:var(--color-text-tertiary);margin:0;">Small (sm)</p>
+          <hr class="divider divider-sm" />
+          <p class="t-body-sm" style="color:var(--color-text-tertiary);margin:0;">Medium (md)</p>
+          <hr class="divider divider-md" />
+
+          <span class="demo-label" style="margin-top:var(--space-2xl);">Vertical</span>
+          <div class="demo-row" style="align-items:center;">
+            <span class="t-body-md">Left</span>
+            <span class="divider-vertical"></span>
+            <span class="t-body-md">Right</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
+    <section class="section" id="action-icon">
+      <div class="section-head">
+        <h2 class="t-h4">Action Icon</h2>
+        <span class="anchor">16 · Components</span>
+      </div>
+      <div class="demo">
+        <span class="demo-label">Variants</span>
+        <div class="demo-row" style="margin-bottom: var(--space-2xl);">
+          <div style="text-align:center;">
+            <button class="action-icon ai-transparent">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+            <div class="t-body-sm" style="color:var(--color-text-tertiary);margin-top:4px;">Transparent</div>
+          </div>
+          <div style="text-align:center;">
+            <button class="action-icon ai-subtle">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <div class="t-body-sm" style="color:var(--color-text-tertiary);margin-top:4px;">Subtle</div>
+          </div>
+          <div style="text-align:center;">
+            <button class="action-icon ai-filled">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <div class="t-body-sm" style="color:var(--color-text-tertiary);margin-top:4px;">Filled</div>
+          </div>
+          <div style="text-align:center;">
+            <button class="action-icon ai-light">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <div class="t-body-sm" style="color:var(--color-text-tertiary);margin-top:4px;">Light</div>
+          </div>
+          <div style="text-align:center;">
+            <button class="action-icon ai-outline">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <div class="t-body-sm" style="color:var(--color-text-tertiary);margin-top:4px;">Outline</div>
+          </div>
+          <div style="text-align:center;">
+            <button class="action-icon ai-default">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <div class="t-body-sm" style="color:var(--color-text-tertiary);margin-top:4px;">Default</div>
+          </div>
+        </div>
+        <span class="demo-label">Colors</span>
+        <div class="demo-row">
+          <div style="text-align:center;">
+            <button class="action-icon ai-primary">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+            <div class="t-body-sm" style="color:var(--color-text-tertiary);margin-top:4px;">Primary</div>
+          </div>
+          <div style="text-align:center;">
+            <button class="action-icon ai-destructive">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+            <div class="t-body-sm" style="color:var(--color-text-tertiary);margin-top:4px;">Destructive</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================ -->
     <section class="section" id="shadows">
       <div class="section-head">
         <h2 class="t-h4">Elevation</h2>
-        <span class="anchor">08 · Foundations</span>
+        <span class="anchor">17 · Foundations</span>
       </div>
       <div class="grid grid-3">
         <div style="background:var(--color-white);border-radius:var(--radius-md);padding:var(--space-2xl);box-shadow:var(--shadow-sm);text-align:center;">
@@ -384,7 +1366,7 @@
     <section class="section" id="usage">
       <div class="section-head">
         <h2 class="t-h4">Using these tokens</h2>
-        <span class="anchor">09 · Reference</span>
+        <span class="anchor">18 · Reference</span>
       </div>
       <div class="card card-padded">
         <p class="t-body-md" style="margin-top:0;">
