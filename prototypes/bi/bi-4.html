@@ -774,7 +774,7 @@
       color: var(--color-text-secondary);
       cursor: pointer;
     }
-    .tpl-row-btn:hover { background: var(--color-gray-1); }
+    .tpl-row-btn:hover { background: none; }
     .tpl-row-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
     .tpl-row-actions-cell {
       display: flex;
@@ -1119,7 +1119,7 @@
       font-weight: var(--font-weight-medium);
       cursor: pointer;
     }
-    .reports-new-btn:hover { opacity: 0.85; }
+    .reports-new-btn:hover { }
 
     /* --- Reports table --- */
     .reports-table {
@@ -1150,7 +1150,7 @@
     }
     .reports-table tr:last-child td { border-bottom: none; }
     .reports-table tbody tr { cursor: pointer; }
-    .reports-table tbody tr:hover td { background: var(--color-gray-1); }
+    .reports-table tbody tr:hover td { background: none; }
     .reports-table .report-name-link {
       color: var(--color-text-primary);
       font-weight: var(--font-weight-medium);
@@ -1222,7 +1222,7 @@
       margin-left: auto;
       height: 36px;
     }
-    .report-chat-toggle:hover { opacity: 0.85; }
+    .report-chat-toggle:hover { }
     .report-chat-toggle svg { width: 14px; height: 14px; }
     .report-edit-actions {
       display: inline-flex;
@@ -1244,7 +1244,7 @@
       cursor: pointer;
       height: 36px;
     }
-    .report-save-btn:hover { opacity: 0.85; }
+    .report-save-btn:hover { }
     .report-cancel-btn {
       display: inline-flex;
       align-items: center;
@@ -1260,7 +1260,7 @@
       cursor: pointer;
       height: 36px;
     }
-    .report-cancel-btn:hover { opacity: 0.85; }
+    .report-cancel-btn:hover { }
     .chart-content-card {
       background: var(--color-white);
       border: 1px solid var(--color-border-default);
@@ -1657,7 +1657,7 @@
       cursor: pointer;
       align-self: flex-end;
     }
-    .report-chat-send:hover { opacity: 0.9; }
+    .report-chat-send:hover { }
     .report-chat-send svg { width: 16px; height: 16px; }
 
     /* ======= Report detail: right preview panel ======= */
@@ -1717,7 +1717,7 @@
       color: var(--color-white);
       border-color: var(--color-gray-9);
     }
-    .report-preview-toolbar .report-refresh-btn:hover { background: var(--color-gray-8); }
+    .report-preview-toolbar .report-refresh-btn:hover { }
     .report-last-generated {
       font-size: var(--font-body-sm-size);
       color: var(--color-text-tertiary);
@@ -1762,7 +1762,7 @@
       font-weight: var(--font-weight-medium);
       cursor: pointer;
     }
-    .report-refresh-btn:hover { opacity: 0.9; }
+    .report-refresh-btn:hover { }
     .report-refresh-btn svg { width: 14px; height: 14px; }
     .report-preview-actions {
       display: flex;
@@ -1782,7 +1782,7 @@
       color: var(--color-text-secondary);
       cursor: pointer;
     }
-    .report-preview-actions button:hover { background: var(--color-gray-1); }
+    .report-preview-actions button:not(.report-save-btn):not(.report-cancel-btn):not(.report-chat-toggle):not(.report-more-btn):hover { background: var(--color-gray-1); }
     .report-preview-actions button svg { width: 14px; height: 14px; }
     .report-dropdown-wrap {
       position: relative;
@@ -1861,7 +1861,7 @@
       font-weight: var(--font-weight-medium);
       cursor: pointer;
     }
-    .report-dash-picker-done:hover { opacity: 0.85; }
+    .report-dash-picker-done:hover { }
 
     .add-dash-modal-overlay {
       position: fixed;
@@ -1941,7 +1941,7 @@
       cursor: pointer;
       height: 36px;
     }
-    .add-dash-modal-add-btn:hover { opacity: 0.85; }
+    .add-dash-modal-add-btn:hover { }
 
     .report-more-btn {
       display: inline-flex;
@@ -2133,7 +2133,7 @@
       color: var(--color-white) !important;
       border-color: var(--color-gray-9) !important;
     }
-    .report-sql-run:hover { opacity: 0.9; }
+    .report-sql-run:hover { }
     .report-sql-running {
       display: none;
       position: absolute;
@@ -3116,7 +3116,7 @@
       color: var(--color-white);
       border-color: var(--color-gray-9);
     }
-    .dash-card-action-btn.is-primary:hover { background: var(--color-gray-8); color: var(--color-white); }
+    .dash-card-action-btn.is-primary:hover { }
     .dash-card-action-btn.is-danger:hover { background: #fef2f2; color: #dc2626; border-color: #fca5a5; }
 
     .dash-card-export-wrap {
@@ -4613,7 +4613,7 @@
       align-items: center;
       justify-content: space-between;
       gap: var(--space-lg);
-      margin-bottom: var(--space-3xl);
+      margin-bottom: var(--space-md);
     }
     .opps-page-header h1 {
       margin: 0;
@@ -5226,7 +5226,7 @@
       color: var(--color-white);
       cursor: pointer;
     }
-    .opps-kebab:hover { background: #1e40af; }
+    .opps-kebab:hover { }
     .opps-kebab svg { width: 16px; height: 16px; fill: currentColor; }
 
     /* Kanban columns */
@@ -5532,7 +5532,7 @@
       font-weight: var(--font-weight-semibold);
       cursor: pointer;
     }
-    .opp-stage-warning .warn-btn:hover { background: #b91c1c; }
+    .opp-stage-warning .warn-btn:hover { }
     .opp-stage-warning .warn-resolve-btn {
       flex-shrink: 0;
       padding: 6px 14px;
@@ -7482,7 +7482,7 @@
     .compose-send-btn svg {
       width: 14px; height: 14px;
     }
-    .compose-send-btn:hover { background: var(--color-gray-8); }
+    .compose-send-btn:hover { }
     .field { margin-bottom: var(--space-lg); }
     .drawer-body .field { margin-bottom: var(--space-2xl); }
     .drawer-body .drawer-inline-row { margin-bottom: var(--space-2xl); }
@@ -7709,7 +7709,7 @@
       background: none;
       border: none;
     }
-    .drawer-foot .tpl-row-btn:hover { background: var(--color-gray-1); }
+    .drawer-foot .tpl-row-btn:hover { background: none; }
     .drawer-foot .tpl-row-btn svg { width: 14px; height: 14px; }
     .btn-cancel {
       padding: 9px 18px;
@@ -8239,47 +8239,13 @@
           <button class="home-view-tab" data-home-tab="sales">Sales</button>
           <button class="home-view-tab" data-home-tab="aaron">Aaron</button>
           <button class="home-view-tab" data-home-tab="matt">Matt</button>
-          <button class="home-view-tab is-new" data-home-tab="new" style="background:var(--color-white);color:var(--color-text-secondary);border:1px solid var(--color-border-default);border-radius:var(--radius-sm);padding:6px 14px;border-bottom:2px solid transparent;margin-left:8px;">+ Dashboard</button>
+          <button class="home-view-tab is-new" data-home-tab="new" style="background:var(--color-white);color:var(--color-text-secondary);border:1px solid var(--color-border-default);border-bottom:1px solid var(--color-border-default);border-radius:var(--radius-sm);padding:6px 14px;margin-left:8px;margin-bottom:0;">+ Dashboard</button>
         </div>
         <div class="home-view-actions" id="home-view-actions-bar" style="display:none;">
           <div class="home-view-actions-left">
-            <div style="position:relative;">
-              <button class="dash-filter-btn" data-dr-btn="home-bar"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="12" height="11" rx="1"/><path d="M1 5.5h12M4 1v2M10 1v2"/></svg> <span data-dr-label="home-bar">This Week</span></button>
-              <div class="dash-daterange-dropdown" data-dr-dropdown="home-bar">
-                <div class="dash-daterange-body">
-                  <div class="dash-daterange-quick">
-                    <div class="dash-daterange-quick-title">Quick Select</div>
-                    <div class="dash-daterange-quick-item is-active">This Week</div>
-                    <div class="dash-daterange-quick-item">This Month</div>
-                    <div class="dash-daterange-quick-item">This Quarter</div>
-                    <div class="dash-daterange-quick-sep"></div>
-                    <div class="dash-daterange-quick-item">Last Week</div>
-                    <div class="dash-daterange-quick-item">Last Month</div>
-                    <div class="dash-daterange-quick-item">Last Quarter</div>
-                    <div class="dash-daterange-quick-sep"></div>
-                    <div class="dash-daterange-quick-item">Year to Date</div>
-                    <div class="dash-daterange-quick-item">Next 30 Days</div>
-                    <div class="dash-daterange-quick-item">Next 90 Days</div>
-                  </div>
-                  <div class="dash-daterange-cal">
-                    <div class="dash-daterange-cal-header">
-                      <button class="dash-daterange-cal-nav" data-dr-prev="home-bar">&lsaquo;</button>
-                      <span data-dr-month="home-bar">May 2026</span>
-                      <button class="dash-daterange-cal-nav" data-dr-next="home-bar">&rsaquo;</button>
-                    </div>
-                    <div class="dash-daterange-cal-grid" data-dr-grid="home-bar"></div>
-                  </div>
-                </div>
-                <div class="dash-daterange-footer">
-                  <button class="dr-btn dr-btn-cancel" data-dr-cancel="home-bar">Cancel</button>
-                  <button class="dr-btn dr-btn-apply" data-dr-apply="home-bar">Apply</button>
-                </div>
-              </div>
-            </div>
-            <span class="home-view-desc" id="home-view-created-by">Created by George Chang</span>
+            <span class="home-view-desc" id="home-view-created-by">George Chang</span>
           </div>
           <div class="home-view-actions-right">
-            <button class="home-view-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button>
             <button class="home-view-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button>
           </div>
         </div>
@@ -9067,40 +9033,7 @@ ORDER BY j.eta ASC;</pre>
             <button class="dash-new-link" id="dash-new-link">+ New dashboard</button>
           </div>
           <div style="display:flex; align-items:center; gap:var(--space-md); margin-bottom: var(--space-lg);">
-            <div style="position:relative;">
-              <button class="dash-filter-btn" id="dash-daterange-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="12" height="11" rx="1"/><path d="M1 5.5h12M4 1v2M10 1v2"/></svg> <span id="dash-daterange-label">This Week</span></button>
-              <div class="dash-daterange-dropdown" id="dash-daterange-dropdown">
-              <div class="dash-daterange-body">
-                <div class="dash-daterange-quick">
-                  <div class="dash-daterange-quick-title">Quick Select</div>
-                  <div class="dash-daterange-quick-item is-active">This Week</div>
-                  <div class="dash-daterange-quick-item">This Month</div>
-                  <div class="dash-daterange-quick-item">This Quarter</div>
-                  <div class="dash-daterange-quick-sep"></div>
-                  <div class="dash-daterange-quick-item">Last Week</div>
-                  <div class="dash-daterange-quick-item">Last Month</div>
-                  <div class="dash-daterange-quick-item">Last Quarter</div>
-                  <div class="dash-daterange-quick-sep"></div>
-                  <div class="dash-daterange-quick-item">Year to Date</div>
-                  <div class="dash-daterange-quick-item">Next 30 Days</div>
-                  <div class="dash-daterange-quick-item">Next 90 Days</div>
-                </div>
-                <div class="dash-daterange-cal">
-                  <div class="dash-daterange-cal-header">
-                    <button class="dash-daterange-cal-nav" id="dash-cal-prev">&lsaquo;</button>
-                    <span id="dash-cal-month-label">May 2026</span>
-                    <button class="dash-daterange-cal-nav" id="dash-cal-next">&rsaquo;</button>
-                  </div>
-                  <div class="dash-daterange-cal-grid" id="dash-cal-grid"></div>
-                </div>
-              </div>
-              <div class="dash-daterange-footer">
-                <button class="dr-btn dr-btn-cancel" id="dash-daterange-cancel">Cancel</button>
-                <button class="dr-btn dr-btn-apply" id="dash-daterange-apply">Apply</button>
-              </div>
-            </div>
-            </div>
-            <span class="home-view-desc" id="dash-sub-created-by">Created by George Chang</span>
+            <span class="home-view-desc" id="dash-sub-created-by">George Chang</span>
           </div>
           <div id="dash-inline-container"></div>
           <div class="dash-inline-grid" id="dash-aaron-grid" style="display:none;">
@@ -11808,7 +11741,7 @@ LIMIT 10;</pre>
         }
         // Update Created by line
         if (dashSubCreatedBy) {
-          dashSubCreatedBy.textContent = 'Created by ' + (dashSubCreatorMap[tab] || 'George Chang');
+          dashSubCreatedBy.textContent = dashSubCreatorMap[tab] || 'George Chang';
         }
       }
 
@@ -12510,7 +12443,7 @@ LIMIT 10;</pre>
         // Show/hide actions bar and update Created by
         if (target !== 'home' && target !== 'new') {
           actionsBar.style.display = '';
-          if (createdByEl) createdByEl.textContent = 'Created by ' + (createdByMap[target] || 'George Chang');
+          if (createdByEl) createdByEl.textContent = createdByMap[target] || 'George Chang';
         } else {
           actionsBar.style.display = 'none';
         }
@@ -13664,7 +13597,7 @@ LIMIT 10;</pre>
         if (bl) bl.addEventListener('click', function (ev) { ev.preventDefault(); showPage('opportunities'); });
         // Created by + date
         var cb = document.querySelector('#opp-detail-page .opp-created');
-        if (cb) cb.textContent = 'Created by ' + (d.creator || 'George Chang') + ' · just now';
+        if (cb) cb.textContent = (d.creator || 'George Chang') + ' · just now';
         // Summary fields
         var grid = document.querySelector('#opp-detail-page .opp-field-grid');
         if (grid && d.fields) {
@@ -16985,11 +16918,17 @@ LIMIT 10;</pre>
           if (moreBtn) moreBtn.style.display = 'none';
           var addHomeBtn = document.getElementById('cdash-add-home-btn');
           if (addHomeBtn) addHomeBtn.style.display = 'none';
-          // Hide dashboard grid content and show empty state
+          // Add example data notice above the grid
           var dashGrid = document.getElementById('custom-dash-grid');
           if (dashGrid) {
-            dashGrid.setAttribute('data-original-html', dashGrid.innerHTML);
-            dashGrid.innerHTML = '<div style="grid-column:1/-1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 0;color:var(--color-text-tertiary);"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="40" height="40" rx="4"/><path d="M4 16h40M16 16v28"/></svg><div style="margin-top:12px;font-size:15px;font-weight:500;color:var(--color-text-secondary);">Template preview</div><div style="margin-top:4px;font-size:13px;">Click "Create with this template" to start building your dashboard.</div><div style="margin-top:8px;font-size:12px;font-style:italic;">This is example data. Connect your data source to see real results.</div></div>';
+            var existingNotice = document.getElementById('tpl-notice-dash');
+            if (!existingNotice) {
+              var notice = document.createElement('div');
+              notice.id = 'tpl-notice-dash';
+              notice.style.cssText = 'margin-bottom:12px;font-size:12px;color:var(--color-text-tertiary);font-style:italic;';
+              notice.textContent = 'This is example data. Connect your data source to see real results.';
+              dashGrid.parentNode.insertBefore(notice, dashGrid);
+            }
           }
         }
       }
@@ -17028,17 +16967,9 @@ LIMIT 10;</pre>
         if (dashMore) dashMore.style.display = '';
         var dashAddHome = document.getElementById('cdash-add-home-btn');
         if (dashAddHome) dashAddHome.style.display = '';
-        // Restore dashboard grid content
-        var dashGrid = document.getElementById('custom-dash-grid');
-        if (dashGrid && dashGrid.getAttribute('data-original-html')) {
-          dashGrid.innerHTML = dashGrid.getAttribute('data-original-html');
-          dashGrid.removeAttribute('data-original-html');
-          // Re-bind drag events on restored cards
-          dashGrid.querySelectorAll('.dash-card').forEach(function(card) {
-            card.addEventListener('dragstart', function(e) { this.style.opacity='0.5'; e.dataTransfer.effectAllowed='move'; e.dataTransfer.setData('text/html', this.outerHTML); });
-            card.addEventListener('dragend', function() { this.style.opacity=''; });
-          });
-        }
+        // Remove dashboard template notice
+        var tplNoticeD = document.getElementById('tpl-notice-dash');
+        if (tplNoticeD) tplNoticeD.remove();
       }
 
       // "Create with this template" click — restore normal and enter edit mode
