@@ -365,6 +365,35 @@ body {
   box-shadow: var(--shadow-sm);
 }
 
+/* Breadcrumb */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--font-body-sm-size);
+  color: var(--color-text-tertiary);
+}
+.breadcrumb a {
+  color: var(--color-blue-7);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.breadcrumb a:hover {
+  color: var(--color-blue-8, #1a56db);
+}
+.breadcrumb-sep {
+  color: var(--color-text-tertiary);
+  display: inline-flex;
+  align-items: center;
+}
+.breadcrumb > span:last-child {
+  color: var(--color-text-secondary);
+  font-weight: var(--font-weight-medium);
+}
+.breadcrumb-chevron .breadcrumb-sep {
+  color: var(--color-gray-4);
+}
+
 /* Table */
 .table {
   width: 100%;
