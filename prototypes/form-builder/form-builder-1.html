@@ -522,6 +522,55 @@
     .fd-text-input:focus { border-color: var(--color-blue-7); }
     .fd-text-input::placeholder { color: var(--color-gray-4); }
 
+    /* Collapsible section */
+    .fd-section-header {
+      display: flex; align-items: center; gap: 10px;
+      padding: 16px 24px 12px; cursor: pointer; user-select: none;
+    }
+    .fd-section-header:hover { background: var(--color-gray-1); }
+    .fd-section-header .fd-check {
+      width: 20px; height: 20px; border-radius: 50%;
+      border: 2px solid var(--color-gray-4); flex-shrink: 0;
+      display: grid; place-items: center;
+    }
+    .fd-section-header .fd-check svg { width: 12px; height: 12px; display: none; stroke: var(--color-white); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .fd-section-header.is-complete .fd-check {
+      background: #22c55e; border-color: #22c55e;
+    }
+    .fd-section-header.is-complete .fd-check svg { display: block; }
+    .fd-section-header .fd-section-title {
+      flex: 1; font-size: 15px; font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary); text-transform: uppercase; letter-spacing: 0.02em;
+    }
+    .fd-section-header .fd-section-count {
+      font-size: 12px; color: var(--color-text-tertiary); font-weight: var(--font-weight-regular);
+    }
+    .fd-section-header .fd-caret {
+      color: var(--color-gray-4); font-size: 12px; transition: transform 0.15s;
+      flex-shrink: 0; width: 16px; height: 16px; display: grid; place-items: center;
+    }
+    .fd-section-header .fd-caret svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .fd-section.is-collapsed .fd-section-header .fd-caret { transform: rotate(-90deg); }
+    .fd-section-body { overflow: hidden; }
+    .fd-section.is-collapsed .fd-section-body { display: none; }
+
+    /* Progress bar in header */
+    .fd-progress-wrap {
+      display: flex; align-items: center; gap: 10px; margin-right: 8px;
+    }
+    .fd-progress-bar {
+      width: 120px; height: 6px; background: var(--color-gray-2);
+      border-radius: 3px; overflow: hidden;
+    }
+    .fd-progress-fill {
+      height: 100%; background: #22c55e; border-radius: 3px;
+      transition: width 0.3s ease;
+    }
+    .fd-progress-text {
+      font-size: 12px; font-weight: var(--font-weight-semibold);
+      color: var(--color-text-secondary); white-space: nowrap;
+    }
+
     /* ============================================================
        Create Checklist Modal
        ============================================================ */
@@ -746,6 +795,10 @@
               <div class="fd-meta" id="fd-meta"></div>
             </div>
             <div class="fd-actions">
+              <div class="fd-progress-wrap" id="fd-progress-wrap">
+                <div class="fd-progress-bar"><div class="fd-progress-fill" id="fd-progress-fill" style="width:0%"></div></div>
+                <span class="fd-progress-text" id="fd-progress-text">0%</span>
+              </div>
               <button class="fd-save-draft-btn">Save Draft</button>
               <button class="fd-submit-btn">Submit</button>
             </div>
@@ -1437,31 +1490,104 @@
       productionRow.classList.add('is-section-active');
     });
 
+    var sectionComplete = {}; // track which sections are completed and collapsed
+
+    function isQuestionAnswered(q) {
+      var a = formAnswers[q.id];
+      if (q.type === 'binary' || q.type === 'single') return !!a;
+      if (q.type === 'multi') return Array.isArray(a) && a.length > 0;
+      if (q.type === 'text') return typeof a === 'string' && a.trim() !== '';
+      if (q.type === 'image') return !!a; // images are optional for auto-complete
+      return false;
+    }
+
+    function isSectionComplete(secId) {
+      var qs = questions[secId] || [];
+      var nonImage = qs.filter(function (q) { return q.type !== 'image'; });
+      if (nonImage.length === 0) return true; // no answerable questions → complete
+      for (var i = 0; i < nonImage.length; i++) {
+        if (!isQuestionAnswered(nonImage[i])) return false;
+      }
+      return true;
+    }
+
+    function updateProgress() {
+      var total = sections.length;
+      var done = 0;
+      sections.forEach(function (sec) { if (isSectionComplete(sec.id)) done++; });
+      var pct = total > 0 ? Math.round((done / total) * 100) : 0;
+      document.getElementById('fd-progress-fill').style.width = pct + '%';
+      document.getElementById('fd-progress-text').textContent = pct + '%';
+    }
+
+    function checkSectionCompletion(secId, card) {
+      var complete = isSectionComplete(secId);
+      var header = card.querySelector('.fd-section-header');
+      if (complete && !sectionComplete[secId]) {
+        // Just became complete — collapse and show check
+        sectionComplete[secId] = true;
+        header.classList.add('is-complete');
+        card.classList.add('is-collapsed');
+        // Update count text
+        var qs = questions[secId] || [];
+        var countEl = header.querySelector('.fd-section-count');
+        if (countEl) countEl.textContent = qs.length + '/' + qs.length;
+      } else if (!complete && sectionComplete[secId]) {
+        sectionComplete[secId] = false;
+        header.classList.remove('is-complete');
+      }
+      if (header && !complete) {
+        var qs = questions[secId] || [];
+        var answered = 0;
+        qs.forEach(function (q) { if (q.type !== 'image' && isQuestionAnswered(q)) answered++; });
+        var nonImage = qs.filter(function (q) { return q.type !== 'image'; }).length;
+        var countEl = header.querySelector('.fd-section-count');
+        if (countEl) countEl.textContent = answered + '/' + nonImage;
+      }
+      updateProgress();
+    }
+
     function renderFormDetail() {
       var paper = document.getElementById('fd-paper');
       paper.innerHTML = '';
+      sectionComplete = {};
 
       sections.forEach(function (sec) {
         var card = document.createElement('div');
         card.className = 'fd-section';
 
-        var title = document.createElement('div');
-        title.className = 'fd-section-title';
-        title.textContent = sec.name;
-        card.appendChild(title);
-
+        // Collapsible header
+        var header = document.createElement('div');
+        header.className = 'fd-section-header';
         var qs = questions[sec.id] || [];
+        var nonImageCount = qs.filter(function (q) { return q.type !== 'image'; }).length;
+
+        header.innerHTML =
+          '<span class="fd-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>' +
+          '<span class="fd-section-title">' + sec.name + '</span>' +
+          '<span class="fd-section-count">0/' + nonImageCount + '</span>' +
+          '<span class="fd-caret"><svg viewBox="0 0 16 16"><polyline points="4 6 8 10 12 6"/></svg></span>';
+
+        header.addEventListener('click', function () {
+          card.classList.toggle('is-collapsed');
+        });
+        card.appendChild(header);
+
+        // Section body (questions)
+        var body = document.createElement('div');
+        body.className = 'fd-section-body';
+
         qs.forEach(function (q) {
           if (q.type === 'image') {
-            // Image gets its own block
-            var label = document.createElement('div');
-            label.className = 'fd-question';
-            label.innerHTML = '<span class="fd-question-label">' + q.label + '</span>';
-            card.appendChild(label);
+            var labelRow = document.createElement('div');
+            labelRow.className = 'fd-question';
+            labelRow.innerHTML = '<span class="fd-question-label">' + q.label + '</span>';
+            body.appendChild(labelRow);
             var zone = document.createElement('div');
             zone.className = 'fd-image-zone';
             zone.innerHTML = '<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4"/><polyline points="7 7 12 2 17 7"/><line x1="12" y1="2" x2="12" y2="15"/></svg><div>Click to upload images</div>';
-            card.appendChild(zone);
+            zone.addEventListener('click', function () { formAnswers[q.id] = true; zone.innerHTML = '<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 9 17 20 6"/></svg><div>Image uploaded</div>'; zone.style.borderColor = '#22c55e'; zone.style.color = '#22c55e'; });
+            body.appendChild(zone);
             return;
           }
 
@@ -1487,6 +1613,7 @@
                 formAnswers[q.id] = opt;
                 bin.querySelectorAll('span').forEach(function (s) { s.classList.remove('is-active'); });
                 sp.classList.add('is-active');
+                checkSectionCompletion(sec.id, card);
               });
               bin.appendChild(sp);
             });
@@ -1505,6 +1632,7 @@
                 formAnswers[q.id] = o;
                 opts.querySelectorAll('.radio').forEach(function (r) { r.classList.remove('is-active'); });
                 radio.classList.add('is-active');
+                checkSectionCompletion(sec.id, card);
               });
               opts.appendChild(optEl);
             });
@@ -1526,6 +1654,7 @@
                 if (idx >= 0) { arr.splice(idx, 1); cb.classList.remove('is-active'); }
                 else { arr.push(o); cb.classList.add('is-active'); }
                 formAnswers[q.id] = arr;
+                checkSectionCompletion(sec.id, card);
               });
               opts2.appendChild(optEl);
             });
@@ -1536,16 +1665,31 @@
             inp.className = 'fd-text-input';
             inp.placeholder = 'Enter text...';
             inp.value = formAnswers[q.id] || '';
-            inp.addEventListener('change', function () { formAnswers[q.id] = inp.value; });
+            inp.addEventListener('input', function () {
+              formAnswers[q.id] = inp.value;
+              checkSectionCompletion(sec.id, card);
+            });
             valueEl.appendChild(inp);
           }
 
           row.appendChild(valueEl);
-          card.appendChild(row);
+          body.appendChild(row);
         });
 
+        card.appendChild(body);
         paper.appendChild(card);
+
+        // Auto-collapse sections that are already complete (e.g. 0 answerable questions)
+        if (isSectionComplete(sec.id)) {
+          sectionComplete[sec.id] = true;
+          header.classList.add('is-complete');
+          card.classList.add('is-collapsed');
+          var countEl = header.querySelector('.fd-section-count');
+          if (countEl) countEl.textContent = nonImageCount + '/' + nonImageCount;
+        }
       });
+
+      updateProgress();
     }
 
     /* ============================================================
