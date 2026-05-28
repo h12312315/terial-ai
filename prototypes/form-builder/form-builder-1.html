@@ -603,6 +603,25 @@
       border: none; border-radius: var(--radius-sm); font-family: var(--font-family-base);
       font-size: var(--font-body-sm-size); font-weight: var(--font-weight-semibold); cursor: pointer;
     }
+    .modal-cancel-btn {
+      padding: 8px 24px; background: var(--color-white); color: var(--color-text-secondary);
+      border: 1px solid var(--color-border-default); border-radius: var(--radius-sm); font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size); font-weight: var(--font-weight-medium); cursor: pointer;
+    }
+
+    /* Completed form state */
+    .fd-completed-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 12px; background: #dcfce7; color: #16a34a;
+      border-radius: var(--radius-sm); font-size: var(--font-body-sm-size); font-weight: var(--font-weight-semibold);
+    }
+    .fd-completed-badge svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    #page-form-detail.is-completed .fd-text-input { pointer-events: none; background: var(--color-gray-1); color: var(--color-text-secondary); }
+    #page-form-detail.is-completed .fd-binary span { pointer-events: none; }
+    #page-form-detail.is-completed .fd-opt { pointer-events: none; }
+    #page-form-detail.is-completed .fd-image-zone { pointer-events: none; }
+    #page-form-detail.is-completed .fd-submit-btn { display: none; }
+    #page-form-detail.is-completed .fd-save-draft-btn { display: none; }
 
     /* ============================================================
        Add Question Modal
@@ -804,7 +823,7 @@
               </div>
               <button class="fd-download-btn"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</button>
               <button class="fd-save-draft-btn">Save Draft</button>
-              <button class="fd-submit-btn">Submit</button>
+              <button class="fd-submit-btn" id="fd-submit-btn">Submit</button>
             </div>
           </div>
         </div>
@@ -836,6 +855,23 @@
       </div>
       <div class="modal-footer">
         <button class="modal-save-btn" id="checklist-save-btn">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Submit Checklist Modal -->
+  <div class="modal-overlay" id="submit-checklist-modal">
+    <div class="modal-box" style="width:480px;">
+      <div class="modal-header"><h3>Submit Safety Checklist</h3><button class="modal-close" id="submit-checklist-close"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div>
+      <div class="modal-body" style="padding:0;">
+        <div class="modal-form-row">
+          <div class="modal-form-label">Send to Email <span class="req">*</span></div>
+          <input type="email" class="modal-form-input" id="submit-email-input" placeholder="name@company.com" />
+        </div>
+      </div>
+      <div class="modal-footer" style="gap:8px;">
+        <button class="modal-cancel-btn" id="submit-cancel-btn">Cancel</button>
+        <button class="modal-save-btn" id="submit-send-btn">Send</button>
       </div>
     </div>
   </div>
@@ -1474,6 +1510,9 @@
     function openFormDetail(cl) {
       currentChecklist = cl;
       formAnswers = {};
+      document.getElementById('page-form-detail').classList.remove('is-completed');
+      var badge = document.getElementById('fd-completed-badge');
+      if (badge) badge.remove();
       document.getElementById('fd-title').textContent = cl.name;
       document.getElementById('fd-name-crumb').textContent = cl.name;
       document.getElementById('fd-meta').textContent = 'Template: ' + cl.template + '  ·  Created by ' + cl.createdBy + ' at ' + cl.createdAt;
@@ -1492,6 +1531,54 @@
       productionCaret.textContent = '▴';
       navRows.forEach(function (r) { r.classList.remove('is-section-active'); });
       productionRow.classList.add('is-section-active');
+    });
+
+    // Submit modal
+    var submitModal = document.getElementById('submit-checklist-modal');
+    var submitEmailInput = document.getElementById('submit-email-input');
+
+    document.getElementById('fd-submit-btn').addEventListener('click', function () {
+      submitEmailInput.value = '';
+      submitModal.classList.add('is-open');
+    });
+    document.getElementById('submit-checklist-close').addEventListener('click', function () {
+      submitModal.classList.remove('is-open');
+    });
+    document.getElementById('submit-cancel-btn').addEventListener('click', function () {
+      submitModal.classList.remove('is-open');
+    });
+    submitModal.addEventListener('click', function (e) {
+      if (e.target === submitModal) submitModal.classList.remove('is-open');
+    });
+    document.getElementById('submit-send-btn').addEventListener('click', function () {
+      var email = submitEmailInput.value.trim();
+      if (!email) { submitEmailInput.style.borderColor = '#dc2626'; return; }
+      submitModal.classList.remove('is-open');
+
+      // Mark form as completed
+      var page = document.getElementById('page-form-detail');
+      page.classList.add('is-completed');
+
+      // Add completed badge next to the progress bar
+      var actions = page.querySelector('.fd-actions');
+      var badge = document.createElement('span');
+      badge.className = 'fd-completed-badge';
+      badge.id = 'fd-completed-badge';
+      badge.innerHTML = '<svg viewBox="0 0 16 16"><polyline points="3 8 6.5 11.5 13 5"/></svg>Completed';
+      actions.insertBefore(badge, actions.firstChild);
+
+      // Collapse all sections and mark them complete visually
+      document.querySelectorAll('.fd-section').forEach(function (sec) {
+        sec.classList.add('is-collapsed');
+        sec.querySelector('.fd-section-header').classList.add('is-complete');
+      });
+
+      // Set progress to 100%
+      document.getElementById('fd-progress-fill').style.width = '100%';
+      document.getElementById('fd-progress-text').textContent = '100%';
+    });
+    submitEmailInput.addEventListener('input', function () {
+      submitEmailInput.style.borderColor = '';
     });
 
     var sectionComplete = {}; // track which sections are completed and collapsed
