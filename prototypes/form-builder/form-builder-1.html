@@ -486,7 +486,7 @@
       color: var(--color-text-primary); text-transform: uppercase; letter-spacing: 0.02em;
     }
     .fd-question {
-      padding: 10px 24px 10px 54px; display: flex; align-items: center;
+      padding: 10px 24px; display: flex; align-items: center;
     }
     .fd-question-label {
       flex: 1; font-size: var(--font-body-sm-size); font-weight: var(--font-weight-medium);
@@ -512,7 +512,7 @@
     .fd-image-zone {
       padding: 20px; border: 2px dashed var(--color-border-default); border-radius: var(--radius-sm);
       text-align: center; color: var(--color-text-tertiary); font-size: var(--font-body-sm-size);
-      cursor: pointer; margin: 4px 24px 16px 54px;
+      cursor: pointer; margin: 4px 24px 16px;
     }
     .fd-image-zone:hover { border-color: var(--color-blue-7); color: var(--color-blue-7); }
     .fd-image-zone svg { width: 24px; height: 24px; margin-bottom: 4px; display: block; margin-left: auto; margin-right: auto; }
@@ -532,12 +532,12 @@
     .fd-section-header:hover { background: var(--color-gray-1); }
     .fd-section-header .fd-check {
       width: 20px; height: 20px; border-radius: 50%;
-      display: grid; place-items: center;
-      flex-shrink: 0; visibility: hidden;
+      display: none; place-items: center;
+      flex-shrink: 0; background: #22c55e;
     }
     .fd-section-header .fd-check svg { width: 12px; height: 12px; stroke: var(--color-white); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
     .fd-section-header.is-complete .fd-check {
-      visibility: visible; background: #22c55e;
+      display: grid;
     }
     .fd-section-header .fd-section-title {
       flex: 1; font-size: 15px; font-weight: var(--font-weight-semibold);
@@ -1652,8 +1652,8 @@
         var nonImageCount = qs.filter(function (q) { return q.type !== 'image'; }).length;
 
         header.innerHTML =
-          '<span class="fd-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>' +
           '<span class="fd-section-title">' + sec.name + '</span>' +
+          '<span class="fd-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>' +
           '<span class="fd-section-count">0/' + nonImageCount + '</span>' +
           '<span class="fd-caret"><svg viewBox="0 0 16 16"><polyline points="4 6 8 10 12 6"/></svg></span>';
 
