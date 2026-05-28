@@ -1168,12 +1168,30 @@
       flex-shrink: 0;
       border-top: 1px solid var(--color-border-default);
       background: var(--color-white);
-      padding: var(--space-lg) var(--space-2xl);
       display: none;
     }
     .report-edit-sql.is-visible {
       display: block;
     }
+    .sql-toggle-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px var(--space-2xl);
+      cursor: pointer;
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      user-select: none;
+    }
+    .sql-toggle-bar:hover { color: var(--color-text-primary); }
+    .sql-toggle-bar .sql-chevron { width: 12px; height: 12px; transition: transform 0.2s ease; transform: rotate(-90deg); }
+    .sql-toggle-bar.is-open .sql-chevron { transform: rotate(0deg); }
+    .sql-editor-content {
+      display: none;
+      padding: var(--space-lg) var(--space-2xl);
+    }
+    .sql-editor-content.is-open { display: block; }
     .report-chat-toggle {
       display: inline-flex;
       align-items: center;
@@ -1191,6 +1209,52 @@
     }
     .report-chat-toggle:hover { background: var(--color-primary-5, #e6b800); }
     .report-chat-toggle svg { width: 14px; height: 14px; }
+    .report-edit-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+    }
+    .report-save-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      background: var(--color-gray-9);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-white);
+      cursor: pointer;
+    }
+    .report-save-btn:hover { background: var(--color-gray-8); }
+    .report-cancel-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 16px;
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-text-secondary);
+      cursor: pointer;
+    }
+    .report-cancel-btn:hover { background: var(--color-gray-1); }
+    .chart-content-card {
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      padding: var(--space-xl);
+      margin: var(--space-lg) var(--space-2xl);
+    }
+    .custom-dash-detail-page.is-edit-mode .dash-card { cursor: grab; }
+    .custom-dash-detail-page.is-edit-mode .dash-card:active { cursor: grabbing; }
+    .dash-card-action-btn[data-action="edit"] { color: var(--color-text-secondary); }
+    .dash-card-action-btn[data-action="edit"]:hover { color: var(--color-text-primary); }
     @keyframes chat-msg-fade-in {
       from { opacity: 0; transform: translateY(8px); }
       to { opacity: 1; transform: translateY(0); }
@@ -1544,15 +1608,15 @@
       align-items: center;
       justify-content: center;
       width: 28px; height: 28px;
-      background: none !important;
-      border: none !important;
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
       border-radius: var(--radius-sm);
       cursor: pointer;
       color: var(--color-text-tertiary);
       flex-shrink: 0;
-      padding: 0 !important;
+      padding: 0;
     }
-    .report-more-btn:hover { background: var(--color-gray-1) !important; color: var(--color-text-primary); }
+    .report-more-btn:hover { background: var(--color-gray-1); color: var(--color-text-primary); }
     .report-more-btn svg { width: 14px; height: 14px; }
 
     .report-preview-content {
@@ -8763,13 +8827,14 @@ ORDER BY j.eta ASC;</pre>
           <div class="report-detail-left">
             <!-- Left: Report preview -->
             <div class="report-preview-panel">
-              <div class="report-detail-breadcrumb"><a id="report-back-link">Custom reports</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current" id="report-breadcrumb-name">Revenue by Region</span><button class="report-chat-toggle" id="report-chat-toggle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Edit</button></div>
+              <div class="report-detail-breadcrumb"><a id="report-back-link">Custom reports</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current" id="report-breadcrumb-name">Revenue by Region</span></div>
               <div class="report-detail-header">
                 <div class="report-detail-header-left">
                   <span class="report-title-text" id="report-detail-title">Revenue by Region</span>
                   <div class="report-detail-summary" id="report-detail-summary"></div>
                 </div>
                 <div class="report-preview-actions">
+                  <button class="report-chat-toggle" id="report-chat-toggle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Edit</button>
                   <div class="report-dropdown-wrap">
                     <button class="report-more-btn" id="report-more-btn"><svg viewBox="0 0 14 14" fill="currentColor"><circle cx="7" cy="3" r="1.2"/><circle cx="7" cy="7" r="1.2"/><circle cx="7" cy="11" r="1.2"/></svg></button>
                     <div class="report-dropdown" id="report-more-dropdown">
@@ -8779,18 +8844,8 @@ ORDER BY j.eta ASC;</pre>
                   </div>
                 </div>
               </div>
-              <div class="report-preview-header">
-                <div class="report-preview-meta">
-                  <span class="report-last-generated" id="report-last-generated">Last generated: May 5, 2026</span>
-                </div>
-              </div>
               <div class="report-preview-toolbar" id="report-preview-toolbar">
-                <div class="report-preview-toolbar-left">
-                  <div class="report-view-toggle" id="report-view-toggle">
-                    <button class="is-active" data-view="table"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="1" width="12" height="12" rx="1.5"/><path d="M1 5h12M1 9h12M5 5v8"/></svg>Table</button>
-                    <button data-view="chart"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="8" width="2.5" height="5" rx="0.5"/><rect x="5.75" y="4" width="2.5" height="9" rx="0.5"/><rect x="10.5" y="1" width="2.5" height="12" rx="0.5"/></svg>Chart</button>
-                  </div>
-                </div>
+                <div class="report-preview-toolbar-left"></div>
                 <div class="report-preview-toolbar-right">
                   <div class="report-dropdown-wrap">
                     <button id="report-download-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10V2M3.5 6.5L7 10l3.5-3.5M2 12h10"/></svg> Download</button>
@@ -8799,6 +8854,7 @@ ORDER BY j.eta ASC;</pre>
                       <button class="report-dropdown-item">As a CSV</button>
                     </div>
                   </div>
+                  <button id="report-create-chart-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="8" width="2.5" height="5" rx="0.5"/><rect x="5.75" y="4" width="2.5" height="9" rx="0.5"/><rect x="10.5" y="1" width="2.5" height="12" rx="0.5"/></svg> Create a chart</button>
                   <div class="report-dropdown-wrap">
                     <button id="report-add-dash-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="1.5" width="11" height="11" rx="1.5"/><path d="M1.5 5.5h11M5.5 5.5v7"/></svg> Add to dashboard</button>
                     <div class="report-dropdown report-dash-picker" id="report-dash-picker">
@@ -8810,7 +8866,6 @@ ORDER BY j.eta ASC;</pre>
                       <div class="report-dash-picker-actions"><button class="report-dash-picker-done" id="report-dash-picker-done">Done</button></div>
                     </div>
                   </div>
-                  <button class="report-refresh-btn" id="report-refresh-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1v4h4"/><path d="M2.5 9.5a5 5 0 1 0 1-5.2L1 5"/></svg>Refresh</button>
                 </div>
               </div>
               <div class="report-preview-content">
@@ -8865,6 +8920,8 @@ ORDER BY j.eta ASC;</pre>
             </div>
             <!-- SQL panel (in left column) -->
             <div class="report-edit-sql" id="report-edit-sql">
+            <div class="sql-toggle-bar" id="report-sql-toggle-bar"><svg class="sql-chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5L6 7.5L9 4.5"/></svg> SQL editor</div>
+            <div class="sql-editor-content" id="report-sql-content">
             <div class="report-sql-view" id="report-sql-view" style="display:block;">
               <div class="report-sql-wrap">
                 <button class="report-sql-copy-inner" id="report-sql-copy"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="8" height="8" rx="1"/><path d="M10 4V3a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h1"/></svg> Copy</button>
@@ -8895,6 +8952,7 @@ ORDER BY "Total Revenue" DESC;</pre>
                 <button id="report-sql-cancel-btn">Cancel</button>
               </div>
             </div>
+            </div><!-- /sql-editor-content -->
           </div>
           </div><!-- /report-detail-left -->
           <!-- Right: AI chat (embedded) -->
@@ -9027,13 +9085,14 @@ ORDER BY "Total Revenue" DESC;</pre>
         <div class="charts-detail-body">
           <div class="charts-detail-left">
             <div class="chart-preview-panel">
-              <div class="report-detail-breadcrumb"><a id="chart-back-link">Custom charts</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current" id="chart-breadcrumb-name">Revenue by Region</span><button class="report-chat-toggle" id="chart-chat-toggle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Edit</button></div>
+              <div class="report-detail-breadcrumb"><a id="chart-back-link">Custom charts</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current" id="chart-breadcrumb-name">Revenue by Region</span></div>
               <div class="report-detail-header" id="chart-detail-header">
                 <div class="report-detail-header-left">
                   <span class="report-title-text" id="chart-detail-title">Revenue by Region</span>
                   <div class="report-detail-summary" id="chart-detail-summary">Visualization showing revenue by region data across all regions.</div>
                 </div>
                 <div class="report-preview-actions">
+                  <button class="report-chat-toggle" id="chart-chat-toggle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Edit</button>
                   <div class="report-dropdown-wrap">
                     <button class="report-more-btn" id="chart-more-btn"><svg viewBox="0 0 14 14" fill="currentColor"><circle cx="7" cy="3" r="1.2"/><circle cx="7" cy="7" r="1.2"/><circle cx="7" cy="11" r="1.2"/></svg></button>
                   </div>
@@ -9043,26 +9102,41 @@ ORDER BY "Total Revenue" DESC;</pre>
                 <div class="report-preview-toolbar-left"></div>
                 <div class="report-preview-toolbar-right">
                   <button id="chart-download-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10V2M3.5 6.5L7 10l3.5-3.5M2 12h10"/></svg> Download</button>
-                  <button class="report-refresh-btn" id="chart-refresh-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1v4h4"/><path d="M2.5 9.5a5 5 0 1 0 1-5.2L1 5"/></svg>Refresh</button>
+                  <button id="chart-create-chart-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="8" width="2.5" height="5" rx="0.5"/><rect x="5.75" y="4" width="2.5" height="9" rx="0.5"/><rect x="10.5" y="1" width="2.5" height="12" rx="0.5"/></svg> Create a chart</button>
+                  <div class="report-dropdown-wrap">
+                    <button id="chart-add-dash-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1.5" y="1.5" width="11" height="11" rx="1.5"/><path d="M1.5 5.5h11M5.5 5.5v7"/></svg> Add to dashboard</button>
+                    <div class="report-dropdown report-dash-picker" id="chart-dash-picker">
+                      <div class="report-dash-picker-title">Select dashboards</div>
+                      <label class="report-dash-picker-item"><input type="checkbox" value="sales"> Sales Dashboard</label>
+                      <label class="report-dash-picker-item"><input type="checkbox" value="marketing"> Marketing Dashboard</label>
+                      <label class="report-dash-picker-item"><input type="checkbox" value="ops"> Operations Dashboard</label>
+                      <label class="report-dash-picker-item"><input type="checkbox" value="exec"> Executive Dashboard</label>
+                      <div class="report-dash-picker-actions"><button class="report-dash-picker-done" id="chart-dash-picker-done">Done</button></div>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="report-preview-content">
-                <div class="report-chart-view" style="display:block; padding: var(--space-lg) var(--space-2xl);">
-                  <div class="report-chart-bar-row"><div class="report-chart-bar-label">West Coast</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:100%;background:#2563eb;"><span class="report-chart-bar-value">$523,100</span></div></div></div>
-                  <div class="report-chart-bar-row"><div class="report-chart-bar-label">Northeast</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:92%;background:#3b82f6;"><span class="report-chart-bar-value">$482,300</span></div></div></div>
-                  <div class="report-chart-bar-row"><div class="report-chart-bar-label">Southeast</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:71%;background:#3b82f6;"><span class="report-chart-bar-value">$371,050</span></div></div></div>
-                  <div class="report-chart-bar-row"><div class="report-chart-bar-label">Mid-Atlantic</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:68%;background:#60a5fa;"><span class="report-chart-bar-value">$356,900</span></div></div></div>
-                  <div class="report-chart-bar-row"><div class="report-chart-bar-label">Midwest</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:57%;background:#60a5fa;"><span class="report-chart-bar-value">$298,700</span></div></div></div>
-                  <div class="report-chart-bar-row"><div class="report-chart-bar-label">Southwest</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:41%;background:#93bbfd;"><span class="report-chart-bar-value">$215,400</span></div></div></div>
-                  <div class="report-chart-bar-row"><div class="report-chart-bar-label">Pacific NW</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:36%;background:#93bbfd;"><span class="report-chart-bar-value">$189,200</span></div></div></div>
-                  <div class="report-chart-bar-row"><div class="report-chart-bar-label">Mountain</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:27%;background:#bfdbfe;"><span class="report-chart-bar-value" style="color:var(--color-text-primary);">$142,800</span></div></div></div>
-                  <div class="report-chart-legend">
-                    <div class="report-chart-legend-item"><div class="report-chart-legend-dot" style="background:#3b82f6"></div>Total Revenue by Region</div>
+                <div class="chart-content-card">
+                  <div class="report-chart-view" style="display:block;">
+                    <div class="report-chart-bar-row"><div class="report-chart-bar-label">West Coast</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:100%;background:#2563eb;"><span class="report-chart-bar-value">$523,100</span></div></div></div>
+                    <div class="report-chart-bar-row"><div class="report-chart-bar-label">Northeast</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:92%;background:#3b82f6;"><span class="report-chart-bar-value">$482,300</span></div></div></div>
+                    <div class="report-chart-bar-row"><div class="report-chart-bar-label">Southeast</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:71%;background:#3b82f6;"><span class="report-chart-bar-value">$371,050</span></div></div></div>
+                    <div class="report-chart-bar-row"><div class="report-chart-bar-label">Mid-Atlantic</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:68%;background:#60a5fa;"><span class="report-chart-bar-value">$356,900</span></div></div></div>
+                    <div class="report-chart-bar-row"><div class="report-chart-bar-label">Midwest</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:57%;background:#60a5fa;"><span class="report-chart-bar-value">$298,700</span></div></div></div>
+                    <div class="report-chart-bar-row"><div class="report-chart-bar-label">Southwest</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:41%;background:#93bbfd;"><span class="report-chart-bar-value">$215,400</span></div></div></div>
+                    <div class="report-chart-bar-row"><div class="report-chart-bar-label">Pacific NW</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:36%;background:#93bbfd;"><span class="report-chart-bar-value">$189,200</span></div></div></div>
+                    <div class="report-chart-bar-row"><div class="report-chart-bar-label">Mountain</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:27%;background:#bfdbfe;"><span class="report-chart-bar-value" style="color:var(--color-text-primary);">$142,800</span></div></div></div>
+                    <div class="report-chart-legend">
+                      <div class="report-chart-legend-item"><div class="report-chart-legend-dot" style="background:#3b82f6"></div>Total Revenue by Region</div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
             <div class="report-edit-sql" id="chart-edit-sql">
+              <div class="sql-toggle-bar" id="chart-sql-toggle-bar"><svg class="sql-chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5L6 7.5L9 4.5"/></svg> SQL editor</div>
+              <div class="sql-editor-content" id="chart-sql-content">
               <div class="report-sql-view" style="display:block;">
                 <div class="report-sql-wrap">
                   <pre class="report-sql-pre" contenteditable="true" spellcheck="false">SELECT
@@ -9079,6 +9153,7 @@ ORDER BY "Total Revenue" DESC;</pre>
                   <button>Cancel</button>
                 </div>
               </div>
+              </div><!-- /chart-sql-content -->
             </div>
           </div>
           <div class="report-chat-panel is-collapsed" id="chart-chat-panel">
@@ -9195,16 +9270,26 @@ ORDER BY "Total Revenue" DESC;</pre>
       <div class="custom-dash-detail-page" id="custom-dash-detail-page">
         <div class="cdash-detail-left">
           <div class="dash-main-panel">
-            <div class="report-detail-breadcrumb" style="padding-left:0;"><a id="custom-dash-back-link">Custom dashboards</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current" id="cdash-breadcrumb-name">Sales Dashboard</span><button class="report-chat-toggle" id="cdash-chat-toggle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Edit</button></div>
+            <div class="report-detail-breadcrumb" style="padding-left:0;"><a id="custom-dash-back-link">Custom dashboards</a><span class="breadcrumb-sep">/</span><span class="breadcrumb-current" id="cdash-breadcrumb-name">Sales Dashboard</span></div>
             <div class="dash-header">
               <div class="dash-header-left">
                 <span class="dash-title-text" id="custom-dash-title">Sales Dashboard</span>
               </div>
+              <div class="report-preview-actions">
+                <button class="report-chat-toggle" id="cdash-chat-toggle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Edit</button>
+                <div class="report-dropdown-wrap">
+                  <button class="report-more-btn" id="cdash-more-btn"><svg viewBox="0 0 14 14" fill="currentColor"><circle cx="7" cy="3" r="1.2"/><circle cx="7" cy="7" r="1.2"/><circle cx="7" cy="11" r="1.2"/></svg></button>
+                  <div class="report-dropdown" id="cdash-more-dropdown">
+                    <button class="report-dropdown-item" id="cdash-action-duplicate">Duplicate</button>
+                    <button class="report-dropdown-item is-danger" id="cdash-action-remove">Remove</button>
+                  </div>
+                </div>
+              </div>
             </div>
             <div class="dash-grid" id="custom-dash-grid">
 
-              <div class="dash-card span-2" draggable="true">
-                <div class="dash-card-actions"><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
+              <div class="dash-card span-2" draggable="true" data-board-type="report">
+                <div class="dash-card-actions"><button class="dash-card-action-btn" data-action="edit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg>Edit</button><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
                 <div class="dash-card-title">Top Deals This Quarter</div>
                 <table class="dash-card-table">
                   <thead><tr><th>Deal</th><th>Rep</th><th>Value</th><th>Stage</th></tr></thead>
@@ -9217,8 +9302,8 @@ ORDER BY "Total Revenue" DESC;</pre>
                 </table>
               </div>
 
-              <div class="dash-card span-2" draggable="true">
-                <div class="dash-card-actions"><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
+              <div class="dash-card span-2" draggable="true" data-board-type="chart">
+                <div class="dash-card-actions"><button class="dash-card-action-btn" data-action="edit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg>Edit</button><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
                 <div class="dash-card-title">Revenue by Rep</div>
                 <table class="dash-card-table">
                   <thead><tr><th>Rep</th><th>Revenue</th></tr></thead>
@@ -9231,15 +9316,15 @@ ORDER BY "Total Revenue" DESC;</pre>
                 </table>
               </div>
 
-              <div class="dash-card" draggable="true">
-                <div class="dash-card-actions"><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
+              <div class="dash-card" draggable="true" data-board-type="chart">
+                <div class="dash-card-actions"><button class="dash-card-action-btn" data-action="edit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg>Edit</button><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
                 <div class="dash-card-title">Win Rate</div>
                 <div class="dash-stat-value" style="font-size:36px;font-weight:700;color:var(--color-text-primary);padding:16px 0;">47%</div>
                 <div style="color:#22c55e;font-size:13px;">+3% vs last quarter</div>
               </div>
 
-              <div class="dash-card" draggable="true">
-                <div class="dash-card-actions"><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
+              <div class="dash-card" draggable="true" data-board-type="chart">
+                <div class="dash-card-actions"><button class="dash-card-action-btn" data-action="edit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg>Edit</button><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
                 <div class="dash-card-title">Revenue Trend</div>
                 <table class="dash-card-table">
                   <thead><tr><th>Month</th><th>Revenue</th></tr></thead>
@@ -9253,8 +9338,8 @@ ORDER BY "Total Revenue" DESC;</pre>
                 </table>
               </div>
 
-              <div class="dash-card" draggable="true">
-                <div class="dash-card-actions"><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
+              <div class="dash-card" draggable="true" data-board-type="report">
+                <div class="dash-card-actions"><button class="dash-card-action-btn" data-action="edit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg>Edit</button><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
                 <div class="dash-card-title">Pipeline by Stage</div>
                 <table class="dash-card-table">
                   <thead><tr><th>Stage</th><th>Deals</th><th>Value</th></tr></thead>
@@ -9267,8 +9352,8 @@ ORDER BY "Total Revenue" DESC;</pre>
                 </table>
               </div>
 
-              <div class="dash-card" draggable="true">
-                <div class="dash-card-actions"><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
+              <div class="dash-card" draggable="true" data-board-type="chart">
+                <div class="dash-card-actions"><button class="dash-card-action-btn" data-action="edit"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg>Edit</button><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
                 <div class="dash-card-title">Monthly Bookings</div>
                 <div class="dash-stat-value" style="font-size:36px;font-weight:700;color:var(--color-text-primary);padding:16px 0;">$1.39M</div>
                 <div style="color:#22c55e;font-size:13px;">+12% vs last month</div>
@@ -9277,6 +9362,8 @@ ORDER BY "Total Revenue" DESC;</pre>
             </div>
           </div>
           <div class="report-edit-sql" id="cdash-edit-sql">
+            <div class="sql-toggle-bar" id="cdash-sql-toggle-bar"><svg class="sql-chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4.5L6 7.5L9 4.5"/></svg> SQL editor</div>
+            <div class="sql-editor-content" id="cdash-sql-content">
             <div class="report-sql-view" style="display:block;">
               <div class="report-sql-wrap">
                 <pre class="report-sql-pre" contenteditable="true" spellcheck="false">SELECT
@@ -9295,6 +9382,7 @@ LIMIT 10;</pre>
                 <button>Cancel</button>
               </div>
             </div>
+            </div><!-- /cdash-sql-content -->
           </div>
         </div>
         <div class="report-chat-panel is-collapsed" id="cdash-chat-panel">
@@ -15282,6 +15370,8 @@ LIMIT 10;</pre>
 
       function openDetail(name, isNew, thread, summary) {
         isNewReport = !!isNew;
+        // Reset edit mode if active
+        if (reportIsEditing) exitReportEditMode(true);
         document.getElementById('report-detail-title').textContent = name;
         document.getElementById('report-breadcrumb-name').textContent = name;
         document.getElementById('report-detail-summary').textContent = summary || '';
@@ -15349,72 +15439,90 @@ LIMIT 10;</pre>
         showPage('reports');
       });
 
-      // Chat + SQL toggle (embedded panels)
+      // Edit mode state management
       var toggleBtn = document.getElementById('report-chat-toggle');
       var reportSqlPanel = document.getElementById('report-edit-sql');
-      function toggleReportChat(e) {
-        if (e) e.stopPropagation();
-        chatPanel.classList.toggle('is-collapsed');
-        if (reportSqlPanel) reportSqlPanel.classList.toggle('is-visible');
-      }
-      toggleBtn.addEventListener('click', toggleReportChat);
+      var reportSqlToggleBar = document.getElementById('report-sql-toggle-bar');
+      var reportSqlContent = document.getElementById('report-sql-content');
+      var reportIsEditing = false;
+      var reportOriginalTitle = '';
 
-      // Editable title: click to edit via input field
-      var headerEl = document.querySelector('.report-detail-header');
-      headerEl.addEventListener('click', function (e) {
-        // Editable summary: click to edit via textarea
-        var summaryDiv = e.target.closest('.report-detail-summary');
-        if (summaryDiv) {
-          var currentSummary = summaryDiv.textContent;
-          var ta = document.createElement('textarea');
-          ta.className = 'report-summary-input';
-          ta.id = 'report-detail-summary';
-          ta.value = currentSummary;
-          ta.rows = 1;
-          summaryDiv.replaceWith(ta);
-          ta.style.height = ta.scrollHeight + 'px';
-          ta.focus();
-          function saveSummary() {
-            var val = ta.value.trim() || currentSummary;
-            var div = document.createElement('div');
-            div.className = 'report-detail-summary';
-            div.id = 'report-detail-summary';
-            div.textContent = val;
-            ta.replaceWith(div);
-          }
-          ta.addEventListener('blur', saveSummary);
-          ta.addEventListener('input', function () { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; });
-          ta.addEventListener('keydown', function (ev) {
-            if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); ta.blur(); }
-            if (ev.key === 'Escape') { ta.value = currentSummary; ta.blur(); }
-          });
-          return;
+      // SQL toggle bar
+      if (reportSqlToggleBar) {
+        reportSqlToggleBar.addEventListener('click', function() {
+          reportSqlToggleBar.classList.toggle('is-open');
+          if (reportSqlContent) reportSqlContent.classList.toggle('is-open');
+        });
+      }
+
+      function enterReportEditMode(e) {
+        if (e) e.stopPropagation();
+        if (reportIsEditing) return;
+        reportIsEditing = true;
+
+        // Show chat + SQL panels
+        chatPanel.classList.remove('is-collapsed');
+        if (reportSqlPanel) reportSqlPanel.classList.add('is-visible');
+        // Open SQL content by default
+        if (reportSqlToggleBar) reportSqlToggleBar.classList.add('is-open');
+        if (reportSqlContent) reportSqlContent.classList.add('is-open');
+
+        // Replace Edit button with Save/Cancel
+        var actionsWrap = toggleBtn.parentElement;
+        var editActions = document.createElement('div');
+        editActions.className = 'report-edit-actions';
+        editActions.id = 'report-edit-actions';
+        editActions.innerHTML = '<button class="report-save-btn" id="report-save-btn">Save</button><button class="report-cancel-btn" id="report-cancel-btn">Cancel</button>';
+        toggleBtn.style.display = 'none';
+        actionsWrap.insertBefore(editActions, toggleBtn);
+
+        // Make title editable
+        var titleEl = document.getElementById('report-detail-title');
+        if (titleEl && titleEl.tagName !== 'INPUT') {
+          reportOriginalTitle = titleEl.textContent;
+          var input = document.createElement('input');
+          input.type = 'text';
+          input.className = 'report-title-input';
+          input.id = 'report-detail-title';
+          input.value = reportOriginalTitle;
+          titleEl.replaceWith(input);
+          input.focus();
+          input.select();
         }
-        var titleSpan = e.target.closest('.report-title-text');
-        if (!titleSpan) return;
-        var current = titleSpan.textContent;
-        var input = document.createElement('input');
-        input.type = 'text';
-        input.className = 'report-title-input';
-        input.id = 'report-detail-title';
-        input.value = current;
-        titleSpan.replaceWith(input);
-        input.focus();
-        input.select();
-        function save() {
-          var val = input.value.trim() || current;
+
+        // Bind save/cancel
+        document.getElementById('report-save-btn').addEventListener('click', exitReportEditMode);
+        document.getElementById('report-cancel-btn').addEventListener('click', function() { exitReportEditMode(true); });
+      }
+
+      function exitReportEditMode(isCancel) {
+        reportIsEditing = false;
+
+        // Hide panels
+        chatPanel.classList.add('is-collapsed');
+        if (reportSqlPanel) reportSqlPanel.classList.remove('is-visible');
+        if (reportSqlToggleBar) reportSqlToggleBar.classList.remove('is-open');
+        if (reportSqlContent) reportSqlContent.classList.remove('is-open');
+
+        // Restore Edit button
+        var editActions = document.getElementById('report-edit-actions');
+        if (editActions) editActions.remove();
+        toggleBtn.style.display = '';
+
+        // Restore title
+        var titleInput = document.getElementById('report-detail-title');
+        if (titleInput && titleInput.tagName === 'INPUT') {
+          var val = isCancel === true ? reportOriginalTitle : (titleInput.value.trim() || reportOriginalTitle);
           var span = document.createElement('span');
           span.className = 'report-title-text';
           span.id = 'report-detail-title';
           span.textContent = val;
-          input.replaceWith(span);
+          titleInput.replaceWith(span);
+          document.getElementById('report-breadcrumb-name').textContent = val;
         }
-        input.addEventListener('blur', save);
-        input.addEventListener('keydown', function (e) {
-          if (e.key === 'Enter') { e.preventDefault(); input.blur(); }
-          if (e.key === 'Escape') { input.value = current; input.blur(); }
-        });
-      });
+      }
+
+      toggleBtn.addEventListener('click', enterReportEditMode);
 
       // Dropdown helpers
       function closeAllDropdowns() {
@@ -15492,39 +15600,18 @@ LIMIT 10;</pre>
 
       sqlPre.addEventListener('input', updateSqlRunState);
 
-      // Refresh button
-      document.getElementById('report-refresh-btn').addEventListener('click', function () {
-        tableView.classList.remove('is-hidden');
-        emptyState.classList.remove('is-visible');
-        entryLoading.classList.add('is-visible');
-        var lastGen = document.getElementById('report-last-generated');
-        setTimeout(function () {
-          entryLoading.classList.remove('is-visible');
-          var now = new Date();
-          var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-          lastGen.textContent = 'Last generated: ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear() + ' ' + now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0');
-        }, 2000);
-      });
-
-      // Table / Chart toggle
-      var viewToggle = document.getElementById('report-view-toggle');
-      var chartView = document.getElementById('report-chart-view');
-      if (viewToggle && tableView && chartView) {
-        viewToggle.addEventListener('click', function (e) {
-          var btn = e.target.closest('button');
-          if (!btn) return;
-          var view = btn.getAttribute('data-view');
-          viewToggle.querySelectorAll('button').forEach(function (b) { b.classList.remove('is-active'); });
-          btn.classList.add('is-active');
-          if (view === 'chart') {
-            tableView.style.display = 'none';
-            chartView.classList.add('is-visible');
-          } else {
-            tableView.style.display = '';
-            chartView.classList.remove('is-visible');
-          }
+      // Create a chart button
+      var createChartBtn = document.getElementById('report-create-chart-btn');
+      if (createChartBtn) {
+        createChartBtn.addEventListener('click', function() {
+          var name = (document.getElementById('report-detail-title').textContent || document.getElementById('report-detail-title').value || 'Chart').trim();
+          document.getElementById('chart-detail-title').textContent = name;
+          document.getElementById('chart-breadcrumb-name').textContent = name;
+          showPage('charts-detail');
         });
       }
+
+      // (Table/Chart toggle removed)
 
       // SQL Run / Copy / Cancel
       var sqlRunning = document.getElementById('report-sql-running');
@@ -15584,7 +15671,7 @@ LIMIT 10;</pre>
               tableView.classList.remove('is-hidden');
               var now = new Date();
               var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-              document.getElementById('report-last-generated').textContent = 'Last generated: ' + months[now.getMonth()] + ' ' + now.getDate() + ', ' + now.getFullYear() + ' ' + now.getHours() + ':' + String(now.getMinutes()).padStart(2,'0');
+              // last-generated element removed
             }, 1500);
           }
         }, 50);
@@ -15696,6 +15783,15 @@ LIMIT 10;</pre>
           var csp = document.getElementById('chart-edit-sql');
           if (ccp) ccp.classList.add('is-collapsed');
           if (csp) csp.classList.remove('is-visible');
+          // Reset edit mode if active
+          var chartEditActions = document.getElementById('chart-edit-actions');
+          if (chartEditActions) chartEditActions.remove();
+          var chartToggle = document.getElementById('chart-chat-toggle');
+          if (chartToggle) chartToggle.style.display = '';
+          var chartSqlTB = document.getElementById('chart-sql-toggle-bar');
+          var chartSqlC = document.getElementById('chart-sql-content');
+          if (chartSqlTB) chartSqlTB.classList.remove('is-open');
+          if (chartSqlC) chartSqlC.classList.remove('is-open');
           showPage('charts-detail');
         });
       });
@@ -15706,74 +15802,97 @@ LIMIT 10;</pre>
         showPage('charts');
       });
 
-      // Chart chat + SQL toggle (embedded panels)
+      // Chart edit mode
       var chartChatToggle = document.getElementById('chart-chat-toggle');
       var chartChatPanel = document.getElementById('chart-chat-panel');
       var chartSqlPanel = document.getElementById('chart-edit-sql');
-      if (chartChatToggle && chartChatPanel) {
-        chartChatToggle.addEventListener('click', function() {
-          chartChatPanel.classList.toggle('is-collapsed');
-          if (chartSqlPanel) chartSqlPanel.classList.toggle('is-visible');
+      var chartSqlToggleBar = document.getElementById('chart-sql-toggle-bar');
+      var chartSqlContent = document.getElementById('chart-sql-content');
+      var chartIsEditing = false;
+      var chartOriginalTitle = '';
+
+      // SQL toggle bar
+      if (chartSqlToggleBar) {
+        chartSqlToggleBar.addEventListener('click', function() {
+          chartSqlToggleBar.classList.toggle('is-open');
+          if (chartSqlContent) chartSqlContent.classList.toggle('is-open');
         });
       }
 
-      // Editable chart title/summary
-      var chartHeaderEl = document.getElementById('chart-detail-header');
-      if (chartHeaderEl) {
-        chartHeaderEl.addEventListener('click', function(e) {
-          // Editable summary
-          var summaryDiv = e.target.closest('.report-detail-summary');
-          if (summaryDiv && summaryDiv.id === 'chart-detail-summary') {
-            var currentSummary = summaryDiv.textContent;
-            var ta = document.createElement('textarea');
-            ta.className = 'report-summary-input';
-            ta.id = 'chart-detail-summary';
-            ta.value = currentSummary;
-            ta.rows = 1;
-            summaryDiv.replaceWith(ta);
-            ta.style.height = ta.scrollHeight + 'px';
-            ta.focus();
-            function saveSummary() {
-              var val = ta.value.trim() || currentSummary;
-              var div = document.createElement('div');
-              div.className = 'report-detail-summary';
-              div.id = 'chart-detail-summary';
-              div.textContent = val;
-              ta.replaceWith(div);
-            }
-            ta.addEventListener('blur', saveSummary);
-            ta.addEventListener('input', function() { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; });
-            ta.addEventListener('keydown', function(ev) {
-              if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); ta.blur(); }
-              if (ev.key === 'Escape') { ta.value = currentSummary; ta.blur(); }
-            });
-            return;
-          }
-          // Editable title
-          var titleSpan = e.target.closest('.report-title-text');
-          if (!titleSpan || titleSpan.id !== 'chart-detail-title') return;
-          var current = titleSpan.textContent;
+      function enterChartEditMode() {
+        if (chartIsEditing) return;
+        chartIsEditing = true;
+        chartChatPanel.classList.remove('is-collapsed');
+        if (chartSqlPanel) chartSqlPanel.classList.add('is-visible');
+        if (chartSqlToggleBar) chartSqlToggleBar.classList.add('is-open');
+        if (chartSqlContent) chartSqlContent.classList.add('is-open');
+
+        var actionsWrap = chartChatToggle.parentElement;
+        var editActions = document.createElement('div');
+        editActions.className = 'report-edit-actions';
+        editActions.id = 'chart-edit-actions';
+        editActions.innerHTML = '<button class="report-save-btn" id="chart-save-btn">Save</button><button class="report-cancel-btn" id="chart-cancel-btn">Cancel</button>';
+        chartChatToggle.style.display = 'none';
+        actionsWrap.insertBefore(editActions, chartChatToggle);
+
+        var titleEl = document.getElementById('chart-detail-title');
+        if (titleEl && titleEl.tagName !== 'INPUT') {
+          chartOriginalTitle = titleEl.textContent;
           var input = document.createElement('input');
           input.type = 'text';
           input.className = 'report-title-input';
           input.id = 'chart-detail-title';
-          input.value = current;
-          titleSpan.replaceWith(input);
+          input.value = chartOriginalTitle;
+          titleEl.replaceWith(input);
           input.focus();
           input.select();
-          function saveTitle() {
-            var val = input.value.trim() || current;
-            var span = document.createElement('span');
-            span.className = 'report-title-text';
-            span.id = 'chart-detail-title';
-            span.textContent = val;
-            input.replaceWith(span);
-          }
-          input.addEventListener('blur', saveTitle);
-          input.addEventListener('keydown', function(ev) {
-            if (ev.key === 'Enter') { ev.preventDefault(); input.blur(); }
-            if (ev.key === 'Escape') { input.value = current; input.blur(); }
-          });
+        }
+
+        document.getElementById('chart-save-btn').addEventListener('click', exitChartEditMode);
+        document.getElementById('chart-cancel-btn').addEventListener('click', function() { exitChartEditMode(true); });
+      }
+
+      function exitChartEditMode(isCancel) {
+        chartIsEditing = false;
+        chartChatPanel.classList.add('is-collapsed');
+        if (chartSqlPanel) chartSqlPanel.classList.remove('is-visible');
+        if (chartSqlToggleBar) chartSqlToggleBar.classList.remove('is-open');
+        if (chartSqlContent) chartSqlContent.classList.remove('is-open');
+
+        var editActions = document.getElementById('chart-edit-actions');
+        if (editActions) editActions.remove();
+        chartChatToggle.style.display = '';
+
+        var titleInput = document.getElementById('chart-detail-title');
+        if (titleInput && titleInput.tagName === 'INPUT') {
+          var val = isCancel === true ? chartOriginalTitle : (titleInput.value.trim() || chartOriginalTitle);
+          var span = document.createElement('span');
+          span.className = 'report-title-text';
+          span.id = 'chart-detail-title';
+          span.textContent = val;
+          titleInput.replaceWith(span);
+          document.getElementById('chart-breadcrumb-name').textContent = val;
+        }
+      }
+
+      if (chartChatToggle) chartChatToggle.addEventListener('click', enterChartEditMode);
+
+      // Chart "Add to dashboard" dropdown
+      var chartAddDashBtn = document.getElementById('chart-add-dash-btn');
+      if (chartAddDashBtn) {
+        chartAddDashBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var dd = document.getElementById('chart-dash-picker');
+          var wasOpen = dd.classList.contains('is-open');
+          document.querySelectorAll('.report-dropdown.is-open').forEach(function(d) { d.classList.remove('is-open'); });
+          if (!wasOpen) dd.classList.add('is-open');
+        });
+      }
+      var chartDashDone = document.getElementById('chart-dash-picker-done');
+      if (chartDashDone) {
+        chartDashDone.addEventListener('click', function(e) {
+          e.stopPropagation();
+          document.querySelectorAll('.report-dropdown.is-open').forEach(function(d) { d.classList.remove('is-open'); });
         });
       }
     })();
@@ -15801,46 +15920,108 @@ LIMIT 10;</pre>
         showPage('dashboards-list');
       });
 
-      // Custom dashboard chat + SQL toggle (embedded panels)
+      // Dashboard edit mode (no chat/SQL — just reorder + title edit)
       var cdashChatToggle = document.getElementById('cdash-chat-toggle');
-      var cdashChatPanel = document.getElementById('cdash-chat-panel');
-      var cdashSqlPanel = document.getElementById('cdash-edit-sql');
-      if (cdashChatToggle && cdashChatPanel) {
-        cdashChatToggle.addEventListener('click', function() {
-          cdashChatPanel.classList.toggle('is-collapsed');
-          if (cdashSqlPanel) cdashSqlPanel.classList.toggle('is-visible');
-        });
-      }
+      var cdashDetailPage = document.getElementById('custom-dash-detail-page');
+      var cdashIsEditing = false;
+      var cdashOriginalTitle = '';
 
-      // Editable dashboard title
-      var cdashTitle = document.getElementById('custom-dash-title');
-      if (cdashTitle) {
-        cdashTitle.addEventListener('click', function() {
-          var current = cdashTitle.textContent;
+      function enterDashEditMode() {
+        if (cdashIsEditing) return;
+        cdashIsEditing = true;
+        cdashDetailPage.classList.add('is-edit-mode');
+
+        // Replace Edit with Save/Cancel
+        var actionsWrap = cdashChatToggle.parentElement;
+        var editActions = document.createElement('div');
+        editActions.className = 'report-edit-actions';
+        editActions.id = 'cdash-edit-actions';
+        editActions.innerHTML = '<button class="report-save-btn" id="cdash-save-btn">Save</button><button class="report-cancel-btn" id="cdash-cancel-btn">Cancel</button>';
+        cdashChatToggle.style.display = 'none';
+        actionsWrap.insertBefore(editActions, cdashChatToggle);
+
+        // Make title editable
+        var titleEl = document.getElementById('custom-dash-title');
+        if (titleEl && titleEl.tagName !== 'INPUT') {
+          cdashOriginalTitle = titleEl.textContent;
           var input = document.createElement('input');
           input.type = 'text';
           input.className = 'dash-title-input';
           input.id = 'custom-dash-title';
-          input.value = current;
+          input.value = cdashOriginalTitle;
           input.style.cssText = 'font-size:var(--font-h4-size,20px);font-weight:var(--font-weight-semibold);color:var(--color-text-primary);font-family:var(--font-family-base);border:none;border-bottom:1px solid var(--color-primary-6);padding:0 0 1px;background:transparent;outline:none;width:100%;min-width:200px;';
-          cdashTitle.replaceWith(input);
+          titleEl.replaceWith(input);
           input.focus();
           input.select();
-          function saveDashTitle() {
-            var val = input.value.trim() || current;
-            var span = document.createElement('span');
-            span.className = 'dash-title-text';
-            span.id = 'custom-dash-title';
-            span.textContent = val;
-            input.replaceWith(span);
-            // Re-attach click handler
-            span.addEventListener('click', arguments.callee);
+        }
+
+        document.getElementById('cdash-save-btn').addEventListener('click', exitDashEditMode);
+        document.getElementById('cdash-cancel-btn').addEventListener('click', function() { exitDashEditMode(true); });
+      }
+
+      function exitDashEditMode(isCancel) {
+        cdashIsEditing = false;
+        cdashDetailPage.classList.remove('is-edit-mode');
+
+        var editActions = document.getElementById('cdash-edit-actions');
+        if (editActions) editActions.remove();
+        cdashChatToggle.style.display = '';
+
+        var titleInput = document.getElementById('custom-dash-title');
+        if (titleInput && titleInput.tagName === 'INPUT') {
+          var val = isCancel === true ? cdashOriginalTitle : (titleInput.value.trim() || cdashOriginalTitle);
+          var span = document.createElement('span');
+          span.className = 'dash-title-text';
+          span.id = 'custom-dash-title';
+          span.textContent = val;
+          titleInput.replaceWith(span);
+          document.getElementById('cdash-breadcrumb-name').textContent = val;
+        }
+      }
+
+      if (cdashChatToggle) cdashChatToggle.addEventListener('click', enterDashEditMode);
+
+      // Dashboard more button
+      var cdashMoreBtn = document.getElementById('cdash-more-btn');
+      if (cdashMoreBtn) {
+        cdashMoreBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var dd = document.getElementById('cdash-more-dropdown');
+          var wasOpen = dd.classList.contains('is-open');
+          document.querySelectorAll('.report-dropdown.is-open').forEach(function(d) { d.classList.remove('is-open'); });
+          if (!wasOpen) dd.classList.add('is-open');
+        });
+      }
+      var cdashRemoveBtn = document.getElementById('cdash-action-remove');
+      if (cdashRemoveBtn) {
+        cdashRemoveBtn.addEventListener('click', function() {
+          document.querySelectorAll('.report-dropdown.is-open').forEach(function(d) { d.classList.remove('is-open'); });
+          showPage('dashboards-list');
+        });
+      }
+
+      // Board edit navigation — click Edit on a card to navigate to report/chart detail
+      var cdashGrid = document.getElementById('custom-dash-grid');
+      if (cdashGrid) {
+        cdashGrid.addEventListener('click', function(e) {
+          var editBtn = e.target.closest('[data-action="edit"]');
+          if (!editBtn) return;
+          e.stopPropagation();
+          var card = editBtn.closest('.dash-card');
+          if (!card) return;
+          var titleEl = card.querySelector('.dash-card-title');
+          var name = titleEl ? titleEl.textContent : 'Untitled';
+          var boardType = card.getAttribute('data-board-type') || 'report';
+
+          if (boardType === 'chart') {
+            document.getElementById('chart-detail-title').textContent = name;
+            document.getElementById('chart-breadcrumb-name').textContent = name;
+            showPage('charts-detail');
+          } else {
+            document.getElementById('report-detail-title').textContent = name;
+            document.getElementById('report-breadcrumb-name').textContent = name;
+            showPage('report-detail');
           }
-          input.addEventListener('blur', saveDashTitle);
-          input.addEventListener('keydown', function(ev) {
-            if (ev.key === 'Enter') { ev.preventDefault(); input.blur(); }
-            if (ev.key === 'Escape') { input.value = current; input.blur(); }
-          });
         });
       }
     })();
