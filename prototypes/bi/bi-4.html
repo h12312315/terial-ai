@@ -2529,6 +2529,46 @@
     .dash-detail-page.is-visible:has(.dash-chat-panel:not(.is-collapsed)) {
       right: 320px;
     }
+
+    /* ========== Charts detail page ========== */
+    .charts-detail-page { display: none; }
+    .charts-detail-page.is-visible {
+      display: flex;
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+    }
+    .charts-detail-body {
+      flex: 1;
+      display: flex;
+      min-height: 0;
+      overflow: hidden;
+      margin-right: 340px;
+    }
+    .charts-detail-body:has(.report-chat-panel.is-collapsed) {
+      margin-right: 0;
+    }
+    .chart-preview-panel {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      background: var(--color-bg-page);
+    }
+
+    /* ========== Custom dashboard detail page ========== */
+    .custom-dash-detail-page { display: none; }
+    .custom-dash-detail-page.is-visible {
+      display: flex;
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      background: var(--color-bg-page);
+    }
+    .custom-dash-detail-page.is-visible:has(.dash-chat-panel:not(.is-collapsed)) {
+      right: 320px;
+    }
+
     .dash-main-panel {
       flex: 1;
       overflow-y: auto;
@@ -7323,6 +7363,8 @@
       </div>
       <div class="nav-children" id="nav-reports-children" style="display:none;">
         <div class="nav-child">Custom reports</div>
+        <div class="nav-child">Custom charts</div>
+        <div class="nav-child">Custom dashboards</div>
       </div>
 
       <div class="nav-row" id="nav-dashboards-toggle" style="display:none;">
@@ -8900,6 +8942,391 @@ ORDER BY "Total Revenue" DESC;</pre>
                 <svg viewBox="0 0 16 16" fill="currentColor"><path d="M1.7 1.4l13 6.3c.4.2.4.7 0 .9l-13 6.3c-.5.2-1-.2-.8-.7L3 8 .9 2.1c-.2-.5.3-1 .8-.7zM4 8.5l9.3-.5L4 7.5v1z"/></svg>
               </button>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Charts list page -->
+      <div class="reports-page" id="charts-page">
+        <div class="opps-page-header">
+          <div class="opps-page-header-titlewrap">
+            <h1>Custom charts</h1>
+          </div>
+        </div>
+        <div class="reports-toolbar">
+          <div class="reports-search">
+            <svg class="search-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4"/><path d="M9 9l3.5 3.5"/></svg>
+            <input type="text" placeholder="Search charts..." />
+          </div>
+          <button class="reports-filter-btn">
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 2.5h11l-4 5v4l-3 1.5v-5.5l-4-5z"/></svg>
+            Filters
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5L7 9.5l4-4"/></svg>
+          </button>
+          <button class="reports-new-btn" id="charts-new-btn">+ New</button>
+        </div>
+        <table class="reports-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Created by</th>
+              <th>Last modified</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="charts-table-body">
+            <tr data-chart="chart-revenue-region">
+              <td><span class="report-name-link">Revenue by Region</span></td>
+              <td>Bar</td>
+              <td>George Chang</td>
+              <td>May 12, 2026</td>
+              <td><span class="report-tag tag-active">Active</span></td>
+            </tr>
+            <tr data-chart="chart-monthly-sales">
+              <td><span class="report-name-link">Monthly Sales Trend</span></td>
+              <td>Line</td>
+              <td>Valeriia User</td>
+              <td>May 10, 2026</td>
+              <td><span class="report-tag tag-active">Active</span></td>
+            </tr>
+            <tr data-chart="chart-win-rate">
+              <td><span class="report-name-link">Win Rate by Rep</span></td>
+              <td>Pie</td>
+              <td>Sheri Li</td>
+              <td>May 8, 2026</td>
+              <td><span class="report-tag tag-active">Active</span></td>
+            </tr>
+            <tr data-chart="chart-pipeline-stage">
+              <td><span class="report-name-link">Deal Pipeline by Stage</span></td>
+              <td>Funnel</td>
+              <td>George Chang</td>
+              <td>May 5, 2026</td>
+              <td><span class="report-tag tag-active">Active</span></td>
+            </tr>
+            <tr data-chart="chart-ticket-volume">
+              <td><span class="report-name-link">Ticket Volume Over Time</span></td>
+              <td>Area</td>
+              <td>Alec McGovern</td>
+              <td>May 2, 2026</td>
+              <td><span class="report-tag tag-active">Active</span></td>
+            </tr>
+            <tr data-chart="chart-cac">
+              <td><span class="report-name-link">Customer Acquisition Cost</span></td>
+              <td>Bar</td>
+              <td>Valeriia User</td>
+              <td>Apr 28, 2026</td>
+              <td><span class="report-tag tag-draft">Draft</span></td>
+            </tr>
+            <tr data-chart="chart-rev-target">
+              <td><span class="report-name-link">Revenue vs Target</span></td>
+              <td>Gauge</td>
+              <td>George Chang</td>
+              <td>Apr 25, 2026</td>
+              <td><span class="report-tag tag-active">Active</span></td>
+            </tr>
+            <tr data-chart="chart-top-products">
+              <td><span class="report-name-link">Top Products by Revenue</span></td>
+              <td>Horizontal Bar</td>
+              <td>Sheri Li</td>
+              <td>Apr 20, 2026</td>
+              <td><span class="report-tag tag-draft">Draft</span></td>
+            </tr>
+            <tr data-chart="chart-proposal-conv">
+              <td><span class="report-name-link">Proposal Conversion Rate</span></td>
+              <td>Donut</td>
+              <td>Alec McGovern</td>
+              <td>Apr 18, 2026</td>
+              <td><span class="report-tag tag-active">Active</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Chart detail page -->
+      <div class="charts-detail-page" id="charts-detail-page">
+        <div class="charts-detail-body">
+          <!-- Left: Chart preview -->
+          <div class="chart-preview-panel">
+            <div class="report-detail-breadcrumb"><a id="chart-back-link">&larr; Back</a><button class="report-chat-toggle" id="chart-chat-toggle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1L3 8h3l-1 6 5-8H7l1-6z" fill="currentColor" stroke="none"/></svg> Chart builder <span class="toggle-arrow">&rarr;</span></button></div>
+            <div class="report-detail-header" id="chart-detail-header">
+              <div class="report-detail-header-left">
+                <span class="report-title-text" id="chart-detail-title">Revenue by Region</span>
+                <div class="report-detail-summary" id="chart-detail-summary">Visualization showing revenue by region data across all regions.</div>
+              </div>
+              <div class="report-preview-actions">
+                <div class="report-dropdown-wrap">
+                  <button class="report-more-btn" id="chart-more-btn"><svg viewBox="0 0 14 14" fill="currentColor"><circle cx="7" cy="3" r="1.2"/><circle cx="7" cy="7" r="1.2"/><circle cx="7" cy="11" r="1.2"/></svg></button>
+                </div>
+              </div>
+            </div>
+            <div class="report-preview-toolbar" id="chart-preview-toolbar">
+              <div class="report-preview-toolbar-left">
+                <div style="position:relative;">
+                  <button class="dash-filter-btn" data-dr-btn="chart-detail"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="12" height="11" rx="1"/><path d="M1 5.5h12M4 1v2M10 1v2"/></svg> <span data-dr-label="chart-detail">This Quarter</span></button>
+                </div>
+              </div>
+              <div class="report-preview-toolbar-right">
+                <button id="chart-download-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10V2M3.5 6.5L7 10l3.5-3.5M2 12h10"/></svg> Download</button>
+                <button class="report-refresh-btn" id="chart-refresh-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1v4h4"/><path d="M2.5 9.5a5 5 0 1 0 1-5.2L1 5"/></svg>Refresh</button>
+              </div>
+            </div>
+            <div class="report-preview-content">
+              <div class="report-chart-view" style="display:block; padding: var(--space-lg) var(--space-2xl);">
+                <div class="report-chart-bar-row"><div class="report-chart-bar-label">West Coast</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:100%;background:#2563eb;"><span class="report-chart-bar-value">$523,100</span></div></div></div>
+                <div class="report-chart-bar-row"><div class="report-chart-bar-label">Northeast</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:92%;background:#3b82f6;"><span class="report-chart-bar-value">$482,300</span></div></div></div>
+                <div class="report-chart-bar-row"><div class="report-chart-bar-label">Southeast</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:71%;background:#3b82f6;"><span class="report-chart-bar-value">$371,050</span></div></div></div>
+                <div class="report-chart-bar-row"><div class="report-chart-bar-label">Mid-Atlantic</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:68%;background:#60a5fa;"><span class="report-chart-bar-value">$356,900</span></div></div></div>
+                <div class="report-chart-bar-row"><div class="report-chart-bar-label">Midwest</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:57%;background:#60a5fa;"><span class="report-chart-bar-value">$298,700</span></div></div></div>
+                <div class="report-chart-bar-row"><div class="report-chart-bar-label">Southwest</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:41%;background:#93bbfd;"><span class="report-chart-bar-value">$215,400</span></div></div></div>
+                <div class="report-chart-bar-row"><div class="report-chart-bar-label">Pacific NW</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:36%;background:#93bbfd;"><span class="report-chart-bar-value">$189,200</span></div></div></div>
+                <div class="report-chart-bar-row"><div class="report-chart-bar-label">Mountain</div><div class="report-chart-bar-track"><div class="report-chart-bar-fill" style="width:27%;background:#bfdbfe;"><span class="report-chart-bar-value" style="color:var(--color-text-primary);">$142,800</span></div></div></div>
+                <div class="report-chart-legend">
+                  <div class="report-chart-legend-item"><div class="report-chart-legend-dot" style="background:#3b82f6"></div>Total Revenue by Region</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Right: AI chat -->
+          <div class="report-chat-panel" id="chart-chat-panel">
+            <div class="report-chat-header">
+              <div class="report-chat-header-title">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1L3 8h3l-1 6 5-8H7l1-6z" fill="currentColor" stroke="none"/></svg>
+                Terial AI
+              </div>
+              <button class="report-chat-reset" id="chart-chat-reset">
+                <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1 1v4h4"/><path d="M2.5 9.5a5 5 0 1 0 1-5.2L1 5"/></svg>
+                Reset
+              </button>
+            </div>
+            <div class="report-chat-tabs" id="chart-chat-panel-tabs">
+              <button class="is-active" data-chat-view="chat">AI chat</button>
+              <button data-chat-view="sql">SQL</button>
+            </div>
+            <div class="report-chat-sql-view" id="chart-chat-sql-view" style="display:none;">
+              <div class="report-sql-view" style="display:block;">
+                <div class="report-sql-wrap">
+                  <pre class="report-sql-pre" contenteditable="true" spellcheck="false">SELECT
+  r.region_name        AS "Region",
+  SUM(o.value)         AS "Total Revenue"
+FROM opportunities o
+JOIN regions r ON r.id = o.region_id
+WHERE o.closed_at >= DATE_TRUNC('quarter', CURRENT_DATE)
+GROUP BY r.region_name
+ORDER BY "Total Revenue" DESC;</pre>
+                </div>
+              </div>
+            </div>
+            <div class="report-chat-messages" id="chart-chat-messages">
+              <div class="chat-msg is-ai">
+                <div class="chat-msg-label">Terial AI</div>
+                I can help you build this chart. Describe what data you'd like to visualize, and I'll generate the query and chart for you.
+              </div>
+            </div>
+            <div class="report-chat-input-wrap">
+              <textarea class="report-chat-input" id="chart-chat-input" placeholder="Ask Terial AI to build your chart..." rows="1"></textarea>
+              <button class="report-chat-send" id="chart-chat-send">
+                <svg viewBox="0 0 16 16" fill="currentColor"><path d="M1.7 1.4l13 6.3c.4.2.4.7 0 .9l-13 6.3c-.5.2-1-.2-.8-.7L3 8 .9 2.1c-.2-.5.3-1 .8-.7zM4 8.5l9.3-.5L4 7.5v1z"/></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Dashboards list page -->
+      <div class="reports-page" id="dashboards-page">
+        <div class="opps-page-header">
+          <div class="opps-page-header-titlewrap">
+            <h1>Custom dashboards</h1>
+          </div>
+        </div>
+        <div class="reports-toolbar">
+          <div class="reports-search">
+            <svg class="search-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4"/><path d="M9 9l3.5 3.5"/></svg>
+            <input type="text" placeholder="Search dashboards..." />
+          </div>
+          <button class="reports-filter-btn">
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 2.5h11l-4 5v4l-3 1.5v-5.5l-4-5z"/></svg>
+            Filters
+            <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5L7 9.5l4-4"/></svg>
+          </button>
+          <button class="reports-new-btn" id="dashboards-new-btn">+ New</button>
+        </div>
+        <table class="reports-table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Cards</th>
+              <th>Created by</th>
+              <th>Last modified</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="dashboards-table-body">
+            <tr data-dashboard="dash-sales">
+              <td><span class="report-name-link">Sales Dashboard</span></td>
+              <td>8</td>
+              <td>George Chang</td>
+              <td>May 14, 2026</td>
+              <td><span class="report-tag tag-active">Active</span></td>
+            </tr>
+            <tr data-dashboard="dash-marketing">
+              <td><span class="report-name-link">Marketing Overview</span></td>
+              <td>5</td>
+              <td>Valeriia User</td>
+              <td>May 10, 2026</td>
+              <td><span class="report-tag tag-active">Active</span></td>
+            </tr>
+            <tr data-dashboard="dash-operations">
+              <td><span class="report-name-link">Operations Dashboard</span></td>
+              <td>12</td>
+              <td>Sheri Li</td>
+              <td>May 7, 2026</td>
+              <td><span class="report-tag tag-active">Active</span></td>
+            </tr>
+            <tr data-dashboard="dash-executive">
+              <td><span class="report-name-link">Executive Summary</span></td>
+              <td>6</td>
+              <td>George Chang</td>
+              <td>May 3, 2026</td>
+              <td><span class="report-tag tag-active">Active</span></td>
+            </tr>
+            <tr data-dashboard="dash-service">
+              <td><span class="report-name-link">Service Performance</span></td>
+              <td>10</td>
+              <td>Alec McGovern</td>
+              <td>Apr 28, 2026</td>
+              <td><span class="report-tag tag-draft">Draft</span></td>
+            </tr>
+            <tr data-dashboard="dash-project">
+              <td><span class="report-name-link">Project Tracker</span></td>
+              <td>7</td>
+              <td>Sheri Li</td>
+              <td>Apr 22, 2026</td>
+              <td><span class="report-tag tag-active">Active</span></td>
+            </tr>
+            <tr data-dashboard="dash-finance">
+              <td><span class="report-name-link">Finance Dashboard</span></td>
+              <td>9</td>
+              <td>Valeriia User</td>
+              <td>Apr 18, 2026</td>
+              <td><span class="report-tag tag-draft">Draft</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Custom dashboard detail page -->
+      <div class="custom-dash-detail-page" id="custom-dash-detail-page">
+        <div class="dash-main-panel">
+          <div class="report-detail-breadcrumb" style="padding-left:0;"><a id="custom-dash-back-link">&larr; Back</a><button class="dash-chat-toggle" id="cdash-chat-toggle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1L3 8h3l-1 6 5-8H7l1-6z" fill="currentColor" stroke="none"/></svg> AI builder <span class="toggle-arrow">&rarr;</span></button></div>
+          <div class="dash-header">
+            <div class="dash-header-left">
+              <span class="dash-title-text" id="custom-dash-title">Sales Dashboard</span>
+            </div>
+          </div>
+          <div class="dash-grid" id="custom-dash-grid">
+
+            <div class="dash-card span-2" draggable="true">
+              <div class="dash-card-actions"><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
+              <div class="dash-card-title">Top Deals This Quarter</div>
+              <table class="dash-card-table">
+                <thead><tr><th>Deal</th><th>Rep</th><th>Value</th><th>Stage</th></tr></thead>
+                <tbody>
+                  <tr><td>Lakewood Plaza Re-Roof</td><td>George Chang</td><td>$124,500</td><td>Negotiation</td></tr>
+                  <tr><td>Meridian Office Complex</td><td>Valeriia User</td><td>$98,200</td><td>Proposal</td></tr>
+                  <tr><td>Harbor View Condos</td><td>Sheri Li</td><td>$87,600</td><td>Closed Won</td></tr>
+                  <tr><td>Riverdale Medical Ctr</td><td>George Chang</td><td>$76,300</td><td>Qualified</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="dash-card span-2" draggable="true">
+              <div class="dash-card-actions"><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
+              <div class="dash-card-title">Revenue by Rep</div>
+              <table class="dash-card-table">
+                <thead><tr><th>Rep</th><th>Revenue</th></tr></thead>
+                <tbody>
+                  <tr><td>George Chang</td><td><span class="dash-tbl-bar" style="width:90%;background:var(--color-primary-6)"></span>$482K</td></tr>
+                  <tr><td>Valeriia User</td><td><span class="dash-tbl-bar" style="width:72%;background:var(--color-primary-6)"></span>$371K</td></tr>
+                  <tr><td>Sheri Li</td><td><span class="dash-tbl-bar" style="width:58%;background:var(--color-primary-6)"></span>$298K</td></tr>
+                  <tr><td>Alec McGovern</td><td><span class="dash-tbl-bar" style="width:42%;background:var(--color-primary-6)"></span>$215K</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="dash-card" draggable="true">
+              <div class="dash-card-actions"><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
+              <div class="dash-card-title">Win Rate</div>
+              <div class="dash-stat-value" style="font-size:36px;font-weight:700;color:var(--color-text-primary);padding:16px 0;">47%</div>
+              <div style="color:#22c55e;font-size:13px;">+3% vs last quarter</div>
+            </div>
+
+            <div class="dash-card" draggable="true">
+              <div class="dash-card-actions"><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
+              <div class="dash-card-title">Revenue Trend</div>
+              <table class="dash-card-table">
+                <thead><tr><th>Month</th><th>Revenue</th></tr></thead>
+                <tbody>
+                  <tr><td>Jan</td><td><span class="dash-tbl-bar" style="width:55%;background:var(--color-primary-6)"></span>$210K</td></tr>
+                  <tr><td>Feb</td><td><span class="dash-tbl-bar" style="width:62%;background:var(--color-primary-6)"></span>$245K</td></tr>
+                  <tr><td>Mar</td><td><span class="dash-tbl-bar" style="width:70%;background:var(--color-primary-6)"></span>$278K</td></tr>
+                  <tr><td>Apr</td><td><span class="dash-tbl-bar" style="width:80%;background:var(--color-primary-6)"></span>$312K</td></tr>
+                  <tr><td>May</td><td><span class="dash-tbl-bar" style="width:88%;background:var(--color-primary-6)"></span>$348K</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="dash-card" draggable="true">
+              <div class="dash-card-actions"><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
+              <div class="dash-card-title">Pipeline by Stage</div>
+              <table class="dash-card-table">
+                <thead><tr><th>Stage</th><th>Deals</th><th>Value</th></tr></thead>
+                <tbody>
+                  <tr><td>Qualified</td><td>18</td><td>$420K</td></tr>
+                  <tr><td>Proposal</td><td>12</td><td>$580K</td></tr>
+                  <tr><td>Negotiation</td><td>7</td><td>$340K</td></tr>
+                  <tr><td>Closed Won</td><td>22</td><td>$890K</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="dash-card" draggable="true">
+              <div class="dash-card-actions"><div class="dash-card-export-wrap"><button class="dash-card-action-btn is-primary" data-action="export"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M8 12V4M4.5 7.5L8 4l3.5 3.5M2 14h12"/></svg>Export</button><div class="dash-card-export-dropdown"><button class="dash-card-export-item" data-export="pdf">Export as PDF</button><button class="dash-card-export-item" data-export="csv">Export as CSV</button></div></div><button class="dash-card-action-btn" data-action="duplicate"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>Duplicate</button><button class="dash-card-action-btn is-danger" data-action="remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V3a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1v1M6.5 7v4M9.5 7v4"/><path d="M3.5 4l.7 9a1 1 0 0 0 1 .9h5.6a1 1 0 0 0 1-.9l.7-9"/></svg>Remove</button></div>
+              <div class="dash-card-title">Monthly Bookings</div>
+              <div class="dash-stat-value" style="font-size:36px;font-weight:700;color:var(--color-text-primary);padding:16px 0;">$1.39M</div>
+              <div style="color:#22c55e;font-size:13px;">+12% vs last month</div>
+            </div>
+
+          </div>
+        </div>
+
+        <div class="dash-chat-panel is-collapsed" id="cdash-chat-panel">
+          <div class="dash-chat-header">
+            <div class="dash-chat-header-left"><button class="dash-chat-header-icon" data-action="close-chat"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg></button><span class="dash-chat-header-title">Terial AI</span></div>
+          </div>
+          <div class="dash-chat-tabs" data-chat-tabs>
+            <button class="is-active" data-chat-view="chat">AI chat</button>
+            <button data-chat-view="sql">SQL</button>
+          </div>
+          <div class="dash-chat-messages" id="cdash-chat-messages"></div>
+          <div class="dash-chat-sql-view" data-sql-view>
+            <pre class="dash-chat-sql-pre">SELECT
+  d.deal_name       AS "Deal",
+  u.full_name       AS "Rep",
+  d.value           AS "Value",
+  d.stage           AS "Stage"
+FROM deals d
+JOIN users u ON u.id = d.rep_id
+WHERE d.quarter = CURRENT_QUARTER
+ORDER BY d.value DESC
+LIMIT 10;</pre>
+          </div>
+          <div class="dash-chat-input-wrap">
+            <textarea class="dash-chat-input" id="cdash-chat-input" placeholder="Ask Terial AI..." rows="1"></textarea>
+            <button class="dash-chat-send" id="cdash-chat-send">
+              <svg viewBox="0 0 16 16" fill="currentColor"><path d="M1.7 1.4l13 6.3c.4.2.4.7 0 .9l-13 6.3c-.5.2-1-.2-.8-.7L3 8 .9 2.1c-.2-.5.3-1 .8-.7zM4 8.5l9.3-.5L4 7.5v1z"/></svg>
+            </button>
           </div>
         </div>
       </div>
@@ -10716,6 +11143,10 @@ LIMIT 10;</pre>
     var tplDetailPage = document.getElementById('tpl-detail-page');
     var reportsPage = document.getElementById('reports-page');
     var reportDetailPage = document.getElementById('report-detail-page');
+    var chartsPage = document.getElementById('charts-page');
+    var chartsDetailPage = document.getElementById('charts-detail-page');
+    var dashboardsPage = document.getElementById('dashboards-page');
+    var customDashDetailPage = document.getElementById('custom-dash-detail-page');
 
     // Reports/Dashboards tab switching
     (function () {
@@ -11356,6 +11787,10 @@ LIMIT 10;</pre>
       if (reportsPage) reportsPage.classList.remove('is-visible');
       if (reportDetailPage) reportDetailPage.classList.remove('is-visible');
       if (dashDetailPage) dashDetailPage.classList.remove('is-visible');
+      if (chartsPage) chartsPage.classList.remove('is-visible');
+      if (chartsDetailPage) chartsDetailPage.classList.remove('is-visible');
+      if (dashboardsPage) dashboardsPage.classList.remove('is-visible');
+      if (customDashDetailPage) customDashDetailPage.classList.remove('is-visible');
       var qp = document.getElementById('ai-queue-page');
       var rp = document.getElementById('ai-review-page');
       if (qp) { qp.classList.remove('is-visible'); qp.style.display = 'none'; }
@@ -11373,6 +11808,10 @@ LIMIT 10;</pre>
       else if (name === 'reports' && reportsPage) reportsPage.classList.add('is-visible');
       else if (name === 'report-detail' && reportDetailPage) reportDetailPage.classList.add('is-visible');
       else if (name === 'dash-detail' && dashDetailPage) dashDetailPage.classList.add('is-visible');
+      else if (name === 'charts' && chartsPage) chartsPage.classList.add('is-visible');
+      else if (name === 'charts-detail' && chartsDetailPage) chartsDetailPage.classList.add('is-visible');
+      else if (name === 'dashboards-list' && dashboardsPage) dashboardsPage.classList.add('is-visible');
+      else if (name === 'custom-dash-detail' && customDashDetailPage) customDashDetailPage.classList.add('is-visible');
       else if (name === 'ai-queue') { var qp = document.getElementById('ai-queue-page'); if (qp) { qp.classList.add('is-visible'); qp.style.display = ''; } }
       else if (name === 'ai-review') { var rp = document.getElementById('ai-review-page'); if (rp) { rp.classList.add('is-visible'); rp.style.display = ''; } }
     }
@@ -11730,6 +12169,10 @@ LIMIT 10;</pre>
         var label = child.textContent.trim();
         if (label === 'Custom reports') {
           showPage('reports');
+        } else if (label === 'Custom charts') {
+          showPage('charts');
+        } else if (label === 'Custom dashboards') {
+          showPage('dashboards-list');
         } else {
           showPage('tasks');
         }
@@ -15282,6 +15725,216 @@ LIMIT 10;</pre>
       document.getElementById('report-chat-reset').addEventListener('click', function () {
         chatMessages.innerHTML = '<div class="chat-msg is-ai"><div class="chat-msg-label">Terial AI</div>I can help you build this report. Describe what data you\'d like to see, and I\'ll generate the query and preview for you.</div>';
       });
+    })();
+
+    // ========== Charts page handlers ==========
+    (function() {
+      // Charts table click
+      document.querySelectorAll('#charts-table-body tr').forEach(function(row) {
+        row.addEventListener('click', function() {
+          var nameEl = row.querySelector('.report-name-link');
+          var name = nameEl ? nameEl.textContent : 'Chart';
+          document.getElementById('chart-detail-title').textContent = name;
+          document.getElementById('chart-detail-summary').textContent = 'Visualization showing ' + name.toLowerCase() + ' data across all regions.';
+          showPage('charts-detail');
+        });
+      });
+
+      // Chart detail back
+      document.getElementById('chart-back-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        showPage('charts');
+      });
+
+      // Chart chat toggle
+      var chartChatToggle = document.getElementById('chart-chat-toggle');
+      var chartChatPanel = document.getElementById('chart-chat-panel');
+      if (chartChatToggle && chartChatPanel) {
+        var chartToggleArrow = chartChatToggle.querySelector('.toggle-arrow');
+        function updateChartToggleArrow() {
+          if (chartToggleArrow) chartToggleArrow.textContent = chartChatPanel.classList.contains('is-collapsed') ? '←' : '→';
+        }
+        chartChatToggle.addEventListener('click', function() {
+          chartChatPanel.classList.toggle('is-collapsed');
+          updateChartToggleArrow();
+        });
+      }
+
+      // Chart chat tabs
+      var chartChatTabs = document.getElementById('chart-chat-panel-tabs');
+      if (chartChatTabs) {
+        chartChatTabs.querySelectorAll('button').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            chartChatTabs.querySelectorAll('button').forEach(function(b) { b.classList.remove('is-active'); });
+            btn.classList.add('is-active');
+            var view = btn.getAttribute('data-chat-view');
+            var sqlView = document.getElementById('chart-chat-sql-view');
+            var chatMsgs = document.getElementById('chart-chat-messages');
+            if (view === 'sql') {
+              if (sqlView) sqlView.style.display = 'block';
+              if (chatMsgs) chatMsgs.style.display = 'none';
+            } else {
+              if (sqlView) sqlView.style.display = 'none';
+              if (chatMsgs) chatMsgs.style.display = '';
+            }
+          });
+        });
+      }
+
+      // Editable chart title/summary
+      var chartHeaderEl = document.getElementById('chart-detail-header');
+      if (chartHeaderEl) {
+        chartHeaderEl.addEventListener('click', function(e) {
+          // Editable summary
+          var summaryDiv = e.target.closest('.report-detail-summary');
+          if (summaryDiv && summaryDiv.id === 'chart-detail-summary') {
+            var currentSummary = summaryDiv.textContent;
+            var ta = document.createElement('textarea');
+            ta.className = 'report-summary-input';
+            ta.id = 'chart-detail-summary';
+            ta.value = currentSummary;
+            ta.rows = 1;
+            summaryDiv.replaceWith(ta);
+            ta.style.height = ta.scrollHeight + 'px';
+            ta.focus();
+            function saveSummary() {
+              var val = ta.value.trim() || currentSummary;
+              var div = document.createElement('div');
+              div.className = 'report-detail-summary';
+              div.id = 'chart-detail-summary';
+              div.textContent = val;
+              ta.replaceWith(div);
+            }
+            ta.addEventListener('blur', saveSummary);
+            ta.addEventListener('input', function() { ta.style.height = 'auto'; ta.style.height = ta.scrollHeight + 'px'; });
+            ta.addEventListener('keydown', function(ev) {
+              if (ev.key === 'Enter' && !ev.shiftKey) { ev.preventDefault(); ta.blur(); }
+              if (ev.key === 'Escape') { ta.value = currentSummary; ta.blur(); }
+            });
+            return;
+          }
+          // Editable title
+          var titleSpan = e.target.closest('.report-title-text');
+          if (!titleSpan || titleSpan.id !== 'chart-detail-title') return;
+          var current = titleSpan.textContent;
+          var input = document.createElement('input');
+          input.type = 'text';
+          input.className = 'report-title-input';
+          input.id = 'chart-detail-title';
+          input.value = current;
+          titleSpan.replaceWith(input);
+          input.focus();
+          input.select();
+          function saveTitle() {
+            var val = input.value.trim() || current;
+            var span = document.createElement('span');
+            span.className = 'report-title-text';
+            span.id = 'chart-detail-title';
+            span.textContent = val;
+            input.replaceWith(span);
+          }
+          input.addEventListener('blur', saveTitle);
+          input.addEventListener('keydown', function(ev) {
+            if (ev.key === 'Enter') { ev.preventDefault(); input.blur(); }
+            if (ev.key === 'Escape') { input.value = current; input.blur(); }
+          });
+        });
+      }
+    })();
+
+    // ========== Dashboards page handlers ==========
+    (function() {
+      // Dashboards table click
+      document.querySelectorAll('#dashboards-table-body tr').forEach(function(row) {
+        row.addEventListener('click', function() {
+          var nameEl = row.querySelector('.report-name-link');
+          var name = nameEl ? nameEl.textContent : 'Dashboard';
+          document.getElementById('custom-dash-title').textContent = name;
+          showPage('custom-dash-detail');
+        });
+      });
+
+      // Dashboard detail back
+      document.getElementById('custom-dash-back-link').addEventListener('click', function(e) {
+        e.preventDefault();
+        showPage('dashboards-list');
+      });
+
+      // Custom dashboard chat toggle
+      var cdashChatToggle = document.getElementById('cdash-chat-toggle');
+      var cdashChatPanel = document.getElementById('cdash-chat-panel');
+      if (cdashChatToggle && cdashChatPanel) {
+        var cdashToggleArrow = cdashChatToggle.querySelector('.toggle-arrow');
+        function updateCdashToggleArrow() {
+          if (cdashToggleArrow) cdashToggleArrow.textContent = cdashChatPanel.classList.contains('is-collapsed') ? '←' : '→';
+        }
+        cdashChatToggle.addEventListener('click', function() {
+          cdashChatPanel.classList.toggle('is-collapsed');
+          updateCdashToggleArrow();
+        });
+
+        // Close chat button
+        var cdashCloseBtn = cdashChatPanel.querySelector('[data-action="close-chat"]');
+        if (cdashCloseBtn) {
+          cdashCloseBtn.addEventListener('click', function() {
+            cdashChatPanel.classList.add('is-collapsed');
+            updateCdashToggleArrow();
+          });
+        }
+      }
+
+      // Custom dashboard chat tabs
+      var cdashChatTabs = cdashChatPanel ? cdashChatPanel.querySelector('[data-chat-tabs]') : null;
+      if (cdashChatTabs) {
+        cdashChatTabs.querySelectorAll('button').forEach(function(btn) {
+          btn.addEventListener('click', function() {
+            cdashChatTabs.querySelectorAll('button').forEach(function(b) { b.classList.remove('is-active'); });
+            btn.classList.add('is-active');
+            var view = btn.getAttribute('data-chat-view');
+            var sqlView = cdashChatPanel.querySelector('[data-sql-view]');
+            var chatMsgs = document.getElementById('cdash-chat-messages');
+            if (view === 'sql') {
+              if (sqlView) sqlView.style.display = 'block';
+              if (chatMsgs) chatMsgs.style.display = 'none';
+            } else {
+              if (sqlView) sqlView.style.display = 'none';
+              if (chatMsgs) chatMsgs.style.display = '';
+            }
+          });
+        });
+      }
+
+      // Editable dashboard title
+      var cdashTitle = document.getElementById('custom-dash-title');
+      if (cdashTitle) {
+        cdashTitle.addEventListener('click', function() {
+          var current = cdashTitle.textContent;
+          var input = document.createElement('input');
+          input.type = 'text';
+          input.className = 'dash-title-input';
+          input.id = 'custom-dash-title';
+          input.value = current;
+          input.style.cssText = 'font-size:var(--font-h4-size,20px);font-weight:var(--font-weight-semibold);color:var(--color-text-primary);font-family:var(--font-family-base);border:none;border-bottom:1px solid var(--color-primary-6);padding:0 0 1px;background:transparent;outline:none;width:100%;min-width:200px;';
+          cdashTitle.replaceWith(input);
+          input.focus();
+          input.select();
+          function saveDashTitle() {
+            var val = input.value.trim() || current;
+            var span = document.createElement('span');
+            span.className = 'dash-title-text';
+            span.id = 'custom-dash-title';
+            span.textContent = val;
+            input.replaceWith(span);
+            // Re-attach click handler
+            span.addEventListener('click', arguments.callee);
+          }
+          input.addEventListener('blur', saveDashTitle);
+          input.addEventListener('keydown', function(ev) {
+            if (ev.key === 'Enter') { ev.preventDefault(); input.blur(); }
+            if (ev.key === 'Escape') { input.value = current; input.blur(); }
+          });
+        });
+      }
     })();
   </script>
 </body>
