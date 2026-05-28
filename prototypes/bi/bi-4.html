@@ -1000,10 +1000,6 @@
       display: flex;
       min-height: 0;
       overflow: hidden;
-      margin-right: 340px;
-    }
-    .report-detail-body:has(.report-chat-panel.is-collapsed) {
-      margin-right: 0;
     }
 
     /* --- Reports tabs (Data Queries / Widgets / Dashboards) --- */
@@ -1140,43 +1136,54 @@
 
     /* ======= Report detail: left chat panel ======= */
     .report-chat-panel {
-      width: 340px;
+      width: 55vw;
+      max-width: 800px;
+      min-width: 500px;
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
       border-left: 1px solid var(--color-border-default);
       background: var(--color-white);
-      transition: width 0.25s ease, opacity 0.25s ease;
+      transition: transform 0.3s ease, opacity 0.2s ease;
       overflow: hidden;
       position: fixed;
       top: 0;
       right: 0;
       height: 100vh;
-      z-index: 10;
+      z-index: 100;
+      box-shadow: -8px 0 30px rgba(0,0,0,0.15);
     }
     .report-chat-panel.is-collapsed {
-      width: 0;
-      border-left: none;
+      transform: translateX(100%);
       opacity: 0;
       pointer-events: none;
-      position: static;
-      height: auto;
+    }
+    .report-chat-backdrop {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.3);
+      z-index: 99;
+    }
+    .report-chat-backdrop.is-visible {
+      display: block;
     }
     .report-chat-toggle {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
-      padding: 4px 10px;
-      background: none;
-      border: 1px solid var(--color-border-default);
+      gap: 6px;
+      padding: 6px 16px;
+      background: var(--color-primary-6);
+      border: none;
       border-radius: var(--radius-sm);
       font-family: var(--font-family-base);
       font-size: var(--font-body-sm-size);
-      color: var(--color-text-secondary);
+      font-weight: var(--font-weight-medium);
+      color: var(--color-gray-9);
       cursor: pointer;
       margin-left: auto;
     }
-    .report-chat-toggle:hover { background: var(--color-gray-1); }
+    .report-chat-toggle:hover { background: var(--color-primary-5, #e6b800); }
     .report-chat-toggle svg { width: 14px; height: 14px; }
     @keyframes chat-msg-fade-in {
       from { opacity: 0; transform: translateY(8px); }
@@ -2490,9 +2497,6 @@
       display: flex;
       height: 100%;
     }
-    .home-sales-body:has(.dash-chat-panel:not(.is-collapsed)) {
-      margin-right: 320px;
-    }
     .home-sales-main {
       flex: 1;
       padding: 0 var(--space-2xl) var(--space-2xl);
@@ -2526,9 +2530,6 @@
       z-index: 10;
       background: var(--color-bg-page);
     }
-    .dash-detail-page.is-visible:has(.dash-chat-panel:not(.is-collapsed)) {
-      right: 320px;
-    }
 
     /* ========== Charts detail page ========== */
     .charts-detail-page { display: none; }
@@ -2543,10 +2544,6 @@
       display: flex;
       min-height: 0;
       overflow: hidden;
-      margin-right: 340px;
-    }
-    .charts-detail-body:has(.report-chat-panel.is-collapsed) {
-      margin-right: 0;
     }
     .chart-preview-panel {
       flex: 1;
@@ -2564,9 +2561,6 @@
       inset: 0;
       z-index: 10;
       background: var(--color-bg-page);
-    }
-    .custom-dash-detail-page.is-visible:has(.dash-chat-panel:not(.is-collapsed)) {
-      right: 320px;
     }
 
     .dash-main-panel {
@@ -2772,27 +2766,27 @@
 
     /* Dashboard chat panel */
     .dash-chat-panel {
-      width: 320px;
+      width: 55vw;
+      max-width: 800px;
+      min-width: 500px;
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
       border-left: 1px solid var(--color-border-default);
       background: var(--color-white);
-      transition: width 0.25s ease, opacity 0.25s ease;
+      transition: transform 0.3s ease, opacity 0.2s ease;
       overflow: hidden;
       position: fixed;
       top: 0;
       right: 0;
       height: 100vh;
-      z-index: 10;
+      z-index: 100;
+      box-shadow: -8px 0 30px rgba(0,0,0,0.15);
     }
     .dash-chat-panel.is-collapsed {
-      width: 0;
-      border-left: none;
+      transform: translateX(100%);
       opacity: 0;
       pointer-events: none;
-      position: static;
-      height: auto;
     }
     .dash-chat-header {
       padding: var(--space-lg) var(--space-xl);
@@ -8748,7 +8742,7 @@ ORDER BY j.eta ASC;</pre>
         <div class="report-detail-body">
           <!-- Left: Report preview -->
           <div class="report-preview-panel">
-            <div class="report-detail-breadcrumb"><a id="report-back-link">← Back</a><button class="report-chat-toggle" id="report-chat-toggle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1L3 8h3l-1 6 5-8H7l1-6z" fill="currentColor" stroke="none"/></svg> Report builder <span class="toggle-arrow">→</span></button></div>
+            <div class="report-detail-breadcrumb"><a id="report-back-link">← Back</a><button class="report-chat-toggle" id="report-chat-toggle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Edit</button></div>
             <div class="report-detail-header">
               <div class="report-detail-header-left">
                 <span class="report-title-text" id="report-detail-title">Revenue by Region</span>
@@ -8774,39 +8768,6 @@ ORDER BY j.eta ASC;</pre>
                 <div class="report-view-toggle" id="report-view-toggle">
                   <button class="is-active" data-view="table"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="1" width="12" height="12" rx="1.5"/><path d="M1 5h12M1 9h12M5 5v8"/></svg>Table</button>
                   <button data-view="chart"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="8" width="2.5" height="5" rx="0.5"/><rect x="5.75" y="4" width="2.5" height="9" rx="0.5"/><rect x="10.5" y="1" width="2.5" height="12" rx="0.5"/></svg>Chart</button>
-                </div>
-                <div style="position:relative;">
-                  <button class="dash-filter-btn" data-dr-btn="report-detail"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="12" height="11" rx="1"/><path d="M1 5.5h12M4 1v2M10 1v2"/></svg> <span data-dr-label="report-detail">This Week</span></button>
-                  <div class="dash-daterange-dropdown" data-dr-dropdown="report-detail">
-                    <div class="dash-daterange-body">
-                      <div class="dash-daterange-quick">
-                        <div class="dash-daterange-quick-title">Quick Select</div>
-                        <div class="dash-daterange-quick-item is-active">This Week</div>
-                        <div class="dash-daterange-quick-item">This Month</div>
-                        <div class="dash-daterange-quick-item">This Quarter</div>
-                        <div class="dash-daterange-quick-sep"></div>
-                        <div class="dash-daterange-quick-item">Last Week</div>
-                        <div class="dash-daterange-quick-item">Last Month</div>
-                        <div class="dash-daterange-quick-item">Last Quarter</div>
-                        <div class="dash-daterange-quick-sep"></div>
-                        <div class="dash-daterange-quick-item">Year to Date</div>
-                        <div class="dash-daterange-quick-item">Next 30 Days</div>
-                        <div class="dash-daterange-quick-item">Next 90 Days</div>
-                      </div>
-                      <div class="dash-daterange-cal">
-                        <div class="dash-daterange-cal-header">
-                          <button class="dash-daterange-cal-nav" data-dr-prev="report-detail">&lsaquo;</button>
-                          <span data-dr-month="report-detail">May 2026</span>
-                          <button class="dash-daterange-cal-nav" data-dr-next="report-detail">&rsaquo;</button>
-                        </div>
-                        <div class="dash-daterange-cal-grid" data-dr-grid="report-detail"></div>
-                      </div>
-                    </div>
-                    <div class="dash-daterange-footer">
-                      <button class="dr-btn dr-btn-cancel" data-dr-cancel="report-detail">Cancel</button>
-                      <button class="dr-btn dr-btn-apply" data-dr-apply="report-detail">Apply</button>
-                    </div>
-                  </div>
                 </div>
               </div>
               <div class="report-preview-toolbar-right">
@@ -8882,7 +8843,8 @@ ORDER BY j.eta ASC;</pre>
               <!-- SQL view moved to chat panel -->
             </div>
           </div>
-          <!-- Right: AI chat -->
+          <!-- Right: AI chat overlay -->
+          <div class="report-chat-backdrop" id="report-chat-backdrop"></div>
           <div class="report-chat-panel">
             <div class="report-chat-header">
               <div class="report-chat-header-title">
@@ -9048,7 +9010,7 @@ ORDER BY "Total Revenue" DESC;</pre>
         <div class="charts-detail-body">
           <!-- Left: Chart preview -->
           <div class="chart-preview-panel">
-            <div class="report-detail-breadcrumb"><a id="chart-back-link">&larr; Back</a><button class="report-chat-toggle" id="chart-chat-toggle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1L3 8h3l-1 6 5-8H7l1-6z" fill="currentColor" stroke="none"/></svg> Chart builder <span class="toggle-arrow">&rarr;</span></button></div>
+            <div class="report-detail-breadcrumb"><a id="chart-back-link">&larr; Back</a><button class="report-chat-toggle" id="chart-chat-toggle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Edit</button></div>
             <div class="report-detail-header" id="chart-detail-header">
               <div class="report-detail-header-left">
                 <span class="report-title-text" id="chart-detail-title">Revenue by Region</span>
@@ -9062,9 +9024,6 @@ ORDER BY "Total Revenue" DESC;</pre>
             </div>
             <div class="report-preview-toolbar" id="chart-preview-toolbar">
               <div class="report-preview-toolbar-left">
-                <div style="position:relative;">
-                  <button class="dash-filter-btn" data-dr-btn="chart-detail"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="2" width="12" height="11" rx="1"/><path d="M1 5.5h12M4 1v2M10 1v2"/></svg> <span data-dr-label="chart-detail">This Quarter</span></button>
-                </div>
               </div>
               <div class="report-preview-toolbar-right">
                 <button id="chart-download-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10V2M3.5 6.5L7 10l3.5-3.5M2 12h10"/></svg> Download</button>
@@ -9087,7 +9046,8 @@ ORDER BY "Total Revenue" DESC;</pre>
               </div>
             </div>
           </div>
-          <!-- Right: AI chat -->
+          <!-- Right: AI chat overlay -->
+          <div class="report-chat-backdrop" id="chart-chat-backdrop"></div>
           <div class="report-chat-panel" id="chart-chat-panel">
             <div class="report-chat-header">
               <div class="report-chat-header-title">
@@ -9219,7 +9179,7 @@ ORDER BY "Total Revenue" DESC;</pre>
       <!-- Custom dashboard detail page -->
       <div class="custom-dash-detail-page" id="custom-dash-detail-page">
         <div class="dash-main-panel">
-          <div class="report-detail-breadcrumb" style="padding-left:0;"><a id="custom-dash-back-link">&larr; Back</a><button class="dash-chat-toggle" id="cdash-chat-toggle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M8 1L3 8h3l-1 6 5-8H7l1-6z" fill="currentColor" stroke="none"/></svg> AI builder <span class="toggle-arrow">&rarr;</span></button></div>
+          <div class="report-detail-breadcrumb" style="padding-left:0;"><a id="custom-dash-back-link">&larr; Back</a><button class="report-chat-toggle" id="cdash-chat-toggle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Edit</button></div>
           <div class="dash-header">
             <div class="dash-header-left">
               <span class="dash-title-text" id="custom-dash-title">Sales Dashboard</span>
@@ -9301,6 +9261,7 @@ ORDER BY "Total Revenue" DESC;</pre>
           </div>
         </div>
 
+        <div class="report-chat-backdrop" id="cdash-chat-backdrop"></div>
         <div class="dash-chat-panel is-collapsed" id="cdash-chat-panel">
           <div class="dash-chat-header">
             <div class="dash-chat-header-left"><button class="dash-chat-header-icon" data-action="close-chat"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 4l4 4-4 4"/></svg></button><span class="dash-chat-header-title">Terial AI</span></div>
@@ -15301,7 +15262,7 @@ LIMIT 10;</pre>
         document.getElementById('report-detail-title').textContent = name;
         document.getElementById('report-detail-summary').textContent = summary || '';
         chatPanel.classList.remove('is-collapsed');
-        updateToggleArrow();
+        if (reportBackdrop) reportBackdrop.classList.add('is-visible');
         // Reset to AI chat tab in panel
         document.querySelectorAll('#report-chat-panel-tabs button').forEach(function (t) { t.classList.remove('is-active'); });
         document.querySelector('#report-chat-panel-tabs button[data-chat-view="chat"]').classList.add('is-active');
@@ -15370,15 +15331,17 @@ LIMIT 10;</pre>
         showPage('reports');
       });
 
-      // Chat toggle
+      // Chat toggle (overlay drawer)
       var toggleBtn = document.getElementById('report-chat-toggle');
-      var toggleArrow = toggleBtn.querySelector('.toggle-arrow');
-      function updateToggleArrow() {
-        toggleArrow.textContent = chatPanel.classList.contains('is-collapsed') ? '←' : '→';
-      }
-      toggleBtn.addEventListener('click', function () {
+      var reportBackdrop = document.getElementById('report-chat-backdrop');
+      function toggleReportChat() {
         chatPanel.classList.toggle('is-collapsed');
-        updateToggleArrow();
+        if (reportBackdrop) reportBackdrop.classList.toggle('is-visible', !chatPanel.classList.contains('is-collapsed'));
+      }
+      toggleBtn.addEventListener('click', toggleReportChat);
+      if (reportBackdrop) reportBackdrop.addEventListener('click', function() {
+        chatPanel.classList.add('is-collapsed');
+        reportBackdrop.classList.remove('is-visible');
       });
 
       // Editable title: click to edit via input field
@@ -15746,17 +15709,18 @@ LIMIT 10;</pre>
         showPage('charts');
       });
 
-      // Chart chat toggle
+      // Chart chat toggle (overlay drawer)
       var chartChatToggle = document.getElementById('chart-chat-toggle');
       var chartChatPanel = document.getElementById('chart-chat-panel');
+      var chartBackdrop = document.getElementById('chart-chat-backdrop');
       if (chartChatToggle && chartChatPanel) {
-        var chartToggleArrow = chartChatToggle.querySelector('.toggle-arrow');
-        function updateChartToggleArrow() {
-          if (chartToggleArrow) chartToggleArrow.textContent = chartChatPanel.classList.contains('is-collapsed') ? '←' : '→';
-        }
         chartChatToggle.addEventListener('click', function() {
           chartChatPanel.classList.toggle('is-collapsed');
-          updateChartToggleArrow();
+          if (chartBackdrop) chartBackdrop.classList.toggle('is-visible', !chartChatPanel.classList.contains('is-collapsed'));
+        });
+        if (chartBackdrop) chartBackdrop.addEventListener('click', function() {
+          chartChatPanel.classList.add('is-collapsed');
+          chartBackdrop.classList.remove('is-visible');
         });
       }
 
@@ -15860,26 +15824,25 @@ LIMIT 10;</pre>
         showPage('dashboards-list');
       });
 
-      // Custom dashboard chat toggle
+      // Custom dashboard chat toggle (overlay drawer)
       var cdashChatToggle = document.getElementById('cdash-chat-toggle');
       var cdashChatPanel = document.getElementById('cdash-chat-panel');
+      var cdashBackdrop = document.getElementById('cdash-chat-backdrop');
       if (cdashChatToggle && cdashChatPanel) {
-        var cdashToggleArrow = cdashChatToggle.querySelector('.toggle-arrow');
-        function updateCdashToggleArrow() {
-          if (cdashToggleArrow) cdashToggleArrow.textContent = cdashChatPanel.classList.contains('is-collapsed') ? '←' : '→';
+        function closeCdashChat() {
+          cdashChatPanel.classList.add('is-collapsed');
+          if (cdashBackdrop) cdashBackdrop.classList.remove('is-visible');
         }
         cdashChatToggle.addEventListener('click', function() {
           cdashChatPanel.classList.toggle('is-collapsed');
-          updateCdashToggleArrow();
+          if (cdashBackdrop) cdashBackdrop.classList.toggle('is-visible', !cdashChatPanel.classList.contains('is-collapsed'));
         });
+        if (cdashBackdrop) cdashBackdrop.addEventListener('click', closeCdashChat);
 
         // Close chat button
         var cdashCloseBtn = cdashChatPanel.querySelector('[data-action="close-chat"]');
         if (cdashCloseBtn) {
-          cdashCloseBtn.addEventListener('click', function() {
-            cdashChatPanel.classList.add('is-collapsed');
-            updateCdashToggleArrow();
-          });
+          cdashCloseBtn.addEventListener('click', closeCdashChat);
         }
       }
 
