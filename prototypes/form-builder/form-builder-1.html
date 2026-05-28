@@ -461,11 +461,13 @@
       border: none; border-radius: var(--radius-sm); font-family: var(--font-family-base);
       font-size: var(--font-body-sm-size); font-weight: var(--font-weight-semibold); cursor: pointer;
     }
-    .fd-save-draft-btn {
+    .fd-save-draft-btn, .fd-download-btn {
       padding: 8px 16px; background: var(--color-white); border: 1px solid var(--color-border-default);
       border-radius: var(--radius-sm); font-family: var(--font-family-base);
       font-size: var(--font-body-sm-size); color: var(--color-text-tertiary); cursor: pointer;
+      display: inline-flex; align-items: center; gap: 6px;
     }
+    .fd-download-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     .form-detail-body {
       flex: 1; overflow-y: auto; background: var(--color-bg-page);
       padding: 24px 32px; display: flex; flex-direction: column; align-items: center;
@@ -530,14 +532,13 @@
     .fd-section-header:hover { background: var(--color-gray-1); }
     .fd-section-header .fd-check {
       width: 20px; height: 20px; border-radius: 50%;
-      border: 2px solid var(--color-gray-4); flex-shrink: 0;
-      display: grid; place-items: center;
+      flex-shrink: 0; display: none; place-items: center;
+      background: #22c55e;
     }
-    .fd-section-header .fd-check svg { width: 12px; height: 12px; display: none; stroke: var(--color-white); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+    .fd-section-header .fd-check svg { width: 12px; height: 12px; stroke: var(--color-white); fill: none; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
     .fd-section-header.is-complete .fd-check {
-      background: #22c55e; border-color: #22c55e;
+      display: grid;
     }
-    .fd-section-header.is-complete .fd-check svg { display: block; }
     .fd-section-header .fd-section-title {
       flex: 1; font-size: 15px; font-weight: var(--font-weight-semibold);
       color: var(--color-text-primary); text-transform: uppercase; letter-spacing: 0.02em;
@@ -799,6 +800,7 @@
                 <div class="fd-progress-bar"><div class="fd-progress-fill" id="fd-progress-fill" style="width:0%"></div></div>
                 <span class="fd-progress-text" id="fd-progress-text">0%</span>
               </div>
+              <button class="fd-download-btn"><svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>Download</button>
               <button class="fd-save-draft-btn">Save Draft</button>
               <button class="fd-submit-btn">Submit</button>
             </div>
