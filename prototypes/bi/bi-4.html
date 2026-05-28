@@ -16990,6 +16990,21 @@ LIMIT 10;</pre>
               toolbarLeft.appendChild(notice);
             }
           }
+        } else if (type === 'dashboard') {
+          // Change Edit to "Create with this template"
+          var editBtn = document.getElementById('cdash-chat-toggle');
+          if (editBtn) { editBtn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Create with this template'; }
+          // Hide More button, Add to home button
+          var moreBtn = document.getElementById('cdash-more-btn');
+          if (moreBtn) moreBtn.style.display = 'none';
+          var addHomeBtn = document.getElementById('cdash-add-home-btn');
+          if (addHomeBtn) addHomeBtn.style.display = 'none';
+          // Hide dashboard grid content and show empty state
+          var dashGrid = document.getElementById('custom-dash-grid');
+          if (dashGrid) {
+            dashGrid.setAttribute('data-original-html', dashGrid.innerHTML);
+            dashGrid.innerHTML = '<div style="grid-column:1/-1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:80px 0;color:var(--color-text-tertiary);"><svg viewBox="0 0 48 48" width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="40" height="40" rx="4"/><path d="M4 16h40M16 16v28"/></svg><div style="margin-top:12px;font-size:15px;font-weight:500;color:var(--color-text-secondary);">Template preview</div><div style="margin-top:4px;font-size:13px;">Click "Create with this template" to start building your dashboard.</div><div style="margin-top:8px;font-size:12px;font-style:italic;">This is example data. Connect your data source to see real results.</div></div>';
+          }
         }
       }
 
@@ -17020,6 +17035,24 @@ LIMIT 10;</pre>
         }
         var tplNoticeC = document.getElementById('tpl-notice-chart');
         if (tplNoticeC) tplNoticeC.remove();
+        // Restore dashboard detail
+        var dashEditBtn = document.getElementById('cdash-chat-toggle');
+        if (dashEditBtn) dashEditBtn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Edit';
+        var dashMore = document.getElementById('cdash-more-btn');
+        if (dashMore) dashMore.style.display = '';
+        var dashAddHome = document.getElementById('cdash-add-home-btn');
+        if (dashAddHome) dashAddHome.style.display = '';
+        // Restore dashboard grid content
+        var dashGrid = document.getElementById('custom-dash-grid');
+        if (dashGrid && dashGrid.getAttribute('data-original-html')) {
+          dashGrid.innerHTML = dashGrid.getAttribute('data-original-html');
+          dashGrid.removeAttribute('data-original-html');
+          // Re-bind drag events on restored cards
+          dashGrid.querySelectorAll('.dash-card').forEach(function(card) {
+            card.addEventListener('dragstart', function(e) { this.style.opacity='0.5'; e.dataTransfer.effectAllowed='move'; e.dataTransfer.setData('text/html', this.outerHTML); });
+            card.addEventListener('dragend', function() { this.style.opacity=''; });
+          });
+        }
       }
 
       // "Create with this template" click — restore normal and enter edit mode
@@ -17039,6 +17072,14 @@ LIMIT 10;</pre>
             e.stopImmediatePropagation();
             clearTemplateMode();
             setTimeout(function() { window.enterChartEditMode(); }, 100);
+          }
+        }
+        var dashToggle = document.getElementById('cdash-chat-toggle');
+        if (dashToggle && (e.target === dashToggle || dashToggle.contains(e.target))) {
+          if (window._isTemplateView) {
+            e.stopImmediatePropagation();
+            clearTemplateMode();
+            setTimeout(function() { window.enterDashEditMode(); }, 100);
           }
         }
       }, true);
