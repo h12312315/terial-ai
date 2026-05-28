@@ -162,56 +162,32 @@
     .pagination .pg-btn.is-active { background: var(--color-blue-7); color: var(--color-white); border-color: var(--color-blue-7); }
 
     /* ============================================================
-       Page 3: Form Template Editor (3-panel layout)
+       Page 3: Form Template Editor
        ============================================================ */
-    #page-editor.is-visible { display: flex; flex-direction: row; height: 100%; }
+    #page-editor.is-visible { display: flex; flex-direction: column; height: 100%; }
 
-    /* --- Left: Sections panel --- */
-    .editor-sections {
-      width: 220px; flex-shrink: 0; background: var(--color-white);
-      border-right: 1px solid var(--color-border-default);
-      display: flex; flex-direction: column; overflow-y: auto;
+    /* --- Full-width header --- */
+    .editor-header {
+      background: var(--color-white);
+      border-bottom: 1px solid var(--color-border-default);
+      padding: 20px 32px 16px;
+      flex-shrink: 0;
     }
-    .editor-sections-header {
-      padding: 16px 16px 8px; font-size: 12px; font-weight: var(--font-weight-semibold);
-      color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.04em;
-    }
-    .section-item {
-      display: flex; align-items: center; gap: 8px;
-      padding: 10px 16px; cursor: pointer;
-      font-size: var(--font-body-md-size); color: var(--color-text-secondary);
-      border-left: 3px solid transparent;
-    }
-    .section-item:hover { background: var(--color-gray-1); }
-    .section-item.is-active { background: var(--color-blue-1, #eff6ff); color: var(--color-blue-7); border-left-color: var(--color-blue-7); font-weight: var(--font-weight-semibold); }
-    .section-item .grip { color: var(--color-gray-4); font-size: 10px; cursor: grab; flex-shrink: 0; }
-    .section-item .section-name { flex: 1; }
-    .section-item .section-remove { background: none; border: none; color: var(--color-gray-4); cursor: pointer; font-size: 14px; padding: 0 2px; line-height: 1; }
-    .section-item .section-remove:hover { color: var(--color-danger-fg, #dc2626); }
-    .add-section-btn {
-      display: flex; align-items: center; gap: 6px;
-      margin: 8px 16px 16px; padding: 8px 12px;
-      background: var(--color-gray-1); border: 1px dashed var(--color-border-strong);
-      border-radius: var(--radius-sm); font-family: var(--font-family-base);
+    .editor-breadcrumb {
       font-size: var(--font-body-sm-size); color: var(--color-text-tertiary);
-      cursor: pointer;
+      margin-bottom: 12px;
     }
-    .add-section-btn:hover { background: var(--color-gray-2); color: var(--color-text-secondary); }
-
-    /* --- Center: Canvas --- */
-    .editor-canvas {
-      flex: 1; overflow-y: auto; background: var(--color-bg-page);
-      padding: var(--space-2xl) var(--space-2xl);
-      display: flex; flex-direction: column; align-items: center;
-    }
-    .editor-topbar {
-      display: flex; align-items: center; justify-content: space-between;
-      width: 100%; max-width: 780px; margin-bottom: var(--space-lg);
-    }
-    .editor-breadcrumb { font-size: var(--font-body-sm-size); color: var(--color-text-tertiary); }
     .editor-breadcrumb a { color: var(--color-blue-7); text-decoration: underline; cursor: pointer; }
-    .editor-title { font-size: 22px; font-weight: var(--font-weight-semibold); color: var(--color-text-primary); margin: 0 0 4px; }
-    .editor-meta { font-size: var(--font-body-sm-size); color: var(--color-text-tertiary); margin-bottom: var(--space-lg); }
+    .editor-title-row {
+      display: flex; align-items: flex-start; justify-content: space-between;
+    }
+    .editor-title {
+      font-size: 22px; font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary); margin: 0 0 6px;
+    }
+    .editor-meta {
+      font-size: var(--font-body-sm-size); color: var(--color-text-tertiary);
+    }
     .editor-actions { display: flex; gap: var(--space-sm); align-items: center; }
     .editor-actions .save-btn {
       padding: 8px 16px; background: var(--color-white); border: 1px solid var(--color-border-default);
@@ -229,85 +205,189 @@
       border-radius: var(--radius-sm); cursor: pointer; font-size: 16px;
     }
 
+    /* --- Editor body: 3-col below header --- */
+    .editor-body {
+      display: flex; flex: 1; min-height: 0;
+    }
+
+    /* --- Left: Sections panel --- */
+    .editor-sections {
+      width: 240px; flex-shrink: 0; background: var(--color-white);
+      border-right: 1px solid var(--color-border-default);
+      display: flex; flex-direction: column; overflow-y: auto;
+      padding: 12px 12px 16px;
+    }
+    .section-item {
+      display: flex; align-items: center; gap: 8px;
+      padding: 12px 14px; cursor: pointer;
+      font-size: var(--font-body-md-size); color: var(--color-text-primary);
+      font-weight: var(--font-weight-medium);
+      border-radius: var(--radius-sm);
+      border: 1px solid transparent;
+      margin-bottom: 2px;
+      transition: background 0.1s, border-color 0.1s;
+    }
+    .section-item:hover { background: var(--color-gray-1); }
+    .section-item.is-active {
+      background: #edf4ff;
+      border-color: #b8d4fe;
+      color: var(--color-text-primary);
+      font-weight: var(--font-weight-semibold);
+    }
+    .section-item .grip {
+      color: var(--color-gray-4); font-size: 14px; cursor: grab; flex-shrink: 0;
+      display: flex; align-items: center; line-height: 1;
+    }
+    .section-item .section-name { flex: 1; }
+    .section-item .section-remove {
+      background: none; border: none; color: var(--color-gray-4);
+      cursor: pointer; font-size: 16px; padding: 0 2px; line-height: 1;
+      width: 22px; height: 22px; display: grid; place-items: center;
+      border-radius: 50%; flex-shrink: 0;
+    }
+    .section-item .section-remove:hover { color: var(--color-white); background: var(--color-gray-5); }
+    .add-section-btn {
+      display: flex; align-items: center; gap: 6px;
+      margin: 8px 0 0; padding: 10px 14px;
+      background: var(--color-gray-1); border: 1px dashed var(--color-border-strong);
+      border-radius: var(--radius-sm); font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size); color: var(--color-text-tertiary);
+      cursor: pointer;
+    }
+    .add-section-btn:hover { background: var(--color-gray-2); color: var(--color-text-secondary); }
+
+    /* --- Center: Canvas --- */
+    .editor-canvas {
+      flex: 1; overflow-y: auto; background: var(--color-bg-page);
+      padding: 24px 32px;
+      display: flex; flex-direction: column; align-items: center;
+    }
+
     .form-paper {
       width: 100%; max-width: 780px;
       background: var(--color-white); border: 1px solid var(--color-border-default);
       border-radius: var(--radius-md); box-shadow: var(--shadow-sm);
     }
 
-    /* --- Question card --- */
-    .q-card {
-      padding: 20px 24px; border-bottom: 1px solid var(--color-border-default);
+    /* --- Section block inside the paper --- */
+    .section-block { scroll-margin-top: 24px; }
+    .section-block-title {
+      padding: 20px 24px 10px;
+      font-size: 15px; font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+      text-transform: uppercase; letter-spacing: 0.02em;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+
+    /* --- Question row (inline: label left, answer right) --- */
+    .q-row {
+      display: flex; align-items: center;
+      padding: 10px 16px 10px 10px;
       cursor: pointer; position: relative;
-      transition: box-shadow 0.15s;
+      border: 2px solid transparent;
+      border-radius: var(--radius-sm);
+      margin: 0 8px;
+      transition: border-color 0.12s, background 0.12s;
+      min-height: 40px;
     }
-    .q-card:last-child { border-bottom: none; }
-    .q-card.is-selected { box-shadow: inset 3px 0 0 var(--color-blue-7); background: var(--color-blue-1, #f0f7ff); }
-    .q-card-label {
-      font-size: var(--font-body-sm-size); font-weight: var(--font-weight-semibold);
-      color: var(--color-blue-7); margin-bottom: 8px; display: block;
+    .q-row:hover { background: var(--color-gray-1); }
+    .q-row.is-selected {
+      border-color: #6aacf8;
+      background: #f4f9ff;
     }
-    .q-card-label[contenteditable="true"] { outline: none; cursor: text; }
-    .q-card-label[contenteditable="true"]:focus { border-bottom: 1px solid var(--color-blue-7); }
-    .q-card-value { font-size: var(--font-body-md-size); color: var(--color-text-primary); }
-    .q-card-remove {
-      position: absolute; top: 12px; right: 12px;
+    .q-row .q-grip {
+      color: var(--color-gray-4); font-size: 14px; cursor: grab; flex-shrink: 0;
+      margin-right: 8px; display: flex; align-items: center; line-height: 1;
+      padding: 2px;
+    }
+    .q-row .q-grip:hover { color: var(--color-gray-6); }
+    .q-row-label {
+      flex: 1; min-width: 0;
+      font-size: var(--font-body-sm-size); font-weight: var(--font-weight-medium);
+      color: var(--color-text-primary);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .q-row-label[contenteditable="true"] { outline: none; cursor: text; }
+    .q-row-label[contenteditable="true"]:focus { white-space: normal; }
+    .q-row-value {
+      flex-shrink: 0; margin-left: 16px;
+      display: flex; align-items: center;
+    }
+    .q-row-remove {
+      position: absolute; top: 50%; right: -28px; transform: translateY(-50%);
       background: none; border: none; color: var(--color-gray-4);
       cursor: pointer; font-size: 16px; padding: 4px; line-height: 1;
-      display: none;
+      opacity: 0; transition: opacity 0.12s;
     }
-    .q-card:hover .q-card-remove { display: block; }
-    .q-card-remove:hover { color: var(--color-danger-fg, #dc2626); }
+    .q-row:hover .q-row-remove { opacity: 1; }
+    .q-row-remove:hover { color: var(--color-danger-fg, #dc2626); }
 
     /* Binary Yes/No/N/A */
-    .q-binary { display: flex; align-items: center; gap: 0; margin-top: 4px; }
+    .q-binary { display: flex; align-items: center; gap: 0; }
     .q-binary span {
-      padding: 4px 14px; font-size: var(--font-body-sm-size);
+      padding: 3px 12px; font-size: 12px;
       color: var(--color-text-tertiary); border: 1px solid var(--color-border-default);
       cursor: pointer; user-select: none; background: var(--color-white);
+      line-height: 1.4;
     }
     .q-binary span:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
     .q-binary span:last-child { border-radius: 0 var(--radius-sm) var(--radius-sm) 0; border-left: none; }
     .q-binary span:not(:first-child):not(:last-child) { border-left: none; }
     .q-binary span.is-selected { background: var(--color-gray-5); color: var(--color-white); border-color: var(--color-gray-5); }
 
-    /* Single/Multi select */
-    .q-options { margin-top: 4px; }
-    .q-option { display: flex; align-items: center; gap: 8px; padding: 4px 0; font-size: var(--font-body-sm-size); color: var(--color-text-secondary); }
-    .q-option .radio { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--color-gray-4); flex-shrink: 0; }
-    .q-option .checkbox { width: 14px; height: 14px; border-radius: 3px; border: 2px solid var(--color-gray-4); flex-shrink: 0; }
+    /* Single/Multi select inline */
+    .q-inline-options { display: flex; align-items: center; gap: 12px; }
+    .q-inline-opt { display: flex; align-items: center; gap: 4px; font-size: 12px; color: var(--color-text-secondary); }
+    .q-inline-opt .radio { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--color-gray-4); flex-shrink: 0; }
+    .q-inline-opt .checkbox { width: 12px; height: 12px; border-radius: 2px; border: 2px solid var(--color-gray-4); flex-shrink: 0; }
 
-    /* Image upload placeholder */
-    .q-image-zone {
-      margin-top: 8px; padding: 24px; border: 2px dashed var(--color-border-default);
-      border-radius: var(--radius-sm); text-align: center;
-      color: var(--color-text-tertiary); font-size: var(--font-body-sm-size);
+    /* Image upload inline */
+    .q-inline-image {
+      display: flex; align-items: center; gap: 6px;
+      padding: 4px 12px; border: 1px dashed var(--color-border-default);
+      border-radius: var(--radius-sm); color: var(--color-text-tertiary);
+      font-size: 12px;
     }
 
-    /* Text input placeholder */
-    .q-text-input {
-      margin-top: 8px; padding: 8px 12px; border: 1px solid var(--color-border-default);
+    /* Text input inline */
+    .q-inline-text {
+      padding: 4px 12px; border: 1px solid var(--color-border-default);
       border-radius: var(--radius-sm); color: var(--color-gray-4);
-      font-size: var(--font-body-sm-size); font-family: var(--font-family-base);
+      font-size: 12px; min-width: 140px;
     }
 
-    /* Add question zone (between cards) */
+    /* Add question zone (full width) */
     .q-add-zone {
-      padding: 8px 24px; text-align: center; opacity: 0;
-      transition: opacity 0.15s;
+      margin: 0 8px; opacity: 0; transition: opacity 0.12s;
+      height: 0; overflow: visible; position: relative;
     }
     .q-add-zone:hover { opacity: 1; }
     .q-add-zone button {
-      padding: 6px 14px; background: none; border: 1px dashed var(--color-border-strong);
+      position: relative; top: -12px;
+      width: 100%; padding: 5px 0;
+      background: none; border: 1px dashed var(--color-border-strong);
       border-radius: var(--radius-sm); font-family: var(--font-family-base);
       font-size: var(--font-body-sm-size); color: var(--color-text-tertiary);
-      cursor: pointer;
+      cursor: pointer; text-align: center;
     }
-    .q-add-zone button:hover { background: var(--color-gray-1); color: var(--color-text-secondary); }
+    .q-add-zone button:hover { background: var(--color-blue-1, #f0f7ff); border-color: var(--color-blue-7); color: var(--color-blue-7); }
+
+    /* Section end add zone (visible) */
+    .q-section-add {
+      padding: 6px 16px 14px;
+    }
+    .q-section-add button {
+      width: 100%; padding: 6px 0;
+      background: none; border: 1px dashed var(--color-border-strong);
+      border-radius: var(--radius-sm); font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size); color: var(--color-text-tertiary);
+      cursor: pointer; text-align: center;
+    }
+    .q-section-add button:hover { background: var(--color-blue-1, #f0f7ff); border-color: var(--color-blue-7); color: var(--color-blue-7); }
 
     /* --- Right: Properties panel --- */
     .editor-props {
-      width: 260px; flex-shrink: 0; background: var(--color-white);
+      width: 280px; flex-shrink: 0; background: var(--color-white);
       border-left: 1px solid var(--color-border-default);
       overflow-y: auto; padding: 20px;
     }
@@ -469,82 +549,66 @@
       <!-- ======== Page 3: Form Template Editor ======== -->
       <div class="page" id="page-editor">
 
-        <!-- Left: Sections -->
-        <div class="editor-sections">
-          <div class="editor-sections-header">Form Settings</div>
-          <div id="section-list">
-            <div class="section-item is-active" data-section="checklist">
-              <span class="grip">⠿</span>
-              <span class="section-name">Checklist</span>
-              <button class="section-remove" title="Remove">&times;</button>
+        <!-- Full-width header -->
+        <div class="editor-header">
+          <div class="editor-breadcrumb"><a id="editor-back-link">Form Templates</a> / <span id="editor-tpl-name-crumb">Safety Checklist</span></div>
+          <div class="editor-title-row">
+            <div>
+              <h1 class="editor-title" id="editor-title">Safety Checklist</h1>
+              <div class="editor-meta">Created by Romao Barbosa at 5/15/2026 3:03 pm</div>
             </div>
-            <div class="section-item" data-section="ppe">
-              <span class="grip">⠿</span>
-              <span class="section-name">Personal Protective Equipment</span>
-              <button class="section-remove" title="Remove">&times;</button>
-            </div>
-            <div class="section-item" data-section="photos">
-              <span class="grip">⠿</span>
-              <span class="section-name">Photos</span>
-              <button class="section-remove" title="Remove">&times;</button>
-            </div>
-            <div class="section-item" data-section="comments">
-              <span class="grip">⠿</span>
-              <span class="section-name">Additional Comments</span>
-              <button class="section-remove" title="Remove">&times;</button>
+            <div class="editor-actions">
+              <button class="save-btn">Save</button>
+              <button class="download-btn">Download PDF</button>
+              <button class="kebab-btn">&#8942;</button>
             </div>
           </div>
-          <button class="add-section-btn" id="add-section-btn">+ Add Section</button>
         </div>
 
-        <!-- Center: Canvas -->
-        <div class="editor-canvas" id="editor-canvas">
-          <div style="width:100%;max-width:780px;">
-            <div class="editor-breadcrumb"><a id="editor-back-link">Form Templates</a> / <span id="editor-tpl-name-crumb">Safety Checklist</span></div>
-            <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:var(--space-lg);">
-              <div>
-                <h1 class="editor-title" id="editor-title">Safety Checklist</h1>
-                <div class="editor-meta">Created by Romao Barbosa at 5/15/2026 3:03 pm</div>
+        <!-- 3-column body below header -->
+        <div class="editor-body">
+
+          <!-- Left: Sections -->
+          <div class="editor-sections">
+            <div id="section-list"></div>
+            <button class="add-section-btn" id="add-section-btn">+ Add Section</button>
+          </div>
+
+          <!-- Center: Canvas -->
+          <div class="editor-canvas" id="editor-canvas">
+            <div class="form-paper" id="form-paper">
+              <!-- All sections and questions rendered by JS -->
+            </div>
+          </div>
+
+          <!-- Right: Properties -->
+          <div class="editor-props" id="editor-props">
+            <div class="props-empty" id="props-empty">Select a question to edit its properties</div>
+            <div id="props-content" style="display:none;">
+              <div class="props-title">Widget Properties</div>
+              <div class="props-group">
+                <div class="props-label">Name</div>
+                <input type="text" class="props-input" id="props-name" />
               </div>
-              <div class="editor-actions">
-                <button class="save-btn">Save</button>
-                <button class="download-btn">Download PDF</button>
-                <button class="kebab-btn">&#8942;</button>
+              <div class="props-group">
+                <div class="props-label">Type</div>
+                <select class="props-select" id="props-type">
+                  <option value="binary">Yes / No / N/A</option>
+                  <option value="single">Single Select</option>
+                  <option value="multi">Multiple Select</option>
+                  <option value="image">Image Upload</option>
+                  <option value="text">Text Input</option>
+                </select>
+              </div>
+              <div class="props-group" id="props-options-group" style="display:none;">
+                <div class="props-label">Options</div>
+                <div class="props-option-list" id="props-option-list"></div>
+                <button class="props-add-option" id="props-add-option">+ Add option</button>
               </div>
             </div>
           </div>
-
-          <div class="form-paper" id="form-paper">
-            <!-- Questions are rendered by JS -->
-          </div>
         </div>
 
-        <!-- Right: Properties -->
-        <div class="editor-props" id="editor-props">
-          <div class="props-empty" id="props-empty">Select a question to edit its properties</div>
-          <div id="props-content" style="display:none;">
-            <div class="props-title">Question Properties</div>
-            <div class="props-group">
-              <div class="props-label">Name</div>
-              <input type="text" class="props-input" id="props-name" />
-            </div>
-            <div class="props-group">
-              <div class="props-label">Type</div>
-              <select class="props-select" id="props-type">
-                <option value="binary">Yes / No / N/A</option>
-                <option value="single">Single Select</option>
-                <option value="multi">Multiple Select</option>
-                <option value="image">Image Upload</option>
-                <option value="text">Text Input</option>
-              </select>
-            </div>
-            <div class="props-group" id="props-options-group" style="display:none;">
-              <div class="props-label">Options</div>
-              <div class="props-option-list" id="props-option-list"></div>
-              <button class="props-add-option" id="props-add-option">+ Add option</button>
-            </div>
-          </div>
-        </div>
       </div>
 
     </div>
@@ -634,7 +698,7 @@
     showPage('projects');
 
     /* ============================================================
-       Form Templates → click into editor
+       Form Templates -> click into editor
        ============================================================ */
     var templatesTbody = document.getElementById('templates-tbody');
     templatesTbody.addEventListener('click', function (e) {
@@ -659,11 +723,13 @@
 
     function openEditor() {
       showPage('editor');
-      renderQuestions();
+      renderSections();
+      renderAllQuestions();
+      renderProps();
     }
 
     /* ============================================================
-       Form Builder — Data Model
+       Form Builder - Data Model
        ============================================================ */
     var sections = [
       { id: 'checklist', name: 'Checklist' },
@@ -704,10 +770,11 @@
     var activeSection = 'checklist';
     var selectedQ = null;
     var qCounter = 20;
-    var insertIndex = -1; // -1 means append
+    var insertSectionId = null;
+    var insertIndex = -1;
 
     /* ============================================================
-       Sections panel
+       Sections panel (bookmark-style navigation)
        ============================================================ */
     function renderSections() {
       var list = document.getElementById('section-list');
@@ -716,21 +783,21 @@
         var div = document.createElement('div');
         div.className = 'section-item' + (s.id === activeSection ? ' is-active' : '');
         div.setAttribute('data-section', s.id);
-        div.innerHTML = '<span class="grip">⠗</span><span class="section-name">' + s.name + '</span><button class="section-remove" title="Remove">&times;</button>';
+        div.innerHTML = '<span class="grip">⠁⠁⠁<br>⠁⠁⠁</span><span class="section-name">' + s.name + '</span><button class="section-remove" title="Remove">×</button>';
         div.addEventListener('click', function (e) {
           if (e.target.classList.contains('section-remove')) {
             sections = sections.filter(function (x) { return x.id !== s.id; });
             delete questions[s.id];
             if (activeSection === s.id) activeSection = sections.length ? sections[0].id : null;
             renderSections();
-            renderQuestions();
+            renderAllQuestions();
             return;
           }
+          // Scroll to section in canvas
           activeSection = s.id;
-          selectedQ = null;
           renderSections();
-          renderQuestions();
-          renderProps();
+          var target = document.getElementById('section-' + s.id);
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
         list.appendChild(div);
       });
@@ -744,119 +811,199 @@
       questions[id] = [];
       activeSection = id;
       renderSections();
-      renderQuestions();
+      renderAllQuestions();
+      var target = document.getElementById('section-' + id);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
     /* ============================================================
-       Questions canvas
+       Scroll spy: highlight active section based on scroll
        ============================================================ */
-    function renderQuestions() {
+    var canvasEl = document.getElementById('editor-canvas');
+    canvasEl.addEventListener('scroll', function () {
+      var scrollTop = canvasEl.scrollTop;
+      var found = null;
+      sections.forEach(function (s) {
+        var el = document.getElementById('section-' + s.id);
+        if (el && el.offsetTop - canvasEl.offsetTop <= scrollTop + 60) {
+          found = s.id;
+        }
+      });
+      if (found && found !== activeSection) {
+        activeSection = found;
+        // Update section highlights without re-rendering everything
+        document.querySelectorAll('.section-item').forEach(function (item) {
+          item.classList.toggle('is-active', item.getAttribute('data-section') === activeSection);
+        });
+      }
+    });
+
+    /* ============================================================
+       Render ALL sections and questions in one scrolling view
+       ============================================================ */
+    function renderAllQuestions() {
       var paper = document.getElementById('form-paper');
       paper.innerHTML = '';
-      var qs = questions[activeSection] || [];
 
-      // Section title
-      var secTitle = document.createElement('div');
-      secTitle.style.cssText = 'padding:20px 24px 8px;font-size:16px;font-weight:600;color:var(--color-text-primary);border-bottom:1px solid var(--color-border-default);';
-      var sec = sections.find(function (s) { return s.id === activeSection; });
-      secTitle.textContent = sec ? sec.name : '';
-      paper.appendChild(secTitle);
+      sections.forEach(function (sec, secIdx) {
+        var block = document.createElement('div');
+        block.className = 'section-block';
+        block.id = 'section-' + sec.id;
 
-      // Add zone at top
-      paper.appendChild(makeAddZone(0));
+        // Section title
+        var titleDiv = document.createElement('div');
+        titleDiv.className = 'section-block-title';
+        titleDiv.textContent = sec.name;
+        if (secIdx > 0) titleDiv.style.borderTop = '1px solid var(--color-border-default)';
+        block.appendChild(titleDiv);
 
-      qs.forEach(function (q, idx) {
-        var card = document.createElement('div');
-        card.className = 'q-card' + (selectedQ === q.id ? ' is-selected' : '');
-        card.setAttribute('data-qid', q.id);
-
-        // Label (editable)
-        var label = document.createElement('span');
-        label.className = 'q-card-label';
-        label.contentEditable = 'true';
-        label.textContent = q.label;
-        label.addEventListener('blur', function () { q.label = label.textContent; renderProps(); });
-        label.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); label.blur(); } });
-        card.appendChild(label);
-
-        // Value area
-        var value = document.createElement('div');
-        value.className = 'q-card-value';
-        if (q.type === 'binary') {
-          var bin = document.createElement('div');
-          bin.className = 'q-binary';
-          (q.options.length ? q.options : ['Yes','No','N/A']).forEach(function (opt) {
-            var sp = document.createElement('span');
-            sp.textContent = opt;
-            if (opt === 'N/A') sp.classList.add('is-selected');
-            bin.appendChild(sp);
-          });
-          value.appendChild(bin);
-        } else if (q.type === 'single') {
-          var opts = document.createElement('div');
-          opts.className = 'q-options';
-          (q.options.length ? q.options : ['Option 1','Option 2']).forEach(function (o) {
-            var row = document.createElement('div'); row.className = 'q-option';
-            row.innerHTML = '<span class="radio"></span>' + o;
-            opts.appendChild(row);
-          });
-          value.appendChild(opts);
-        } else if (q.type === 'multi') {
-          var opts2 = document.createElement('div');
-          opts2.className = 'q-options';
-          (q.options.length ? q.options : ['Option 1','Option 2']).forEach(function (o) {
-            var row = document.createElement('div'); row.className = 'q-option';
-            row.innerHTML = '<span class="checkbox"></span>' + o;
-            opts2.appendChild(row);
-          });
-          value.appendChild(opts2);
-        } else if (q.type === 'image') {
-          value.innerHTML = '<div class="q-image-zone"><svg viewBox="0 0 32 32" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="26" height="22" rx="2"/><circle cx="11" cy="13" r="3"/><path d="M3 23l7-6 5 4 5-5 9 7"/></svg><div style="margin-top:4px;">Upload images</div></div>';
-        } else {
-          value.innerHTML = '<div class="q-text-input">Enter text...</div>';
-        }
-        card.appendChild(value);
-
-        // Remove btn
-        var removeBtn = document.createElement('button');
-        removeBtn.className = 'q-card-remove';
-        removeBtn.innerHTML = '&times;';
-        removeBtn.addEventListener('click', function (e) {
-          e.stopPropagation();
-          questions[activeSection] = questions[activeSection].filter(function (x) { return x.id !== q.id; });
-          if (selectedQ === q.id) { selectedQ = null; renderProps(); }
-          renderQuestions();
-        });
-        card.appendChild(removeBtn);
-
-        // Select on click
-        card.addEventListener('click', function (e) {
-          if (e.target.closest('[contenteditable]')) return;
-          if (e.target.closest('.q-card-remove')) return;
-          selectedQ = q.id;
-          renderQuestions();
-          renderProps();
+        // Questions
+        var qs = questions[sec.id] || [];
+        qs.forEach(function (q, idx) {
+          // Add zone between questions
+          block.appendChild(makeAddZone(sec.id, idx));
+          block.appendChild(makeQuestionRow(q, sec.id));
         });
 
-        paper.appendChild(card);
-        paper.appendChild(makeAddZone(idx + 1));
+        // Add zone at the end / section add button
+        var addDiv = document.createElement('div');
+        addDiv.className = 'q-section-add';
+        var addBtn = document.createElement('button');
+        addBtn.textContent = '+ Add question';
+        addBtn.addEventListener('click', function () {
+          insertSectionId = sec.id;
+          insertIndex = (questions[sec.id] || []).length;
+          document.getElementById('add-q-modal').classList.add('is-open');
+        });
+        addDiv.appendChild(addBtn);
+        block.appendChild(addDiv);
+
+        paper.appendChild(block);
       });
-
-      // If empty
-      if (qs.length === 0) {
-        var emptyDiv = document.createElement('div');
-        emptyDiv.style.cssText = 'padding:60px;text-align:center;color:var(--color-text-tertiary);font-size:14px;';
-        emptyDiv.innerHTML = '<div style="margin-bottom:12px;">No questions yet</div><button class="primary-btn" style="margin:0 auto;" onclick="document.getElementById(\'add-q-modal\').classList.add(\'is-open\')">+ Add Question</button>';
-        paper.appendChild(emptyDiv);
-      }
     }
 
-    function makeAddZone(idx) {
+    function makeQuestionRow(q, sectionId) {
+      var row = document.createElement('div');
+      row.className = 'q-row' + (selectedQ === q.id ? ' is-selected' : '');
+      row.setAttribute('data-qid', q.id);
+      row.setAttribute('draggable', 'true');
+
+      // Grip handle
+      var grip = document.createElement('span');
+      grip.className = 'q-grip';
+      grip.innerHTML = '⠁⠁⠁<br>⠁⠁⠁';
+      row.appendChild(grip);
+
+      // Label
+      var label = document.createElement('span');
+      label.className = 'q-row-label';
+      label.contentEditable = 'true';
+      label.textContent = q.label;
+      label.addEventListener('blur', function () { q.label = label.textContent; renderProps(); });
+      label.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); label.blur(); } });
+      row.appendChild(label);
+
+      // Value (right side)
+      var value = document.createElement('div');
+      value.className = 'q-row-value';
+      if (q.type === 'binary') {
+        var bin = document.createElement('div');
+        bin.className = 'q-binary';
+        (q.options.length ? q.options : ['Yes','No','N/A']).forEach(function (opt) {
+          var sp = document.createElement('span');
+          sp.textContent = opt;
+          if (opt === 'N/A') sp.classList.add('is-selected');
+          bin.appendChild(sp);
+        });
+        value.appendChild(bin);
+      } else if (q.type === 'single') {
+        var opts = document.createElement('div');
+        opts.className = 'q-inline-options';
+        (q.options.length ? q.options : ['Option 1','Option 2']).forEach(function (o) {
+          var optEl = document.createElement('span'); optEl.className = 'q-inline-opt';
+          optEl.innerHTML = '<span class="radio"></span>' + o;
+          opts.appendChild(optEl);
+        });
+        value.appendChild(opts);
+      } else if (q.type === 'multi') {
+        var opts2 = document.createElement('div');
+        opts2.className = 'q-inline-options';
+        (q.options.length ? q.options : ['Option 1','Option 2']).forEach(function (o) {
+          var optEl = document.createElement('span'); optEl.className = 'q-inline-opt';
+          optEl.innerHTML = '<span class="checkbox"></span>' + o;
+          opts2.appendChild(optEl);
+        });
+        value.appendChild(opts2);
+      } else if (q.type === 'image') {
+        value.innerHTML = '<div class="q-inline-image"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="14" height="10" rx="1.5"/><circle cx="5.5" cy="7" r="1.5"/><path d="M1 11l4-3 3 2 2.5-2.5L15 11"/></svg>Upload</div>';
+      } else {
+        value.innerHTML = '<div class="q-inline-text">Enter text...</div>';
+      }
+      row.appendChild(value);
+
+      // Remove button
+      var removeBtn = document.createElement('button');
+      removeBtn.className = 'q-row-remove';
+      removeBtn.innerHTML = '×';
+      removeBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        questions[sectionId] = questions[sectionId].filter(function (x) { return x.id !== q.id; });
+        if (selectedQ === q.id) { selectedQ = null; renderProps(); }
+        renderAllQuestions();
+      });
+      row.appendChild(removeBtn);
+
+      // Select on click
+      row.addEventListener('click', function (e) {
+        if (e.target.closest('[contenteditable]')) return;
+        if (e.target.closest('.q-row-remove')) return;
+        selectedQ = q.id;
+        renderAllQuestions();
+        renderProps();
+      });
+
+      // Drag and drop for reordering
+      row.addEventListener('dragstart', function (e) {
+        e.dataTransfer.setData('text/plain', q.id + '|' + sectionId);
+        e.dataTransfer.effectAllowed = 'move';
+        row.style.opacity = '0.4';
+      });
+      row.addEventListener('dragend', function () { row.style.opacity = ''; });
+      row.addEventListener('dragover', function (e) {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+        row.style.borderTopColor = '#6aacf8';
+      });
+      row.addEventListener('dragleave', function () { row.style.borderTopColor = ''; });
+      row.addEventListener('drop', function (e) {
+        e.preventDefault();
+        row.style.borderTopColor = '';
+        var data = e.dataTransfer.getData('text/plain').split('|');
+        var dragId = data[0], fromSecId = data[1];
+        if (dragId === q.id) return;
+        // Remove from old position
+        var dragQ = null;
+        for (var i = 0; i < questions[fromSecId].length; i++) {
+          if (questions[fromSecId][i].id === dragId) { dragQ = questions[fromSecId].splice(i, 1)[0]; break; }
+        }
+        if (!dragQ) return;
+        // Insert before this question in this section
+        var targetIdx = questions[sectionId].indexOf(q);
+        if (targetIdx === -1) targetIdx = questions[sectionId].length;
+        questions[sectionId].splice(targetIdx, 0, dragQ);
+        renderAllQuestions();
+      });
+
+      return row;
+    }
+
+    function makeAddZone(sectionId, idx) {
       var zone = document.createElement('div');
       zone.className = 'q-add-zone';
       var btn = document.createElement('button');
       btn.textContent = '+ Add question';
       btn.addEventListener('click', function () {
+        insertSectionId = sectionId;
         insertIndex = idx;
         document.getElementById('add-q-modal').classList.add('is-open');
       });
@@ -893,6 +1040,15 @@
       return null;
     }
 
+    function findQuestionSection(id) {
+      for (var sec in questions) {
+        for (var i = 0; i < questions[sec].length; i++) {
+          if (questions[sec][i].id === id) return sec;
+        }
+      }
+      return null;
+    }
+
     function renderPropOptions(q) {
       var list = document.getElementById('props-option-list');
       list.innerHTML = '';
@@ -901,10 +1057,10 @@
         row.className = 'props-option-row';
         var inp = document.createElement('input');
         inp.type = 'text'; inp.value = opt;
-        inp.addEventListener('change', function () { q.options[idx] = inp.value; renderQuestions(); });
+        inp.addEventListener('change', function () { q.options[idx] = inp.value; renderAllQuestions(); });
         var rmBtn = document.createElement('button');
-        rmBtn.className = 'remove-opt'; rmBtn.innerHTML = '&times;';
-        rmBtn.addEventListener('click', function () { q.options.splice(idx, 1); renderPropOptions(q); renderQuestions(); });
+        rmBtn.className = 'remove-opt'; rmBtn.innerHTML = '×';
+        rmBtn.addEventListener('click', function () { q.options.splice(idx, 1); renderPropOptions(q); renderAllQuestions(); });
         row.appendChild(inp); row.appendChild(rmBtn);
         list.appendChild(row);
       });
@@ -913,7 +1069,7 @@
     // Props name change
     document.getElementById('props-name').addEventListener('change', function () {
       var q = findQuestion(selectedQ);
-      if (q) { q.label = this.value; renderQuestions(); }
+      if (q) { q.label = this.value; renderAllQuestions(); }
     });
 
     // Props type change
@@ -924,7 +1080,7 @@
       if (this.value === 'binary') q.options = ['Yes','No','N/A'];
       else if (this.value === 'single' || this.value === 'multi') { if (q.options.length === 0 || (q.options.length === 3 && q.options[0] === 'Yes')) q.options = ['Option 1','Option 2']; }
       else q.options = [];
-      renderQuestions();
+      renderAllQuestions();
       renderProps();
     });
 
@@ -934,7 +1090,7 @@
       if (!q) return;
       q.options.push('Option ' + (q.options.length + 1));
       renderPropOptions(q);
-      renderQuestions();
+      renderAllQuestions();
     });
 
     /* ============================================================
@@ -951,16 +1107,19 @@
         if (type === 'binary') newQ.options = ['Yes','No','N/A'];
         else if (type === 'single' || type === 'multi') newQ.options = ['Option 1', 'Option 2'];
 
-        if (!questions[activeSection]) questions[activeSection] = [];
-        if (insertIndex >= 0 && insertIndex <= questions[activeSection].length) {
-          questions[activeSection].splice(insertIndex, 0, newQ);
+        var targetSec = insertSectionId || (sections.length ? sections[0].id : null);
+        if (!targetSec) return;
+        if (!questions[targetSec]) questions[targetSec] = [];
+        if (insertIndex >= 0 && insertIndex <= questions[targetSec].length) {
+          questions[targetSec].splice(insertIndex, 0, newQ);
         } else {
-          questions[activeSection].push(newQ);
+          questions[targetSec].push(newQ);
         }
+        insertSectionId = null;
         insertIndex = -1;
         selectedQ = newQ.id;
         modal.classList.remove('is-open');
-        renderQuestions();
+        renderAllQuestions();
         renderProps();
       });
     });
