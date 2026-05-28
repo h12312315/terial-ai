@@ -944,12 +944,11 @@
       font-size: var(--font-body-sm-size);
       color: var(--color-text-tertiary);
       line-height: 1.5;
-      cursor: pointer;
       border-bottom: 1px solid transparent;
       padding-bottom: 1px;
     }
     .report-detail-summary:hover {
-      border-bottom-color: var(--color-border-default);
+      border-bottom-color: transparent;
     }
     .report-detail-header .report-summary-input {
       margin: 2px 0 0;
@@ -985,8 +984,8 @@
       box-shadow: var(--shadow-sm);
     }
     .report-detail-header .report-title-input:focus {
-      border-color: var(--color-primary-6);
-      box-shadow: 0 0 0 2px rgba(234,179,8,0.15);
+      border-color: var(--color-gray-5, #9ca3af);
+      box-shadow: 0 0 0 2px rgba(156,163,175,0.15);
     }
     .report-detail-breadcrumb {
       display: flex;
@@ -1136,6 +1135,7 @@
       background: var(--color-gray-1);
       border-bottom: 1px solid var(--color-border-default);
       white-space: nowrap;
+      position: relative;
     }
     .reports-table td {
       padding: 16px 20px;
@@ -1312,6 +1312,67 @@
       gap: 4px;
     }
     .report-data-timeframe svg { width: 12px; height: 12px; }
+    .th-sortable {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+      user-select: none;
+    }
+    .th-sortable:hover { color: var(--color-text-primary); }
+    .th-sort-icon {
+      width: 10px; height: 12px;
+      color: var(--color-text-tertiary);
+      flex-shrink: 0;
+    }
+    .th-sortable:hover .th-sort-icon { color: var(--color-text-secondary); }
+    .th-sortable.is-asc .th-sort-icon path:last-child { display: none; }
+    .th-sortable.is-desc .th-sort-icon path:first-child { display: none; }
+    .th-sortable.is-asc .th-sort-icon,
+    .th-sortable.is-desc .th-sort-icon { color: var(--color-text-primary); }
+    .th-filter-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 20px; height: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--color-text-tertiary);
+      border-radius: var(--radius-sm);
+      padding: 0;
+      margin-left: 2px;
+    }
+    .th-filter-btn:hover { background: var(--color-gray-1); color: var(--color-text-primary); }
+    .th-filter-btn svg { width: 12px; height: 12px; }
+    .th-filter-dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--color-white);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-lg);
+      padding: var(--space-md);
+      min-width: 180px;
+      z-index: 50;
+      display: none;
+    }
+    .th-filter-dropdown.is-open { display: block; }
+    .th-filter-dropdown label {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      padding: 4px var(--space-sm);
+      font-size: var(--font-body-sm-size);
+      cursor: pointer;
+      border-radius: var(--radius-sm);
+    }
+    .th-filter-dropdown label:hover { background: var(--color-gray-1); }
+    .th-filter-dropdown input[type="checkbox"] {
+      accent-color: var(--color-gray-9);
+      width: 14px; height: 14px;
+    }
     .chart-type-modal-overlay {
       position: fixed;
       inset: 0;
@@ -1796,6 +1857,86 @@
       cursor: pointer;
     }
     .report-dash-picker-done:hover { background: var(--color-gray-8); }
+
+    .add-dash-modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.35);
+      z-index: 200;
+      display: none;
+      place-items: center;
+    }
+    .add-dash-modal-overlay.is-open { display: grid; }
+    .add-dash-modal {
+      background: var(--color-white);
+      border-radius: var(--radius-lg, 12px);
+      box-shadow: var(--shadow-lg);
+      width: 400px;
+      display: flex;
+      flex-direction: column;
+    }
+    .add-dash-modal-header {
+      padding: var(--space-xl) var(--space-2xl);
+      border-bottom: 1px solid var(--color-border-default);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .add-dash-modal-title {
+      font-size: var(--font-h4-size);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary);
+    }
+    .add-dash-modal-close {
+      width: 28px; height: 28px;
+      display: grid; place-items: center;
+      background: none; border: none; cursor: pointer;
+      color: var(--color-text-tertiary);
+      border-radius: var(--radius-sm);
+    }
+    .add-dash-modal-close:hover { background: var(--color-gray-1); color: var(--color-text-primary); }
+    .add-dash-modal-body {
+      padding: var(--space-xl) var(--space-2xl);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-sm);
+    }
+    .add-dash-modal-item {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      font-size: var(--font-body-md-size);
+      color: var(--color-text-primary);
+    }
+    .add-dash-modal-item:hover { background: var(--color-gray-1); }
+    .add-dash-modal-item input[type="checkbox"] {
+      accent-color: var(--color-gray-9);
+      width: 16px; height: 16px;
+      cursor: pointer;
+    }
+    .add-dash-modal-footer {
+      padding: var(--space-lg) var(--space-2xl);
+      display: flex;
+      justify-content: flex-end;
+    }
+    .add-dash-modal-add-btn {
+      display: inline-flex;
+      align-items: center;
+      padding: 8px 20px;
+      background: var(--color-gray-9);
+      color: var(--color-white);
+      border: none;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-family-base);
+      font-size: var(--font-body-md-size);
+      font-weight: var(--font-weight-medium);
+      cursor: pointer;
+      height: 36px;
+    }
+    .add-dash-modal-add-btn:hover { background: var(--color-gray-8); }
 
     .report-more-btn {
       display: inline-flex;
@@ -2854,6 +2995,7 @@
       display: flex;
       flex-wrap: wrap;
       align-items: center;
+      gap: var(--space-md);
     }
     .dash-header-left { flex: 1; min-width: 0; }
     .dash-chat-toggle {
@@ -4452,6 +4594,9 @@
       display: none;
     }
     .ai-toast.is-visible { display: block; animation: ai-toast-in 0.3s ease; }
+    .ai-toast.is-success {
+      background: #16a34a;
+    }
     @keyframes ai-toast-in {
       from { opacity: 0; transform: translate(-50%, 10px); }
       to { opacity: 1; transform: translate(-50%, 0); }
@@ -8085,11 +8230,11 @@
 
         <!-- View tabs -->
         <div class="home-view-tabs">
-          <button class="home-view-tab is-active" data-home-tab="home">Home</button>
+          <button class="home-view-tab is-active" data-home-tab="home"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px;"><path d="M2 7l6-5 6 5v7a1 1 0 0 1-1 1h-3v-5H6v5H3a1 1 0 0 1-1-1z"/></svg></button>
           <button class="home-view-tab" data-home-tab="sales">Sales</button>
           <button class="home-view-tab" data-home-tab="aaron">Aaron</button>
           <button class="home-view-tab" data-home-tab="matt">Matt</button>
-          <button class="home-view-tab is-new" data-home-tab="new">+ New view</button>
+          <button class="home-view-tab is-new" data-home-tab="new" style="background:var(--color-gray-9);color:var(--color-white);border:none;border-radius:var(--radius-sm);padding:6px 14px;border-bottom:none;">+ Dashboard</button>
         </div>
         <div class="home-view-actions" id="home-view-actions-bar" style="display:none;">
           <div class="home-view-actions-left">
@@ -8789,9 +8934,9 @@ ORDER BY j.eta ASC;</pre>
           </div>
         </div>
 
-        <div class="reports-page-tabs" id="reports-page-tabs" style="display:none;">
-          <button class="reports-page-tab is-active" data-rptab="reports">Reports</button>
-          <button class="reports-page-tab" data-rptab="dashboards">Dashboards</button>
+        <div class="reports-tabs" id="reports-list-tabs">
+          <button class="reports-tab is-active" data-listtab="your">Your reports</button>
+          <button class="reports-tab" data-listtab="templates">Templates</button>
         </div>
 
         <div id="rptab-reports">
@@ -8885,6 +9030,27 @@ ORDER BY j.eta ASC;</pre>
           </tbody>
         </table>
         </div><!-- end rptab-reports -->
+
+        <div id="reports-templates-view" style="display:none;">
+          <div class="reports-toolbar">
+            <div class="reports-search">
+              <svg class="search-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4"/><path d="M9 9l3.5 3.5"/></svg>
+              <input type="text" placeholder="Search templates..." />
+            </div>
+          </div>
+          <table class="reports-table">
+            <thead>
+              <tr><th>Name</th><th>Type</th><th>Category</th><th>Description</th></tr>
+            </thead>
+            <tbody id="reports-templates-body">
+              <tr data-template="tpl-sales-pipeline"><td><span class="report-name-link">Sales Pipeline Report</span></td><td>Query</td><td>Sales</td><td>Track deals through each stage of your pipeline</td></tr>
+              <tr data-template="tpl-monthly-revenue"><td><span class="report-name-link">Monthly Revenue Template</span></td><td>Query</td><td>Finance</td><td>Monthly revenue breakdown by region and product</td></tr>
+              <tr data-template="tpl-ticket-aging"><td><span class="report-name-link">Ticket Aging Report</span></td><td>Query</td><td>Service</td><td>View open tickets by age and priority</td></tr>
+              <tr data-template="tpl-rep-performance"><td><span class="report-name-link">Rep Performance Scorecard</span></td><td>Query</td><td>Sales</td><td>Sales rep KPIs including close rate and deal size</td></tr>
+              <tr data-template="tpl-customer-churn"><td><span class="report-name-link">Customer Churn Analysis</span></td><td>Query</td><td>Analytics</td><td>Identify at-risk customers based on engagement</td></tr>
+            </tbody>
+          </table>
+        </div>
 
         <div style="display:none;" id="rptab-dashboards">
           <div class="dash-sub-tabs-row">
@@ -9039,7 +9205,7 @@ ORDER BY j.eta ASC;</pre>
                 </div>
               </div>
               <div class="report-preview-toolbar" id="report-preview-toolbar">
-                <div class="report-preview-toolbar-left"><span class="report-data-timeframe"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="5"/><path d="M6 3v3l2 1.5"/></svg>Data from 2026</span></div>
+                <div class="report-preview-toolbar-left"><span class="dash-card-time-badge"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="5"/><path d="M6 3v3l2 1.5"/></svg>This year</span></div>
                 <div class="report-preview-toolbar-right">
                   <div class="report-dropdown-wrap">
                     <button id="report-download-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10V2M3.5 6.5L7 10l3.5-3.5M2 12h10"/></svg> Download</button>
@@ -9078,11 +9244,7 @@ ORDER BY j.eta ASC;</pre>
                   <table class="report-result-table" id="report-result-table">
                     <thead>
                       <tr>
-                        <th>Region</th>
-                        <th>Total Revenue</th>
-                        <th>Deal Count</th>
-                        <th>Avg Deal Size</th>
-                        <th>Win Rate</th>
+                        <th><span class="th-sortable" data-col="0">Region<svg class="th-sort-icon" viewBox="0 0 10 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 1v10M2.5 3.5L5 1l2.5 2.5M2.5 8.5L5 11l2.5-2.5"/></svg></span><button class="th-filter-btn" data-col="0"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><path d="M1 2h10L7 6.5V9.5L5 11V6.5L1 2z"/></svg></button></th><th><span class="th-sortable" data-col="1">Total Revenue<svg class="th-sort-icon" viewBox="0 0 10 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 1v10M2.5 3.5L5 1l2.5 2.5M2.5 8.5L5 11l2.5-2.5"/></svg></span></th><th><span class="th-sortable" data-col="2">Deal Count<svg class="th-sort-icon" viewBox="0 0 10 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 1v10M2.5 3.5L5 1l2.5 2.5M2.5 8.5L5 11l2.5-2.5"/></svg></span></th><th><span class="th-sortable" data-col="3">Avg Deal Size<svg class="th-sort-icon" viewBox="0 0 10 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 1v10M2.5 3.5L5 1l2.5 2.5M2.5 8.5L5 11l2.5-2.5"/></svg></span></th><th><span class="th-sortable" data-col="4">Win Rate<svg class="th-sort-icon" viewBox="0 0 10 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M5 1v10M2.5 3.5L5 1l2.5 2.5M2.5 8.5L5 11l2.5-2.5"/></svg></span></th>
                       </tr>
                     </thead>
                     <tbody>
@@ -9184,6 +9346,11 @@ ORDER BY "Total Revenue" DESC;</pre>
             <h1>Custom charts</h1>
           </div>
         </div>
+        <div class="reports-tabs" id="charts-list-tabs">
+          <button class="reports-tab is-active" data-listtab="your">Your charts</button>
+          <button class="reports-tab" data-listtab="templates">Templates</button>
+        </div>
+        <div id="charts-your-view">
         <div class="reports-toolbar">
           <div class="reports-search">
             <svg class="search-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4"/><path d="M9 9l3.5 3.5"/></svg>
@@ -9272,6 +9439,28 @@ ORDER BY "Total Revenue" DESC;</pre>
             </tr>
           </tbody>
         </table>
+        </div><!-- end charts-your-view -->
+
+        <div id="charts-templates-view" style="display:none;">
+          <div class="reports-toolbar">
+            <div class="reports-search">
+              <svg class="search-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4"/><path d="M9 9l3.5 3.5"/></svg>
+              <input type="text" placeholder="Search chart templates..." />
+            </div>
+          </div>
+          <table class="reports-table">
+            <thead>
+              <tr><th>Name</th><th>Type</th><th>Category</th><th>Description</th></tr>
+            </thead>
+            <tbody id="charts-templates-body">
+              <tr data-template="tpl-chart-revenue"><td><span class="report-name-link">Revenue Breakdown Chart</span></td><td>Bar</td><td>Finance</td><td>Visualize revenue by product line or region</td></tr>
+              <tr data-template="tpl-chart-funnel"><td><span class="report-name-link">Sales Funnel</span></td><td>Funnel</td><td>Sales</td><td>Deal conversion through pipeline stages</td></tr>
+              <tr data-template="tpl-chart-trend"><td><span class="report-name-link">Monthly Trend Line</span></td><td>Line</td><td>Analytics</td><td>Track KPIs over time with trend lines</td></tr>
+              <tr data-template="tpl-chart-pie"><td><span class="report-name-link">Market Share Breakdown</span></td><td>Pie</td><td>Marketing</td><td>Distribution of market share by segment</td></tr>
+              <tr data-template="tpl-chart-gauge"><td><span class="report-name-link">Goal Tracker Gauge</span></td><td>Gauge</td><td>Operations</td><td>Track progress toward quarterly targets</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <!-- Chart detail page -->
@@ -9293,7 +9482,7 @@ ORDER BY "Total Revenue" DESC;</pre>
                 </div>
               </div>
               <div class="report-preview-toolbar" id="chart-preview-toolbar">
-                <div class="report-preview-toolbar-left"><span class="report-data-timeframe"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="5"/><path d="M6 3v3l2 1.5"/></svg>Data from 2026</span></div>
+                <div class="report-preview-toolbar-left"><span class="dash-card-time-badge"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="5"/><path d="M6 3v3l2 1.5"/></svg>This year</span></div>
                 <div class="report-preview-toolbar-right">
                   <button id="chart-download-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 10V2M3.5 6.5L7 10l3.5-3.5M2 12h10"/></svg> Download</button>
                   <button id="chart-create-chart-btn"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="8" width="2.5" height="5" rx="0.5"/><rect x="5.75" y="4" width="2.5" height="9" rx="0.5"/><rect x="10.5" y="1" width="2.5" height="12" rx="0.5"/></svg> Create custom chart</button>
@@ -9384,6 +9573,11 @@ ORDER BY "Total Revenue" DESC;</pre>
             <h1>Custom dashboards</h1>
           </div>
         </div>
+        <div class="reports-tabs" id="dashboards-list-tabs">
+          <button class="reports-tab is-active" data-listtab="your">Your dashboards</button>
+          <button class="reports-tab" data-listtab="templates">Templates</button>
+        </div>
+        <div id="dashboards-your-view">
         <div class="reports-toolbar">
           <div class="reports-search">
             <svg class="search-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4"/><path d="M9 9l3.5 3.5"/></svg>
@@ -9458,6 +9652,28 @@ ORDER BY "Total Revenue" DESC;</pre>
             </tr>
           </tbody>
         </table>
+        </div><!-- end dashboards-your-view -->
+
+        <div id="dashboards-templates-view" style="display:none;">
+          <div class="reports-toolbar">
+            <div class="reports-search">
+              <svg class="search-icon" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="6" cy="6" r="4"/><path d="M9 9l3.5 3.5"/></svg>
+              <input type="text" placeholder="Search dashboard templates..." />
+            </div>
+          </div>
+          <table class="reports-table">
+            <thead>
+              <tr><th>Name</th><th>Cards</th><th>Category</th><th>Description</th></tr>
+            </thead>
+            <tbody id="dashboards-templates-body">
+              <tr data-template="tpl-dash-sales"><td><span class="report-name-link">Sales Overview Dashboard</span></td><td>8</td><td>Sales</td><td>Complete sales KPIs with pipeline and forecast</td></tr>
+              <tr data-template="tpl-dash-marketing"><td><span class="report-name-link">Marketing Performance</span></td><td>6</td><td>Marketing</td><td>Campaign ROI, lead gen, and conversion metrics</td></tr>
+              <tr data-template="tpl-dash-ops"><td><span class="report-name-link">Operations Command Center</span></td><td>10</td><td>Operations</td><td>Project status, resource allocation, and timelines</td></tr>
+              <tr data-template="tpl-dash-exec"><td><span class="report-name-link">Executive Summary</span></td><td>5</td><td>Executive</td><td>High-level company metrics for leadership review</td></tr>
+              <tr data-template="tpl-dash-service"><td><span class="report-name-link">Service Desk Dashboard</span></td><td>7</td><td>Service</td><td>Ticket volume, response times, and satisfaction</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <!-- Custom dashboard detail page -->
@@ -9470,6 +9686,7 @@ ORDER BY "Total Revenue" DESC;</pre>
                 <span class="dash-title-text" id="custom-dash-title">Sales Dashboard</span>
               </div>
               <div class="report-preview-actions">
+                <button class="report-chat-toggle" id="cdash-add-home-btn" style="background:var(--color-white);color:var(--color-text-secondary);border:1px solid var(--color-border-default);"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 7l6-5 6 5v7a1 1 0 0 1-1 1h-3v-5H6v5H3a1 1 0 0 1-1-1z"/></svg> Add to home</button>
                 <button class="report-chat-toggle" id="cdash-chat-toggle"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Edit</button>
                 <div class="report-dropdown-wrap">
                   <button class="report-more-btn" id="cdash-more-btn"><svg viewBox="0 0 14 14" fill="currentColor"><circle cx="7" cy="3" r="1.2"/><circle cx="7" cy="7" r="1.2"/><circle cx="7" cy="11" r="1.2"/></svg></button>
@@ -10491,9 +10708,9 @@ LIMIT 10;</pre>
               <div class="chart-type-card-preview"><svg viewBox="0 0 64 48" fill="none"><circle cx="10" cy="32" r="3" fill="#3b82f6"/><circle cx="22" cy="18" r="3" fill="#3b82f6"/><circle cx="30" cy="28" r="3" fill="#3b82f6"/><circle cx="42" cy="10" r="3" fill="#3b82f6"/><circle cx="50" cy="22" r="3" fill="#3b82f6"/><circle cx="18" cy="38" r="3" fill="#60a5fa"/><circle cx="36" cy="36" r="3" fill="#60a5fa"/><circle cx="56" cy="14" r="3" fill="#60a5fa"/><line x1="0" y1="44" x2="64" y2="44" stroke="#e5e7eb" stroke-width="1"/></svg></div>
               <div class="chart-type-card-label">Scatter plot</div>
             </div>
-            <div class="chart-type-card" data-chart="table">
-              <div class="chart-type-card-preview"><svg viewBox="0 0 64 48" fill="none" stroke="#94a3b8" stroke-width="1"><rect x="2" y="4" width="60" height="40" rx="2"/><line x1="2" y1="14" x2="62" y2="14"/><line x1="2" y1="24" x2="62" y2="24"/><line x1="2" y1="34" x2="62" y2="34"/><line x1="22" y1="4" x2="22" y2="44"/><line x1="42" y1="4" x2="42" y2="44"/></svg></div>
-              <div class="chart-type-card-label">Data table</div>
+            <div class="chart-type-card" data-chart="gauge">
+              <div class="chart-type-card-preview"><svg viewBox="0 0 48 48" fill="none"><path d="M8 32 A16 16 0 0 1 40 32" stroke="#e5e7eb" stroke-width="4" stroke-linecap="round"/><path d="M8 32 A16 16 0 0 1 34 18" stroke="#3b82f6" stroke-width="4" stroke-linecap="round"/><circle cx="24" cy="32" r="2" fill="#3b82f6"/></svg></div>
+              <div class="chart-type-card-label">Gauge</div>
             </div>
           </div>
         </div>
@@ -10506,6 +10723,70 @@ LIMIT 10;</pre>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add to dashboard modal -->
+  <div class="add-dash-modal-overlay" id="add-dash-modal">
+    <div class="add-dash-modal">
+      <div class="add-dash-modal-header">
+        <div class="add-dash-modal-title">Add to dashboard</div>
+        <button class="add-dash-modal-close" id="add-dash-modal-close"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l10 10M12 2L2 12"/></svg></button>
+      </div>
+      <div class="add-dash-modal-body">
+        <label class="add-dash-modal-item"><input type="checkbox" value="sales"> Sales Dashboard</label>
+        <label class="add-dash-modal-item"><input type="checkbox" value="marketing"> Marketing Overview</label>
+        <label class="add-dash-modal-item"><input type="checkbox" value="ops"> Operations Dashboard</label>
+        <label class="add-dash-modal-item"><input type="checkbox" value="exec"> Executive Summary</label>
+      </div>
+      <div class="add-dash-modal-footer">
+        <button class="add-dash-modal-add-btn" id="add-dash-modal-add">Add</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Home add dashboard modal -->
+  <div class="add-dash-modal-overlay" id="home-dash-modal">
+    <div class="add-dash-modal">
+      <div class="add-dash-modal-header">
+        <div class="add-dash-modal-title">Add dashboard to home</div>
+        <button class="add-dash-modal-close" id="home-dash-modal-close"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l10 10M12 2L2 12"/></svg></button>
+      </div>
+      <div class="add-dash-modal-body">
+        <label class="add-dash-modal-item"><input type="checkbox" value="Sales Dashboard"> Sales Dashboard</label>
+        <label class="add-dash-modal-item"><input type="checkbox" value="Marketing Overview"> Marketing Overview</label>
+        <label class="add-dash-modal-item"><input type="checkbox" value="Operations Dashboard"> Operations Dashboard</label>
+        <label class="add-dash-modal-item"><input type="checkbox" value="Executive Summary"> Executive Summary</label>
+        <label class="add-dash-modal-item"><input type="checkbox" value="Service Performance"> Service Performance</label>
+        <label class="add-dash-modal-item"><input type="checkbox" value="Project Tracker"> Project Tracker</label>
+      </div>
+      <div class="add-dash-modal-footer" style="display:flex;gap:8px;">
+        <button class="add-dash-modal-add-btn" id="home-dash-modal-add">Add</button>
+        <button class="add-dash-modal-add-btn" id="home-dash-modal-create" style="background:var(--color-white);color:var(--color-text-primary);border:1px solid var(--color-border-default);">Create new dashboard</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add content to dashboard modal -->
+  <div class="add-dash-modal-overlay" id="add-content-modal">
+    <div class="add-dash-modal" style="max-width:520px;">
+      <div class="add-dash-modal-header">
+        <div class="add-dash-modal-title">Add content</div>
+        <button class="add-dash-modal-close" id="add-content-modal-close"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l10 10M12 2L2 12"/></svg></button>
+      </div>
+      <div style="display:flex;gap:0;border-bottom:1px solid var(--color-border-default);margin-bottom:12px;">
+        <button class="reports-tab is-active" data-content-tab="charts" style="flex:1;text-align:center;">Charts</button>
+        <button class="reports-tab" data-content-tab="reports" style="flex:1;text-align:center;">Reports</button>
+      </div>
+      <div class="add-dash-modal-body" id="add-content-charts-list" style="max-height:300px;overflow-y:auto;">
+        <!-- populated by JS -->
+      </div>
+      <div class="add-dash-modal-body" id="add-content-reports-list" style="max-height:300px;overflow-y:auto;display:none;">
+        <!-- populated by JS -->
+      </div>
+      <div class="add-dash-modal-footer">
+        <button class="add-dash-modal-add-btn" id="add-content-modal-add">Add</button>
       </div>
     </div>
   </div>
@@ -14794,11 +15075,14 @@ LIMIT 10;</pre>
         }
       };
 
-      function showToast(text) {
+      function showToast(text, isSuccess) {
         aiToast.textContent = text;
+        aiToast.classList.remove('is-success');
+        if (isSuccess) aiToast.classList.add('is-success');
         aiToast.classList.add('is-visible');
-        setTimeout(function () { aiToast.classList.remove('is-visible'); }, 2400);
+        setTimeout(function () { aiToast.classList.remove('is-visible'); aiToast.classList.remove('is-success'); }, 2400);
       }
+      window.showToast = showToast;
 
       // ---------- Banner ----------
       var pendingDismissBtn = document.getElementById('ai-pending-dismiss');
@@ -15696,6 +15980,7 @@ LIMIT 10;</pre>
       document.getElementById('reports-new-btn').addEventListener('click', function () {
         chatPanel.classList.remove('is-collapsed');
         openDetail('New report', true);
+        setTimeout(function() { enterReportEditMode(); }, 200);
       });
 
       // Back link
@@ -15790,6 +16075,7 @@ LIMIT 10;</pre>
       }
 
       toggleBtn.addEventListener('click', enterReportEditMode);
+      window.enterReportEditMode = enterReportEditMode;
 
       // Dropdown helpers
       function closeAllDropdowns() {
@@ -15811,21 +16097,11 @@ LIMIT 10;</pre>
         item.addEventListener('click', function () { closeAllDropdowns(); });
       });
 
-      // Add to dashboard dropdown
+      // Add to dashboard — open modal
       document.getElementById('report-add-dash-btn').addEventListener('click', function (e) {
         e.stopPropagation();
-        var dd = document.getElementById('report-dash-picker');
-        var wasOpen = dd.classList.contains('is-open');
         closeAllDropdowns();
-        if (!wasOpen) dd.classList.add('is-open');
-      });
-      document.getElementById('report-dash-picker-done').addEventListener('click', function (e) {
-        e.stopPropagation();
-        closeAllDropdowns();
-      });
-      // Prevent checkbox clicks from closing the dropdown
-      document.querySelectorAll('.report-dash-picker-item').forEach(function (item) {
-        item.addEventListener('click', function (e) { e.stopPropagation(); });
+        document.getElementById('add-dash-modal').classList.add('is-open');
       });
 
       // More menu dropdown
@@ -15845,6 +16121,111 @@ LIMIT 10;</pre>
       document.getElementById('report-action-remove').addEventListener('click', function () {
         closeAllDropdowns();
         showPage('reports');
+      });
+
+      // ---- Sort handlers ----
+      var currentSortCol = null;
+      var currentSortDir = null;
+      document.querySelectorAll('#report-result-table .th-sortable').forEach(function(sortEl) {
+        sortEl.addEventListener('click', function() {
+          var col = parseInt(sortEl.getAttribute('data-col'), 10);
+          // Toggle direction
+          if (currentSortCol === col) {
+            currentSortDir = currentSortDir === 'asc' ? 'desc' : 'asc';
+          } else {
+            currentSortCol = col;
+            currentSortDir = 'asc';
+          }
+          // Update classes
+          document.querySelectorAll('#report-result-table .th-sortable').forEach(function(s) {
+            s.classList.remove('is-asc', 'is-desc');
+          });
+          sortEl.classList.add(currentSortDir === 'asc' ? 'is-asc' : 'is-desc');
+
+          var tbody = document.querySelector('#report-result-table tbody');
+          var rows = Array.from(tbody.querySelectorAll('tr'));
+          rows.sort(function(a, b) {
+            var aText = a.cells[col] ? a.cells[col].textContent.trim() : '';
+            var bText = b.cells[col] ? b.cells[col].textContent.trim() : '';
+            if (col >= 1 && col <= 4) {
+              var aNum = parseFloat(aText.replace(/[$%,]/g, '')) || 0;
+              var bNum = parseFloat(bText.replace(/[$%,]/g, '')) || 0;
+              return currentSortDir === 'asc' ? aNum - bNum : bNum - aNum;
+            }
+            return currentSortDir === 'asc' ? aText.localeCompare(bText) : bText.localeCompare(aText);
+          });
+          rows.forEach(function(r) { tbody.appendChild(r); });
+        });
+      });
+
+      // ---- Filter handlers ----
+      var activeFilterDropdown = null;
+      document.querySelectorAll('#report-result-table .th-filter-btn').forEach(function(filterBtn) {
+        filterBtn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var col = parseInt(filterBtn.getAttribute('data-col'), 10);
+
+          // Close any existing dropdown
+          if (activeFilterDropdown) {
+            activeFilterDropdown.parentNode.removeChild(activeFilterDropdown);
+            activeFilterDropdown = null;
+          }
+
+          // Build unique values from column
+          var tbody = document.querySelector('#report-result-table tbody');
+          var rows = Array.from(tbody.querySelectorAll('tr'));
+          var values = [];
+          rows.forEach(function(r) {
+            var val = r.cells[col] ? r.cells[col].textContent.trim() : '';
+            if (val && values.indexOf(val) === -1) values.push(val);
+          });
+          values.sort();
+
+          // Create dropdown
+          var dd = document.createElement('div');
+          dd.className = 'th-filter-dropdown';
+          dd.style.cssText = 'position:absolute;top:100%;left:0;z-index:100;background:var(--color-white);border:1px solid var(--color-border-default);border-radius:var(--radius-md);box-shadow:var(--shadow-lg);padding:8px;min-width:180px;max-height:240px;overflow-y:auto;';
+          values.forEach(function(val) {
+            var label = document.createElement('label');
+            label.style.cssText = 'display:flex;align-items:center;gap:8px;padding:4px 8px;cursor:pointer;font-size:13px;white-space:nowrap;';
+            var cb = document.createElement('input');
+            cb.type = 'checkbox';
+            cb.value = val;
+            cb.checked = true;
+            label.appendChild(cb);
+            label.appendChild(document.createTextNode(val));
+            dd.appendChild(label);
+
+            cb.addEventListener('change', function() {
+              var checkedVals = [];
+              dd.querySelectorAll('input[type="checkbox"]').forEach(function(c) {
+                if (c.checked) checkedVals.push(c.value);
+              });
+              var allChecked = checkedVals.length === values.length;
+              rows.forEach(function(r) {
+                var cellVal = r.cells[col] ? r.cells[col].textContent.trim() : '';
+                if (allChecked || checkedVals.indexOf(cellVal) !== -1) {
+                  r.style.display = '';
+                } else {
+                  r.style.display = 'none';
+                }
+              });
+            });
+          });
+
+          filterBtn.style.position = 'relative';
+          filterBtn.parentNode.style.position = 'relative';
+          filterBtn.parentNode.appendChild(dd);
+          activeFilterDropdown = dd;
+        });
+      });
+
+      // Close filter dropdown on outside click
+      document.addEventListener('click', function(e) {
+        if (activeFilterDropdown && !e.target.closest('.th-filter-dropdown') && !e.target.closest('.th-filter-btn')) {
+          activeFilterDropdown.parentNode.removeChild(activeFilterDropdown);
+          activeFilterDropdown = null;
+        }
       });
 
       // Chat panel tabs (AI chat / SQL)
@@ -15928,6 +16309,21 @@ LIMIT 10;</pre>
           document.getElementById('chart-detail-title').textContent = name;
           document.getElementById('chart-breadcrumb-name').textContent = name;
           showPage('charts-detail');
+
+          // Add loading overlay on chart content
+          var chartContentCard = document.querySelector('.chart-content-card');
+          if (chartContentCard) {
+            var loadingOverlay = document.createElement('div');
+            loadingOverlay.className = 'chart-ai-loading-overlay';
+            loadingOverlay.style.cssText = 'position:absolute;inset:0;background:rgba(255,255,255,0.85);display:flex;align-items:center;justify-content:center;z-index:10;border-radius:var(--radius-md);';
+            loadingOverlay.innerHTML = '<div style="text-align:center;"><div class="report-spinner"></div><div style="margin-top:12px;font-size:13px;color:var(--color-text-secondary);">AI is generating your chart...</div></div>';
+            chartContentCard.style.position = 'relative';
+            chartContentCard.appendChild(loadingOverlay);
+            setTimeout(function() {
+              if (loadingOverlay.parentNode) loadingOverlay.parentNode.removeChild(loadingOverlay);
+            }, 1500);
+          }
+
           // Enter edit mode and send prompt
           setTimeout(function() {
             var chartEditBtn = document.getElementById('chart-chat-toggle');
@@ -15937,15 +16333,15 @@ LIMIT 10;</pre>
               var chatMessages = document.querySelector('#chart-chat-panel .report-chat-messages');
               if (chatMessages) {
                 var msgDiv = document.createElement('div');
-                msgDiv.className = 'report-chat-msg is-user';
-                msgDiv.innerHTML = '<div class="report-chat-msg-bubble">I\'d like to make this into a chart</div>';
+                msgDiv.className = 'chat-msg is-user';
+                msgDiv.textContent = 'I\'d like to make this into a chart';
                 chatMessages.appendChild(msgDiv);
                 chatMessages.scrollTop = chatMessages.scrollHeight;
                 // Simulate AI response after short delay
                 setTimeout(function() {
                   var aiMsg = document.createElement('div');
-                  aiMsg.className = 'report-chat-msg is-ai';
-                  aiMsg.innerHTML = '<div class="report-chat-msg-sender">Terial AI</div><div class="report-chat-msg-bubble">I\'ll help you create a chart from this data. What type of visualization would work best — a bar chart, line chart, or something else?</div>';
+                  aiMsg.className = 'chat-msg is-ai is-fade-in';
+                  aiMsg.innerHTML = '<div class="chat-msg-label">Terial AI</div>I\'ve taken a first attempt at creating a chart from your data. You can try other formats like bar chart, line chart, pie chart, or adjust the grouping and filters.';
                   chatMessages.appendChild(aiMsg);
                   chatMessages.scrollTop = chatMessages.scrollHeight;
                 }, 800);
@@ -16222,25 +16618,39 @@ LIMIT 10;</pre>
       }
 
       if (chartChatToggle) chartChatToggle.addEventListener('click', enterChartEditMode);
+      window.enterChartEditMode = enterChartEditMode;
 
-      // Chart "Add to dashboard" dropdown
+      // Chart "Add to dashboard" — open modal
       var chartAddDashBtn = document.getElementById('chart-add-dash-btn');
       if (chartAddDashBtn) {
         chartAddDashBtn.addEventListener('click', function(e) {
           e.stopPropagation();
-          var dd = document.getElementById('chart-dash-picker');
-          var wasOpen = dd.classList.contains('is-open');
           document.querySelectorAll('.report-dropdown.is-open').forEach(function(d) { d.classList.remove('is-open'); });
-          if (!wasOpen) dd.classList.add('is-open');
+          document.getElementById('add-dash-modal').classList.add('is-open');
         });
       }
-      var chartDashDone = document.getElementById('chart-dash-picker-done');
-      if (chartDashDone) {
-        chartDashDone.addEventListener('click', function(e) {
-          e.stopPropagation();
-          document.querySelectorAll('.report-dropdown.is-open').forEach(function(d) { d.classList.remove('is-open'); });
-        });
-      }
+    })();
+
+    // ========== Add-to-dashboard modal handlers ==========
+    (function() {
+      var addDashModal = document.getElementById('add-dash-modal');
+      var addDashClose = document.getElementById('add-dash-modal-close');
+      var addDashAdd = document.getElementById('add-dash-modal-add');
+
+      if (addDashClose) addDashClose.addEventListener('click', function() {
+        addDashModal.classList.remove('is-open');
+      });
+      // Overlay click to close
+      if (addDashModal) addDashModal.addEventListener('click', function(e) {
+        if (e.target === addDashModal) addDashModal.classList.remove('is-open');
+      });
+      // Add button
+      if (addDashAdd) addDashAdd.addEventListener('click', function() {
+        addDashModal.classList.remove('is-open');
+        // Uncheck all checkboxes
+        addDashModal.querySelectorAll('input[type="checkbox"]').forEach(function(cb) { cb.checked = false; });
+        window.showToast('Added to dashboard successfully', true);
+      });
     })();
 
     // ========== Dashboards page handlers ==========
@@ -16326,6 +16736,42 @@ LIMIT 10;</pre>
       }
 
       if (cdashChatToggle) cdashChatToggle.addEventListener('click', enterDashEditMode);
+      window.enterDashEditMode = enterDashEditMode;
+
+      // Add to home button
+      var cdashAddHomeBtn = document.getElementById('cdash-add-home-btn');
+      if (cdashAddHomeBtn) {
+        cdashAddHomeBtn.addEventListener('click', function() {
+          var titleEl = document.getElementById('custom-dash-title');
+          var dashName = titleEl ? (titleEl.textContent || titleEl.value || 'Dashboard').trim() : 'Dashboard';
+          showToast('Dashboard added to home', true);
+
+          // Create new tab in home-view-tabs before the +Dashboard button
+          var tabsContainer = document.querySelector('.home-view-tabs');
+          var newBtn = document.querySelector('.home-view-tab[data-home-tab="new"]');
+          var tabId = 'home-dash-' + Date.now();
+          var newTab = document.createElement('button');
+          newTab.className = 'home-view-tab';
+          newTab.setAttribute('data-home-tab', tabId);
+          newTab.textContent = dashName;
+          if (newBtn) tabsContainer.insertBefore(newTab, newBtn);
+
+          // Create panel
+          var newPanel = document.createElement('div');
+          newPanel.className = 'home-tab-panel';
+          newPanel.id = 'home-tab-' + tabId;
+          newPanel.innerHTML = '<div style="padding:var(--space-lg) 0;"><h2 style="font-size:18px;font-weight:600;margin-bottom:var(--space-lg);">' + dashName + '</h2><div class="dash-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-md);"><div class="dash-card"><div class="dash-card-title">Revenue</div><div class="dash-stat-value" style="font-size:32px;font-weight:700;padding:12px 0;">$482,300</div><div style="color:#22c55e;font-size:13px;">+12% vs last month</div></div><div class="dash-card"><div class="dash-card-title">Deals Won</div><div class="dash-stat-value" style="font-size:32px;font-weight:700;padding:12px 0;">14</div><div style="color:#22c55e;font-size:13px;">+3 this week</div></div><div class="dash-card"><div class="dash-card-title">Win Rate</div><div class="dash-stat-value" style="font-size:32px;font-weight:700;padding:12px 0;">48%</div><div style="color:var(--color-text-tertiary);font-size:13px;">Stable</div></div></div></div>';
+          var homePageEl = document.getElementById('home-page');
+          homePageEl.appendChild(newPanel);
+
+          // Navigate to home and activate
+          showPage('home');
+          document.querySelectorAll('.home-view-tab').forEach(function(t) { t.classList.remove('is-active'); });
+          newTab.classList.add('is-active');
+          document.querySelectorAll('.home-tab-panel').forEach(function(p) { p.classList.remove('is-active'); });
+          newPanel.classList.add('is-active');
+        });
+      }
 
       // Drag-and-drop reordering
       var dragSrcEl = null;
@@ -16428,13 +16874,369 @@ LIMIT 10;</pre>
             document.getElementById('chart-detail-title').textContent = name;
             document.getElementById('chart-breadcrumb-name').textContent = name;
             showPage('charts-detail');
+            setTimeout(function() { window.enterChartEditMode(); }, 100);
           } else {
             document.getElementById('report-detail-title').textContent = name;
             document.getElementById('report-breadcrumb-name').textContent = name;
             showPage('report-detail');
+            setTimeout(function() { window.enterReportEditMode(); }, 100);
           }
         });
       }
+    })();
+
+    // ========== Task 10: Template tabs for list pages ==========
+    (function() {
+      var isTemplateView = false;
+
+      // Generic tab switcher for list pages
+      function setupListTabs(tabsContainerId, yourViewId, templatesViewId) {
+        var container = document.getElementById(tabsContainerId);
+        if (!container) return;
+        var tabs = container.querySelectorAll('.reports-tab');
+        var yourView = document.getElementById(yourViewId);
+        var tplView = document.getElementById(templatesViewId);
+        tabs.forEach(function(tab) {
+          tab.addEventListener('click', function() {
+            tabs.forEach(function(t) { t.classList.remove('is-active'); });
+            tab.classList.add('is-active');
+            var which = tab.getAttribute('data-listtab');
+            if (which === 'templates') {
+              if (yourView) yourView.style.display = 'none';
+              if (tplView) tplView.style.display = '';
+            } else {
+              if (yourView) yourView.style.display = '';
+              if (tplView) tplView.style.display = 'none';
+            }
+          });
+        });
+      }
+
+      setupListTabs('reports-list-tabs', 'rptab-reports', 'reports-templates-view');
+      setupListTabs('charts-list-tabs', 'charts-your-view', 'charts-templates-view');
+      setupListTabs('dashboards-list-tabs', 'dashboards-your-view', 'dashboards-templates-view');
+
+      // Template row clicks — navigate to detail in template mode
+      function setupTemplateRows(bodyId, type) {
+        var tbody = document.getElementById(bodyId);
+        if (!tbody) return;
+        tbody.querySelectorAll('tr').forEach(function(row) {
+          row.style.cursor = 'pointer';
+          row.addEventListener('click', function() {
+            var nameEl = row.querySelector('.report-name-link');
+            var name = nameEl ? nameEl.textContent : 'Template';
+            isTemplateView = true;
+            window._isTemplateView = true;
+
+            if (type === 'report') {
+              document.getElementById('report-detail-title').textContent = name;
+              document.getElementById('report-breadcrumb-name').textContent = name;
+              showPage('report-detail');
+            } else if (type === 'chart') {
+              document.getElementById('chart-detail-title').textContent = name;
+              document.getElementById('chart-breadcrumb-name').textContent = name;
+              showPage('charts-detail');
+            } else if (type === 'dashboard') {
+              document.getElementById('custom-dash-title').textContent = name;
+              document.getElementById('cdash-breadcrumb-name').textContent = name;
+              showPage('custom-dash-detail');
+            }
+
+            // Apply template mode UI changes
+            setTimeout(function() {
+              applyTemplateMode(type);
+            }, 50);
+          });
+        });
+      }
+
+      function applyTemplateMode(type) {
+        if (type === 'report') {
+          var editBtn = document.getElementById('report-chat-toggle');
+          if (editBtn) { editBtn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Create with this template'; }
+          var moreBtn = document.getElementById('report-more-btn');
+          if (moreBtn) moreBtn.style.display = 'none';
+          var toolbar = document.getElementById('report-preview-toolbar');
+          if (toolbar) {
+            var right = toolbar.querySelector('.report-preview-toolbar-right');
+            if (right) right.style.display = 'none';
+          }
+          // Add template notice
+          var toolbarLeft = toolbar ? toolbar.querySelector('.report-preview-toolbar-left') : null;
+          if (toolbarLeft && !document.getElementById('tpl-notice-report')) {
+            var notice = document.createElement('span');
+            notice.id = 'tpl-notice-report';
+            notice.style.cssText = 'margin-left:12px;font-size:12px;color:var(--color-text-tertiary);font-style:italic;';
+            notice.textContent = 'This is example data. Connect your data source to see real results.';
+            toolbarLeft.appendChild(notice);
+          }
+        } else if (type === 'chart') {
+          var editBtn = document.getElementById('chart-chat-toggle');
+          if (editBtn) { editBtn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Create with this template'; }
+          var moreBtn = document.getElementById('chart-more-btn');
+          if (moreBtn) moreBtn.style.display = 'none';
+          var toolbar = document.getElementById('chart-preview-toolbar');
+          if (toolbar) {
+            var right = toolbar.querySelector('.report-preview-toolbar-right');
+            if (right) right.style.display = 'none';
+          }
+          if (toolbar) {
+            var toolbarLeft = toolbar.querySelector('.report-preview-toolbar-left');
+            if (toolbarLeft && !document.getElementById('tpl-notice-chart')) {
+              var notice = document.createElement('span');
+              notice.id = 'tpl-notice-chart';
+              notice.style.cssText = 'margin-left:12px;font-size:12px;color:var(--color-text-tertiary);font-style:italic;';
+              notice.textContent = 'This is example data. Connect your data source to see real results.';
+              toolbarLeft.appendChild(notice);
+            }
+          }
+        }
+      }
+
+      function clearTemplateMode() {
+        isTemplateView = false;
+        window._isTemplateView = false;
+        // Restore report detail
+        var reportEditBtn = document.getElementById('report-chat-toggle');
+        if (reportEditBtn) reportEditBtn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Edit';
+        var reportMore = document.getElementById('report-more-btn');
+        if (reportMore) reportMore.style.display = '';
+        var reportToolbar = document.getElementById('report-preview-toolbar');
+        if (reportToolbar) {
+          var rRight = reportToolbar.querySelector('.report-preview-toolbar-right');
+          if (rRight) rRight.style.display = '';
+        }
+        var tplNoticeR = document.getElementById('tpl-notice-report');
+        if (tplNoticeR) tplNoticeR.remove();
+        // Restore chart detail
+        var chartEditBtn = document.getElementById('chart-chat-toggle');
+        if (chartEditBtn) chartEditBtn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M11.5 1.5l3 3L5 14H2v-3L11.5 1.5z"/></svg> Edit';
+        var chartMore = document.getElementById('chart-more-btn');
+        if (chartMore) chartMore.style.display = '';
+        var chartToolbar = document.getElementById('chart-preview-toolbar');
+        if (chartToolbar) {
+          var cRight = chartToolbar.querySelector('.report-preview-toolbar-right');
+          if (cRight) cRight.style.display = '';
+        }
+        var tplNoticeC = document.getElementById('tpl-notice-chart');
+        if (tplNoticeC) tplNoticeC.remove();
+      }
+
+      // "Create with this template" click — restore normal and enter edit mode
+      document.addEventListener('click', function(e) {
+        if (!window._isTemplateView) return;
+        var reportToggle = document.getElementById('report-chat-toggle');
+        var chartToggle = document.getElementById('chart-chat-toggle');
+        if (reportToggle && (e.target === reportToggle || reportToggle.contains(e.target))) {
+          if (window._isTemplateView) {
+            e.stopImmediatePropagation();
+            clearTemplateMode();
+            setTimeout(function() { window.enterReportEditMode(); }, 100);
+          }
+        }
+        if (chartToggle && (e.target === chartToggle || chartToggle.contains(e.target))) {
+          if (window._isTemplateView) {
+            e.stopImmediatePropagation();
+            clearTemplateMode();
+            setTimeout(function() { window.enterChartEditMode(); }, 100);
+          }
+        }
+      }, true);
+
+      // Clear template mode when navigating to regular detail rows
+      var origRows = document.querySelectorAll('#reports-table-body tr, #charts-table-body tr, #dashboards-table-body tr');
+      origRows.forEach(function(r) {
+        r.addEventListener('click', function() { clearTemplateMode(); });
+      });
+
+      setupTemplateRows('reports-templates-body', 'report');
+      setupTemplateRows('charts-templates-body', 'chart');
+      setupTemplateRows('dashboards-templates-body', 'dashboard');
+    })();
+
+    // ========== Task 12: Home page +Dashboard modal ==========
+    (function() {
+      var homeDashModal = document.getElementById('home-dash-modal');
+      var homeDashClose = document.getElementById('home-dash-modal-close');
+      var homeDashAdd = document.getElementById('home-dash-modal-add');
+      var homeDashCreate = document.getElementById('home-dash-modal-create');
+
+      // Close handlers
+      if (homeDashClose) homeDashClose.addEventListener('click', function() { homeDashModal.classList.remove('is-open'); });
+      if (homeDashModal) homeDashModal.addEventListener('click', function(e) {
+        if (e.target === homeDashModal) homeDashModal.classList.remove('is-open');
+      });
+
+      // Override the +Dashboard tab to open this modal
+      var tabsContainer = document.querySelector('.home-view-tabs');
+      if (tabsContainer) {
+        tabsContainer.addEventListener('click', function(e) {
+          var tab = e.target.closest('.home-view-tab[data-home-tab="new"]');
+          if (tab) {
+            e.stopImmediatePropagation();
+            homeDashModal.classList.add('is-open');
+          }
+        }, true);
+      }
+
+      // Add button — create tabs for checked dashboards
+      if (homeDashAdd) homeDashAdd.addEventListener('click', function() {
+        var checked = homeDashModal.querySelectorAll('input[type="checkbox"]:checked');
+        if (checked.length === 0) {
+          homeDashModal.classList.remove('is-open');
+          return;
+        }
+        checked.forEach(function(cb) {
+          var dashName = cb.value;
+          var tabId = 'home-dash-' + Date.now() + '-' + Math.random().toString(36).substr(2, 5);
+          var newTab = document.createElement('button');
+          newTab.className = 'home-view-tab';
+          newTab.setAttribute('data-home-tab', tabId);
+          newTab.textContent = dashName;
+          var newViewBtn = document.querySelector('.home-view-tab[data-home-tab="new"]');
+          if (newViewBtn) newViewBtn.parentNode.insertBefore(newTab, newViewBtn);
+
+          var newPanel = document.createElement('div');
+          newPanel.className = 'home-tab-panel';
+          newPanel.id = 'home-tab-' + tabId;
+          newPanel.innerHTML = '<div style="padding:var(--space-lg) 0;"><h2 style="font-size:18px;font-weight:600;margin-bottom:var(--space-lg);">' + dashName + '</h2><div class="dash-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-md);"><div class="dash-card"><div class="dash-card-title">Total Revenue</div><div class="dash-stat-value" style="font-size:32px;font-weight:700;padding:12px 0;">$1.2M</div></div><div class="dash-card"><div class="dash-card-title">Active Deals</div><div class="dash-stat-value" style="font-size:32px;font-weight:700;padding:12px 0;">42</div></div><div class="dash-card"><div class="dash-card-title">Conversion Rate</div><div class="dash-stat-value" style="font-size:32px;font-weight:700;padding:12px 0;">38%</div></div></div></div>';
+          document.getElementById('home-page').appendChild(newPanel);
+          cb.checked = false;
+        });
+        homeDashModal.classList.remove('is-open');
+        showToast('Dashboard added to home', true);
+      });
+
+      // Create new dashboard button
+      if (homeDashCreate) homeDashCreate.addEventListener('click', function() {
+        homeDashModal.classList.remove('is-open');
+        document.getElementById('custom-dash-title').textContent = 'New dashboard';
+        document.getElementById('cdash-breadcrumb-name').textContent = 'New dashboard';
+        showPage('custom-dash-detail');
+        setTimeout(function() { window.enterDashEditMode(); }, 200);
+      });
+    })();
+
+    // ========== Task 13: Charts +New and Dashboards +New ==========
+    (function() {
+      // Charts +New
+      var chartsNewBtn = document.getElementById('charts-new-btn');
+      if (chartsNewBtn) {
+        chartsNewBtn.addEventListener('click', function() {
+          document.getElementById('chart-detail-title').textContent = 'New chart';
+          document.getElementById('chart-breadcrumb-name').textContent = 'New chart';
+          document.getElementById('chart-detail-summary').textContent = '';
+          var ccp = document.getElementById('chart-chat-panel');
+          if (ccp) ccp.classList.add('is-collapsed');
+          showPage('charts-detail');
+          setTimeout(function() { window.enterChartEditMode(); }, 200);
+        });
+      }
+
+      // Dashboards +New
+      var dashNewBtn = document.getElementById('dashboards-new-btn');
+      if (dashNewBtn) {
+        dashNewBtn.addEventListener('click', function() {
+          document.getElementById('custom-dash-title').textContent = 'New dashboard';
+          document.getElementById('cdash-breadcrumb-name').textContent = 'New dashboard';
+          // Clear the grid to show blank state
+          var grid = document.getElementById('custom-dash-grid');
+          if (grid) {
+            grid.setAttribute('data-original-html', grid.innerHTML);
+            grid.innerHTML = '<div class="dash-card" style="display:flex;align-items:center;justify-content:center;min-height:200px;border:2px dashed var(--color-border-default);cursor:pointer;grid-column:span 2;" data-add-content><div style="text-align:center;color:var(--color-text-tertiary);"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg><div style="font-size:13px;margin-top:4px;">Add content</div></div></div><div class="dash-card" style="display:flex;align-items:center;justify-content:center;min-height:200px;border:2px dashed var(--color-border-default);cursor:pointer;" data-add-content><div style="text-align:center;color:var(--color-text-tertiary);"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg><div style="font-size:13px;margin-top:4px;">Add content</div></div></div><div class="dash-card" style="display:flex;align-items:center;justify-content:center;min-height:200px;border:2px dashed var(--color-border-default);cursor:pointer;" data-add-content><div style="text-align:center;color:var(--color-text-tertiary);"><svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg><div style="font-size:13px;margin-top:4px;">Add content</div></div></div>';
+          }
+          showPage('custom-dash-detail');
+          setTimeout(function() { window.enterDashEditMode(); }, 200);
+        });
+      }
+
+      // Restore grid when navigating to an existing dashboard
+      document.querySelectorAll('#dashboards-table-body tr').forEach(function(row) {
+        row.addEventListener('click', function() {
+          var grid = document.getElementById('custom-dash-grid');
+          if (grid && grid.getAttribute('data-original-html')) {
+            grid.innerHTML = grid.getAttribute('data-original-html');
+            grid.removeAttribute('data-original-html');
+          }
+        });
+      });
+
+      // Add-content modal for blank dashboard placeholders
+      var addContentModal = document.getElementById('add-content-modal');
+      var addContentClose = document.getElementById('add-content-modal-close');
+      var addContentAdd = document.getElementById('add-content-modal-add');
+      var addContentChartsList = document.getElementById('add-content-charts-list');
+      var addContentReportsList = document.getElementById('add-content-reports-list');
+
+      // Close handlers
+      if (addContentClose) addContentClose.addEventListener('click', function() { addContentModal.classList.remove('is-open'); });
+      if (addContentModal) addContentModal.addEventListener('click', function(e) {
+        if (e.target === addContentModal) addContentModal.classList.remove('is-open');
+      });
+
+      // Tab switching within add-content modal
+      document.querySelectorAll('#add-content-modal [data-content-tab]').forEach(function(tab) {
+        tab.addEventListener('click', function() {
+          document.querySelectorAll('#add-content-modal [data-content-tab]').forEach(function(t) { t.classList.remove('is-active'); });
+          tab.classList.add('is-active');
+          var which = tab.getAttribute('data-content-tab');
+          addContentChartsList.style.display = which === 'charts' ? '' : 'none';
+          addContentReportsList.style.display = which === 'reports' ? '' : 'none';
+        });
+      });
+
+      // Current add-content target element
+      var addContentTarget = null;
+
+      // Clicking add-content placeholder opens modal
+      document.addEventListener('click', function(e) {
+        var addBtn = e.target.closest('[data-add-content]');
+        if (!addBtn) return;
+        addContentTarget = addBtn;
+
+        // Populate charts list
+        var chartsHtml = '';
+        document.querySelectorAll('#charts-table-body tr').forEach(function(r) {
+          var nameEl = r.querySelector('.report-name-link');
+          if (nameEl) {
+            chartsHtml += '<label class="add-dash-modal-item"><input type="checkbox" value="' + nameEl.textContent + '"> ' + nameEl.textContent + '</label>';
+          }
+        });
+        addContentChartsList.innerHTML = chartsHtml || '<div style="padding:12px;color:var(--color-text-tertiary);font-size:13px;">No charts available</div>';
+
+        // Populate reports list
+        var reportsHtml = '';
+        document.querySelectorAll('#reports-table-body tr').forEach(function(r) {
+          var nameEl = r.querySelector('.report-name-link');
+          if (nameEl) {
+            reportsHtml += '<label class="add-dash-modal-item"><input type="checkbox" value="' + nameEl.textContent + '"> ' + nameEl.textContent + '</label>';
+          }
+        });
+        addContentReportsList.innerHTML = reportsHtml || '<div style="padding:12px;color:var(--color-text-tertiary);font-size:13px;">No reports available</div>';
+
+        addContentModal.classList.add('is-open');
+      });
+
+      // Add content modal — Add button
+      if (addContentAdd) addContentAdd.addEventListener('click', function() {
+        var grid = document.getElementById('custom-dash-grid');
+        var checked = addContentModal.querySelectorAll('input[type="checkbox"]:checked');
+        checked.forEach(function(cb) {
+          var card = document.createElement('div');
+          card.className = 'dash-card';
+          card.draggable = true;
+          card.innerHTML = '<div class="dash-card-title">' + cb.value + '</div><div class="dash-stat-value" style="font-size:28px;font-weight:700;padding:12px 0;color:var(--color-text-secondary);">--</div><div style="color:var(--color-text-tertiary);font-size:12px;">Connect data source to populate</div>';
+          // Replace the add-content placeholder if available
+          if (addContentTarget && addContentTarget.parentNode) {
+            addContentTarget.parentNode.replaceChild(card, addContentTarget);
+            addContentTarget = null;
+          } else {
+            grid.appendChild(card);
+          }
+        });
+        addContentModal.classList.remove('is-open');
+        if (checked.length > 0) showToast('Content added to dashboard', true);
+      });
     })();
   </script>
 </body>
