@@ -235,16 +235,19 @@
       font-weight: var(--font-weight-semibold);
     }
     .section-item .grip {
-      color: var(--color-gray-4); font-size: 14px; cursor: grab; flex-shrink: 0;
+      color: var(--color-gray-4); cursor: grab; flex-shrink: 0;
       display: flex; align-items: center; line-height: 1;
+      width: 16px; height: 16px;
     }
+    .section-item .grip svg { width: 16px; height: 16px; display: block; }
     .section-item .section-name { flex: 1; }
     .section-item .section-remove {
       background: none; border: none; color: var(--color-gray-4);
-      cursor: pointer; font-size: 16px; padding: 0 2px; line-height: 1;
-      width: 22px; height: 22px; display: grid; place-items: center;
+      cursor: pointer; padding: 0; line-height: 1;
+      width: 20px; height: 20px; display: grid; place-items: center;
       border-radius: 50%; flex-shrink: 0;
     }
+    .section-item .section-remove svg { width: 16px; height: 16px; display: block; }
     .section-item .section-remove:hover { color: var(--color-white); background: var(--color-gray-5); }
     .add-section-btn {
       display: flex; align-items: center; gap: 6px;
@@ -296,10 +299,11 @@
       background: #f4f9ff;
     }
     .q-row .q-grip {
-      color: var(--color-gray-4); font-size: 14px; cursor: grab; flex-shrink: 0;
-      margin-right: 8px; display: flex; align-items: center; line-height: 1;
-      padding: 2px;
+      color: var(--color-gray-4); cursor: grab; flex-shrink: 0;
+      margin-right: 8px; display: flex; align-items: center;
+      width: 16px; height: 16px;
     }
+    .q-row .q-grip svg { width: 16px; height: 16px; display: block; }
     .q-row .q-grip:hover { color: var(--color-gray-6); }
     .q-row-label {
       flex: 1; min-width: 0;
@@ -316,9 +320,12 @@
     .q-row-remove {
       position: absolute; top: 50%; right: -28px; transform: translateY(-50%);
       background: none; border: none; color: var(--color-gray-4);
-      cursor: pointer; font-size: 16px; padding: 4px; line-height: 1;
+      cursor: pointer; padding: 2px; line-height: 1;
+      width: 20px; height: 20px; display: grid; place-items: center;
+      border-radius: 50%;
       opacity: 0; transition: opacity 0.12s;
     }
+    .q-row-remove svg { width: 16px; height: 16px; display: block; }
     .q-row:hover .q-row-remove { opacity: 1; }
     .q-row-remove:hover { color: var(--color-danger-fg, #dc2626); }
 
@@ -348,6 +355,7 @@
       border-radius: var(--radius-sm); color: var(--color-text-tertiary);
       font-size: 12px;
     }
+    .q-inline-image svg { width: 14px; height: 14px; flex-shrink: 0; }
 
     /* Text input inline */
     .q-inline-text {
@@ -372,10 +380,12 @@
     }
     .q-add-zone button:hover { background: var(--color-blue-1, #f0f7ff); border-color: var(--color-blue-7); color: var(--color-blue-7); }
 
-    /* Section end add zone (visible) */
+    /* Section end add zone (hover-only) */
     .q-section-add {
       padding: 6px 16px 14px;
+      opacity: 0; transition: opacity 0.12s;
     }
+    .q-section-add:hover { opacity: 1; }
     .q-section-add button {
       width: 100%; padding: 6px 0;
       background: none; border: 1px dashed var(--color-border-strong);
@@ -617,7 +627,7 @@
   <!-- Add Question Modal -->
   <div class="modal-overlay" id="add-q-modal">
     <div class="modal-box">
-      <div class="modal-header"><h3>Add Question</h3><button class="modal-close" id="add-q-modal-close">&times;</button></div>
+      <div class="modal-header"><h3>Add Question</h3><button class="modal-close" id="add-q-modal-close"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div>
       <div class="modal-body">
         <div class="qtype-grid">
           <div class="qtype-card" data-qtype="binary">
@@ -783,7 +793,7 @@
         var div = document.createElement('div');
         div.className = 'section-item' + (s.id === activeSection ? ' is-active' : '');
         div.setAttribute('data-section', s.id);
-        div.innerHTML = '<span class="grip">⠁⠁⠁<br>⠁⠁⠁</span><span class="section-name">' + s.name + '</span><button class="section-remove" title="Remove">×</button>';
+        div.innerHTML = '<span class="grip"><svg viewBox="0 0 16 16" fill="currentColor"><circle cx="5" cy="3" r="1.5"/><circle cx="11" cy="3" r="1.5"/><circle cx="5" cy="8" r="1.5"/><circle cx="11" cy="8" r="1.5"/><circle cx="5" cy="13" r="1.5"/><circle cx="11" cy="13" r="1.5"/></svg></span><span class="section-name">' + s.name + '</span><button class="section-remove" title="Remove"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button>';
         div.addEventListener('click', function (e) {
           if (e.target.classList.contains('section-remove')) {
             sections = sections.filter(function (x) { return x.id !== s.id; });
@@ -888,19 +898,22 @@
       row.setAttribute('data-qid', q.id);
       row.setAttribute('draggable', 'true');
 
-      // Grip handle
+      // Grip handle (SVG 6-dot pattern)
       var grip = document.createElement('span');
       grip.className = 'q-grip';
-      grip.innerHTML = '⠁⠁⠁<br>⠁⠁⠁';
+      grip.innerHTML = '<svg viewBox="0 0 16 16" fill="currentColor"><circle cx="5" cy="3" r="1.5"/><circle cx="11" cy="3" r="1.5"/><circle cx="5" cy="8" r="1.5"/><circle cx="11" cy="8" r="1.5"/><circle cx="5" cy="13" r="1.5"/><circle cx="11" cy="13" r="1.5"/></svg>';
       row.appendChild(grip);
 
-      // Label
+      // Label - only editable when selected
+      var isSelected = selectedQ === q.id;
       var label = document.createElement('span');
       label.className = 'q-row-label';
-      label.contentEditable = 'true';
+      if (isSelected) {
+        label.contentEditable = 'true';
+        label.addEventListener('blur', function () { q.label = label.textContent; renderProps(); });
+        label.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); label.blur(); } });
+      }
       label.textContent = q.label;
-      label.addEventListener('blur', function () { q.label = label.textContent; renderProps(); });
-      label.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); label.blur(); } });
       row.appendChild(label);
 
       // Value (right side)
@@ -909,8 +922,17 @@
       if (q.type === 'binary') {
         var bin = document.createElement('div');
         bin.className = 'q-binary';
-        (q.options.length ? q.options : ['Yes','No','N/A']).forEach(function (opt) {
+        (q.options.length ? q.options : ['Yes','No','N/A']).forEach(function (opt, optIdx) {
           var sp = document.createElement('span');
+          if (isSelected) {
+            sp.contentEditable = 'true';
+            sp.addEventListener('blur', function () {
+              if (!q.options.length) q.options = ['Yes','No','N/A'];
+              q.options[optIdx] = sp.textContent;
+              renderProps();
+            });
+            sp.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); sp.blur(); } });
+          }
           sp.textContent = opt;
           if (opt === 'N/A') sp.classList.add('is-selected');
           bin.appendChild(sp);
@@ -919,32 +941,58 @@
       } else if (q.type === 'single') {
         var opts = document.createElement('div');
         opts.className = 'q-inline-options';
-        (q.options.length ? q.options : ['Option 1','Option 2']).forEach(function (o) {
+        (q.options.length ? q.options : ['Option 1','Option 2']).forEach(function (o, optIdx) {
           var optEl = document.createElement('span'); optEl.className = 'q-inline-opt';
-          optEl.innerHTML = '<span class="radio"></span>' + o;
+          optEl.innerHTML = '<span class="radio"></span>';
+          var optText = document.createElement('span');
+          if (isSelected) {
+            optText.contentEditable = 'true';
+            optText.style.outline = 'none';
+            optText.addEventListener('blur', function () {
+              if (!q.options.length) q.options = ['Option 1','Option 2'];
+              q.options[optIdx] = optText.textContent;
+              renderProps();
+            });
+            optText.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); optText.blur(); } });
+          }
+          optText.textContent = o;
+          optEl.appendChild(optText);
           opts.appendChild(optEl);
         });
         value.appendChild(opts);
       } else if (q.type === 'multi') {
         var opts2 = document.createElement('div');
         opts2.className = 'q-inline-options';
-        (q.options.length ? q.options : ['Option 1','Option 2']).forEach(function (o) {
+        (q.options.length ? q.options : ['Option 1','Option 2']).forEach(function (o, optIdx) {
           var optEl = document.createElement('span'); optEl.className = 'q-inline-opt';
-          optEl.innerHTML = '<span class="checkbox"></span>' + o;
+          optEl.innerHTML = '<span class="checkbox"></span>';
+          var optText = document.createElement('span');
+          if (isSelected) {
+            optText.contentEditable = 'true';
+            optText.style.outline = 'none';
+            optText.addEventListener('blur', function () {
+              if (!q.options.length) q.options = ['Option 1','Option 2'];
+              q.options[optIdx] = optText.textContent;
+              renderProps();
+            });
+            optText.addEventListener('keydown', function (e) { if (e.key === 'Enter') { e.preventDefault(); optText.blur(); } });
+          }
+          optText.textContent = o;
+          optEl.appendChild(optText);
           opts2.appendChild(optEl);
         });
         value.appendChild(opts2);
       } else if (q.type === 'image') {
-        value.innerHTML = '<div class="q-inline-image"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="14" height="10" rx="1.5"/><circle cx="5.5" cy="7" r="1.5"/><path d="M1 11l4-3 3 2 2.5-2.5L15 11"/></svg>Upload</div>';
+        value.innerHTML = '<div class="q-inline-image">Upload<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10v3a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1v-3"/><polyline points="5 5 8 2 11 5"/><line x1="8" y1="2" x2="8" y2="10"/></svg></div>';
       } else {
         value.innerHTML = '<div class="q-inline-text">Enter text...</div>';
       }
       row.appendChild(value);
 
-      // Remove button
+      // Remove button (SVG X icon)
       var removeBtn = document.createElement('button');
       removeBtn.className = 'q-row-remove';
-      removeBtn.innerHTML = '×';
+      removeBtn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>';
       removeBtn.addEventListener('click', function (e) {
         e.stopPropagation();
         questions[sectionId] = questions[sectionId].filter(function (x) { return x.id !== q.id; });
@@ -955,7 +1003,7 @@
 
       // Select on click
       row.addEventListener('click', function (e) {
-        if (e.target.closest('[contenteditable]')) return;
+        if (e.target.closest('[contenteditable="true"]')) return;
         if (e.target.closest('.q-row-remove')) return;
         selectedQ = q.id;
         renderAllQuestions();
