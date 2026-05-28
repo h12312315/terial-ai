@@ -1030,28 +1030,33 @@
     /* --- Reports tabs (Data Queries / Widgets / Dashboards) --- */
     .reports-tabs {
       display: flex;
+      align-items: center;
       gap: 0;
+      border-bottom: 1px solid var(--color-border-default);
       margin-bottom: var(--space-lg);
     }
     .reports-tabs button {
-      padding: 8px 16px;
-      background: none;
-      border: 1px solid var(--color-border-default);
-      border-right: none;
+      padding: 12px 20px;
       font-family: var(--font-family-base);
       font-size: var(--font-body-md-size);
       font-weight: var(--font-weight-medium);
-      color: var(--color-text-secondary);
+      color: var(--color-text-tertiary);
       cursor: pointer;
+      border: none;
+      background: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -1px;
+      transition: color 0.15s, border-color 0.15s;
     }
-    .reports-tabs button:first-child { border-radius: var(--radius-sm) 0 0 var(--radius-sm); }
-    .reports-tabs button:last-child { border-right: 1px solid var(--color-border-default); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+    .reports-tabs button:first-child { border-radius: 0; }
+    .reports-tabs button:last-child { border-right: none; border-radius: 0; }
+    .reports-tabs button:hover { color: var(--color-text-primary); }
     .reports-tabs button.is-active {
-      background: var(--color-gray-9);
-      color: var(--color-white);
-      border-color: var(--color-gray-9);
+      color: var(--color-text-primary);
+      border-bottom-color: var(--color-primary-6);
+      font-weight: var(--font-weight-semibold);
     }
-    .reports-tabs button.is-active + button { border-left-color: var(--color-gray-9); }
+    .reports-tabs button.is-active + button { border-left-color: transparent; }
 
     /* --- Reports toolbar --- */
     .reports-toolbar {
@@ -1114,7 +1119,7 @@
       font-weight: var(--font-weight-medium);
       cursor: pointer;
     }
-    .reports-new-btn:hover { opacity: 0.9; }
+    .reports-new-btn:hover { opacity: 0.85; }
 
     /* --- Reports table --- */
     .reports-table {
@@ -1217,7 +1222,7 @@
       margin-left: auto;
       height: 36px;
     }
-    .report-chat-toggle:hover { background: var(--color-gray-8); }
+    .report-chat-toggle:hover { opacity: 0.85; }
     .report-chat-toggle svg { width: 14px; height: 14px; }
     .report-edit-actions {
       display: inline-flex;
@@ -1239,7 +1244,7 @@
       cursor: pointer;
       height: 36px;
     }
-    .report-save-btn:hover { background: var(--color-gray-8); }
+    .report-save-btn:hover { opacity: 0.85; }
     .report-cancel-btn {
       display: inline-flex;
       align-items: center;
@@ -1255,7 +1260,7 @@
       cursor: pointer;
       height: 36px;
     }
-    .report-cancel-btn:hover { background: #b91c1c; }
+    .report-cancel-btn:hover { opacity: 0.85; }
     .chart-content-card {
       background: var(--color-white);
       border: 1px solid var(--color-border-default);
@@ -1856,7 +1861,7 @@
       font-weight: var(--font-weight-medium);
       cursor: pointer;
     }
-    .report-dash-picker-done:hover { background: var(--color-gray-8); }
+    .report-dash-picker-done:hover { opacity: 0.85; }
 
     .add-dash-modal-overlay {
       position: fixed;
@@ -1936,7 +1941,7 @@
       cursor: pointer;
       height: 36px;
     }
-    .add-dash-modal-add-btn:hover { background: var(--color-gray-8); }
+    .add-dash-modal-add-btn:hover { opacity: 0.85; }
 
     .report-more-btn {
       display: inline-flex;
@@ -8234,7 +8239,7 @@
           <button class="home-view-tab" data-home-tab="sales">Sales</button>
           <button class="home-view-tab" data-home-tab="aaron">Aaron</button>
           <button class="home-view-tab" data-home-tab="matt">Matt</button>
-          <button class="home-view-tab is-new" data-home-tab="new" style="background:var(--color-gray-9);color:var(--color-white);border:none;border-radius:var(--radius-sm);padding:6px 14px;border-bottom:none;">+ Dashboard</button>
+          <button class="home-view-tab is-new" data-home-tab="new" style="background:var(--color-white);color:var(--color-text-secondary);border:1px solid var(--color-border-default);border-radius:var(--radius-sm);padding:6px 14px;border-bottom:2px solid transparent;margin-left:8px;">+ Dashboard</button>
         </div>
         <div class="home-view-actions" id="home-view-actions-bar" style="display:none;">
           <div class="home-view-actions-left">
@@ -8932,6 +8937,7 @@ ORDER BY j.eta ASC;</pre>
           <div class="opps-page-header-titlewrap">
             <h1>Custom reports</h1>
           </div>
+          <button class="reports-new-btn" id="reports-new-btn">+ New</button>
         </div>
 
         <div class="reports-tabs" id="reports-list-tabs">
@@ -8950,7 +8956,6 @@ ORDER BY j.eta ASC;</pre>
             Filters
             <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5L7 9.5l4-4"/></svg>
           </button>
-          <button class="reports-new-btn" id="reports-new-btn">+ New</button>
         </div>
 
         <table class="reports-table">
@@ -9345,6 +9350,7 @@ ORDER BY "Total Revenue" DESC;</pre>
           <div class="opps-page-header-titlewrap">
             <h1>Custom charts</h1>
           </div>
+          <button class="reports-new-btn" id="charts-new-btn">+ New</button>
         </div>
         <div class="reports-tabs" id="charts-list-tabs">
           <button class="reports-tab is-active" data-listtab="your">Your charts</button>
@@ -9361,7 +9367,6 @@ ORDER BY "Total Revenue" DESC;</pre>
             Filters
             <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5L7 9.5l4-4"/></svg>
           </button>
-          <button class="reports-new-btn" id="charts-new-btn">+ New</button>
         </div>
         <table class="reports-table">
           <thead>
@@ -9572,6 +9577,7 @@ ORDER BY "Total Revenue" DESC;</pre>
           <div class="opps-page-header-titlewrap">
             <h1>Custom dashboards</h1>
           </div>
+          <button class="reports-new-btn" id="dashboards-new-btn">+ New</button>
         </div>
         <div class="reports-tabs" id="dashboards-list-tabs">
           <button class="reports-tab is-active" data-listtab="your">Your dashboards</button>
@@ -9588,7 +9594,6 @@ ORDER BY "Total Revenue" DESC;</pre>
             Filters
             <svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5.5L7 9.5l4-4"/></svg>
           </button>
-          <button class="reports-new-btn" id="dashboards-new-btn">+ New</button>
         </div>
         <table class="reports-table">
           <thead>
@@ -10776,8 +10781,8 @@ LIMIT 10;</pre>
         <button class="add-dash-modal-close" id="add-content-modal-close"><svg viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 2l10 10M12 2L2 12"/></svg></button>
       </div>
       <div style="display:flex;gap:0;border-bottom:1px solid var(--color-border-default);margin-bottom:12px;">
-        <button class="reports-tab is-active" data-content-tab="charts" style="flex:1;text-align:center;">Charts</button>
-        <button class="reports-tab" data-content-tab="reports" style="flex:1;text-align:center;">Reports</button>
+        <button data-content-tab="charts" class="is-active" style="flex:1;text-align:center;padding:12px 20px;font-size:var(--font-body-md-size);font-weight:var(--font-weight-semibold);color:var(--color-text-primary);cursor:pointer;border:none;background:none;border-bottom:2px solid var(--color-primary-6);margin-bottom:-1px;font-family:var(--font-family-base);">Charts</button>
+        <button data-content-tab="reports" style="flex:1;text-align:center;padding:12px 20px;font-size:var(--font-body-md-size);font-weight:var(--font-weight-medium);color:var(--color-text-tertiary);cursor:pointer;border:none;background:none;border-bottom:2px solid transparent;margin-bottom:-1px;font-family:var(--font-family-base);">Reports</button>
       </div>
       <div class="add-dash-modal-body" id="add-content-charts-list" style="max-height:300px;overflow-y:auto;">
         <!-- populated by JS -->
@@ -16742,34 +16747,15 @@ LIMIT 10;</pre>
       var cdashAddHomeBtn = document.getElementById('cdash-add-home-btn');
       if (cdashAddHomeBtn) {
         cdashAddHomeBtn.addEventListener('click', function() {
-          var titleEl = document.getElementById('custom-dash-title');
-          var dashName = titleEl ? (titleEl.textContent || titleEl.value || 'Dashboard').trim() : 'Dashboard';
           showToast('Dashboard added to home', true);
-
-          // Create new tab in home-view-tabs before the +Dashboard button
-          var tabsContainer = document.querySelector('.home-view-tabs');
-          var newBtn = document.querySelector('.home-view-tab[data-home-tab="new"]');
-          var tabId = 'home-dash-' + Date.now();
-          var newTab = document.createElement('button');
-          newTab.className = 'home-view-tab';
-          newTab.setAttribute('data-home-tab', tabId);
-          newTab.textContent = dashName;
-          if (newBtn) tabsContainer.insertBefore(newTab, newBtn);
-
-          // Create panel
-          var newPanel = document.createElement('div');
-          newPanel.className = 'home-tab-panel';
-          newPanel.id = 'home-tab-' + tabId;
-          newPanel.innerHTML = '<div style="padding:var(--space-lg) 0;"><h2 style="font-size:18px;font-weight:600;margin-bottom:var(--space-lg);">' + dashName + '</h2><div class="dash-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:var(--space-md);"><div class="dash-card"><div class="dash-card-title">Revenue</div><div class="dash-stat-value" style="font-size:32px;font-weight:700;padding:12px 0;">$482,300</div><div style="color:#22c55e;font-size:13px;">+12% vs last month</div></div><div class="dash-card"><div class="dash-card-title">Deals Won</div><div class="dash-stat-value" style="font-size:32px;font-weight:700;padding:12px 0;">14</div><div style="color:#22c55e;font-size:13px;">+3 this week</div></div><div class="dash-card"><div class="dash-card-title">Win Rate</div><div class="dash-stat-value" style="font-size:32px;font-weight:700;padding:12px 0;">48%</div><div style="color:var(--color-text-tertiary);font-size:13px;">Stable</div></div></div></div>';
-          var homePageEl = document.getElementById('home-page');
-          homePageEl.appendChild(newPanel);
-
-          // Navigate to home and activate
+          // Navigate back to home page (home tab)
           showPage('home');
           document.querySelectorAll('.home-view-tab').forEach(function(t) { t.classList.remove('is-active'); });
-          newTab.classList.add('is-active');
+          var homeTab = document.querySelector('.home-view-tab[data-home-tab="home"]');
+          if (homeTab) homeTab.classList.add('is-active');
           document.querySelectorAll('.home-tab-panel').forEach(function(p) { p.classList.remove('is-active'); });
-          newPanel.classList.add('is-active');
+          var homePanel = document.getElementById('home-tab-home');
+          if (homePanel) homePanel.classList.add('is-active');
         });
       }
 
@@ -17218,8 +17204,16 @@ LIMIT 10;</pre>
       // Tab switching within add-content modal
       document.querySelectorAll('#add-content-modal [data-content-tab]').forEach(function(tab) {
         tab.addEventListener('click', function() {
-          document.querySelectorAll('#add-content-modal [data-content-tab]').forEach(function(t) { t.classList.remove('is-active'); });
+          document.querySelectorAll('#add-content-modal [data-content-tab]').forEach(function(t) {
+            t.classList.remove('is-active');
+            t.style.color = 'var(--color-text-tertiary)';
+            t.style.fontWeight = 'var(--font-weight-medium)';
+            t.style.borderBottomColor = 'transparent';
+          });
           tab.classList.add('is-active');
+          tab.style.color = 'var(--color-text-primary)';
+          tab.style.fontWeight = 'var(--font-weight-semibold)';
+          tab.style.borderBottomColor = 'var(--color-primary-6)';
           var which = tab.getAttribute('data-content-tab');
           addContentChartsList.style.display = which === 'charts' ? '' : 'none';
           addContentReportsList.style.display = which === 'reports' ? '' : 'none';
