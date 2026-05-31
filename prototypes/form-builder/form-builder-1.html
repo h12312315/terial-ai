@@ -438,6 +438,49 @@
       cursor: pointer; padding: 4px 0;
     }
     .props-empty { font-size: var(--font-body-sm-size); color: var(--color-text-tertiary); padding: 40px 0; text-align: center; }
+    .props-divider { height: 1px; background: var(--color-border-default); margin: 16px 0; }
+    .props-radio-group { display: flex; gap: 0; border: 1px solid var(--color-border-default); border-radius: var(--radius-sm); overflow: hidden; }
+    .props-radio-group label {
+      flex: 1; text-align: center; padding: 6px 0; font-size: var(--font-body-sm-size);
+      font-weight: var(--font-weight-medium); color: var(--color-text-tertiary);
+      cursor: pointer; background: var(--color-white); border-right: 1px solid var(--color-border-default);
+      transition: background 0.15s, color 0.15s;
+    }
+    .props-radio-group label:last-child { border-right: none; }
+    .props-radio-group input { display: none; }
+    .props-radio-group input:checked + span {
+      color: var(--color-text-primary); background: var(--color-primary-6); display: block; margin: -6px 0; padding: 6px 0;
+      font-weight: var(--font-weight-semibold);
+    }
+    .props-checkbox-row {
+      display: flex; align-items: center; gap: 8px; cursor: pointer;
+      font-size: var(--font-body-sm-size); color: var(--color-text-primary);
+    }
+    .props-checkbox-row input[type="checkbox"] {
+      width: 16px; height: 16px; accent-color: var(--color-primary-6); cursor: pointer; flex-shrink: 0;
+    }
+    .props-followup-panel {
+      margin-top: 10px; padding: 12px; background: var(--color-gray-1);
+      border: 1px solid var(--color-border-default); border-radius: var(--radius-sm);
+    }
+    .props-followup-panel .props-label { margin-top: 0; }
+    .props-trigger-list { margin-top: 6px; }
+    .props-trigger-row {
+      display: flex; align-items: center; gap: 6px; margin-bottom: 4px;
+      font-size: var(--font-body-sm-size); color: var(--color-text-primary);
+    }
+    .props-trigger-row input[type="checkbox"] {
+      width: 14px; height: 14px; accent-color: var(--color-primary-6); cursor: pointer;
+    }
+    .props-followup-q {
+      margin-top: 10px;
+    }
+    .props-followup-q textarea {
+      width: 100%; box-sizing: border-box; padding: 8px 10px;
+      border: 1px solid var(--color-border-default); border-radius: var(--radius-sm);
+      font-family: var(--font-family-base); font-size: var(--font-body-sm-size);
+      color: var(--color-text-primary); outline: none; resize: vertical; min-height: 60px;
+    }
 
     /* ============================================================
        Page 4: Form Detail (read-only form filling)
@@ -798,6 +841,41 @@
                 <div class="props-label">Options</div>
                 <div class="props-option-list" id="props-option-list"></div>
                 <button class="props-add-option" id="props-add-option">+ Add option</button>
+              </div>
+
+              <div class="props-divider"></div>
+
+              <!-- Required -->
+              <div class="props-group">
+                <div class="props-label">Required</div>
+                <div class="props-radio-group">
+                  <label><input type="radio" name="props-required" id="props-required-yes" value="yes" /><span>Required</span></label>
+                  <label><input type="radio" name="props-required" id="props-required-no" value="no" /><span>Not Required</span></label>
+                </div>
+              </div>
+
+              <!-- Allow Photo Upload -->
+              <div class="props-group">
+                <label class="props-checkbox-row">
+                  <input type="checkbox" id="props-allow-photos" />
+                  Allow photo upload (multiple)
+                </label>
+              </div>
+
+              <!-- Sequential / Follow-up -->
+              <div class="props-group">
+                <label class="props-checkbox-row">
+                  <input type="checkbox" id="props-sequential" />
+                  Enable follow-up question
+                </label>
+                <div class="props-followup-panel" id="props-followup-panel" style="display:none;">
+                  <div class="props-label">Trigger on answers</div>
+                  <div class="props-trigger-list" id="props-trigger-list"></div>
+                  <div class="props-followup-q">
+                    <div class="props-label">Follow-up question</div>
+                    <textarea id="props-followup-text" placeholder="Enter follow-up question..."></textarea>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1165,6 +1243,33 @@
       label.textContent = q.label;
       row.appendChild(label);
 
+      // Indicator badges
+      var badges = document.createElement('span');
+      badges.className = 'q-badges';
+      badges.style.cssText = 'display:flex;align-items:center;gap:4px;margin-right:8px;flex-shrink:0;';
+      if (q.required !== false) {
+        var req = document.createElement('span');
+        req.style.cssText = 'color:#dc2626;font-weight:700;font-size:14px;line-height:1;';
+        req.textContent = '*';
+        req.title = 'Required';
+        badges.appendChild(req);
+      }
+      if (q.allowPhotos) {
+        var cam = document.createElement('span');
+        cam.style.cssText = 'width:14px;height:14px;color:var(--color-gray-5);display:flex;';
+        cam.title = 'Photo upload enabled';
+        cam.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="14" height="10" rx="2"/><circle cx="8" cy="9" r="2.5"/><path d="M5 4l1-2h4l1 2"/></svg>';
+        badges.appendChild(cam);
+      }
+      if (q.followUp) {
+        var seq = document.createElement('span');
+        seq.style.cssText = 'width:14px;height:14px;color:var(--color-blue-7);display:flex;';
+        seq.title = 'Has follow-up question';
+        seq.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h8M8 4v8"/><rect x="1" y="1" width="14" height="14" rx="3"/></svg>';
+        badges.appendChild(seq);
+      }
+      row.appendChild(badges);
+
       // Value (right side)
       var value = document.createElement('div');
       value.className = 'q-row-value';
@@ -1326,6 +1431,49 @@
       var showOptions = (q.type === 'single' || q.type === 'multi');
       document.getElementById('props-options-group').style.display = showOptions ? '' : 'none';
       if (showOptions) renderPropOptions(q);
+
+      // Required
+      document.getElementById('props-required-yes').checked = q.required !== false;
+      document.getElementById('props-required-no').checked = q.required === false;
+
+      // Allow photos
+      document.getElementById('props-allow-photos').checked = !!q.allowPhotos;
+
+      // Sequential / follow-up
+      var hasFollowUp = !!q.followUp;
+      document.getElementById('props-sequential').checked = hasFollowUp;
+      document.getElementById('props-followup-panel').style.display = hasFollowUp ? '' : 'none';
+
+      if (hasFollowUp) {
+        renderFollowUpTriggers(q);
+        document.getElementById('props-followup-text').value = q.followUp.question || '';
+      }
+    }
+
+    function renderFollowUpTriggers(q) {
+      var list = document.getElementById('props-trigger-list');
+      list.innerHTML = '';
+      var answers = q.options && q.options.length ? q.options : ['(any answer)'];
+      var triggers = q.followUp.triggers || [];
+      answers.forEach(function (ans) {
+        var row = document.createElement('div');
+        row.className = 'props-trigger-row';
+        var cb = document.createElement('input');
+        cb.type = 'checkbox';
+        cb.checked = triggers.indexOf(ans) >= 0 || triggers.length === 0;
+        cb.addEventListener('change', function () {
+          if (cb.checked) {
+            if (q.followUp.triggers.indexOf(ans) < 0) q.followUp.triggers.push(ans);
+          } else {
+            q.followUp.triggers = q.followUp.triggers.filter(function (t) { return t !== ans; });
+          }
+        });
+        var label = document.createElement('span');
+        label.textContent = ans;
+        row.appendChild(cb);
+        row.appendChild(label);
+        list.appendChild(row);
+      });
     }
 
     function findQuestion(id) {
@@ -1388,6 +1536,40 @@
       q.options.push('Option ' + (q.options.length + 1));
       renderPropOptions(q);
       renderAllQuestions();
+    });
+
+    // Props required toggle
+    document.getElementById('props-required-yes').addEventListener('change', function () {
+      var q = findQuestion(selectedQ);
+      if (q) { q.required = true; renderAllQuestions(); }
+    });
+    document.getElementById('props-required-no').addEventListener('change', function () {
+      var q = findQuestion(selectedQ);
+      if (q) { q.required = false; renderAllQuestions(); }
+    });
+
+    // Props allow photos
+    document.getElementById('props-allow-photos').addEventListener('change', function () {
+      var q = findQuestion(selectedQ);
+      if (q) { q.allowPhotos = this.checked; renderAllQuestions(); }
+    });
+
+    // Props sequential / follow-up
+    document.getElementById('props-sequential').addEventListener('change', function () {
+      var q = findQuestion(selectedQ);
+      if (!q) return;
+      if (this.checked) {
+        q.followUp = { triggers: q.options ? q.options.slice() : [], question: '' };
+      } else {
+        delete q.followUp;
+      }
+      renderProps();
+      renderAllQuestions();
+    });
+
+    document.getElementById('props-followup-text').addEventListener('input', function () {
+      var q = findQuestion(selectedQ);
+      if (q && q.followUp) { q.followUp.question = this.value; }
     });
 
     /* ============================================================
