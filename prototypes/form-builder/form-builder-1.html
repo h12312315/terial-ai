@@ -510,10 +510,37 @@
     .fd-download-btn svg { width: 14px; height: 14px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     .form-detail-body {
       flex: 1; overflow-y: auto; background: var(--color-bg-page);
-      padding: 24px 32px; display: flex; flex-direction: column; align-items: center;
+      padding: 24px 32px; display: flex; gap: 24px;
     }
+    .fd-sidebar {
+      width: 280px; flex-shrink: 0;
+    }
+    .fd-meta-card {
+      background: var(--color-white); border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md); box-shadow: var(--shadow-sm); padding: 20px;
+      position: sticky; top: 0;
+    }
+    .fd-meta-card-title {
+      font-size: 15px; font-weight: var(--font-weight-semibold);
+      color: var(--color-text-primary); margin-bottom: 16px;
+      text-transform: uppercase; letter-spacing: 0.02em;
+    }
+    .fd-meta-row {
+      display: flex; flex-direction: column; gap: 2px;
+      padding: 10px 0; border-bottom: 1px solid var(--color-border-default);
+    }
+    .fd-meta-row:last-child { border-bottom: none; }
+    .fd-meta-label {
+      font-size: 12px; font-weight: var(--font-weight-medium);
+      color: var(--color-text-tertiary);
+    }
+    .fd-meta-value {
+      font-size: var(--font-body-sm-size); color: var(--color-blue-7);
+      text-decoration: none; font-weight: var(--font-weight-medium);
+    }
+    .fd-meta-value.plain { color: var(--color-text-primary); }
     .fd-paper {
-      width: 100%; max-width: 700px;
+      flex: 1; min-width: 0;
       display: flex; flex-direction: column; gap: 16px;
     }
     .fd-section {
@@ -589,6 +616,7 @@
     .fd-section-header .fd-caret {
       color: var(--color-gray-4); font-size: 12px; transition: transform 0.15s;
       flex-shrink: 0; width: 16px; height: 16px; display: grid; place-items: center;
+      order: -1;
     }
     .fd-section-header .fd-caret svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     .fd-section.is-collapsed .fd-section-header .fd-caret { transform: rotate(-90deg); }
@@ -917,6 +945,31 @@
           </div>
         </div>
         <div class="form-detail-body">
+          <div class="fd-sidebar">
+            <div class="fd-meta-card">
+              <div class="fd-meta-card-title">Project Information</div>
+              <div class="fd-meta-row">
+                <span class="fd-meta-label">Project Name</span>
+                <a class="fd-meta-value" id="fd-meta-project">Sutter FL Test Project</a>
+              </div>
+              <div class="fd-meta-row">
+                <span class="fd-meta-label">ID</span>
+                <span class="fd-meta-value plain" id="fd-meta-id">MB123</span>
+              </div>
+              <div class="fd-meta-row">
+                <span class="fd-meta-label">Company</span>
+                <a class="fd-meta-value" id="fd-meta-company">Neuehouse Union Square</a>
+              </div>
+              <div class="fd-meta-row">
+                <span class="fd-meta-label">Property</span>
+                <a class="fd-meta-value" id="fd-meta-property">Neuehouse</a>
+              </div>
+              <div class="fd-meta-row">
+                <span class="fd-meta-label">On-Site Contact</span>
+                <a class="fd-meta-value" id="fd-meta-contact">Caitlyn McDonagh</a>
+              </div>
+            </div>
+          </div>
           <div class="fd-paper" id="fd-paper">
             <!-- Rendered by JS -->
           </div>
