@@ -791,15 +791,15 @@
           </div>
           <div class="templates-card">
             <table class="data-table">
-              <thead><tr><th>Name</th><th>Created By</th><th>Created At <span style="opacity:0.5;">&#9662;</span></th><th>Updated At</th><th>Description</th></tr></thead>
+              <thead><tr><th>Name</th><th>Type</th><th>Created By</th><th>Created At <span style="opacity:0.5;">&#9662;</span></th><th>Updated At</th><th>Description</th></tr></thead>
               <tbody id="templates-tbody">
-                <tr data-tpl="romao-full"><td><span class="tpl-name-link">Romao - Full Features</span></td><td><span class="tpl-creator-link">Romao Barbosa</span></td><td>5/15/2026 3:03 pm</td><td>5/18/2026 9:23 am</td><td></td></tr>
-                <tr data-tpl="romao-dynamic"><td><span class="tpl-name-link">Romao - Dynamic Variables</span></td><td><span class="tpl-creator-link">Romao Barbosa</span></td><td>5/13/2026 11:03 am</td><td>5/15/2026 3:01 pm</td><td></td></tr>
-                <tr data-tpl="recover-tpo"><td><span class="tpl-name-link">Recover - TPO (60 Mil)</span></td><td><span class="tpl-creator-link">Loren Heinbach</span></td><td>5/11/2026 11:25 am</td><td>5/11/2026 12:17 pm</td><td>Standard recover form for commercial TPO reroofs over existing low-slope assemblies</td></tr>
-                <tr data-tpl="template-1"><td><span class="tpl-name-link">Template 1</span></td><td><span class="tpl-creator-link">Matt Billard</span></td><td>4/2/2026 9:12 pm</td><td>4/24/2026 2:52 pm</td><td>This is a template</td></tr>
-                <tr data-tpl="hotfix-test"><td><span class="tpl-name-link">Hotfix test template</span></td><td><span class="tpl-creator-link">Romao Barbosa</span></td><td>4/1/2026 12:15 pm</td><td>4/1/2026 12:15 pm</td><td></td></tr>
-                <tr data-tpl="romao-demo"><td><span class="tpl-name-link">Romao Demo</span></td><td><span class="tpl-creator-link">Romao Barbosa</span></td><td>3/26/2026 9:50 am</td><td>3/26/2026 9:50 am</td><td></td></tr>
-                <tr data-tpl="test"><td><span class="tpl-name-link">Test</span></td><td><span class="tpl-creator-link">Romao Barbosa</span></td><td>3/19/2026 8:04 pm</td><td>3/19/2026 8:05 pm</td><td></td></tr>
+                <tr data-tpl="romao-full"><td><span class="tpl-name-link">Romao - Full Features</span></td><td>Safety</td><td><span class="tpl-creator-link">Romao Barbosa</span></td><td>5/15/2026 3:03 pm</td><td>5/18/2026 9:23 am</td><td></td></tr>
+                <tr data-tpl="romao-dynamic"><td><span class="tpl-name-link">Romao - Dynamic Variables</span></td><td>Safety</td><td><span class="tpl-creator-link">Romao Barbosa</span></td><td>5/13/2026 11:03 am</td><td>5/15/2026 3:01 pm</td><td></td></tr>
+                <tr data-tpl="recover-tpo"><td><span class="tpl-name-link">Recover - TPO (60 Mil)</span></td><td>General</td><td><span class="tpl-creator-link">Loren Heinbach</span></td><td>5/11/2026 11:25 am</td><td>5/11/2026 12:17 pm</td><td>Standard recover form for commercial TPO reroofs over existing low-slope assemblies</td></tr>
+                <tr data-tpl="template-1"><td><span class="tpl-name-link">Template 1</span></td><td>General</td><td><span class="tpl-creator-link">Matt Billard</span></td><td>4/2/2026 9:12 pm</td><td>4/24/2026 2:52 pm</td><td>This is a template</td></tr>
+                <tr data-tpl="hotfix-test"><td><span class="tpl-name-link">Hotfix test template</span></td><td>Safety</td><td><span class="tpl-creator-link">Romao Barbosa</span></td><td>4/1/2026 12:15 pm</td><td>4/1/2026 12:15 pm</td><td></td></tr>
+                <tr data-tpl="romao-demo"><td><span class="tpl-name-link">Romao Demo</span></td><td>General</td><td><span class="tpl-creator-link">Romao Barbosa</span></td><td>3/26/2026 9:50 am</td><td>3/26/2026 9:50 am</td><td></td></tr>
+                <tr data-tpl="test"><td><span class="tpl-name-link">Test</span></td><td>General</td><td><span class="tpl-creator-link">Romao Barbosa</span></td><td>3/19/2026 8:04 pm</td><td>3/19/2026 8:05 pm</td><td></td></tr>
               </tbody>
             </table>
           </div>
@@ -815,12 +815,18 @@
           <div class="editor-breadcrumb"><a id="editor-back-link">Form Templates</a> / <span id="editor-tpl-name-crumb">Safety Checklist</span></div>
           <div class="editor-title-row">
             <div>
-              <h1 class="editor-title" id="editor-title">Safety Checklist</h1>
-              <div class="editor-meta">Created by Romao Barbosa at 5/15/2026 3:03 pm</div>
+              <div style="display:flex;align-items:center;gap:12px;">
+                <h1 class="editor-title" id="editor-title" contenteditable="true" style="outline:none;">Safety Checklist</h1>
+                <select id="editor-type-select" style="padding:4px 8px;border:1px solid var(--color-border-default);border-radius:var(--radius-sm);font-family:var(--font-family-base);font-size:var(--font-body-sm-size);color:var(--color-text-secondary);background:var(--color-white);outline:none;">
+                  <option value="General">General</option>
+                  <option value="Safety">Safety</option>
+                </select>
+              </div>
+              <div class="editor-meta" id="editor-meta">Created by Romao Barbosa at 5/15/2026 3:03 pm</div>
             </div>
             <div class="editor-actions">
               <button class="save-btn" id="editor-cancel-btn">Cancel</button>
-              <button class="save-btn">Save</button>
+              <button class="save-btn" id="editor-save-btn">Save</button>
               <button class="download-btn">Download PDF</button>
               <button class="kebab-btn">&#8942;</button>
             </div>
@@ -1100,14 +1106,43 @@
        Form Templates -> click into editor
        ============================================================ */
     var templatesTbody = document.getElementById('templates-tbody');
+    var isNewTemplate = false;
+
+    // Default sections/questions for existing templates
+    var defaultSections = [
+      { id: 'checklist', name: 'Checklist' },
+      { id: 'ppe', name: 'Personal Protective Equipment' },
+      { id: 'photos', name: 'Photos' },
+      { id: 'comments', name: 'Additional Comments' }
+    ];
+
     templatesTbody.addEventListener('click', function (e) {
       var row = e.target.closest('tr');
       if (!row) return;
       var name = row.querySelector('.tpl-name-link');
+      var typeTd = row.querySelector('td:nth-child(2)');
       if (name) {
         document.getElementById('editor-title').textContent = name.textContent;
         document.getElementById('editor-tpl-name-crumb').textContent = name.textContent;
       }
+      document.getElementById('editor-type-select').value = typeTd ? typeTd.textContent : 'General';
+      document.getElementById('editor-meta').textContent = 'Created by ' + (row.querySelector('.tpl-creator-link')?.textContent || 'George Chang');
+      isNewTemplate = false;
+      openEditor();
+    });
+
+    // New Form Template button
+    document.getElementById('new-template-btn').addEventListener('click', function () {
+      isNewTemplate = true;
+      // Reset to blank state
+      sections = [{ id: 'sec-default', name: 'Section 1' }];
+      questions = { 'sec-default': [] };
+      activeSection = 'sec-default';
+      selectedQ = null;
+      document.getElementById('editor-title').textContent = 'Untitled Template';
+      document.getElementById('editor-tpl-name-crumb').textContent = 'Untitled Template';
+      document.getElementById('editor-type-select').value = 'General';
+      document.getElementById('editor-meta').textContent = 'Created by George Chang';
       openEditor();
     });
 
@@ -1117,12 +1152,47 @@
       adminCaret.textContent = '▴';
       navRows.forEach(function (r) { r.classList.remove('is-section-active'); });
       adminRow.classList.add('is-section-active');
+      // Restore default data if we were editing a blank template
+      if (isNewTemplate) {
+        sections = defaultSections.map(function (s) { return { id: s.id, name: s.name }; });
+        // restore default questions
+      }
     }
 
     var editorBackLink = document.getElementById('editor-back-link');
     editorBackLink.addEventListener('click', goBackToTemplates);
 
     document.getElementById('editor-cancel-btn').addEventListener('click', goBackToTemplates);
+
+    // Save button — adds new row to templates table
+    document.getElementById('editor-save-btn').addEventListener('click', function () {
+      var name = document.getElementById('editor-title').textContent.trim();
+      var type = document.getElementById('editor-type-select').value;
+      if (!name) return;
+
+      if (isNewTemplate) {
+        var now = new Date();
+        var dateStr = (now.getMonth()+1) + '/' + now.getDate() + '/' + now.getFullYear() + ' ' +
+          ((now.getHours() % 12) || 12) + ':' + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes() + ' ' +
+          (now.getHours() >= 12 ? 'pm' : 'am');
+        var tr = document.createElement('tr');
+        tr.innerHTML = '<td><span class="tpl-name-link">' + name + '</span></td>' +
+          '<td>' + type + '</td>' +
+          '<td><span class="tpl-creator-link">George Chang</span></td>' +
+          '<td>' + dateStr + '</td>' +
+          '<td>' + dateStr + '</td>' +
+          '<td></td>';
+        templatesTbody.insertBefore(tr, templatesTbody.firstChild);
+
+        // Also add to the template dropdown in New Form modal
+        var opt = document.createElement('option');
+        opt.value = name; opt.textContent = name;
+        document.getElementById('checklist-template-select').appendChild(opt);
+      }
+
+      isNewTemplate = false;
+      goBackToTemplates();
+    });
 
     function openEditor() {
       showPage('editor');
