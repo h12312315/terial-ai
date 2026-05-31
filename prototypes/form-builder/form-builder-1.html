@@ -741,7 +741,7 @@
           <div class="checklist-card">
             <div class="checklist-toolbar">
               <input type="text" class="checklist-search" placeholder="Search Safety Checklist" />
-              <button class="primary-btn" id="new-checklist-btn">+ New Safety Checklist</button>
+              <button class="primary-btn" id="new-checklist-btn">+ New Form</button>
             </div>
             <table class="data-table">
               <thead><tr><th>Date <span style="opacity:0.5;">&#9662;</span></th><th>Inspection Performed By</th><th>Corrective Action(s) Taken</th><th>Created By</th><th>Created At</th></tr></thead>
@@ -929,12 +929,8 @@
   <!-- Create Safety Checklist Modal -->
   <div class="modal-overlay" id="create-checklist-modal">
     <div class="modal-box" style="width:520px;">
-      <div class="modal-header"><h3>Create Safety Checklist</h3><button class="modal-close" id="create-checklist-close"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div>
+      <div class="modal-header"><h3>New Form</h3><button class="modal-close" id="create-checklist-close"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div>
       <div class="modal-body" style="padding:0;">
-        <div class="modal-form-row">
-          <div class="modal-form-label">Name <span class="req">*</span></div>
-          <input type="text" class="modal-form-input" id="checklist-name-input" placeholder="" />
-        </div>
         <div class="modal-form-row">
           <div class="modal-form-label">Form Template <span class="req">*</span></div>
           <select class="modal-form-select" id="checklist-template-select">
@@ -943,7 +939,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button class="modal-save-btn" id="checklist-save-btn">Save</button>
+        <button class="modal-save-btn" id="checklist-save-btn">Create</button>
       </div>
     </div>
   </div>
@@ -1672,7 +1668,6 @@
        ============================================================ */
     var createModal = document.getElementById('create-checklist-modal');
     var createClose = document.getElementById('create-checklist-close');
-    var checklistNameInput = document.getElementById('checklist-name-input');
     var checklistTemplateSelect = document.getElementById('checklist-template-select');
     var checklistSaveBtn = document.getElementById('checklist-save-btn');
 
@@ -1684,9 +1679,8 @@
       checklistTemplateSelect.appendChild(opt);
     });
 
-    // Open modal from "+ New Safety Checklist" button
+    // Open modal from "+ New Form" button
     document.getElementById('new-checklist-btn').addEventListener('click', function () {
-      checklistNameInput.value = '';
       checklistTemplateSelect.value = '';
       createModal.classList.add('is-open');
     });
@@ -1698,16 +1692,13 @@
     var checklistCounter = 1;
 
     checklistSaveBtn.addEventListener('click', function () {
-      var name = checklistNameInput.value.trim();
       var template = checklistTemplateSelect.value;
-      if (!name || !template) {
-        // Highlight empty fields
-        if (!name) checklistNameInput.style.borderColor = '#dc2626';
-        if (!template) checklistTemplateSelect.style.borderColor = '#dc2626';
+      if (!template) {
+        checklistTemplateSelect.style.borderColor = '#dc2626';
         return;
       }
-      checklistNameInput.style.borderColor = '';
       checklistTemplateSelect.style.borderColor = '';
+      var name = template;
 
       var now = new Date();
       var dateStr = (now.getMonth()+1) + '/' + now.getDate() + '/' + now.getFullYear();
