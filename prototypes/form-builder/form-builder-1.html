@@ -609,6 +609,7 @@
     .fd-section-header .fd-section-title {
       flex: 1; font-size: 15px; font-weight: var(--font-weight-semibold);
       color: var(--color-text-primary); text-transform: uppercase; letter-spacing: 0.02em;
+      padding: 0;
     }
     .fd-section-header .fd-section-count {
       font-size: 12px; color: var(--color-text-tertiary); font-weight: var(--font-weight-regular);
@@ -616,7 +617,6 @@
     .fd-section-header .fd-caret {
       color: var(--color-gray-4); font-size: 12px; transition: transform 0.15s;
       flex-shrink: 0; width: 16px; height: 16px; display: grid; place-items: center;
-      order: -1;
     }
     .fd-section-header .fd-caret svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
     .fd-section.is-collapsed .fd-section-header .fd-caret { transform: rotate(-90deg); }
@@ -1942,10 +1942,10 @@
         var nonImageCount = qs.filter(function (q) { return q.type !== 'image'; }).length;
 
         header.innerHTML =
+          '<span class="fd-caret"><svg viewBox="0 0 16 16"><polyline points="4 6 8 10 12 6"/></svg></span>' +
           '<span class="fd-section-title">' + sec.name + '</span>' +
           '<span class="fd-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>' +
-          '<span class="fd-section-count">0/' + nonImageCount + '</span>' +
-          '<span class="fd-caret"><svg viewBox="0 0 16 16"><polyline points="4 6 8 10 12 6"/></svg></span>';
+          '<span class="fd-section-count">0/' + nonImageCount + '</span>';
 
         header.addEventListener('click', function () {
           card.classList.toggle('is-collapsed');
