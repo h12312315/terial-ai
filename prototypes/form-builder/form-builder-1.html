@@ -475,11 +475,8 @@
     .props-followup-q {
       margin-top: 10px;
     }
-    .props-followup-q textarea {
-      width: 100%; box-sizing: border-box; padding: 8px 10px;
-      border: 1px solid var(--color-border-default); border-radius: var(--radius-sm);
-      font-family: var(--font-family-base); font-size: var(--font-body-sm-size);
-      color: var(--color-text-primary); outline: none; resize: vertical; min-height: 60px;
+    .props-followup-q .props-input, .props-followup-q .props-select {
+      margin-top: 4px;
     }
 
     /* ============================================================
@@ -872,8 +869,23 @@
                   <div class="props-label">Trigger on answers</div>
                   <div class="props-trigger-list" id="props-trigger-list"></div>
                   <div class="props-followup-q">
-                    <div class="props-label">Follow-up question</div>
-                    <textarea id="props-followup-text" placeholder="Enter follow-up question..."></textarea>
+                    <div class="props-label" style="margin-top:10px;">Follow-up question</div>
+                    <input type="text" class="props-input" id="props-followup-text" placeholder="Enter follow-up question..." />
+                  </div>
+                  <div class="props-followup-q">
+                    <div class="props-label">Follow-up type</div>
+                    <select class="props-select" id="props-followup-type">
+                      <option value="text">Text Input</option>
+                      <option value="binary">Yes / No / N/A</option>
+                      <option value="single">Single Select</option>
+                      <option value="multi">Multiple Select</option>
+                      <option value="image">Image Upload</option>
+                    </select>
+                  </div>
+                  <div class="props-followup-q" id="props-followup-options-group" style="display:none;">
+                    <div class="props-label">Follow-up options</div>
+                    <div class="props-option-list" id="props-followup-option-list"></div>
+                    <button class="props-add-option" id="props-followup-add-option">+ Add option</button>
                   </div>
                 </div>
               </div>
@@ -1447,6 +1459,11 @@
       if (hasFollowUp) {
         renderFollowUpTriggers(q);
         document.getElementById('props-followup-text').value = q.followUp.question || '';
+        document.getElementById('props-followup-type').value = q.followUp.type || 'text';
+        var fuType = q.followUp.type || 'text';
+        var showFuOpts = (fuType === 'single' || fuType === 'multi');
+        document.getElementById('props-followup-options-group').style.display = showFuOpts ? '' : 'none';
+        if (showFuOpts) renderFollowUpOptions(q);
       }
     }
 
@@ -1472,6 +1489,24 @@
         label.textContent = ans;
         row.appendChild(cb);
         row.appendChild(label);
+        list.appendChild(row);
+      });
+    }
+
+    function renderFollowUpOptions(q) {
+      var list = document.getElementById('props-followup-option-list');
+      list.innerHTML = '';
+      if (!q.followUp.options) q.followUp.options = ['Option 1', 'Option 2'];
+      q.followUp.options.forEach(function (opt, idx) {
+        var row = document.createElement('div');
+        row.className = 'props-option-row';
+        var inp = document.createElement('input');
+        inp.type = 'text'; inp.value = opt;
+        inp.addEventListener('change', function () { q.followUp.options[idx] = inp.value; });
+        var rmBtn = document.createElement('button');
+        rmBtn.className = 'remove-opt'; rmBtn.innerHTML = '×';
+        rmBtn.addEventListener('click', function () { q.followUp.options.splice(idx, 1); renderFollowUpOptions(q); });
+        row.appendChild(inp); row.appendChild(rmBtn);
         list.appendChild(row);
       });
     }
@@ -1559,7 +1594,7 @@
       var q = findQuestion(selectedQ);
       if (!q) return;
       if (this.checked) {
-        q.followUp = { triggers: q.options ? q.options.slice() : [], question: '' };
+        q.followUp = { triggers: q.options ? q.options.slice() : [], question: '', type: 'text', options: [] };
       } else {
         delete q.followUp;
       }
@@ -1570,6 +1605,30 @@
     document.getElementById('props-followup-text').addEventListener('input', function () {
       var q = findQuestion(selectedQ);
       if (q && q.followUp) { q.followUp.question = this.value; }
+    });
+
+    document.getElementById('props-followup-type').addEventListener('change', function () {
+      var q = findQuestion(selectedQ);
+      if (!q || !q.followUp) return;
+      q.followUp.type = this.value;
+      if (this.value === 'binary') {
+        q.followUp.options = ['Yes', 'No', 'N/A'];
+      } else if (this.value === 'single' || this.value === 'multi') {
+        if (!q.followUp.options || q.followUp.options.length === 0 || (q.followUp.options.length === 3 && q.followUp.options[0] === 'Yes')) {
+          q.followUp.options = ['Option 1', 'Option 2'];
+        }
+      } else {
+        q.followUp.options = [];
+      }
+      renderProps();
+    });
+
+    document.getElementById('props-followup-add-option').addEventListener('click', function () {
+      var q = findQuestion(selectedQ);
+      if (!q || !q.followUp) return;
+      if (!q.followUp.options) q.followUp.options = [];
+      q.followUp.options.push('Option ' + (q.followUp.options.length + 1));
+      renderFollowUpOptions(q);
     });
 
     /* ============================================================
