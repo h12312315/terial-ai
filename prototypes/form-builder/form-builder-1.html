@@ -792,6 +792,7 @@
               <div class="editor-meta">Created by Romao Barbosa at 5/15/2026 3:03 pm</div>
             </div>
             <div class="editor-actions">
+              <button class="save-btn" id="editor-cancel-btn">Cancel</button>
               <button class="save-btn">Save</button>
               <button class="download-btn">Download PDF</button>
               <button class="kebab-btn">&#8942;</button>
@@ -1062,14 +1063,18 @@
       openEditor();
     });
 
-    var editorBackLink = document.getElementById('editor-back-link');
-    editorBackLink.addEventListener('click', function () {
+    function goBackToTemplates() {
       showPage('form-templates');
       adminChildren.classList.add('is-open');
       adminCaret.textContent = '▴';
       navRows.forEach(function (r) { r.classList.remove('is-section-active'); });
       adminRow.classList.add('is-section-active');
-    });
+    }
+
+    var editorBackLink = document.getElementById('editor-back-link');
+    editorBackLink.addEventListener('click', goBackToTemplates);
+
+    document.getElementById('editor-cancel-btn').addEventListener('click', goBackToTemplates);
 
     function openEditor() {
       showPage('editor');
