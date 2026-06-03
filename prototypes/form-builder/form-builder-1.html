@@ -387,7 +387,7 @@
       flex-shrink: 0; white-space: nowrap;
       padding: 5px 18px;
       background: var(--color-gray-6, #4b5563); border: none;
-      border-radius: var(--radius-full, 999px); font-family: var(--font-family-base);
+      border-radius: var(--radius-sm); font-family: var(--font-family-base);
       font-size: var(--font-body-sm-size); color: var(--color-white);
       cursor: pointer; text-align: center;
     }
@@ -1446,7 +1446,7 @@
         addInner.className = 'q-section-add-inner';
         addInner.innerHTML = '<div class="q-section-add-line"></div>';
         var addBtn = document.createElement('button');
-        addBtn.textContent = '+ Add Widget';
+        addBtn.textContent = '+ Add Question';
         addBtn.addEventListener('click', function () {
           insertSectionId = sec.id;
           insertIndex = (questions[sec.id] || []).length;
@@ -1650,7 +1650,7 @@
       inner.className = 'q-add-zone-inner';
       inner.innerHTML = '<div class="q-add-zone-line"></div>';
       var btn = document.createElement('button');
-      btn.textContent = '+ Add Widget';
+      btn.textContent = '+ Add Question';
       btn.addEventListener('click', function () {
         insertSectionId = sectionId;
         insertIndex = idx;
