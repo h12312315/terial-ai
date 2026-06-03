@@ -819,10 +819,6 @@
             <div>
               <div style="display:flex;align-items:center;gap:12px;">
                 <h1 class="editor-title" id="editor-title" contenteditable="true" style="outline:none;">Safety Checklist</h1>
-                <select id="editor-type-select" style="padding:4px 8px;border:1px solid var(--color-border-default);border-radius:var(--radius-sm);font-family:var(--font-family-base);font-size:var(--font-body-sm-size);color:var(--color-text-secondary);background:var(--color-white);outline:none;">
-                  <option value="General">General</option>
-                  <option value="Safety">Safety</option>
-                </select>
               </div>
               <div class="editor-meta" id="editor-meta">Created by Romao Barbosa at 5/15/2026 3:03 pm</div>
             </div>
@@ -867,7 +863,10 @@
               </div>
               <div class="props-group">
                 <div class="props-label">Tags</div>
-                <input type="text" class="props-input" id="props-form-tags" placeholder="" />
+                <select class="props-select" id="props-form-tags">
+                  <option value="General">General</option>
+                  <option value="Safety">Safety</option>
+                </select>
               </div>
             </div>
             <div id="props-content" style="display:none;">
@@ -1173,9 +1172,8 @@
         document.getElementById('editor-title').textContent = tplName;
         document.getElementById('editor-tpl-name-crumb').textContent = tplName;
       }
-      document.getElementById('editor-type-select').value = typeTd ? typeTd.textContent : 'General';
       document.getElementById('editor-meta').textContent = 'Created by ' + (row.querySelector('.tpl-creator-link')?.textContent || 'George Chang');
-      formSettings = { name: tplName, description: descTd ? descTd.textContent : '', tags: '' };
+      formSettings = { name: tplName, description: descTd ? descTd.textContent : '', tags: typeTd ? typeTd.textContent : 'General' };
       activeSection = 'form-settings';
       selectedQ = null;
       isNewTemplate = false;
@@ -1209,12 +1207,11 @@
       isNewTemplate = true;
       sections = [{ id: 'sec-default', name: 'Section 1' }];
       questions = { 'sec-default': [] };
-      formSettings = { name: name, description: desc, tags: '' };
+      formSettings = { name: name, description: desc, tags: type };
       activeSection = 'form-settings';
       selectedQ = null;
       document.getElementById('editor-title').textContent = name;
       document.getElementById('editor-tpl-name-crumb').textContent = name;
-      document.getElementById('editor-type-select').value = type;
       document.getElementById('editor-meta').textContent = 'Created by George Chang';
       openEditor();
     });
@@ -1240,7 +1237,7 @@
     // Save button — adds new row to templates table
     document.getElementById('editor-save-btn').addEventListener('click', function () {
       var name = document.getElementById('editor-title').textContent.trim();
-      var type = document.getElementById('editor-type-select').value;
+      var type = formSettings.tags || 'General';
       if (!name) return;
 
       if (isNewTemplate) {
@@ -1313,7 +1310,7 @@
       ]
     };
 
-    var formSettings = { name: 'Romao - Full Features', description: '', tags: '' };
+    var formSettings = { name: 'Romao - Full Features', description: '', tags: 'Safety' };
     var activeSection = 'form-settings';
     var selectedQ = null;
     var qCounter = 20;
@@ -1331,7 +1328,7 @@
       var fsDiv = document.createElement('div');
       fsDiv.className = 'section-item section-item-fixed' + (activeSection === 'form-settings' ? ' is-active' : '');
       fsDiv.setAttribute('data-section', 'form-settings');
-      fsDiv.innerHTML = '<svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="8" cy="8" r="3"/><path d="M12.2 10.6l.8 1.4a1 1 0 0 1-.3 1.3l-.6.3a1 1 0 0 1-1.3-.3l-.8-1.4a5.1 5.1 0 0 1-2 0l-.8 1.4a1 1 0 0 1-1.3.3l-.6-.3a1 1 0 0 1-.3-1.3l.8-1.4A5.2 5.2 0 0 1 4.8 9.6l-1.5-.2a1 1 0 0 1-.8-1v-.7a1 1 0 0 1 .8-1l1.5-.2a5.2 5.2 0 0 1 1-1.7L5 3.4a1 1 0 0 1 .3-1.3l.6-.3a1 1 0 0 1 1.3.3l.8 1.3a5.1 5.1 0 0 1 2 0l.8-1.3a1 1 0 0 1 1.3-.3l.6.3a1 1 0 0 1 .3 1.3l-.8 1.4a5.2 5.2 0 0 1 1 1.7l1.5.2a1 1 0 0 1 .8 1v.7a1 1 0 0 1-.8 1l-1.5.2a5.2 5.2 0 0 1-1 1.7z"/></svg><span class="section-name">Form Settings</span>';
+      fsDiv.innerHTML = '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg><span class="section-name">Form Settings</span>';
       fsDiv.addEventListener('click', function () {
         activeSection = 'form-settings';
         selectedQ = null;
@@ -1865,7 +1862,7 @@
     document.getElementById('props-form-desc').addEventListener('input', function () {
       formSettings.description = this.value;
     });
-    document.getElementById('props-form-tags').addEventListener('input', function () {
+    document.getElementById('props-form-tags').addEventListener('change', function () {
       formSettings.tags = this.value;
     });
 
