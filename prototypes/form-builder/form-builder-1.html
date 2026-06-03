@@ -242,13 +242,13 @@
     .section-item .grip svg { width: 16px; height: 16px; display: block; }
     .section-item .section-name { flex: 1; }
     .section-item .section-remove {
-      background: none; border: none; color: var(--color-gray-4);
+      background: var(--color-gray-5, #6b7280); border: none; color: var(--color-white);
       cursor: pointer; padding: 0; line-height: 1;
       width: 20px; height: 20px; display: grid; place-items: center;
       border-radius: 50%; flex-shrink: 0;
     }
-    .section-item .section-remove svg { width: 16px; height: 16px; display: block; }
-    .section-item .section-remove:hover { color: var(--color-white); background: var(--color-gray-5); }
+    .section-item .section-remove svg { width: 10px; height: 10px; display: block; }
+    .section-item .section-remove:hover { background: var(--color-gray-6, #4b5563); }
     .section-item-fixed { padding-left: 14px; }
     .section-item-fixed svg { color: var(--color-text-tertiary); }
     .add-section-btn {
@@ -302,6 +302,11 @@
     .q-row.is-selected {
       border-color: #6aacf8;
       background: #f4f9ff;
+    }
+    .q-row.is-selected .q-inline-text,
+    .q-row.is-selected .q-binary span:not(.is-selected),
+    .q-row.is-selected .q-inline-image {
+      background: var(--color-white);
     }
     .q-row .q-grip {
       color: var(--color-gray-4); cursor: grab; flex-shrink: 0;
