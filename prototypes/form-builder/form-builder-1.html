@@ -1767,6 +1767,10 @@
         if (e.target.closest('[contenteditable="true"]')) return;
         if (e.target.closest('.q-row-remove')) return;
         selectedQ = q.id;
+        if (activeSection !== sectionId) {
+          activeSection = sectionId;
+          renderSections();
+        }
         renderAllQuestions();
         renderProps();
       });
@@ -2082,10 +2086,12 @@
         } else {
           questions[targetSec].push(newQ);
         }
+        activeSection = targetSec;
         insertSectionId = null;
         insertIndex = -1;
         selectedQ = newQ.id;
         modal.classList.remove('is-open');
+        renderSections();
         renderAllQuestions();
         renderProps();
       });
