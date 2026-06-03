@@ -1651,17 +1651,19 @@
       label.textContent = q.label;
       row.appendChild(label);
 
+      // Required asterisk — right next to label
+      if (q.required !== false) {
+        var req = document.createElement('span');
+        req.style.cssText = 'color:#dc2626;font-weight:700;font-size:14px;line-height:1;flex-shrink:0;margin-left:2px;';
+        req.textContent = '*';
+        req.title = 'Required';
+        row.appendChild(req);
+      }
+
       // Indicator badges
       var badges = document.createElement('span');
       badges.className = 'q-badges';
-      badges.style.cssText = 'display:flex;align-items:center;gap:4px;margin-right:8px;flex-shrink:0;';
-      if (q.required !== false) {
-        var req = document.createElement('span');
-        req.style.cssText = 'color:#dc2626;font-weight:700;font-size:14px;line-height:1;';
-        req.textContent = '*';
-        req.title = 'Required';
-        badges.appendChild(req);
-      }
+      badges.style.cssText = 'display:flex;align-items:center;gap:4px;margin-right:8px;margin-left:auto;flex-shrink:0;';
       if (q.allowPhotos) {
         var cam = document.createElement('span');
         cam.style.cssText = 'width:14px;height:14px;color:var(--color-gray-5);display:flex;';
