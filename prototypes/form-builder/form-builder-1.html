@@ -249,6 +249,8 @@
     }
     .section-item .section-remove svg { width: 16px; height: 16px; display: block; }
     .section-item .section-remove:hover { color: var(--color-white); background: var(--color-gray-5); }
+    .section-item-fixed { padding-left: 14px; }
+    .section-item-fixed svg { color: var(--color-text-tertiary); }
     .add-section-btn {
       display: flex; align-items: center; gap: 6px;
       margin: 8px 0 0; padding: 10px 14px;
@@ -852,6 +854,22 @@
           <!-- Right: Properties -->
           <div class="editor-props" id="editor-props">
             <div class="props-empty" id="props-empty">Select a question to edit its properties</div>
+            <!-- Form Settings panel -->
+            <div id="props-form-settings" style="display:none;">
+              <div class="props-title">Form Settings</div>
+              <div class="props-group">
+                <div class="props-label">Name <span style="color:#dc2626;">*</span></div>
+                <input type="text" class="props-input" id="props-form-name" />
+              </div>
+              <div class="props-group">
+                <div class="props-label">Description</div>
+                <textarea class="props-input" id="props-form-desc" rows="4" style="resize:vertical;font-family:var(--font-family-base);min-height:80px;"></textarea>
+              </div>
+              <div class="props-group">
+                <div class="props-label">Tags</div>
+                <input type="text" class="props-input" id="props-form-tags" placeholder="" />
+              </div>
+            </div>
             <div id="props-content" style="display:none;">
               <div class="props-title">Widget Properties</div>
               <div class="props-group">
@@ -1029,6 +1047,10 @@
           <input type="text" class="modal-form-input" id="template-name-input" placeholder="" />
         </div>
         <div class="modal-form-row">
+          <div class="modal-form-label">Description</div>
+          <textarea class="modal-form-input" id="template-desc-input" rows="3" style="resize:vertical;font-family:var(--font-family-base);"></textarea>
+        </div>
+        <div class="modal-form-row">
           <div class="modal-form-label">Type</div>
           <select class="modal-form-select" id="template-type-input">
             <option value="General">General</option>
@@ -1143,14 +1165,19 @@
     templatesTbody.addEventListener('click', function (e) {
       var row = e.target.closest('tr');
       if (!row) return;
-      var name = row.querySelector('.tpl-name-link');
+      var nameEl = row.querySelector('.tpl-name-link');
       var typeTd = row.querySelector('td:nth-child(2)');
-      if (name) {
-        document.getElementById('editor-title').textContent = name.textContent;
-        document.getElementById('editor-tpl-name-crumb').textContent = name.textContent;
+      var descTd = row.querySelector('td:nth-child(6)');
+      var tplName = nameEl ? nameEl.textContent : '';
+      if (nameEl) {
+        document.getElementById('editor-title').textContent = tplName;
+        document.getElementById('editor-tpl-name-crumb').textContent = tplName;
       }
       document.getElementById('editor-type-select').value = typeTd ? typeTd.textContent : 'General';
       document.getElementById('editor-meta').textContent = 'Created by ' + (row.querySelector('.tpl-creator-link')?.textContent || 'George Chang');
+      formSettings = { name: tplName, description: descTd ? descTd.textContent : '', tags: '' };
+      activeSection = 'form-settings';
+      selectedQ = null;
       isNewTemplate = false;
       openEditor();
     });
@@ -1159,6 +1186,7 @@
     var createTemplateModal = document.getElementById('create-template-modal');
     document.getElementById('new-template-btn').addEventListener('click', function () {
       document.getElementById('template-name-input').value = '';
+      document.getElementById('template-desc-input').value = '';
       document.getElementById('template-type-input').value = 'General';
       document.getElementById('template-name-input').style.borderColor = '';
       createTemplateModal.classList.add('is-open');
@@ -1170,6 +1198,7 @@
     // Modal Save -> open blank editor
     document.getElementById('create-template-save').addEventListener('click', function () {
       var name = document.getElementById('template-name-input').value.trim();
+      var desc = document.getElementById('template-desc-input').value.trim();
       var type = document.getElementById('template-type-input').value;
       if (!name) {
         document.getElementById('template-name-input').style.borderColor = '#dc2626';
@@ -1180,7 +1209,8 @@
       isNewTemplate = true;
       sections = [{ id: 'sec-default', name: 'Section 1' }];
       questions = { 'sec-default': [] };
-      activeSection = 'sec-default';
+      formSettings = { name: name, description: desc, tags: '' };
+      activeSection = 'form-settings';
       selectedQ = null;
       document.getElementById('editor-title').textContent = name;
       document.getElementById('editor-tpl-name-crumb').textContent = name;
@@ -1283,7 +1313,8 @@
       ]
     };
 
-    var activeSection = 'checklist';
+    var formSettings = { name: 'Romao - Full Features', description: '', tags: '' };
+    var activeSection = 'form-settings';
     var selectedQ = null;
     var qCounter = 20;
     var insertSectionId = null;
@@ -1295,6 +1326,20 @@
     function renderSections() {
       var list = document.getElementById('section-list');
       list.innerHTML = '';
+
+      // Form Settings item — always first, no drag/remove
+      var fsDiv = document.createElement('div');
+      fsDiv.className = 'section-item section-item-fixed' + (activeSection === 'form-settings' ? ' is-active' : '');
+      fsDiv.setAttribute('data-section', 'form-settings');
+      fsDiv.innerHTML = '<svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;"><circle cx="8" cy="8" r="3"/><path d="M12.2 10.6l.8 1.4a1 1 0 0 1-.3 1.3l-.6.3a1 1 0 0 1-1.3-.3l-.8-1.4a5.1 5.1 0 0 1-2 0l-.8 1.4a1 1 0 0 1-1.3.3l-.6-.3a1 1 0 0 1-.3-1.3l.8-1.4A5.2 5.2 0 0 1 4.8 9.6l-1.5-.2a1 1 0 0 1-.8-1v-.7a1 1 0 0 1 .8-1l1.5-.2a5.2 5.2 0 0 1 1-1.7L5 3.4a1 1 0 0 1 .3-1.3l.6-.3a1 1 0 0 1 1.3.3l.8 1.3a5.1 5.1 0 0 1 2 0l.8-1.3a1 1 0 0 1 1.3-.3l.6.3a1 1 0 0 1 .3 1.3l-.8 1.4a5.2 5.2 0 0 1 1 1.7l1.5.2a1 1 0 0 1 .8 1v.7a1 1 0 0 1-.8 1l-1.5.2a5.2 5.2 0 0 1-1 1.7z"/></svg><span class="section-name">Form Settings</span>';
+      fsDiv.addEventListener('click', function () {
+        activeSection = 'form-settings';
+        selectedQ = null;
+        renderSections();
+        renderProps();
+      });
+      list.appendChild(fsDiv);
+
       sections.forEach(function (s) {
         var div = document.createElement('div');
         div.className = 'section-item' + (s.id === activeSection ? ' is-active' : '');
@@ -1597,6 +1642,20 @@
     function renderProps() {
       var empty = document.getElementById('props-empty');
       var content = document.getElementById('props-content');
+      var formPanel = document.getElementById('props-form-settings');
+
+      // Form Settings mode
+      if (activeSection === 'form-settings') {
+        empty.style.display = 'none';
+        content.style.display = 'none';
+        formPanel.style.display = '';
+        document.getElementById('props-form-name').value = formSettings.name;
+        document.getElementById('props-form-desc').value = formSettings.description;
+        document.getElementById('props-form-tags').value = formSettings.tags;
+        return;
+      }
+
+      formPanel.style.display = 'none';
       if (!selectedQ) { empty.style.display = ''; content.style.display = 'none'; return; }
       empty.style.display = 'none'; content.style.display = '';
 
@@ -1795,6 +1854,19 @@
       if (!q.followUp.options) q.followUp.options = [];
       q.followUp.options.push('Option ' + (q.followUp.options.length + 1));
       renderFollowUpOptions(q);
+    });
+
+    // Form Settings panel listeners
+    document.getElementById('props-form-name').addEventListener('input', function () {
+      formSettings.name = this.value;
+      document.getElementById('editor-title').textContent = this.value;
+      document.getElementById('editor-tpl-name-crumb').textContent = this.value;
+    });
+    document.getElementById('props-form-desc').addEventListener('input', function () {
+      formSettings.description = this.value;
+    });
+    document.getElementById('props-form-tags').addEventListener('input', function () {
+      formSettings.tags = this.value;
     });
 
     /* ============================================================
