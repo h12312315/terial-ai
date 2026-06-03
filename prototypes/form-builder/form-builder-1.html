@@ -2304,11 +2304,8 @@
       var complete = isSectionComplete(secId);
       var header = card.querySelector('.fd-section-header');
       if (complete && !sectionComplete[secId]) {
-        // Just became complete — collapse and show check
         sectionComplete[secId] = true;
         header.classList.add('is-complete');
-        card.classList.add('is-collapsed');
-        // Update count text
         var qs = questions[secId] || [];
         var countEl = header.querySelector('.fd-section-count');
         if (countEl) countEl.textContent = qs.length + '/' + qs.length;
