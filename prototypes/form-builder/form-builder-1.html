@@ -2125,8 +2125,13 @@
     createModal.addEventListener('click', function (e) { if (e.target === createModal) createModal.classList.remove('is-open'); });
 
     // Checklist data store
-    var checklists = [];
+    var checklists = [
+      { id: 'cl-0', name: 'Romao - Dynamic Variables', template: 'Romao - Dynamic Variables', createdBy: 'George Chang', createdAt: '6/2/2026', date: '6/2/2026' }
+    ];
     var checklistCounter = 1;
+
+    // Render the pre-existing checklist row
+    renderChecklistTable();
 
     checklistSaveBtn.addEventListener('click', function () {
       var template = checklistTemplateSelect.value;
