@@ -954,7 +954,7 @@
               </div>
             </div>
             <div id="props-content" style="display:none;">
-              <div class="props-title">Widget Properties</div>
+              <div class="props-title">Question Properties</div>
               <div class="props-group">
                 <div class="props-label">Name</div>
                 <input type="text" class="props-input" id="props-name" />
@@ -974,6 +974,17 @@
                 <div class="props-option-list" id="props-option-list"></div>
                 <button class="props-add-option" id="props-add-option">+ Add option</button>
               </div>
+
+              <!-- Required -->
+              <div class="props-group">
+                <div class="props-label">Required</div>
+                <div class="props-radio-group">
+                  <label><input type="radio" name="props-required" id="props-required-yes" value="yes" /><span>Required</span></label>
+                  <label><input type="radio" name="props-required" id="props-required-no" value="no" /><span>Not Required</span></label>
+                </div>
+              </div>
+
+              <div class="props-divider"></div>
 
               <!-- Allow Photo Upload -->
               <div class="props-group">
@@ -1011,17 +1022,6 @@
                     <div class="props-option-list" id="props-followup-option-list"></div>
                     <button class="props-add-option" id="props-followup-add-option">+ Add option</button>
                   </div>
-                </div>
-              </div>
-
-              <div class="props-divider"></div>
-
-              <!-- Required -->
-              <div class="props-group">
-                <div class="props-label">Required</div>
-                <div class="props-radio-group">
-                  <label><input type="radio" name="props-required" id="props-required-yes" value="yes" /><span>Required</span></label>
-                  <label><input type="radio" name="props-required" id="props-required-no" value="no" /><span>Not Required</span></label>
                 </div>
               </div>
             </div>
