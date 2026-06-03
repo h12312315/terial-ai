@@ -370,15 +370,19 @@
 
     /* Add question zone — dotted line with centered button */
     .q-add-zone {
-      margin: 0; padding: 4px 0;
-      opacity: 0; transition: opacity 0.15s;
-      position: relative;
+      margin: 0; height: 0; position: relative; z-index: 2;
     }
-    .q-add-zone:hover { opacity: 1; }
+    .q-add-zone::before {
+      content: ''; position: absolute; top: -12px; bottom: -12px; left: 0; right: 0;
+    }
     .q-add-zone-inner {
       display: flex; align-items: center; gap: 0;
       padding: 0 16px;
+      position: relative; top: -16px;
+      opacity: 0; transition: opacity 0.15s;
+      pointer-events: none;
     }
+    .q-add-zone:hover .q-add-zone-inner { opacity: 1; pointer-events: auto; }
     .q-add-zone-line {
       flex: 1; height: 0;
       border-top: 1.5px dashed var(--color-gray-4, #9ca3af);
