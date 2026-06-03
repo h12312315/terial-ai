@@ -155,6 +155,30 @@
     .templates-toolbar input::placeholder { color: var(--color-gray-4); }
     .templates-toolbar .spacer { flex: 1; }
     .templates-card { background: var(--color-white); border: 1px solid var(--color-border-default); border-radius: var(--radius-md); }
+    .tpl-more-cell { padding: 0 8px !important; }
+    .tpl-more-wrap { position: relative; display: inline-block; }
+    .tpl-more-btn {
+      width: 28px; height: 28px; display: grid; place-items: center;
+      background: none; border: 1px solid transparent; color: var(--color-gray-5);
+      border-radius: var(--radius-sm); cursor: pointer; font-size: 16px; line-height: 1;
+    }
+    .tpl-more-btn:hover { background: var(--color-gray-1); border-color: var(--color-border-default); }
+    .tpl-row-menu {
+      display: none; position: absolute; top: 100%; right: 0; margin-top: 4px;
+      background: var(--color-white); border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm); box-shadow: var(--shadow-md, 0 4px 12px rgba(0,0,0,0.12));
+      min-width: 160px; z-index: 100; padding: 4px 0;
+    }
+    .tpl-row-menu.is-open { display: block; }
+    .tpl-row-menu-item {
+      display: flex; align-items: center; gap: 8px; width: 100%;
+      padding: 8px 14px; background: none; border: none;
+      font-family: var(--font-family-base); font-size: var(--font-body-sm-size);
+      color: var(--color-text-primary); cursor: pointer; text-align: left;
+    }
+    .tpl-row-menu-item:hover { background: var(--color-gray-1); }
+    .tpl-row-menu-item.tpl-row-menu-danger { color: var(--color-danger-fg, #dc2626); }
+    .tpl-row-menu-item.tpl-row-menu-danger:hover { background: #fef2f2; }
     .tpl-name-link { color: var(--color-blue-7); text-decoration: underline; cursor: pointer; }
     .tpl-creator-link { color: var(--color-blue-7); text-decoration: underline; cursor: pointer; }
     .pagination { display: flex; align-items: center; justify-content: center; gap: var(--space-md); padding: var(--space-xl) 0; font-size: var(--font-body-sm-size); color: var(--color-text-tertiary); }
@@ -847,15 +871,15 @@
           </div>
           <div class="templates-card">
             <table class="data-table">
-              <thead><tr><th>Name</th><th>Type</th><th>Created By</th><th>Created At <span style="opacity:0.5;">&#9662;</span></th><th>Updated At</th><th>Description</th></tr></thead>
+              <thead><tr><th>Name</th><th>Type</th><th>Created By</th><th>Created At <span style="opacity:0.5;">&#9662;</span></th><th>Updated At</th><th>Description</th><th style="width:40px;"></th></tr></thead>
               <tbody id="templates-tbody">
-                <tr data-tpl="romao-full"><td><span class="tpl-name-link">Romao - Full Features</span></td><td>Safety</td><td><span class="tpl-creator-link">Romao Barbosa</span></td><td>5/15/2026 3:03 pm</td><td>5/18/2026 9:23 am</td><td></td></tr>
-                <tr data-tpl="romao-dynamic"><td><span class="tpl-name-link">Romao - Dynamic Variables</span></td><td>Safety</td><td><span class="tpl-creator-link">Romao Barbosa</span></td><td>5/13/2026 11:03 am</td><td>5/15/2026 3:01 pm</td><td></td></tr>
-                <tr data-tpl="recover-tpo"><td><span class="tpl-name-link">Recover - TPO (60 Mil)</span></td><td>General</td><td><span class="tpl-creator-link">Loren Heinbach</span></td><td>5/11/2026 11:25 am</td><td>5/11/2026 12:17 pm</td><td>Standard recover form for commercial TPO reroofs over existing low-slope assemblies</td></tr>
-                <tr data-tpl="template-1"><td><span class="tpl-name-link">Template 1</span></td><td>General</td><td><span class="tpl-creator-link">Matt Billard</span></td><td>4/2/2026 9:12 pm</td><td>4/24/2026 2:52 pm</td><td>This is a template</td></tr>
-                <tr data-tpl="hotfix-test"><td><span class="tpl-name-link">Hotfix test template</span></td><td>Safety</td><td><span class="tpl-creator-link">Romao Barbosa</span></td><td>4/1/2026 12:15 pm</td><td>4/1/2026 12:15 pm</td><td></td></tr>
-                <tr data-tpl="romao-demo"><td><span class="tpl-name-link">Romao Demo</span></td><td>General</td><td><span class="tpl-creator-link">Romao Barbosa</span></td><td>3/26/2026 9:50 am</td><td>3/26/2026 9:50 am</td><td></td></tr>
-                <tr data-tpl="test"><td><span class="tpl-name-link">Test</span></td><td>General</td><td><span class="tpl-creator-link">Romao Barbosa</span></td><td>3/19/2026 8:04 pm</td><td>3/19/2026 8:05 pm</td><td></td></tr>
+                <tr data-tpl="romao-full"><td><span class="tpl-name-link">Romao - Full Features</span></td><td>Safety</td><td><span class="tpl-creator-link">Romao Barbosa</span></td><td>5/15/2026 3:03 pm</td><td>5/18/2026 9:23 am</td><td></td><td class="tpl-more-cell"><div class="tpl-more-wrap"><button class="tpl-more-btn">&#8942;</button></div></td></tr>
+                <tr data-tpl="romao-dynamic"><td><span class="tpl-name-link">Romao - Dynamic Variables</span></td><td>Safety</td><td><span class="tpl-creator-link">Romao Barbosa</span></td><td>5/13/2026 11:03 am</td><td>5/15/2026 3:01 pm</td><td></td><td class="tpl-more-cell"><div class="tpl-more-wrap"><button class="tpl-more-btn">&#8942;</button></div></td></tr>
+                <tr data-tpl="recover-tpo"><td><span class="tpl-name-link">Recover - TPO (60 Mil)</span></td><td>General</td><td><span class="tpl-creator-link">Loren Heinbach</span></td><td>5/11/2026 11:25 am</td><td>5/11/2026 12:17 pm</td><td>Standard recover form for commercial TPO reroofs over existing low-slope assemblies</td><td class="tpl-more-cell"><div class="tpl-more-wrap"><button class="tpl-more-btn">&#8942;</button></div></td></tr>
+                <tr data-tpl="template-1"><td><span class="tpl-name-link">Template 1</span></td><td>General</td><td><span class="tpl-creator-link">Matt Billard</span></td><td>4/2/2026 9:12 pm</td><td>4/24/2026 2:52 pm</td><td>This is a template</td><td class="tpl-more-cell"><div class="tpl-more-wrap"><button class="tpl-more-btn">&#8942;</button></div></td></tr>
+                <tr data-tpl="hotfix-test"><td><span class="tpl-name-link">Hotfix test template</span></td><td>Safety</td><td><span class="tpl-creator-link">Romao Barbosa</span></td><td>4/1/2026 12:15 pm</td><td>4/1/2026 12:15 pm</td><td></td><td class="tpl-more-cell"><div class="tpl-more-wrap"><button class="tpl-more-btn">&#8942;</button></div></td></tr>
+                <tr data-tpl="romao-demo"><td><span class="tpl-name-link">Romao Demo</span></td><td>General</td><td><span class="tpl-creator-link">Romao Barbosa</span></td><td>3/26/2026 9:50 am</td><td>3/26/2026 9:50 am</td><td></td><td class="tpl-more-cell"><div class="tpl-more-wrap"><button class="tpl-more-btn">&#8942;</button></div></td></tr>
+                <tr data-tpl="test"><td><span class="tpl-name-link">Test</span></td><td>General</td><td><span class="tpl-creator-link">Romao Barbosa</span></td><td>3/19/2026 8:04 pm</td><td>3/19/2026 8:05 pm</td><td></td><td class="tpl-more-cell"><div class="tpl-more-wrap"><button class="tpl-more-btn">&#8942;</button></div></td></tr>
               </tbody>
             </table>
           </div>
@@ -1221,7 +1245,62 @@
       { id: 'comments', name: 'Additional Comments' }
     ];
 
+    // Close any open row menu on outside click
+    var activeRowMenu = null;
+    document.addEventListener('click', function () {
+      if (activeRowMenu) { activeRowMenu.remove(); activeRowMenu = null; }
+    });
+
     templatesTbody.addEventListener('click', function (e) {
+      // Handle more button click
+      if (e.target.closest('.tpl-more-btn')) {
+        e.stopPropagation();
+        var btn = e.target.closest('.tpl-more-btn');
+        var wrap = btn.closest('.tpl-more-wrap');
+        var row = btn.closest('tr');
+
+        // Close existing menu
+        if (activeRowMenu) { activeRowMenu.remove(); activeRowMenu = null; }
+
+        // Create dropdown
+        var menu = document.createElement('div');
+        menu.className = 'tpl-row-menu is-open';
+        menu.innerHTML =
+          '<button class="tpl-row-menu-item" data-action="duplicate"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M2 11V3a1.5 1.5 0 0 1 1.5-1.5H11"/></svg>Duplicate</button>' +
+          '<button class="tpl-row-menu-item tpl-row-menu-danger" data-action="delete"><svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V2.7a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1V4M6.5 7v4M9.5 7v4"/><path d="M3 4l.7 9.3a1.5 1.5 0 0 0 1.5 1.4h5.6a1.5 1.5 0 0 0 1.5-1.4L13 4"/></svg>Delete</button>';
+        menu.addEventListener('click', function (ev) {
+          ev.stopPropagation();
+          var action = ev.target.closest('[data-action]');
+          if (!action) return;
+          menu.remove(); activeRowMenu = null;
+
+          if (action.dataset.action === 'duplicate') {
+            var nameEl = row.querySelector('.tpl-name-link');
+            var clone = row.cloneNode(true);
+            var cloneName = clone.querySelector('.tpl-name-link');
+            if (cloneName) cloneName.textContent = (nameEl ? nameEl.textContent : 'Template') + ' (Copy)';
+            var now = new Date();
+            var dateStr = (now.getMonth()+1) + '/' + now.getDate() + '/' + now.getFullYear() + ' ' +
+              ((now.getHours() % 12) || 12) + ':' + (now.getMinutes() < 10 ? '0' : '') + now.getMinutes() + ' ' +
+              (now.getHours() >= 12 ? 'pm' : 'am');
+            var tds = clone.querySelectorAll('td');
+            if (tds[2]) tds[2].innerHTML = '<span class="tpl-creator-link">George Chang</span>';
+            if (tds[3]) tds[3].textContent = dateStr;
+            if (tds[4]) tds[4].textContent = dateStr;
+            templatesTbody.insertBefore(clone, row.nextSibling);
+          } else if (action.dataset.action === 'delete') {
+            if (confirm('Are you sure you want to delete this template?')) {
+              row.remove();
+            }
+          }
+        });
+        wrap.appendChild(menu);
+        activeRowMenu = menu;
+        return;
+      }
+
+      // Normal row click -> open editor
+      if (e.target.closest('.tpl-more-cell')) return;
       var row = e.target.closest('tr');
       if (!row) return;
       var nameEl = row.querySelector('.tpl-name-link');
@@ -1344,7 +1423,8 @@
           '<td><span class="tpl-creator-link">George Chang</span></td>' +
           '<td>' + dateStr + '</td>' +
           '<td>' + dateStr + '</td>' +
-          '<td></td>';
+          '<td></td>' +
+          '<td class="tpl-more-cell"><div class="tpl-more-wrap"><button class="tpl-more-btn">&#8942;</button></div></td>';
         templatesTbody.insertBefore(tr, templatesTbody.firstChild);
 
         // Also add to the template dropdown in New Form modal
