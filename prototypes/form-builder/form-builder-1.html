@@ -2360,12 +2360,31 @@
           if (q.type === 'image') {
             var labelRow = document.createElement('div');
             labelRow.className = 'fd-question';
-            labelRow.innerHTML = '<span class="fd-question-label">' + q.label + '</span>';
+            labelRow.innerHTML = '<span class="fd-question-label">' + q.label + (q.required !== false ? ' <span style="color:#dc2626;font-weight:700;">*</span>' : '') + '</span>';
             body.appendChild(labelRow);
             var zone = document.createElement('div');
             zone.className = 'fd-image-zone';
             zone.innerHTML = '<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4"/><polyline points="7 7 12 2 17 7"/><line x1="12" y1="2" x2="12" y2="15"/></svg><div>Click to upload images</div>';
-            zone.addEventListener('click', function () { formAnswers[q.id] = true; zone.innerHTML = '<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 9 17 20 6"/></svg><div>Image uploaded</div>'; zone.style.borderColor = '#22c55e'; zone.style.color = '#22c55e'; checkSectionCompletion(sec.id, card); });
+            (function(zoneEl, qId, secId, cardEl) {
+              zoneEl.addEventListener('click', function () {
+                formAnswers[qId] = true;
+                zoneEl.style.border = 'none';
+                zoneEl.style.padding = '0';
+                zoneEl.style.textAlign = 'left';
+                zoneEl.style.display = 'flex';
+                zoneEl.style.gap = '10px';
+                zoneEl.style.alignItems = 'flex-start';
+                zoneEl.innerHTML =
+                  '<div style="width:80px;height:80px;border-radius:6px;overflow:hidden;flex-shrink:0;background:#e5e7eb;">' +
+                    '<img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=160&h=160&fit=crop" style="width:100%;height:100%;object-fit:cover;display:block;" />' +
+                  '</div>' +
+                  '<div style="width:80px;height:80px;border:2px dashed var(--color-border-default);border-radius:6px;display:grid;place-items:center;cursor:pointer;flex-shrink:0;color:var(--color-text-tertiary);">' +
+                    '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>' +
+                  '</div>';
+                zoneEl.style.color = '';
+                checkSectionCompletion(secId, cardEl);
+              });
+            })(zone, q.id, sec.id, card);
             body.appendChild(zone);
             return;
           }
@@ -2375,7 +2394,11 @@
 
           var labelEl = document.createElement('span');
           labelEl.className = 'fd-question-label';
-          labelEl.textContent = q.label;
+          if (q.required !== false) {
+            labelEl.innerHTML = q.label + ' <span style="color:#dc2626;font-weight:700;">*</span>';
+          } else {
+            labelEl.textContent = q.label;
+          }
           row.appendChild(labelEl);
 
           var valueEl = document.createElement('div');
@@ -2458,12 +2481,17 @@
           if (q.allowPhotos) {
             var photoZone = document.createElement('div');
             photoZone.className = 'fd-image-zone';
-            photoZone.style.margin = '0 24px 8px';
+            photoZone.style.cssText = 'margin:0 24px 8px;padding:12px;';
             photoZone.innerHTML = '<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;"><path d="M3 15v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4"/><polyline points="7 7 12 2 17 7"/><line x1="12" y1="2" x2="12" y2="15"/></svg><div style="font-size:12px;">Upload photo (optional)</div>';
-            photoZone.style.padding = '12px';
             photoZone.addEventListener('click', function () {
-              photoZone.innerHTML = '<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;"><polyline points="4 12 9 17 20 6"/></svg><div style="font-size:12px;">Photo uploaded</div>';
-              photoZone.style.borderColor = '#22c55e'; photoZone.style.color = '#22c55e';
+              photoZone.style.cssText = 'margin:0 24px 8px;padding:0;border:none;text-align:left;display:flex;gap:10px;align-items:flex-start;';
+              photoZone.innerHTML =
+                '<div style="width:80px;height:80px;border-radius:6px;overflow:hidden;flex-shrink:0;background:#e5e7eb;">' +
+                  '<img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=160&h=160&fit=crop" style="width:100%;height:100%;object-fit:cover;display:block;" />' +
+                '</div>' +
+                '<div style="width:80px;height:80px;border:2px dashed var(--color-border-default);border-radius:6px;display:grid;place-items:center;cursor:pointer;flex-shrink:0;color:var(--color-text-tertiary);">' +
+                  '<svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>' +
+                '</div>';
             });
             body.appendChild(photoZone);
           }
@@ -2472,7 +2500,7 @@
           if (q.followUp) {
             var fuWrap = document.createElement('div');
             fuWrap.className = 'fd-question';
-            fuWrap.style.cssText = 'padding-left:48px;display:none;background:var(--color-gray-1);border-left:3px solid var(--color-blue-7);margin:0 24px 4px;border-radius:var(--radius-sm);';
+            fuWrap.style.cssText = 'padding-left:36px;display:none;';
             fuWrap.setAttribute('data-followup-for', q.id);
             var fuLabel = document.createElement('span');
             fuLabel.className = 'fd-question-label';
