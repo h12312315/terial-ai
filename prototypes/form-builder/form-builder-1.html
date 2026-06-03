@@ -1019,6 +1019,30 @@
     </div>
   </div>
 
+  <!-- Create Form Template Modal -->
+  <div class="modal-overlay" id="create-template-modal">
+    <div class="modal-box" style="width:520px;">
+      <div class="modal-header"><h3>Create Form Template</h3><button class="modal-close" id="create-template-close"><svg viewBox="0 0 16 16" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg></button></div>
+      <div class="modal-body" style="padding:0;">
+        <div class="modal-form-row">
+          <div class="modal-form-label">Name <span class="req">*</span></div>
+          <input type="text" class="modal-form-input" id="template-name-input" placeholder="" />
+        </div>
+        <div class="modal-form-row">
+          <div class="modal-form-label">Type</div>
+          <select class="modal-form-select" id="template-type-input">
+            <option value="General">General</option>
+            <option value="Safety">Safety</option>
+          </select>
+        </div>
+      </div>
+      <div class="modal-footer" style="gap:8px;">
+        <button class="modal-cancel-btn" id="create-template-cancel">Cancel</button>
+        <button class="modal-save-btn" id="create-template-save">Save</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Add Question Modal -->
   <div class="modal-overlay" id="add-q-modal">
     <div class="modal-box">
@@ -1131,17 +1155,36 @@
       openEditor();
     });
 
-    // New Form Template button
+    // New Form Template button -> open modal
+    var createTemplateModal = document.getElementById('create-template-modal');
     document.getElementById('new-template-btn').addEventListener('click', function () {
+      document.getElementById('template-name-input').value = '';
+      document.getElementById('template-type-input').value = 'General';
+      document.getElementById('template-name-input').style.borderColor = '';
+      createTemplateModal.classList.add('is-open');
+    });
+    document.getElementById('create-template-close').addEventListener('click', function () { createTemplateModal.classList.remove('is-open'); });
+    document.getElementById('create-template-cancel').addEventListener('click', function () { createTemplateModal.classList.remove('is-open'); });
+    createTemplateModal.addEventListener('click', function (e) { if (e.target === createTemplateModal) createTemplateModal.classList.remove('is-open'); });
+
+    // Modal Save -> open blank editor
+    document.getElementById('create-template-save').addEventListener('click', function () {
+      var name = document.getElementById('template-name-input').value.trim();
+      var type = document.getElementById('template-type-input').value;
+      if (!name) {
+        document.getElementById('template-name-input').style.borderColor = '#dc2626';
+        return;
+      }
+      createTemplateModal.classList.remove('is-open');
+
       isNewTemplate = true;
-      // Reset to blank state
       sections = [{ id: 'sec-default', name: 'Section 1' }];
       questions = { 'sec-default': [] };
       activeSection = 'sec-default';
       selectedQ = null;
-      document.getElementById('editor-title').textContent = 'Untitled Template';
-      document.getElementById('editor-tpl-name-crumb').textContent = 'Untitled Template';
-      document.getElementById('editor-type-select').value = 'General';
+      document.getElementById('editor-title').textContent = name;
+      document.getElementById('editor-tpl-name-crumb').textContent = name;
+      document.getElementById('editor-type-select').value = type;
       document.getElementById('editor-meta').textContent = 'Created by George Chang';
       openEditor();
     });
