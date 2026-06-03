@@ -1247,8 +1247,14 @@
 
     // Close any open row menu on outside click
     var activeRowMenu = null;
+    var justClosedMenu = false;
     document.addEventListener('click', function () {
-      if (activeRowMenu) { activeRowMenu.remove(); activeRowMenu = null; }
+      if (activeRowMenu) {
+        activeRowMenu.remove();
+        activeRowMenu = null;
+        justClosedMenu = true;
+        setTimeout(function () { justClosedMenu = false; }, 0);
+      }
     });
 
     templatesTbody.addEventListener('click', function (e) {
@@ -1300,6 +1306,7 @@
       }
 
       // Normal row click -> open editor
+      if (justClosedMenu) return;
       if (e.target.closest('.tpl-more-cell')) return;
       var row = e.target.closest('tr');
       if (!row) return;
