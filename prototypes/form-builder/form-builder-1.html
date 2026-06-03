@@ -368,36 +368,53 @@
       font-size: 12px; min-width: 140px;
     }
 
-    /* Add question zone (full width) */
+    /* Add question zone — dotted line with centered button */
     .q-add-zone {
-      margin: 0 8px; opacity: 0; transition: opacity 0.12s;
+      margin: 0; opacity: 0; transition: opacity 0.15s;
       height: 0; overflow: visible; position: relative;
     }
     .q-add-zone:hover { opacity: 1; }
+    .q-add-zone-inner {
+      position: relative; top: -16px;
+      display: flex; align-items: center; gap: 0;
+      padding: 0 16px;
+    }
+    .q-add-zone-line {
+      flex: 1; height: 0;
+      border-top: 1.5px dashed var(--color-gray-4, #9ca3af);
+    }
     .q-add-zone button {
-      position: relative; top: -12px;
-      width: 100%; padding: 5px 0;
-      background: none; border: 1px dashed var(--color-border-strong);
-      border-radius: var(--radius-sm); font-family: var(--font-family-base);
-      font-size: var(--font-body-sm-size); color: var(--color-text-tertiary);
+      flex-shrink: 0; white-space: nowrap;
+      padding: 5px 18px;
+      background: var(--color-gray-6, #4b5563); border: none;
+      border-radius: var(--radius-full, 999px); font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size); color: var(--color-white);
       cursor: pointer; text-align: center;
     }
-    .q-add-zone button:hover { background: var(--color-blue-1, #f0f7ff); border-color: var(--color-blue-7); color: var(--color-blue-7); }
+    .q-add-zone button:hover { background: var(--color-gray-7, #374151); }
 
-    /* Section end add zone (hover-only) */
+    /* Section end add zone */
     .q-section-add {
       padding: 6px 16px 14px;
-      opacity: 0; transition: opacity 0.12s;
+      opacity: 0; transition: opacity 0.15s;
     }
     .q-section-add:hover { opacity: 1; }
+    .q-section-add-inner {
+      display: flex; align-items: center; gap: 0;
+    }
+    .q-section-add-line {
+      flex: 1; height: 0;
+      border-top: 1.5px dashed var(--color-gray-4, #9ca3af);
+    }
     .q-section-add button {
-      width: 100%; padding: 6px 0;
-      background: none; border: 1px dashed var(--color-border-strong);
-      border-radius: var(--radius-sm); font-family: var(--font-family-base);
-      font-size: var(--font-body-sm-size); color: var(--color-text-tertiary);
+      flex-shrink: 0; white-space: nowrap;
+      padding: 5px 18px;
+      background: var(--color-gray-6, #4b5563); border: none;
+      border-radius: var(--radius-full, 999px); font-family: var(--font-family-base);
+      font-size: var(--font-body-sm-size); color: var(--color-white);
       cursor: pointer; text-align: center;
     }
-    .q-section-add button:hover { background: var(--color-blue-1, #f0f7ff); border-color: var(--color-blue-7); color: var(--color-blue-7); }
+    .q-section-add button:hover { background: var(--color-gray-7, #374151); }
 
     /* --- Right: Properties panel --- */
     .editor-props {
@@ -1425,14 +1442,21 @@
         // Add zone at the end / section add button
         var addDiv = document.createElement('div');
         addDiv.className = 'q-section-add';
+        var addInner = document.createElement('div');
+        addInner.className = 'q-section-add-inner';
+        addInner.innerHTML = '<div class="q-section-add-line"></div>';
         var addBtn = document.createElement('button');
-        addBtn.textContent = '+ Add question';
+        addBtn.textContent = '+ Add Widget';
         addBtn.addEventListener('click', function () {
           insertSectionId = sec.id;
           insertIndex = (questions[sec.id] || []).length;
           document.getElementById('add-q-modal').classList.add('is-open');
         });
-        addDiv.appendChild(addBtn);
+        addInner.appendChild(addBtn);
+        var addLine2 = document.createElement('div');
+        addLine2.className = 'q-section-add-line';
+        addInner.appendChild(addLine2);
+        addDiv.appendChild(addInner);
         block.appendChild(addDiv);
 
         paper.appendChild(block);
@@ -1622,14 +1646,21 @@
     function makeAddZone(sectionId, idx) {
       var zone = document.createElement('div');
       zone.className = 'q-add-zone';
+      var inner = document.createElement('div');
+      inner.className = 'q-add-zone-inner';
+      inner.innerHTML = '<div class="q-add-zone-line"></div>';
       var btn = document.createElement('button');
-      btn.textContent = '+ Add question';
+      btn.textContent = '+ Add Widget';
       btn.addEventListener('click', function () {
         insertSectionId = sectionId;
         insertIndex = idx;
         document.getElementById('add-q-modal').classList.add('is-open');
       });
-      zone.appendChild(btn);
+      inner.appendChild(btn);
+      var line2 = document.createElement('div');
+      line2.className = 'q-add-zone-line';
+      inner.appendChild(line2);
+      zone.appendChild(inner);
       return zone;
     }
 
