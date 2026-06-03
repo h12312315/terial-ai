@@ -577,7 +577,7 @@
     .form-detail-header .fd-meta { font-size: var(--font-body-sm-size); color: var(--color-text-tertiary); }
     .form-detail-header .fd-actions { display: flex; gap: var(--space-sm); align-items: center; }
     .fd-submit-btn {
-      padding: 8px 20px; background: var(--color-primary-6); color: var(--color-gray-9);
+      padding: 8px 20px; background: var(--color-gray-9); color: var(--color-white);
       border: none; border-radius: var(--radius-sm); font-family: var(--font-family-base);
       font-size: var(--font-body-sm-size); font-weight: var(--font-weight-semibold); cursor: pointer;
     }
@@ -1457,7 +1457,8 @@
     var sections = [
       { id: 'checklist', name: 'Checklist' },
       { id: 'ppe', name: 'Personal Protective Equipment' },
-      { id: 'photos', name: 'Photos' },
+      { id: 'hazards', name: 'Hazard Assessment' },
+      { id: 'photos', name: 'Site Photos & Documentation' },
       { id: 'comments', name: 'Additional Comments' }
     ];
 
@@ -1466,34 +1467,42 @@
         { id: 'q1', label: 'Date', type: 'text', options: [] },
         { id: 'q2', label: 'Inspection Performed By', type: 'text', options: [] },
         { id: 'q3', label: 'Roof Height (ft)', type: 'text', options: [] },
-        { id: 'q4', label: 'Fall Hazards Observed', type: 'binary', options: ['Yes','No','N/A'] },
-        { id: 'q5', label: 'Fall Arrest Retrieval Plan', type: 'text', options: [] }
+        { id: 'q4', label: 'Fall Hazards Observed', type: 'binary', options: ['Yes','No','N/A'], followUp: { question: 'Describe the fall hazards observed', type: 'text', options: [], triggers: ['Yes'] } },
+        { id: 'q5', label: 'Weather Conditions', type: 'single', options: ['Clear','Cloudy','Rain','Snow','Wind'] },
+        { id: 'q6', label: 'Site Condition', type: 'binary', options: ['Acceptable','Unacceptable'], allowPhotos: true }
       ],
       ppe: [
-        { id: 'q6', label: 'Hand Protection', type: 'binary', options: ['Yes','No','N/A'] },
-        { id: 'q7', label: 'Hearing Protection', type: 'binary', options: ['Yes','No','N/A'] },
-        { id: 'q8', label: 'Foot Protection', type: 'binary', options: ['Yes','No','N/A'] },
-        { id: 'q9', label: 'Hard Hats Worn', type: 'binary', options: ['Yes','No','N/A'] },
-        { id: 'q10', label: 'Face Shields Worn', type: 'binary', options: ['Yes','No','N/A'] },
-        { id: 'q11', label: 'Harness Properly Worn', type: 'binary', options: ['Yes','No','N/A'] },
-        { id: 'q12', label: 'Life Line Properly Anchored', type: 'binary', options: ['Yes','No','N/A'] },
-        { id: 'q13', label: 'Ladder Properly Tied Off', type: 'binary', options: ['Yes','No','N/A'] },
-        { id: 'q14', label: 'Proper Man Lift Utilization', type: 'binary', options: ['Yes','No','N/A'] },
-        { id: 'q15', label: 'Acceptable Extension Cords', type: 'binary', options: ['Yes','No','N/A'] },
-        { id: 'q16', label: 'Fire Extinguisher Accessible', type: 'binary', options: ['Yes','No','N/A'] }
+        { id: 'q7', label: 'Hand Protection', type: 'binary', options: ['Yes','No','N/A'] },
+        { id: 'q8', label: 'Hearing Protection', type: 'binary', options: ['Yes','No','N/A'] },
+        { id: 'q9', label: 'Foot Protection', type: 'binary', options: ['Yes','No','N/A'] },
+        { id: 'q10', label: 'Hard Hats Worn', type: 'binary', options: ['Yes','No','N/A'] },
+        { id: 'q11', label: 'Face Shields Worn', type: 'binary', options: ['Yes','No','N/A'] },
+        { id: 'q12', label: 'Harness Properly Worn', type: 'binary', options: ['Yes','No','N/A'] },
+        { id: 'q13', label: 'Additional PPE Used', type: 'multi', options: ['Safety Glasses','Dust Mask','Respirator','Welding Shield','High-Vis Vest'] },
+        { id: 'q14', label: 'PPE Condition Notes', type: 'text', options: [], required: false }
+      ],
+      hazards: [
+        { id: 'q15', label: 'Type of Work Being Performed', type: 'single', options: ['Roofing','Electrical','Plumbing','General Construction','Demolition','Painting'] },
+        { id: 'q16', label: 'Hazards Identified', type: 'multi', options: ['Fall Hazard','Electrical Hazard','Chemical Exposure','Confined Space','Heat Stress','Noise'] },
+        { id: 'q17', label: 'Are Guardrails Installed', type: 'binary', options: ['Yes','No','N/A'], followUp: { question: 'Why are guardrails not installed?', type: 'text', options: [], triggers: ['No'] } },
+        { id: 'q18', label: 'Risk Level', type: 'single', options: ['Low','Medium','High','Critical'] },
+        { id: 'q19', label: 'Corrective Actions Required', type: 'binary', options: ['Yes','No'], followUp: { question: 'Describe the corrective actions needed', type: 'text', options: [], triggers: ['Yes'] }, allowPhotos: true }
       ],
       photos: [
-        { id: 'q17', label: 'Photos', type: 'image', options: [] }
+        { id: 'q20', label: 'Overall Site Photo', type: 'image', options: [] },
+        { id: 'q21', label: 'Hazard Area Photo', type: 'image', options: [] },
+        { id: 'q22', label: 'Photo Notes', type: 'text', options: [] }
       ],
       comments: [
-        { id: 'q18', label: 'Additional Comments', type: 'text', options: [] }
+        { id: 'q23', label: 'Additional Comments', type: 'text', options: [] },
+        { id: 'q24', label: 'Supervisor Sign-Off', type: 'binary', options: ['Approved','Rejected'], followUp: { question: 'Reason for rejection', type: 'text', options: [], triggers: ['Rejected'] } }
       ]
     };
 
-    var formSettings = { name: 'Romao - Full Features', description: '', tags: 'Safety' };
+    var formSettings = { name: 'Romao - Dynamic Variables', description: '', tags: 'Safety' };
     var activeSection = 'form-settings';
     var selectedQ = null;
-    var qCounter = 20;
+    var qCounter = 30;
     var insertSectionId = null;
     var insertIndex = -1;
 
@@ -2202,13 +2211,17 @@
     }
 
     // Back link
-    document.getElementById('fd-back-link').addEventListener('click', function () {
+    function goBackToProjects() {
       showPage('projects');
       productionChildren.classList.add('is-open');
       productionCaret.textContent = '▴';
       navRows.forEach(function (r) { r.classList.remove('is-section-active'); });
       productionRow.classList.add('is-section-active');
-    });
+    }
+    document.getElementById('fd-back-link').addEventListener('click', goBackToProjects);
+
+    // Save Draft → go back to parent page
+    document.querySelector('.fd-save-draft-btn').addEventListener('click', goBackToProjects);
 
     // Submit modal
     var submitModal = document.getElementById('submit-checklist-modal');
@@ -2271,10 +2284,9 @@
 
     function isSectionComplete(secId) {
       var qs = questions[secId] || [];
-      var nonImage = qs.filter(function (q) { return q.type !== 'image'; });
-      if (nonImage.length === 0) return true; // no answerable questions → complete
-      for (var i = 0; i < nonImage.length; i++) {
-        if (!isQuestionAnswered(nonImage[i])) return false;
+      if (qs.length === 0) return false;
+      for (var i = 0; i < qs.length; i++) {
+        if (!isQuestionAnswered(qs[i])) return false;
       }
       return true;
     }
@@ -2307,10 +2319,9 @@
       if (header && !complete) {
         var qs = questions[secId] || [];
         var answered = 0;
-        qs.forEach(function (q) { if (q.type !== 'image' && isQuestionAnswered(q)) answered++; });
-        var nonImage = qs.filter(function (q) { return q.type !== 'image'; }).length;
+        qs.forEach(function (q) { if (isQuestionAnswered(q)) answered++; });
         var countEl = header.querySelector('.fd-section-count');
-        if (countEl) countEl.textContent = answered + '/' + nonImage;
+        if (countEl) countEl.textContent = answered + '/' + qs.length;
       }
       updateProgress();
     }
@@ -2328,13 +2339,13 @@
         var header = document.createElement('div');
         header.className = 'fd-section-header';
         var qs = questions[sec.id] || [];
-        var nonImageCount = qs.filter(function (q) { return q.type !== 'image'; }).length;
+        var totalCount = qs.length;
 
         header.innerHTML =
           '<span class="fd-caret"><svg viewBox="0 0 16 16"><polyline points="4 6 8 10 12 6"/></svg></span>' +
           '<span class="fd-section-title">' + sec.name + '</span>' +
           '<span class="fd-check"><svg viewBox="0 0 12 12"><polyline points="2 6 5 9 10 3"/></svg></span>' +
-          '<span class="fd-section-count">0/' + nonImageCount + '</span>';
+          '<span class="fd-section-count">0/' + totalCount + '</span>';
 
         header.addEventListener('click', function () {
           card.classList.toggle('is-collapsed');
@@ -2354,7 +2365,7 @@
             var zone = document.createElement('div');
             zone.className = 'fd-image-zone';
             zone.innerHTML = '<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 15v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4"/><polyline points="7 7 12 2 17 7"/><line x1="12" y1="2" x2="12" y2="15"/></svg><div>Click to upload images</div>';
-            zone.addEventListener('click', function () { formAnswers[q.id] = true; zone.innerHTML = '<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 9 17 20 6"/></svg><div>Image uploaded</div>'; zone.style.borderColor = '#22c55e'; zone.style.color = '#22c55e'; });
+            zone.addEventListener('click', function () { formAnswers[q.id] = true; zone.innerHTML = '<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 12 9 17 20 6"/></svg><div>Image uploaded</div>'; zone.style.borderColor = '#22c55e'; zone.style.color = '#22c55e'; checkSectionCompletion(sec.id, card); });
             body.appendChild(zone);
             return;
           }
@@ -2442,19 +2453,66 @@
 
           row.appendChild(valueEl);
           body.appendChild(row);
+
+          // Allow Photo Upload indicator
+          if (q.allowPhotos) {
+            var photoZone = document.createElement('div');
+            photoZone.className = 'fd-image-zone';
+            photoZone.style.margin = '0 24px 8px';
+            photoZone.innerHTML = '<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;"><path d="M3 15v4a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-4"/><polyline points="7 7 12 2 17 7"/><line x1="12" y1="2" x2="12" y2="15"/></svg><div style="font-size:12px;">Upload photo (optional)</div>';
+            photoZone.style.padding = '12px';
+            photoZone.addEventListener('click', function () {
+              photoZone.innerHTML = '<svg viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="width:20px;height:20px;"><polyline points="4 12 9 17 20 6"/></svg><div style="font-size:12px;">Photo uploaded</div>';
+              photoZone.style.borderColor = '#22c55e'; photoZone.style.color = '#22c55e';
+            });
+            body.appendChild(photoZone);
+          }
+
+          // Follow-up question (shown when trigger answer is selected)
+          if (q.followUp) {
+            var fuWrap = document.createElement('div');
+            fuWrap.className = 'fd-question';
+            fuWrap.style.cssText = 'padding-left:48px;display:none;background:var(--color-gray-1);border-left:3px solid var(--color-blue-7);margin:0 24px 4px;border-radius:var(--radius-sm);';
+            fuWrap.setAttribute('data-followup-for', q.id);
+            var fuLabel = document.createElement('span');
+            fuLabel.className = 'fd-question-label';
+            fuLabel.style.fontSize = '12px';
+            fuLabel.textContent = '↳ ' + q.followUp.question;
+            fuWrap.appendChild(fuLabel);
+            var fuValue = document.createElement('div');
+            fuValue.className = 'fd-question-value';
+            if (q.followUp.type === 'text') {
+              var fuInp = document.createElement('input');
+              fuInp.type = 'text'; fuInp.className = 'fd-text-input'; fuInp.placeholder = 'Enter text...';
+              fuValue.appendChild(fuInp);
+            }
+            fuWrap.appendChild(fuValue);
+            body.appendChild(fuWrap);
+
+            // Wire up trigger visibility
+            (function(qRef, fuEl) {
+              var triggers = qRef.followUp.triggers || [];
+              var origBinHandler = null;
+              // Watch for answer changes on the parent question
+              var observer = new MutationObserver(function() {
+                var ans = formAnswers[qRef.id];
+                fuEl.style.display = (ans && triggers.indexOf(ans) >= 0) ? 'flex' : 'none';
+              });
+              // Use a simpler approach: check on any interaction
+              row.addEventListener('click', function() {
+                setTimeout(function() {
+                  var ans = formAnswers[qRef.id];
+                  fuEl.style.display = (ans && triggers.indexOf(ans) >= 0) ? 'flex' : 'none';
+                }, 10);
+              });
+            })(q, fuWrap);
+          }
         });
 
         card.appendChild(body);
         paper.appendChild(card);
 
-        // Auto-collapse sections that are already complete (e.g. 0 answerable questions)
-        if (isSectionComplete(sec.id)) {
-          sectionComplete[sec.id] = true;
-          header.classList.add('is-complete');
-          card.classList.add('is-collapsed');
-          var countEl = header.querySelector('.fd-section-count');
-          if (countEl) countEl.textContent = nonImageCount + '/' + nonImageCount;
-        }
+        // No auto-collapse on initial render — all sections start open with 0% progress
       });
 
       updateProgress();
