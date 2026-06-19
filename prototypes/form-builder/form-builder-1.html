@@ -325,7 +325,21 @@
       font-size: 15px; font-weight: var(--font-weight-semibold);
       color: var(--color-text-primary);
       text-transform: uppercase; letter-spacing: 0.02em;
+      display: flex; align-items: center; justify-content: space-between;
     }
+    .section-block-actions {
+      display: flex; gap: 6px; align-items: center;
+      opacity: 0; transition: opacity 0.15s;
+    }
+    .section-block:hover .section-block-actions { opacity: 1; }
+    .section-block-actions button {
+      background: none; border: 1px solid var(--color-border-default);
+      color: var(--color-text-tertiary); cursor: pointer; padding: 0; line-height: 1;
+      width: 26px; height: 26px; display: grid; place-items: center;
+      border-radius: var(--radius-sm);
+    }
+    .section-block-actions button:hover { background: var(--color-gray-1); color: var(--color-text-secondary); border-color: var(--color-border-strong); }
+    .section-block-actions button svg { width: 14px; height: 14px; display: block; }
 
     /* --- Question row (inline: label left, answer right) --- */
     .q-row {
@@ -377,18 +391,21 @@
       flex-shrink: 0; margin-left: 16px;
       display: flex; align-items: center;
     }
-    .q-row-remove {
-      position: absolute; top: 50%; right: -11px; transform: translateY(-50%);
+    .q-row-actions {
+      position: absolute; top: 50%; right: -56px; transform: translateY(-50%);
+      display: flex; gap: 4px; align-items: center;
+      opacity: 0; transition: opacity 0.12s;
+      z-index: 3;
+    }
+    .q-row.is-selected .q-row-actions { opacity: 1; }
+    .q-row-remove, .q-row-dup {
       background: var(--color-gray-5, #6b7280); border: none; color: var(--color-white);
       cursor: pointer; padding: 0; line-height: 1;
       width: 22px; height: 22px; display: grid; place-items: center;
       border-radius: 50%;
-      opacity: 0; transition: opacity 0.12s;
-      z-index: 3;
     }
-    .q-row-remove svg { width: 12px; height: 12px; display: block; }
-    .q-row.is-selected .q-row-remove { opacity: 1; }
-    .q-row-remove:hover { background: var(--color-gray-6, #4b5563); }
+    .q-row-remove svg, .q-row-dup svg { width: 12px; height: 12px; display: block; }
+    .q-row-remove:hover, .q-row-dup:hover { background: var(--color-gray-6, #4b5563); }
 
     /* Binary Yes/No/N/A */
     .q-binary { display: flex; align-items: center; gap: 0; }
@@ -1569,6 +1586,15 @@
        Scroll spy: highlight active section based on scroll
        ============================================================ */
     var canvasEl = document.getElementById('editor-canvas');
+    canvasEl.addEventListener('click', function (e) {
+      if (!e.target.closest('.q-row') && !e.target.closest('.section-block-actions')) {
+        if (selectedQ) {
+          selectedQ = null;
+          renderAllQuestions();
+          renderProps();
+        }
+      }
+    });
     canvasEl.addEventListener('scroll', function () {
       var scrollTop = canvasEl.scrollTop;
       var found = null;
@@ -1599,10 +1625,60 @@
         block.className = 'section-block';
         block.id = 'section-' + sec.id;
 
-        // Section title
+        // Section title with actions
         var titleDiv = document.createElement('div');
         titleDiv.className = 'section-block-title';
-        titleDiv.textContent = sec.name;
+        var titleText = document.createElement('span');
+        titleText.textContent = sec.name;
+        titleDiv.appendChild(titleText);
+
+        var secActions = document.createElement('div');
+        secActions.className = 'section-block-actions';
+
+        var secDupBtn = document.createElement('button');
+        secDupBtn.title = 'Duplicate section';
+        secDupBtn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>';
+        secDupBtn.addEventListener('click', (function (si) {
+          return function (e) {
+            e.stopPropagation();
+            var clone = JSON.parse(JSON.stringify(sections[si]));
+            clone.id = 's' + Date.now();
+            clone.name = sections[si].name + ' (copy)';
+            sections.splice(si + 1, 0, clone);
+            var clonedQs = (questions[sections[si].id] || []).map(function (q) {
+              var cq = JSON.parse(JSON.stringify(q));
+              cq.id = 'q' + Date.now() + Math.random().toString(36).slice(2, 6);
+              return cq;
+            });
+            questions[clone.id] = clonedQs;
+            activeSection = clone.id;
+            renderSections();
+            renderAllQuestions();
+          };
+        })(secIdx));
+        secActions.appendChild(secDupBtn);
+
+        var secDelBtn = document.createElement('button');
+        secDelBtn.title = 'Delete section';
+        secDelBtn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h12M5.3 4V2.7a1 1 0 0 1 1-1h3.4a1 1 0 0 1 1 1V4M6.5 7v4M9.5 7v4"/><path d="M3 4l.7 9.3a1.5 1.5 0 0 0 1.5 1.4h5.6a1.5 1.5 0 0 0 1.5-1.4L13 4"/></svg>';
+        secDelBtn.addEventListener('click', (function (si) {
+          return function (e) {
+            e.stopPropagation();
+            if (sections.length <= 1) return;
+            var removed = sections.splice(si, 1)[0];
+            delete questions[removed.id];
+            if (activeSection === removed.id) {
+              activeSection = sections[0].id;
+            }
+            selectedQ = null;
+            renderSections();
+            renderAllQuestions();
+            renderProps();
+          };
+        })(secIdx));
+        secActions.appendChild(secDelBtn);
+
+        titleDiv.appendChild(secActions);
         block.appendChild(titleDiv);
 
         // Questions
@@ -1763,22 +1839,46 @@
       }
       row.appendChild(value);
 
-      // Remove button (SVG X icon)
+      // Action buttons container (duplicate + remove)
+      var actionsDiv = document.createElement('div');
+      actionsDiv.className = 'q-row-actions';
+
+      var dupBtn = document.createElement('button');
+      dupBtn.className = 'q-row-dup';
+      dupBtn.title = 'Duplicate question';
+      dupBtn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="5" width="8" height="8" rx="1"/><path d="M3 11V3a1 1 0 0 1 1-1h8"/></svg>';
+      dupBtn.addEventListener('click', function (e) {
+        e.stopPropagation();
+        var clone = JSON.parse(JSON.stringify(q));
+        clone.id = 'q' + Date.now();
+        clone.label = q.label + ' (copy)';
+        var arr = questions[sectionId] || [];
+        var idx = arr.indexOf(q);
+        arr.splice(idx + 1, 0, clone);
+        selectedQ = clone.id;
+        renderAllQuestions();
+        renderProps();
+      });
+      actionsDiv.appendChild(dupBtn);
+
       var removeBtn = document.createElement('button');
       removeBtn.className = 'q-row-remove';
-      removeBtn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 4l8 8M12 4l-8 8"/></svg>';
+      removeBtn.title = 'Delete question';
+      removeBtn.innerHTML = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 4.5h11M5.5 4.5V3a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v1.5M12 4.5l-.5 8a1.5 1.5 0 0 1-1.5 1.5H6a1.5 1.5 0 0 1-1.5-1.5l-.5-8"/></svg>';
       removeBtn.addEventListener('click', function (e) {
         e.stopPropagation();
         questions[sectionId] = questions[sectionId].filter(function (x) { return x.id !== q.id; });
         if (selectedQ === q.id) { selectedQ = null; renderProps(); }
         renderAllQuestions();
       });
-      row.appendChild(removeBtn);
+      actionsDiv.appendChild(removeBtn);
+
+      row.appendChild(actionsDiv);
 
       // Select on click
       row.addEventListener('click', function (e) {
         if (e.target.closest('[contenteditable="true"]')) return;
-        if (e.target.closest('.q-row-remove')) return;
+        if (e.target.closest('.q-row-actions')) return;
         selectedQ = q.id;
         if (activeSection !== sectionId) {
           activeSection = sectionId;
